@@ -1,11 +1,10 @@
-import Titi from "@/components/titi/titi";
-import Toto from "@/components/toto/toto";
+import {Titi, Toto} from "@/components";
 
 export default function Home() {
   return (
-    <div>
-    <Toto/>
-    <Titi/>
+    <div style={{display: "flex", flexDirection: "row"}}>
+      <Toto/>
+      <Titi/>
     </div>
   )
 }
