@@ -51,7 +51,7 @@ jobs:
                   name: Deploying Morning React UI
                   command: |
                       cd ~/project/
-                      make delete-pod NAMESPACE=link-${CIRCLE_TAG} SERVICE=morning-react-ui
+                      make delete-pod NAMESPACE=link-${CIRCLE_TAG} SERVICE=react-ui
 
     build_notification:
         docker:
