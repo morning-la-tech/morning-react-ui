@@ -1,112 +1,112 @@
 version: 2.1
 aliases: # declare some aliases for further use
-    - &gcloud_common
-      docker: # need gcloud, docker, make
-          - image: bureauxapartager/gcloud:298
-      working_directory: /root/project/
+  - &gcloud_common
+    docker: # need gcloud, docker, make
+      - image: bureauxapartager/gcloud:298
+    working_directory: /root/project/
 
-    - &gcloud_login
-      run:
-          name: Login to gcloud
-          command: |
-              echo ${GOOGLE_SERVICE_ACCOUNT_AUTH_JSON} > gcp-key.json
-              gcloud auth activate-service-account --key-file gcp-key.json
-              gcloud auth configure-docker europe-docker.pkg.dev
-              gcloud --quiet config set project bap-link
-              gcloud --quiet config set compute/zone europe-west1-b
-              gcloud container clusters get-credentials test --zone europe-west1-b --project bap-link
+  - &gcloud_login
+    run:
+      name: Login to gcloud
+      command: |
+        echo ${GOOGLE_SERVICE_ACCOUNT_AUTH_JSON} > gcp-key.json
+        gcloud auth activate-service-account --key-file gcp-key.json
+        gcloud auth configure-docker europe-docker.pkg.dev
+        gcloud --quiet config set project bap-link
+        gcloud --quiet config set compute/zone europe-west1-b
+        gcloud container clusters get-credentials test --zone europe-west1-b --project bap-link
 
 orbs:
-    slack: circleci/slack@4.1
+  slack: circleci/slack@4.1
 jobs:
-    # Build and push images to registry
-    build_push:
-        <<: *gcloud_common
-        resource_class: large
-        environment:
-            IMAGE: europe-docker.pkg.dev/bap-link/eu.gcr.io/morning-react-ui
-        steps:
-            - checkout
-            - setup_remote_docker:
-                  version: 20.10.2
-                  docker_layer_caching: true
-            - run:
-                  name: Build docker image
-                  command: docker build -t ${IMAGE}:${CIRCLE_SHA1} .
-            - *gcloud_login
-            - run:
-                  name: Push image to europe-docker.pkg.dev/bap-link/eu.gcr.io
-                  command: gcloud docker -- push ${IMAGE}:${CIRCLE_SHA1}
-            - run:
-                  name: Add tag latest to the docker image
-                  command: gcloud container images add-tag ${IMAGE}:${CIRCLE_SHA1} ${IMAGE}:${CIRCLE_TAG}
+  # Build and push images to registry
+  build_push:
+    <<: *gcloud_common
+    resource_class: large
+    environment:
+      IMAGE: europe-docker.pkg.dev/bap-link/eu.gcr.io/morning-react-ui
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 20.10.2
+          docker_layer_caching: true
+      - run:
+          name: Build docker image
+          command: docker build -t ${IMAGE}:${CIRCLE_SHA1} .
+      - *gcloud_login
+      - run:
+          name: Push image to europe-docker.pkg.dev/bap-link/eu.gcr.io
+          command: gcloud docker -- push ${IMAGE}:${CIRCLE_SHA1}
+      - run:
+          name: Add tag latest to the docker image
+          command: gcloud container images add-tag ${IMAGE}:${CIRCLE_SHA1} ${IMAGE}:${CIRCLE_TAG}
 
-    deploy:
-        <<: *gcloud_common
-        resource_class: small
-        steps:
-            - checkout
-            - *gcloud_login
-            - run:
-                  name: Deploying Morning React UI
-                  command: |
-                      cd ~/project/
-                      make delete-pod NAMESPACE=link-${CIRCLE_TAG} SERVICE=react-ui
+  deploy:
+    <<: *gcloud_common
+    resource_class: small
+    steps:
+      - checkout
+      - *gcloud_login
+      - run:
+          name: Deploying Morning React UI
+          command: |
+            cd ~/project/
+            make delete-pod NAMESPACE=link-${CIRCLE_TAG} SERVICE=react-ui
 
-    build_notification:
-        docker:
-            - image: cimg/base:stable
-        resource_class: small
-        steps:
-            - slack/notify:
-                  channel: #project-link-notify
-                  template: basic_success_1
-    deploy_notification_end:
-        docker:
-            - image: cimg/base:stable
-        resource_class: small
-        steps:
-            - slack/notify:
-                  channel: #project-link-notify
-                  template: success_tagged_deploy_1
+  build_notification:
+    docker:
+      - image: cimg/base:stable
+    resource_class: small
+    steps:
+      - slack/notify:
+          channel: #project-link-notify
+          template: basic_success_1
+  deploy_notification_end:
+    docker:
+      - image: cimg/base:stable
+    resource_class: small
+    steps:
+      - slack/notify:
+          channel: #project-link-notify
+          template: success_tagged_deploy_1
 
 # Define the workflow
 workflows:
-    version: 2
-    build-push:
-        jobs:
-            - build_notification:
-                  filters:
-                      branches:
-                          ignore: /.*/
-                      tags:
-                          only: /^((v[0-9]+(\.[0-9]+)*)|test(([0-9])|)|demo)$/
+  version: 2
+  build-push:
+    jobs:
+      - build_notification:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^((v[0-9]+(\.[0-9]+)*)|test(([0-9])|)|demo)$/
 
-            # Build and push when a tag for test or demo environment is pushed
-            - build_push:
-                  filters:
-                      branches:
-                          ignore: /.*/
-                      tags:
-                          only: /^((v[0-9]+(\.[0-9]+)*)|test(([0-9])|)|demo)$/
-                  requires:
-                      - build_notification
+      # Build and push when a tag for test or demo environment is pushed
+      - build_push:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^((v[0-9]+(\.[0-9]+)*)|test(([0-9])|)|demo)$/
+          requires:
+            - build_notification
 
-            # Deploy for env test and demo
-            - deploy:
-                  filters:
-                      branches:
-                          ignore: /.*/
-                      tags:
-                          only: /^(test(([0-9])|)|demo)$/
-                  requires:
-                      - build_push
+      # Deploy for env test and demo
+      - deploy:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^(test(([0-9])|)|demo)$/
+          requires:
+            - build_push
 
-            - deploy_notification_end:
-                  filters:
-                      branches:
-                          ignore: /.*/
-                      tags:
-                          only: /^(test(([0-9])|)|demo)$/
-                  requires:
-                      - deploy
+      - deploy_notification_end:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^(test(([0-9])|)|demo)$/
+          requires:
+            - deploy
