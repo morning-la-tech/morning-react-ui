@@ -1,4 +1,5 @@
 const healthz = () => {
-    return <div>OK</div>;
+  return <div>OK</div>;
 };
+
 export default healthz;
