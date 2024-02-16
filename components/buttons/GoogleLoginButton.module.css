@@ -1,0 +1,26 @@
+.googleLoginButton {
+    display: flex;
+    padding: 12px 0px;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    align-self: stretch;
+    border-radius: 6px;
+    border: 2px solid var(--ash);
+    background: var(--white);
+    font-family: 'Inter', sans-serif;
+}
+
+.googleLoginButton span {
+    margin-left: 10px;
+    color: var(--coal);
+    text-align: center;
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    line-height: 28px;
+}
+
+.googleLoginButton:hover {
+    background: var(--cloud);
+    cursor: pointer;
+}
