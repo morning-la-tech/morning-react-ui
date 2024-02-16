@@ -1,0 +1,93 @@
+:root {
+    --titling-font: 'Titling Gothic FB Nrm Bd', sans-serif;
+    --titling-extended-font: 'Titling gothic extended', sans-serif;
+    --titling-comp-font: 'Titling Gothic FB Comp', sans-serif;
+    --space-grotesk: 'Space Grotesk', sans-serif;
+
+    --white: #fff;
+    --black: #000;
+    /*Grey */
+    --cloud: #F6F8F8;
+    --silver: #EEF0F2;
+    --ash: #E5E9EB;
+    --stone: #B0BABF;
+    --iron: #6E7C87;
+    --coal: #252C32;
+
+    /* Blue */
+    --sky: #EBF7FF;
+    --azure: #4095F7;
+    --sapphire: #0E73F6;
+    --navy: #0452C8;
+
+    /* Green */
+    --mint: #EBFFF1;
+    --emerald: #47D16C;
+    --forest: #119C2B;
+
+    /* Red */
+    --petal: #FFEFEB;
+    --cherry: #F2271C;
+    --brick: #CC0905;
+
+    /* Orange */
+    --peach: #FAEADA;
+    --amber: #E27940;
+    --cinnamon: #AE4220;
+
+    /* Yellow */
+    --vanilla: #FFFCC2;
+    --sunflower: #F8DC4F;
+    --mustard: #D29404;
+
+    /* Font size */
+    --font-size-xxl: 24px;
+    --font-size-xl: 18px;
+    --font-size-l: 16px;
+    --font-size-normal: 14px;
+    --font-size-s: 12px;
+
+    /* Gap */
+    --gap-horizontal: 12px;
+    --gap-vertical: 20px;
+}
+
+/* Fonts */
+@font-face {
+    font-family: 'Titling gothic fb';
+    src: url('../public/fonts/TitlingGothicFBNormalMedium.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Titling gothic fb Nrm Bd';
+    src: url('../public/fonts/TitlingGothicFBNormalBold.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Titling gothic fb comp';
+    src: url('../public/fonts/TitlingGothicFBComp-Black.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Titling gothic extended';
+    src: url('../public/fonts/TitlingGothicFBExt-Reg.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Space Grotesk';
+    src: url('../public/fonts/SpaceGrotesk-VariableFont_wght.ttf') format('truetype');
+    font-weight: 100 700;
+    font-style: normal;
+}
