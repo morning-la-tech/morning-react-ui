@@ -28,7 +28,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 20.10.2
+          version: default
           docker_layer_caching: true
       - run:
           name: Build docker image
