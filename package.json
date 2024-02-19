@@ -7,7 +7,7 @@
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
-        "prepare": "node .husky/install.mjs"
+        "prepare": "if [ \"$SKIP_HUSKY\" != \"true\" ]; then node .husky/install.mjs; fi"
     },
     "lint-staged": {
         "*.{js,jsx,ts,tsx}": [
