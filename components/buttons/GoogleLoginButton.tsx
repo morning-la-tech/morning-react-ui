@@ -7,7 +7,7 @@ type Props = {
 
 const GoogleLoginButton = ({ onClick }: Props) => (
   <button className={styles.googleLoginButton} onClick={onClick}>
-    <Image src='/logos/logo_google.png' alt='Google logo' width={24} height={24} />
+    <Image src='https://cdn.morning.fr/logos/logo_google.png' alt='Google logo' width={24} height={24} />
     <span>{'Se connecter avec Google'}</span>
   </button>
 );
