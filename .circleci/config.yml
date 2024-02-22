@@ -54,21 +54,35 @@ jobs:
             make delete-pod NAMESPACE=link-${CIRCLE_TAG} SERVICE=react-ui
 
   build_notification:
-    docker:
-      - image: cimg/base:stable
-    resource_class: small
-    steps:
-      - slack/notify:
-          channel: #project-link-notify
-          template: basic_success_1
+      docker:
+          - image: cimg/base:stable
+      resource_class: small
+      steps:
+          - slack/notify:
+                event: always
+                channel: C2K6UA8TX
+                custom: |
+                    {
+                      "blocks": [
+                        {
+                          "type": "header",
+                          "text": {
+                            "type": "plain_text",
+                            "text": "Deployment Start :gear: $CIRCLE_PROJECT_REPONAME - $CIRCLE_TAG - $CIRCLE_USERNAME",
+                            "emoji": true
+                          }
+                        }
+                      ]
+                    }
   deploy_notification_end:
-    docker:
-      - image: cimg/base:stable
-    resource_class: small
-    steps:
-      - slack/notify:
-          channel: #project-link-notify
-          template: success_tagged_deploy_1
+      docker:
+          - image: cimg/base:stable
+      resource_class: small
+      steps:
+          - slack/notify:
+                event: always
+                channel: C2K6UA8TX
+                template: success_tagged_deploy_1
 
 # Define the workflow
 workflows:

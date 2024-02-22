@@ -56,7 +56,7 @@
 /* Fonts */
 @font-face {
     font-family: 'Titling gothic fb';
-    src: url('../public/fonts/TitlingGothicFBNormalMedium.otf') format('opentype');
+    src: url('https://cdn.morning.fr/fonts/TitlingGothicFBNormalMedium.otf') format('opentype');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
@@ -64,7 +64,7 @@
 
 @font-face {
     font-family: 'Titling gothic fb Nrm Bd';
-    src: url('../public/fonts/TitlingGothicFBNormalBold.otf') format('opentype');
+    src: url('https://cdn.morning.fr/fonts/TitlingGothicFBNormalBold.otf') format('opentype');
     font-weight: 700;
     font-style: normal;
     font-display: swap;
@@ -72,7 +72,7 @@
 
 @font-face {
     font-family: 'Titling gothic fb comp';
-    src: url('../public/fonts/TitlingGothicFBComp-Black.otf') format('opentype');
+    src: url('https://cdn.morning.fr/fonts/TitlingGothicFBComp-Black.otf') format('opentype');
     font-weight: bold;
     font-style: normal;
     font-display: swap;
@@ -80,7 +80,7 @@
 
 @font-face {
     font-family: 'Titling gothic extended';
-    src: url('../public/fonts/TitlingGothicFBExt-Reg.otf') format('opentype');
+    src: url('https://cdn.morning.fr/fonts/TitlingGothicFBExt-Reg.otf') format('opentype');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
