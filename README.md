@@ -51,3 +51,21 @@ After importing the theme, you can use the CSS variables defined in theme.css th
 ```
 
 This ensures that all components in the application can access and use the global styles and variables defined in the theme, promoting consistency and ease of maintenance.
+
+## File Storage in CDN Bucket
+
+This project leverages the `morning-react-ui-data` GCP bucket for storing and serving static assets such as images, stylesheets, and JavaScript files. Utilizing a CDN for these assets allows for improved loading times, reduced server load by caching files closer to the user and serving them over a distributed network and a simpler URL to use.
+
+### How It Works
+
+All static assets are uploaded to the `morning-react-ui-data` bucket on Google Cloud Storage (GCS), where they are made publicly accessible. These assets can then be directly referenced within the application using absolute URLs, following the base path `https://cdn.morning.fr/`. This approach ensures efficient delivery of content to users across the globe, leveraging GCS's robust scalability and Google's extensive network infrastructure.
+
+### Benefits
+
+- **Reduced Latency**: By serving assets from locations geographically closer to the user, we significantly reduce content delivery times.
+- **Scalability**: Google Cloud Storage automatically scales to meet demand, ensuring that assets are always available regardless of traffic spikes.
+- **Cost-Efficiency**: Offloading static asset serving to a CDN can reduce the bandwidth and computation costs on the primary servers.
+
+### Implementing Changes
+
+To update or add new assets to the CDN, files should be uploaded to the `morning-react-ui-data` bucket following the project's asset management guidelines.
