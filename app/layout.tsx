@@ -11,12 +11,11 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'React UI',
   description: 'Morning React UI Library',
+  icons: { icon: '/favicon.ico', apple: '/apple-icon-180x180.png' },
 };
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang='en'>
-      <link rel='icon' href='/favicon.ico' sizes='any' />
-      <link rel='apple-touch-icon' href='/apple-icon-180x180.png' type='image/<generated>' sizes='180x180' />
       <body className={inter.className}>
         <ThemeProvider>{children}</ThemeProvider>
       </body>

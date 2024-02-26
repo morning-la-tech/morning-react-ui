@@ -1,0 +1,104 @@
+/* Base button styling */
+.button {
+    border: none;
+    border-radius: 6px;
+    padding: 5px 8px;
+    font-size: var(--font-size-normal);
+    font-weight: 600;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+
+    .image {
+        display: flex;
+    }
+}
+
+.button.xxl, .button.xl, .button.l {
+    padding: 6px 10px;
+}
+
+.button.s, .button.s::before {
+    border-radius: 4px;
+    padding: 4px 6px;
+    line-height: 16px;
+}
+
+.button.xs, .button.xs::before {
+    border-radius: 2px;
+    padding: 2px 4px;
+    line-height: 12px;
+}
+
+.button.xxl { font-size: var(--font-size-xxl); }
+.button.xl  { font-size: var(--font-size-xl); }
+.button.l   { font-size: var(--font-size-l); line-height: 24px; }
+.button.s   { font-size: var(--font-size-s); }
+.button.xs  { font-size: var(--font-size-xs); }
+
+/* Content and icon styling */
+.content, .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Loading overlay styling */
+.loadingOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.primary {
+    background-color: var(--azure);
+    color: var(--white);
+}
+
+.primary.hover, .primary:hover {
+    background-color: var(--sapphire);
+}
+
+.primary.active, .primary:active {
+    background-color: var(--navy);
+}
+
+.secondary {
+    background-color: var(--white);
+    color: var(--black);
+}
+
+.secondary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border: 1px solid var(--ash); /* Visual "inner border" */
+    box-sizing: border-box;
+    pointer-events: none;
+    border-radius: 6px
+}
+
+.secondary.hover, .secondary:hover {
+    background-color: var(--cloud);
+}
+
+.secondary.active, .secondary:active {
+    background-color: var(--silver);
+}
+
+.primary:disabled, .secondary:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
