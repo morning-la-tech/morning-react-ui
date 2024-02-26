@@ -1,12 +1,9 @@
-import { Titi, Toto } from '@/components';
-import Counter from '@/components/Counter';
+import Link from 'next/link';
 
 export default function Home() {
   return (
     <div style={{ display: 'flex', flexDirection: 'row' }}>
-      <Toto />
-      <Titi />
-      <Counter />
+      <Link href={'/buttons'}>Buttons</Link>
     </div>
   );
 }
