@@ -16,6 +16,12 @@ To start the development server with Docker, execute IN link-360:
 docker compose up ui
 ```
 
+Then in the React-ui projet, run :
+
+```bash
+npm run dev
+```
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Global Style and Theme
