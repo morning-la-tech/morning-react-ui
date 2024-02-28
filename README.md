@@ -16,7 +16,7 @@ To start the development server with Docker, execute IN link-360:
 docker compose up ui
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://ui.morning.test](http://ui.morning.test) with your browser to see the result.
 
 ## Global Style and Theme
 
@@ -24,18 +24,22 @@ This project uses a global stylesheet and a theme file to ensure consistent styl
 
 ### Importing the Theme
 
-The `theme.css` file should be imported at the top level of your application to ensure its variables and styles are globally available. In a Next.js project, this is typically done in the `pages/_app.js` or `pages/_app.tsx` file, which acts as the application's root component.
+The `ThemeProvider.tsx` file should be imported at the top level of your application to ensure its variables and styles are globally available. In a Next.js project, this is typically done in the `app/layout.tsx` file, which acts as the application's root component.
 
 For example, to import the global theme in a Next.js application:
 
 ```jsx
-import './theme.css';
+import ThemeProvider from './ThemeProvider';
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />;
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang='en'>
+      <body className={inter.className}>
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
+    </html>
+  );
 }
-
-export default MyApp;
 ```
 
 ### Using CSS Variables in Components
