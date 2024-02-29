@@ -41,7 +41,7 @@
 .parentInput.s   { font-size: var(--font-size-s); }
 .parentInput.xs  { font-size: var(--font-size-xs); }
 
-.input.xl  { font-size: var(--font-size-xl); padding: 8px 12px; }
+.input.xl  { font-size: var(--font-size-l); padding: 8px 12px; }
 .input.l   { font-size: var(--font-size-l); padding: 6px 12px; }
 .input.m   { font-size: var(--font-size-normal); padding: 6px 10px; }
 .input.s   { font-size: var(--font-size-s); padding: 4px 8px; }

@@ -12,7 +12,6 @@ export default function page() {
     label?: string;
     isLabelBold?: boolean;
     sublabel?: string;
-    height?: string;
     size?: Size;
     value?: string;
     placeholder?: string;
