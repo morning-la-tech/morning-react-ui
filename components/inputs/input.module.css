@@ -4,11 +4,20 @@
     border-radius: 6px;
     box-sizing: border-box;
     width: 100%;
+    background: var(--white);
 }
 
 .input:focus {
     outline: none;
     border: 1px solid var(--sapphire);
+}
+
+.input.error {
+    border-color: var(--brick);
+}
+
+.input.disabled {
+    opacity: 0.5;
 }
 
 .input.xl  { font-size: var(--font-size-l); padding: 8px 12px; }

@@ -11,13 +11,26 @@ type InputProps = {
   placeholder?: string;
   value?: string;
   isLabelBold?: boolean;
+  isError?: boolean;
+  isDisabled?: boolean;
 };
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ label, sublabel, isLabelBold, size = Size.m, value, placeholder }, ref) => {
+  ({ label, sublabel, isLabelBold, size = Size.m, value, placeholder, isError, isDisabled }, ref) => {
     return (
       <ParentInput label={label} sublabel={sublabel} isLabelBold={isLabelBold} size={size}>
-        <input className={classNames(styles.input, styles[size])} ref={ref} value={value} placeholder={placeholder} />
+        <input
+          className={classNames(
+            styles.input,
+            styles[size],
+            { [styles.error]: isError },
+            { [styles.disabled]: isDisabled },
+          )}
+          ref={ref}
+          value={value}
+          placeholder={placeholder}
+          disabled={isDisabled}
+        />
       </ParentInput>
     );
   },

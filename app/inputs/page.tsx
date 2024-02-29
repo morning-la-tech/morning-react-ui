@@ -15,6 +15,8 @@ export default function page() {
     size?: Size;
     value?: string;
     placeholder?: string;
+    isError?: boolean;
+    isDisabled?: boolean;
   }) => {
     return (
       <>
@@ -31,13 +33,18 @@ export default function page() {
     <div style={{ display: 'flex', flexDirection: 'row' }}>
       <Container>
         <Link href={'/'}>Home</Link>
-        <h1>ParentInputs</h1>
         <Columns>
           <Column>
-            {renderInputs({ placeholder: 'Simple input' })}
+            <h1>ParentInputs</h1>
             {renderInputs({ label: 'Label', placeholder: 'With label' })}
             {renderInputs({ label: 'Label', isLabelBold: true, placeholder: 'With bold label' })}
             {renderInputs({ label: 'Label', sublabel: 'Sublabel', placeholder: 'With label and sublabel' })}
+          </Column>
+          <Column>
+            <h1>Inputs text</h1>
+            {renderInputs({ placeholder: 'Simple input' })}
+            {renderInputs({ placeholder: 'Error input', isError: true })}
+            {renderInputs({ placeholder: 'Disabled input', isDisabled: true })}
           </Column>
         </Columns>
       </Container>
