@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 import classNames from 'classnames';
 import { Size } from '@/util/Enum';
-import styles from './input.module.css';
+import styles from './parentInput.module.css';
 
 type ParentInputProps = {
   label?: string;
