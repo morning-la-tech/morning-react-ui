@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import Input from '@/components/inputs/Input';
+import InputText from '@/components/inputs/InputText';
 import Container from '@/components/layout/Container';
 import Columns from '@/components/layout/Columns';
 import Column from '@/components/layout/Column';
@@ -20,11 +20,11 @@ export default function page() {
   }) => {
     return (
       <>
-        <Input {...props} size={Size.xs} />
-        <Input {...props} size={Size.s} />
-        <Input {...props} size={Size.m} />
-        <Input {...props} size={Size.l} />
-        <Input {...props} size={Size.xl} />
+        <InputText {...props} size={Size.xs} />
+        <InputText {...props} size={Size.s} />
+        <InputText {...props} size={Size.m} />
+        <InputText {...props} size={Size.l} />
+        <InputText {...props} size={Size.xl} />
       </>
     );
   };

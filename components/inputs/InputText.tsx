@@ -2,7 +2,7 @@ import { forwardRef } from 'react';
 import classNames from 'classnames';
 import ParentInput from '@/components/inputs/ParentInput';
 import { Size } from '@/util/Enum';
-import styles from './input.module.css';
+import styles from './inputText.module.css';
 
 type InputProps = {
   label?: string;
@@ -15,7 +15,7 @@ type InputProps = {
   isDisabled?: boolean;
 };
 
-const Input = forwardRef<HTMLInputElement, InputProps>(
+const InputText = forwardRef<HTMLInputElement, InputProps>(
   ({ label, sublabel, isLabelBold, size = Size.m, value, placeholder, isError, isDisabled }, ref) => {
     return (
       <ParentInput label={label} sublabel={sublabel} isLabelBold={isLabelBold} size={size}>
@@ -36,6 +36,6 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
   },
 );
 
-Input.displayName = 'Input';
+InputText.displayName = 'InputText';
 
-export default Input;
+export default InputText;
