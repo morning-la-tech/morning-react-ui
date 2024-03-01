@@ -4,7 +4,7 @@ import './globals.css';
 import ThemeProvider from './ThemeProvider';
 
 const inter = Inter({
-  weight: '400',
+  weight: 'variable',
   subsets: ['latin'],
 });
 
