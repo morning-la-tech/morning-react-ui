@@ -17,6 +17,8 @@ export default function page() {
     placeholder?: string;
     isError?: boolean;
     isDisabled?: boolean;
+    imageSrc?: string;
+    imageAlt?: string;
   }) => {
     return (
       <>
@@ -45,6 +47,19 @@ export default function page() {
             {renderInputs({ placeholder: 'Simple input' })}
             {renderInputs({ placeholder: 'Error input', isError: true })}
             {renderInputs({ placeholder: 'Disabled input', isDisabled: true })}
+          </Column>
+          <Column>
+            <h1>Inputs text with images</h1>
+            {renderInputs({
+              placeholder: 'Input with image',
+              imageSrc: 'https://cdn.morning.fr/logos/logo_google.png',
+              imageAlt: 'google logo',
+            })}
+            {renderInputs({
+              placeholder: 'Input with image',
+              imageSrc: '/images/magnifying-glass.svg',
+              imageAlt: 'magnifying glass',
+            })}
           </Column>
         </Columns>
       </Container>
