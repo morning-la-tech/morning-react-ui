@@ -6,9 +6,10 @@ import Container from '@/components/layout/Container';
 import Columns from '@/components/layout/Columns';
 import Column from '@/components/layout/Column';
 import { Size } from '@/util/Enum';
+import InputNumber from '@/components/inputs/inputNumber';
 
 export default function page() {
-  const renderInputs = (props: {
+  const renderTextInputs = (props: {
     label?: string;
     isLabelBold?: boolean;
     sublabel?: string;
@@ -31,6 +32,28 @@ export default function page() {
     );
   };
 
+  const renderNumberInputs = (props: {
+    label?: string;
+    isLabelBold?: boolean;
+    sublabel?: string;
+    size?: Size;
+    value?: number;
+    min?: number;
+    max?: number;
+    isError?: boolean;
+    isDisabled?: boolean;
+  }) => {
+    return (
+      <>
+        <InputNumber {...props} size={Size.xs} />
+        <InputNumber {...props} size={Size.s} />
+        <InputNumber {...props} size={Size.m} />
+        <InputNumber {...props} size={Size.l} />
+        <InputNumber {...props} size={Size.xl} />
+      </>
+    );
+  };
+
   return (
     <div style={{ display: 'flex', flexDirection: 'row' }}>
       <Container>
@@ -38,28 +61,34 @@ export default function page() {
         <Columns>
           <Column>
             <h1>ParentInputs</h1>
-            {renderInputs({ label: 'Label', placeholder: 'With label' })}
-            {renderInputs({ label: 'Label', isLabelBold: true, placeholder: 'With bold label' })}
-            {renderInputs({ label: 'Label', sublabel: 'Sublabel', placeholder: 'With label and sublabel' })}
+            {renderTextInputs({ label: 'Label', placeholder: 'With label' })}
+            {renderTextInputs({ label: 'Label', isLabelBold: true, placeholder: 'With bold label' })}
+            {renderTextInputs({ label: 'Label', sublabel: 'Sublabel', placeholder: 'With label and sublabel' })}
           </Column>
           <Column>
             <h1>Inputs text</h1>
-            {renderInputs({ placeholder: 'Simple input' })}
-            {renderInputs({ placeholder: 'Error input', isError: true })}
-            {renderInputs({ placeholder: 'Disabled input', isDisabled: true })}
+            {renderTextInputs({ placeholder: 'Simple input' })}
+            {renderTextInputs({ placeholder: 'Error input', isError: true })}
+            {renderTextInputs({ placeholder: 'Disabled input', isDisabled: true })}
           </Column>
           <Column>
             <h1>Inputs text with images</h1>
-            {renderInputs({
+            {renderTextInputs({
               placeholder: 'Input with image',
               imageSrc: 'https://cdn.morning.fr/logos/logo_google.png',
               imageAlt: 'google logo',
             })}
-            {renderInputs({
+            {renderTextInputs({
               placeholder: 'Input with image',
               imageSrc: '/images/magnifying-glass.svg',
               imageAlt: 'magnifying glass',
             })}
+          </Column>
+          <Column>
+            <h1>Inputs number</h1>
+            {renderNumberInputs({ label: 'Simple', sublabel: 'Sublabel' })}
+            {renderNumberInputs({ label: 'Error', isError: true })}
+            {renderNumberInputs({ label: 'Disabled', isDisabled: true })}
           </Column>
         </Columns>
       </Container>
