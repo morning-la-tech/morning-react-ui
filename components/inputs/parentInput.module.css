@@ -27,15 +27,15 @@
     height: 100%;
 }
 
-.parentInput.xl  { font-size: var(--font-size-xl); }
-.parentInput.l   { font-size: var(--font-size-l); }
-.parentInput.m   { font-size: var(--font-size-normal); }
-.parentInput.s   { font-size: var(--font-size-s); }
 .parentInput.xs  { font-size: var(--font-size-xs); }
+.parentInput.s   { font-size: var(--font-size-s); }
+.parentInput.m   { font-size: var(--font-size-normal); }
+.parentInput.l   { font-size: var(--font-size-l); }
+.parentInput.xl  { font-size: var(--font-size-xl); }
 
 /* Sublabels are one size smaller than labels */
-.sublabel.xl  { font-size: var(--font-size-l); }
-.sublabel.l   { font-size: var(--font-size-normal); }
-.sublabel.m   { font-size: var(--font-size-s); }
-.sublabel.s   { font-size: var(--font-size-xs); }
 .sublabel.xs  { font-size: var(--font-size-xs); }
+.sublabel.s   { font-size: var(--font-size-xs); }
+.sublabel.m   { font-size: var(--font-size-s); }
+.sublabel.l   { font-size: var(--font-size-normal); }
+.sublabel.xl  { font-size: var(--font-size-l); }

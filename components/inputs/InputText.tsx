@@ -25,28 +25,30 @@ const InputText = forwardRef<HTMLInputElement, InputProps>(
   ) => {
     return (
       <ParentInput label={label} sublabel={sublabel} isLabelBold={isLabelBold} size={size}>
-        {imageSrc && (
-          <Image
-            src={imageSrc}
-            alt={imageAlt ? imageAlt : 'input icon'}
-            className={classNames(styles[size], styles.image)}
-            height={sizeToNumber(size)}
-            width={sizeToNumber(size)}
-          />
-        )}
-        <input
-          className={classNames(
-            styles.input,
-            styles[size],
-            { [styles.error]: isError },
-            { [styles.disabled]: isDisabled },
-            { [styles.hasImage]: imageSrc },
+        <div className={styles.wrapper}>
+          {imageSrc && (
+            <Image
+              src={imageSrc}
+              alt={imageAlt ? imageAlt : 'input icon'}
+              className={classNames(styles[size], styles.image)}
+              height={sizeToNumber(size)}
+              width={sizeToNumber(size)}
+            />
           )}
-          ref={ref}
-          value={value}
-          placeholder={placeholder}
-          disabled={isDisabled}
-        />
+          <input
+            className={classNames(
+              styles.input,
+              styles[size],
+              { [styles.error]: isError },
+              { [styles.disabled]: isDisabled },
+              { [styles.hasImage]: imageSrc },
+            )}
+            ref={ref}
+            value={value}
+            placeholder={placeholder}
+            disabled={isDisabled}
+          />
+        </div>
       </ParentInput>
     );
   },
