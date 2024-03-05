@@ -2,14 +2,15 @@
 
 :root {
     -webkit-font-smoothing: antialiased;
+
     --titling-font: 'Titling Gothic FB Nrm Bd', sans-serif;
     --titling-extended-font: 'Titling gothic extended', sans-serif;
     --titling-comp-font: 'Titling Gothic FB Comp', sans-serif;
     --space-grotesk: 'Space Grotesk', sans-serif;
-
     --white: #fff;
     --black: #000;
-    /*Grey */
+
+    /* Grey */
     --cloud: #F6F8F8;
     --silver: #EEF0F2;
     --ash: #E5E9EB;
