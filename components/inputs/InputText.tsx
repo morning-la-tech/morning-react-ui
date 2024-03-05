@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import Image from 'next/image';
 import ParentInput from '@/components/inputs/ParentInput';
 import { Size, sizeToNumber } from '@/util/Enum';
-import styles from './inputText.module.css';
+import styles from './input.module.css';
 
 type InputProps = {
   label?: string;
