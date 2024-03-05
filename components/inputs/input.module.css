@@ -75,26 +75,35 @@
     position: relative;
 }
 
-.image.xs, .image.s, .image.m, .image.l, .image.xl {
+.image.xs,
+.image.s,
+.image.m,
+.image.l,
+.image.xl {
     z-index: 1;
     position: absolute;
 }
+
 .image.xs {
     top: 5px;
     left: 8px;
 }
+
 .image.s {
     top: 4px;
     left: 8px;
 }
+
 .image.m {
     top: 5px;
     left: 10px;
 }
+
 .image.l {
     top: 4px;
     left: 12px;
 }
+
 .image.xl {
     top: 5px;
     left: 12px;

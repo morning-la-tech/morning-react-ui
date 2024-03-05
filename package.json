@@ -7,13 +7,16 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "lint:css": "stylelint '**/*.css'",
+    "lint:css:fix": "stylelint '**/*.css' --fix",
     "prepare": "if [ \"$SKIP_HUSKY\" != \"true\" ]; then node .husky/install.mjs; fi"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
       "eslint --fix",
       "prettier --write"
-    ]
+    ],
+    "*.css": "stylelint --fix"
   },
   "dependencies": {
     "classnames": "^2.5.1",
@@ -36,6 +39,8 @@
     "husky": "^9.0.7",
     "lint-staged": "^15.2.0",
     "prettier": "^3.2.4",
+    "stylelint": "^16.2.1",
+    "stylelint-config-standard": "^36.0.0",
     "typescript": "^5"
   }
 }

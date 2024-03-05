@@ -1,0 +1,51 @@
+{
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "block-no-empty": true,
+    "color-no-invalid-hex": true,
+    "declaration-block-no-duplicate-properties": true,
+    "declaration-block-no-shorthand-property-overrides": true,
+    "font-family-no-duplicate-names": true,
+    "no-duplicate-selectors": true,
+    "property-no-unknown": true,
+    "selector-pseudo-class-no-unknown": true,
+    "selector-pseudo-element-no-unknown": true,
+    "selector-type-no-unknown": true,
+    "string-no-newline": true,
+    "unit-no-unknown": true,
+    "keyframe-declaration-no-important": true,
+    "comment-no-empty": true,
+    "max-nesting-depth": 4,
+    "color-named": "never",
+    "selector-max-id": 0,
+    "selector-max-class": 3,
+    "selector-max-combinators": 3,
+    "selector-max-compound-selectors": 3,
+    "selector-max-specificity": "0,4,0",
+    "selector-no-qualifying-type": [
+      true,
+      {
+        "ignore": [
+          "attribute",
+          "class",
+          "id"
+        ]
+      }
+    ],
+    "value-no-vendor-prefix": true,
+    "property-no-vendor-prefix": true,
+    "rule-empty-line-before": [
+      "always-multi-line",
+      {
+        "except": [
+          "first-nested"
+        ],
+        "ignore": [
+          "after-comment"
+        ]
+      }
+    ],
+    "selector-class-pattern": "^([a-z][a-zA-Z0-9]+|[a-z])$",
+    "no-empty-source": true
+  }
+}
