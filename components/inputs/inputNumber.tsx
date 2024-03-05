@@ -8,7 +8,6 @@ type InputProps = {
   label?: string;
   sublabel?: string;
   size?: Size;
-  onChange: (value: number) => void;
   value: number;
   min?: number;
   max?: number;
@@ -18,7 +17,7 @@ type InputProps = {
 };
 
 const InputNumber = forwardRef<HTMLInputElement, InputProps>(
-  ({ label, sublabel, isLabelBold, size = Size.m, onChange, value, min, max, isError, isDisabled }, ref) => {
+  ({ label, sublabel, isLabelBold, size = Size.m, value, min, max, isError, isDisabled }, ref) => {
     const [inputValue, setInputValue] = useState<number>(value);
 
     const validateAndSet = (val: number) => {
@@ -42,7 +41,7 @@ const InputNumber = forwardRef<HTMLInputElement, InputProps>(
 
     const handleBlur = () => {
       const validValue = isNaN(inputValue) ? NaN : inputValue;
-      onChange(validValue);
+      setInputValue(validValue);
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {

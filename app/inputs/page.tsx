@@ -37,7 +37,7 @@ export default function page() {
     isLabelBold?: boolean;
     sublabel?: string;
     size?: Size;
-    value?: number;
+    value: number;
     min?: number;
     max?: number;
     isError?: boolean;
