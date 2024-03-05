@@ -60,7 +60,6 @@
     padding: 6px 10px 6px 34px;
 }
 
-
 .input.hasImage.l {
     font-size: var(--font-size-l);
     padding: 6px 12px 6px 40px;
@@ -79,22 +78,27 @@
     z-index: 1;
     position: absolute;
 }
+
 .image.xs {
     top: 5px;
     left: 8px;
 }
+
 .image.s {
     top: 4px;
     left: 8px;
 }
+
 .image.m {
     top: 5px;
     left: 10px;
 }
+
 .image.l {
     top: 4px;
     left: 12px;
 }
+
 .image.xl {
     top: 5px;
     left: 12px;
@@ -130,7 +134,6 @@
     padding: 6px 10px 6px 34px;
 }
 
-
 .input.hasImage.l {
     font-size: var(--font-size-l);
     padding: 6px 12px 6px 40px;
@@ -149,22 +152,27 @@
     z-index: 1;
     position: absolute;
 }
+
 .image.xs {
     top: 5px;
     left: 8px;
 }
+
 .image.s {
     top: 4px;
     left: 8px;
 }
+
 .image.m {
     top: 5px;
     left: 10px;
 }
+
 .image.l {
     top: 4px;
     left: 12px;
 }
+
 .image.xl {
     top: 5px;
     left: 12px;
