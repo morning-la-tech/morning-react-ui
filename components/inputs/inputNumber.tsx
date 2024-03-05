@@ -8,7 +8,7 @@ type InputProps = {
   label?: string;
   sublabel?: string;
   size?: Size;
-  value: number;
+  value?: number;
   min?: number;
   max?: number;
   isLabelBold?: boolean;
@@ -18,7 +18,14 @@ type InputProps = {
 
 const InputNumber = forwardRef<HTMLInputElement, InputProps>(
   ({ label, sublabel, isLabelBold, size = Size.m, value, min, max, isError, isDisabled }, ref) => {
-    const [inputValue, setInputValue] = useState<number>(value);
+    const [inputValue, setInputValue] = useState<number | undefined>(value);
+
+    const getValidValue = (val: number | undefined): number => {
+      if (val === undefined) {
+        return NaN;
+      }
+      return isNaN(val) ? NaN : val;
+    };
 
     const validateAndSet = (val: number) => {
       if ((min !== undefined && val < min) || (max !== undefined && val > max)) {
@@ -40,14 +47,15 @@ const InputNumber = forwardRef<HTMLInputElement, InputProps>(
     };
 
     const handleBlur = () => {
-      const validValue = isNaN(inputValue) ? NaN : inputValue;
+      const validValue = getValidValue(inputValue);
       setInputValue(validValue);
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
       if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
         event.preventDefault();
-        let newValue = isNaN(inputValue) ? 0 : inputValue;
+        const testedValue = getValidValue(inputValue);
+        let newValue = isNaN(testedValue) ? 0 : testedValue;
         const increment = 1;
         if (event.key === 'ArrowUp') {
           newValue += increment;
@@ -77,7 +85,7 @@ const InputNumber = forwardRef<HTMLInputElement, InputProps>(
           onKeyDown={handleKeyDown}
           onBlur={handleBlur}
           ref={ref}
-          value={isNaN(inputValue) ? '' : inputValue}
+          value={isNaN(getValidValue(inputValue)) ? '' : inputValue}
           min={min}
           max={max}
           disabled={isDisabled}
