@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { ChangeEvent, forwardRef } from 'react';
 import classNames from 'classnames';
 import Image from 'next/image';
 import ParentInput from '@/components/inputs/ParentInput';
@@ -10,7 +10,8 @@ type InputProps = {
   sublabel?: string;
   size?: Size;
   placeholder?: string;
-  value?: string;
+  value: string;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   isLabelBold?: boolean;
   isError?: boolean;
   isDisabled?: boolean;
@@ -20,7 +21,19 @@ type InputProps = {
 
 const InputText = forwardRef<HTMLInputElement, InputProps>(
   (
-    { label, sublabel, isLabelBold, size = Size.m, value, placeholder, isError, isDisabled, imageSrc, imageAlt },
+    {
+      label,
+      sublabel,
+      isLabelBold,
+      size = Size.m,
+      value,
+      onChange,
+      placeholder,
+      isError,
+      isDisabled,
+      imageSrc,
+      imageAlt,
+    },
     ref,
   ) => {
     return (
@@ -47,6 +60,7 @@ const InputText = forwardRef<HTMLInputElement, InputProps>(
             value={value}
             placeholder={placeholder}
             disabled={isDisabled}
+            onChange={onChange}
           />
         </div>
       </ParentInput>
