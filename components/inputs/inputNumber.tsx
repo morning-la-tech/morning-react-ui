@@ -2,22 +2,17 @@ import React, { ChangeEvent, forwardRef, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { Size } from '@/util/Enum';
 import ParentInput from '@/components/inputs/ParentInput';
+import { InputProps } from '@/components/inputs/types';
 import styles from './input.module.css';
 
-type InputProps = {
-  label?: string;
-  sublabel?: string;
-  size?: Size;
+type InputNumberProps = InputProps & {
   value: number | undefined;
   onChange: (value: number) => void;
   min?: number;
   max?: number;
-  isLabelBold?: boolean;
-  isError?: boolean;
-  isDisabled?: boolean;
 };
 
-const InputNumber = forwardRef<HTMLInputElement, InputProps>(
+const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
   ({ label, sublabel, isLabelBold, size = Size.m, value, onChange, min, max, isError, isDisabled }, ref) => {
     const [inputValue, setInputValue] = useState<number | undefined>(value);
 

@@ -3,23 +3,18 @@ import classNames from 'classnames';
 import Image from 'next/image';
 import ParentInput from '@/components/inputs/ParentInput';
 import { Size, sizeToNumber } from '@/util/Enum';
+import { InputProps } from '@/components/inputs/types';
 import styles from './input.module.css';
 
-type InputProps = {
-  label?: string;
-  sublabel?: string;
-  size?: Size;
+type InputTextProps = InputProps & {
   placeholder?: string;
   value: string;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  isLabelBold?: boolean;
-  isError?: boolean;
-  isDisabled?: boolean;
   imageSrc?: string;
   imageAlt?: string;
 };
 
-const InputText = forwardRef<HTMLInputElement, InputProps>(
+const InputText = forwardRef<HTMLInputElement, InputTextProps>(
   (
     {
       label,
