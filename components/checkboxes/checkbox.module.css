@@ -1,0 +1,45 @@
+.checkbox {
+    display: flex;
+    align-items: center;
+    user-select: none;
+}
+
+.checkbox.xs {
+    font-size: 10px;
+    line-height: 12px;
+}
+
+.checkbox.xs input {
+    width: 7px;
+    height: 7px;
+}
+
+.checkbox.s {
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.checkbox.s input {
+    width: 10px;
+    height: 10px;
+}
+
+.checkbox.m {
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.checkbox.m input {
+    width: 12px;
+    height: 12px;
+}
+
+.checkbox.l {
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.checkbox.l input {
+    width: 14px;
+    height: 14px;
+}
