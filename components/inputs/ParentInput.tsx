@@ -1,13 +1,10 @@
 import { forwardRef } from 'react';
 import classNames from 'classnames';
 import { Size } from '@/util/Enum';
+import { BasicInputProps } from '@/components/inputs/types';
 import styles from './parentInput.module.css';
 
-type ParentInputProps = {
-  label?: string;
-  isLabelBold?: boolean;
-  sublabel?: string;
-  size?: Size;
+type ParentInputProps = BasicInputProps & {
   children: React.ReactNode;
 };
 
