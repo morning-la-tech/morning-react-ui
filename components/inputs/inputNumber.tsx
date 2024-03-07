@@ -13,7 +13,21 @@ type InputNumberProps = InputProps & {
 };
 
 const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
-  ({ label, sublabel, isLabelBold, size = Size.m, value, onChange, min, max, isError, isDisabled }, ref) => {
+  (
+    {
+      label,
+      sublabel,
+      isLabelBold,
+      size = Size.m,
+      value,
+      onChange,
+      min,
+      max,
+      isError,
+      isDisabled,
+    },
+    ref,
+  ) => {
     const [inputValue, setInputValue] = useState<number | undefined>(value);
 
     const getValidValue = (val: number | undefined): number => {
@@ -24,7 +38,10 @@ const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
     };
 
     const validateAndSet = (val: number) => {
-      if ((min !== undefined && val < min) || (max !== undefined && val > max)) {
+      if (
+        (min !== undefined && val < min) ||
+        (max !== undefined && val > max)
+      ) {
         return;
       }
       setInputValue(val);
@@ -63,7 +80,12 @@ const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
     }, [value]);
 
     return (
-      <ParentInput label={label} sublabel={sublabel} isLabelBold={isLabelBold} size={size}>
+      <ParentInput
+        label={label}
+        sublabel={sublabel}
+        isLabelBold={isLabelBold}
+        size={size}
+      >
         <input
           type='number'
           className={classNames(
