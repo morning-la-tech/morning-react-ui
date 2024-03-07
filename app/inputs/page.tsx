@@ -2,12 +2,12 @@
 
 import Link from 'next/link';
 import { ChangeEvent, ChangeEventHandler, useState } from 'react';
-import InputText from '@/components/inputs/InputText';
+import TextInput from '@/components/inputs/TextInput';
 import Container from '@/components/layout/Container';
 import Columns from '@/components/layout/Columns';
 import Column from '@/components/layout/Column';
 import { Size } from '@/util/Enum';
-import InputNumber from '@/components/inputs/inputNumber';
+import NumberInput from '@/components/inputs/NumberInput';
 
 export default function Page() {
   const [value, setValue] = useState<string>('');
@@ -39,11 +39,11 @@ export default function Page() {
   }) => {
     return (
       <>
-        <InputText {...props} size={Size.xs} />
-        <InputText {...props} size={Size.s} />
-        <InputText {...props} size={Size.m} />
-        <InputText {...props} size={Size.l} />
-        <InputText {...props} size={Size.xl} />
+        <TextInput {...props} size={Size.xs} />
+        <TextInput {...props} size={Size.s} />
+        <TextInput {...props} size={Size.m} />
+        <TextInput {...props} size={Size.l} />
+        <TextInput {...props} size={Size.xl} />
       </>
     );
   };
@@ -62,11 +62,11 @@ export default function Page() {
   }) => {
     return (
       <>
-        <InputNumber {...props} size={Size.xs} />
-        <InputNumber {...props} size={Size.s} />
-        <InputNumber {...props} size={Size.m} />
-        <InputNumber {...props} size={Size.l} />
-        <InputNumber {...props} size={Size.xl} />
+        <NumberInput {...props} size={Size.xs} />
+        <NumberInput {...props} size={Size.s} />
+        <NumberInput {...props} size={Size.m} />
+        <NumberInput {...props} size={Size.l} />
+        <NumberInput {...props} size={Size.xl} />
       </>
     );
   };
@@ -77,7 +77,7 @@ export default function Page() {
         <Link href={'/'}>Home</Link>
         <Columns>
           <Column>
-            <h1>ParentInputs</h1>
+            <h1>ParentInput</h1>
             {renderTextInputs({
               label: 'Label',
               placeholder: 'With label',
@@ -100,7 +100,7 @@ export default function Page() {
             })}
           </Column>
           <Column>
-            <h1>Inputs text</h1>
+            <h1>TextInput</h1>
             {renderTextInputs({
               placeholder: 'Simple input',
               value: value,
@@ -120,7 +120,7 @@ export default function Page() {
             })}
           </Column>
           <Column>
-            <h1>Inputs text with images</h1>
+            <h1>TextInput with images</h1>
             {renderTextInputs({
               placeholder: 'Input with image',
               imageSrc: 'https://cdn.morning.fr/logos/logo_google.png',
@@ -130,7 +130,7 @@ export default function Page() {
             })}
           </Column>
           <Column>
-            <h1>Inputs number</h1>
+            <h1>NumberInput</h1>
             {renderNumberInputs({
               label: 'Simple',
               sublabel: 'Sublabel',
