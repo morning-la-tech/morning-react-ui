@@ -5,7 +5,10 @@ type SeparatorProps = {
   backgroundColor?: string;
 };
 
-const Separator = ({ height = '1px', backgroundColor = '#E5E9EB' }: SeparatorProps) => {
+const Separator = ({
+  height = '1px',
+  backgroundColor = '#E5E9EB',
+}: SeparatorProps) => {
   const separatorStyle = {
     height: height,
     backgroundColor: backgroundColor,

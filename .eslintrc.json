@@ -20,6 +20,8 @@
     "prettier/prettier": [
       "error",
       {
+        "useTabs": false,
+        "printWidth": 80,
         "singleQuote": true,
         "jsxSingleQuote": true
       }
@@ -77,7 +79,7 @@
         { "blankLine": "never", "prev": "import", "next": "import" }
       ]
       
-  },  
+  },
   "env": {
     "browser": true
   },

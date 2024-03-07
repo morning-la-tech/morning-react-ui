@@ -32,7 +32,12 @@ const InputText = forwardRef<HTMLInputElement, InputTextProps>(
     ref,
   ) => {
     return (
-      <ParentInput label={label} sublabel={sublabel} isLabelBold={isLabelBold} size={size}>
+      <ParentInput
+        label={label}
+        sublabel={sublabel}
+        isLabelBold={isLabelBold}
+        size={size}
+      >
         <div className={styles.wrapper}>
           {imageSrc && (
             <Image

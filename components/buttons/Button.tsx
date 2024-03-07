@@ -29,17 +29,28 @@ const Button = ({
   className,
   ...props
 }: ButtonProps) => {
-  const buttonClass = classNames(styles.button, styles[variant], styles[size], className);
+  const buttonClass = classNames(
+    styles.button,
+    styles[variant],
+    styles[size],
+    className,
+  );
   return (
     <button className={buttonClass} {...props}>
-      <div className={styles.content} style={{ visibility: isLoading ? 'hidden' : 'visible' }}>
+      <div
+        className={styles.content}
+        style={{ visibility: isLoading ? 'hidden' : 'visible' }}
+      >
         {startImage && <span className={styles.image}>{startImage}</span>}
         {children}
         {endImage && <span className={styles.image}>{endImage}</span>}
       </div>
       {isLoading && (
         <div className={styles.loadingOverlay}>
-          <Loading radius={sizeToNumber(size)} color={variant == ButtonVariant.Primary ? 'white' : 'black'} />
+          <Loading
+            radius={sizeToNumber(size)}
+            color={variant == ButtonVariant.Primary ? 'white' : 'black'}
+          />
         </div>
       )}
     </button>

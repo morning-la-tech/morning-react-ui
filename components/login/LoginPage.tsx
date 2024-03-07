@@ -22,7 +22,12 @@ const LoginPage = ({ onClick, title, body }: Props) => (
         />
       </div>
       <div className={styles.logoContainer}>
-        <Image src='https://cdn.morning.fr/logos/logo_morning_white.png' alt='logo' width={160} height={39} />
+        <Image
+          src='https://cdn.morning.fr/logos/logo_morning_white.png'
+          alt='logo'
+          width={160}
+          height={39}
+        />
       </div>
     </div>
     <div className={styles.loginForm}>
