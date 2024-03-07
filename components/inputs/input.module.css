@@ -60,7 +60,6 @@
     padding: 6px 10px 6px 34px;
 }
 
-
 .input.hasImage.l {
     font-size: var(--font-size-l);
     padding: 6px 12px 6px 40px;
@@ -75,11 +74,7 @@
     position: relative;
 }
 
-.image.xs,
-.image.s,
-.image.m,
-.image.l,
-.image.xl {
+.image.xs, .image.s, .image.m, .image.l, .image.xl {
     z-index: 1;
     position: absolute;
 }
