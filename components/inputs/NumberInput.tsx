@@ -5,14 +5,14 @@ import ParentInput from '@/components/inputs/ParentInput';
 import { InputProps } from '@/components/inputs/types';
 import styles from './input.module.css';
 
-type InputNumberProps = InputProps & {
+type NumberInputProps = InputProps & {
   value: number | undefined;
   onChange: (value: number) => void;
   min?: number;
   max?: number;
 };
 
-const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
+const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
   (
     {
       label,
@@ -108,6 +108,6 @@ const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
   },
 );
 
-InputNumber.displayName = 'InputNumber';
+NumberInput.displayName = 'NumberInput';
 
-export default InputNumber;
+export default NumberInput;
