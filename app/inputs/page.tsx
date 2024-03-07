@@ -77,7 +77,7 @@ export default function Page() {
         <Link href={'/'}>Home</Link>
         <Columns>
           <Column>
-            <h1>ParentInputs</h1>
+            <h1>ParentInput</h1>
             {renderTextInputs({
               label: 'Label',
               placeholder: 'With label',
@@ -100,7 +100,7 @@ export default function Page() {
             })}
           </Column>
           <Column>
-            <h1>Inputs text</h1>
+            <h1>TextInput</h1>
             {renderTextInputs({
               placeholder: 'Simple input',
               value: value,
@@ -120,7 +120,7 @@ export default function Page() {
             })}
           </Column>
           <Column>
-            <h1>Inputs text with images</h1>
+            <h1>TextInput with images</h1>
             {renderTextInputs({
               placeholder: 'Input with image',
               imageSrc: 'https://cdn.morning.fr/logos/logo_google.png',
@@ -130,7 +130,7 @@ export default function Page() {
             })}
           </Column>
           <Column>
-            <h1>Inputs number</h1>
+            <h1>NumberInput</h1>
             {renderNumberInputs({
               label: 'Simple',
               sublabel: 'Sublabel',
