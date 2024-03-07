@@ -5,6 +5,7 @@ export default function Home() {
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <Link href={'/buttons'}>Buttons</Link>
       <Link href={'/inputs'}>Inputs</Link>
+      <Link href={'/checkbox'}>Checkbox</Link>
     </div>
   );
 }
