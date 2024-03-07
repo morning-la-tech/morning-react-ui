@@ -18,13 +18,9 @@ export default function Page() {
     setValue(newValue);
   };
 
-  console.log(value);
-
   const handleNumberChange = (newNumberValue: number) => {
     setNumberValue(newNumberValue);
   };
-
-  console.log(numberValue);
 
   const renderTextInputs = (props: {
     label?: string;

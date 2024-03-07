@@ -39,11 +39,11 @@ const InputNumber = forwardRef<HTMLInputElement, InputProps>(
       const newValue = event.target.value;
       if (newValue === '') {
         setInputValue(NaN);
-      } else {
-        const parsedValue = parseInt(newValue, 10);
-        if (!isNaN(parsedValue)) {
-          validateAndSet(parsedValue);
-        }
+        return;
+      }
+      const parsedValue = parseInt(newValue, 10);
+      if (!isNaN(parsedValue)) {
+        validateAndSet(parsedValue);
       }
     };
 
@@ -53,19 +53,15 @@ const InputNumber = forwardRef<HTMLInputElement, InputProps>(
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
-        event.preventDefault();
-        const testedValue = getValidValue(inputValue);
-        let newValue = isNaN(testedValue) ? 0 : testedValue;
-        const increment = 1;
-        if (event.key === 'ArrowUp') {
-          newValue += increment;
-        } else if (event.key === 'ArrowDown') {
-          newValue -= increment;
-        }
-
-        validateAndSet(newValue);
+      if (!(event.key === 'ArrowUp' || event.key === 'ArrowDown')) {
+        return;
       }
+      event.preventDefault();
+      const testedValue = getValidValue(inputValue);
+      let newValue = isNaN(testedValue) ? 0 : testedValue;
+
+      newValue = event.key === 'ArrowUp' ? newValue + 1 : newValue - 1;
+      validateAndSet(newValue);
     };
 
     useEffect(() => {
