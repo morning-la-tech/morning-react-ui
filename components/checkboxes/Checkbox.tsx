@@ -10,7 +10,13 @@ interface CheckboxProps {
   className?: string;
 }
 
-const Checkbox = ({ label, value, onChange, size = Size.m, className }: CheckboxProps) => {
+const Checkbox = ({
+  label,
+  value,
+  onChange,
+  size = Size.m,
+  className,
+}: CheckboxProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e.target.checked);
   };

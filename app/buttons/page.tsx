@@ -102,14 +102,24 @@ export default function Page() {
             {renderButtons({ className: buttonStyles.hover })}
             {renderButtons({ className: buttonStyles.hover }, true)}
             {renderButtons({ className: buttonStyles.hover }, true, true)}
-            {renderButtons({ className: buttonStyles.hover }, true, undefined, <></>)}
+            {renderButtons(
+              { className: buttonStyles.hover },
+              true,
+              undefined,
+              <></>,
+            )}
             {renderButtons({ className: buttonStyles.hover, isLoading: true })}
           </Column>
           <Column>
             {renderButtons({ className: buttonStyles.active })}
             {renderButtons({ className: buttonStyles.active }, true)}
             {renderButtons({ className: buttonStyles.active }, true, true)}
-            {renderButtons({ className: buttonStyles.active }, true, undefined, <></>)}
+            {renderButtons(
+              { className: buttonStyles.active },
+              true,
+              undefined,
+              <></>,
+            )}
             {renderButtons({ className: buttonStyles.active, isLoading: true })}
           </Column>
           <Column>
@@ -123,34 +133,112 @@ export default function Page() {
             {renderButtons({ variant: ButtonVariant.Secondary })}
             {renderButtons({ variant: ButtonVariant.Secondary }, true)}
             {renderButtons({ variant: ButtonVariant.Secondary }, true, true)}
-            {renderButtons({ variant: ButtonVariant.Secondary }, true, undefined, <></>)}
-            {renderButtons({ variant: ButtonVariant.Secondary, isLoading: true })}
-          </Column>
-          <Column>
-            {renderButtons({ variant: ButtonVariant.Secondary, className: buttonStyles.hover })}
-            {renderButtons({ variant: ButtonVariant.Secondary, className: buttonStyles.hover }, true)}
-            {renderButtons({ variant: ButtonVariant.Secondary, className: buttonStyles.hover }, true, true)}
-            {renderButtons({ variant: ButtonVariant.Secondary, className: buttonStyles.hover }, true, undefined, <></>)}
-            {renderButtons({ variant: ButtonVariant.Secondary, className: buttonStyles.hover, isLoading: true })}
-          </Column>
-          <Column>
-            {renderButtons({ variant: ButtonVariant.Secondary, className: buttonStyles.active })}
-            {renderButtons({ variant: ButtonVariant.Secondary, className: buttonStyles.active }, true)}
-            {renderButtons({ variant: ButtonVariant.Secondary, className: buttonStyles.active }, true, true)}
             {renderButtons(
-              { variant: ButtonVariant.Secondary, className: buttonStyles.active },
+              { variant: ButtonVariant.Secondary },
               true,
               undefined,
               <></>,
             )}
-            {renderButtons({ variant: ButtonVariant.Secondary, className: buttonStyles.active, isLoading: true })}
+            {renderButtons({
+              variant: ButtonVariant.Secondary,
+              isLoading: true,
+            })}
           </Column>
           <Column>
-            {renderButtons({ variant: ButtonVariant.Secondary, disabled: true })}
-            {renderButtons({ variant: ButtonVariant.Secondary, disabled: true }, true)}
-            {renderButtons({ variant: ButtonVariant.Secondary, disabled: true }, true, true)}
-            {renderButtons({ variant: ButtonVariant.Secondary, disabled: true }, true, undefined, <></>)}
-            {renderButtons({ variant: ButtonVariant.Secondary, disabled: true, isLoading: true })}
+            {renderButtons({
+              variant: ButtonVariant.Secondary,
+              className: buttonStyles.hover,
+            })}
+            {renderButtons(
+              {
+                variant: ButtonVariant.Secondary,
+                className: buttonStyles.hover,
+              },
+              true,
+            )}
+            {renderButtons(
+              {
+                variant: ButtonVariant.Secondary,
+                className: buttonStyles.hover,
+              },
+              true,
+              true,
+            )}
+            {renderButtons(
+              {
+                variant: ButtonVariant.Secondary,
+                className: buttonStyles.hover,
+              },
+              true,
+              undefined,
+              <></>,
+            )}
+            {renderButtons({
+              variant: ButtonVariant.Secondary,
+              className: buttonStyles.hover,
+              isLoading: true,
+            })}
+          </Column>
+          <Column>
+            {renderButtons({
+              variant: ButtonVariant.Secondary,
+              className: buttonStyles.active,
+            })}
+            {renderButtons(
+              {
+                variant: ButtonVariant.Secondary,
+                className: buttonStyles.active,
+              },
+              true,
+            )}
+            {renderButtons(
+              {
+                variant: ButtonVariant.Secondary,
+                className: buttonStyles.active,
+              },
+              true,
+              true,
+            )}
+            {renderButtons(
+              {
+                variant: ButtonVariant.Secondary,
+                className: buttonStyles.active,
+              },
+              true,
+              undefined,
+              <></>,
+            )}
+            {renderButtons({
+              variant: ButtonVariant.Secondary,
+              className: buttonStyles.active,
+              isLoading: true,
+            })}
+          </Column>
+          <Column>
+            {renderButtons({
+              variant: ButtonVariant.Secondary,
+              disabled: true,
+            })}
+            {renderButtons(
+              { variant: ButtonVariant.Secondary, disabled: true },
+              true,
+            )}
+            {renderButtons(
+              { variant: ButtonVariant.Secondary, disabled: true },
+              true,
+              true,
+            )}
+            {renderButtons(
+              { variant: ButtonVariant.Secondary, disabled: true },
+              true,
+              undefined,
+              <></>,
+            )}
+            {renderButtons({
+              variant: ButtonVariant.Secondary,
+              disabled: true,
+              isLoading: true,
+            })}
           </Column>
         </Columns>
       </Container>

@@ -13,7 +13,11 @@ export const metadata: Metadata = {
   description: 'Morning React UI Library',
   icons: { icon: '/favicon.ico', apple: '/apple-icon-180x180.png' },
 };
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang='en'>
       <body className={inter.className}>
