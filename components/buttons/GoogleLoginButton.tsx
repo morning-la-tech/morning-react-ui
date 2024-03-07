@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import styles from './GoogleLoginButton.module.css';
+import styles from './googleLoginButton.module.css';
 
 type Props = {
   onClick: () => void;
