@@ -6,7 +6,7 @@ import { Size, sizeToNumber } from '@/util/Enum';
 import { InputProps } from '@/components/inputs/types';
 import styles from './input.module.css';
 
-type InputTextProps = InputProps & {
+type TextInputProps = InputProps & {
   placeholder?: string;
   value: string;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -14,7 +14,7 @@ type InputTextProps = InputProps & {
   imageAlt?: string;
 };
 
-const InputText = forwardRef<HTMLInputElement, InputTextProps>(
+const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
   (
     {
       label,
@@ -68,6 +68,6 @@ const InputText = forwardRef<HTMLInputElement, InputTextProps>(
   },
 );
 
-InputText.displayName = 'InputText';
+TextInput.displayName = 'TextInput';
 
-export default InputText;
+export default TextInput;
