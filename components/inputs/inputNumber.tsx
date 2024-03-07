@@ -59,8 +59,7 @@ const InputNumber = forwardRef<HTMLInputElement, InputProps>(
       event.preventDefault();
       const testedValue = getValidValue(inputValue);
       let newValue = isNaN(testedValue) ? 0 : testedValue;
-
-      newValue = event.key === 'ArrowUp' ? newValue + 1 : newValue - 1;
+      event.key === 'ArrowUp' ? newValue++ : newValue--;
       validateAndSet(newValue);
     };
 
