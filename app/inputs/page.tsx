@@ -13,7 +13,9 @@ export default function Page() {
   const [value, setValue] = useState<string>('');
   const [numberValue, setNumberValue] = useState<number | undefined>(undefined);
 
-  const handleTextChange: ChangeEventHandler<HTMLInputElement> = (e: ChangeEvent<HTMLInputElement>): void => {
+  const handleTextChange: ChangeEventHandler<HTMLInputElement> = (
+    e: ChangeEvent<HTMLInputElement>,
+  ): void => {
     const newValue: string = e.target.value;
     setValue(newValue);
   };
@@ -76,7 +78,12 @@ export default function Page() {
         <Columns>
           <Column>
             <h1>ParentInputs</h1>
-            {renderTextInputs({ label: 'Label', placeholder: 'With label', value: value, onChange: handleTextChange })}
+            {renderTextInputs({
+              label: 'Label',
+              placeholder: 'With label',
+              value: value,
+              onChange: handleTextChange,
+            })}
             {renderTextInputs({
               label: 'Label',
               isLabelBold: true,
@@ -94,8 +101,17 @@ export default function Page() {
           </Column>
           <Column>
             <h1>Inputs text</h1>
-            {renderTextInputs({ placeholder: 'Simple input', value: value, onChange: handleTextChange })}
-            {renderTextInputs({ placeholder: 'Error input', isError: true, value: value, onChange: handleTextChange })}
+            {renderTextInputs({
+              placeholder: 'Simple input',
+              value: value,
+              onChange: handleTextChange,
+            })}
+            {renderTextInputs({
+              placeholder: 'Error input',
+              isError: true,
+              value: value,
+              onChange: handleTextChange,
+            })}
             {renderTextInputs({
               placeholder: 'Disabled input',
               isDisabled: true,
@@ -121,7 +137,12 @@ export default function Page() {
               value: numberValue,
               onChange: handleNumberChange,
             })}
-            {renderNumberInputs({ label: 'Error', isError: true, value: numberValue, onChange: handleNumberChange })}
+            {renderNumberInputs({
+              label: 'Error',
+              isError: true,
+              value: numberValue,
+              onChange: handleNumberChange,
+            })}
             {renderNumberInputs({
               label: 'Disabled',
               isDisabled: true,
