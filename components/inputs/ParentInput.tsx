@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import classNames from 'classnames';
-import { Size } from '@/util/Enum';
+import { Size } from '@/utils/Enum';
 import { BasicInputProps } from '@/components/inputs/types';
 import styles from './parentInput.module.css';
 
