@@ -1,4 +1,4 @@
-import { Size } from '@/util/Enum';
+import { Size } from '@/utils/Enum';
 
 export type BasicInputProps = {
   label?: string;
@@ -6,7 +6,12 @@ export type BasicInputProps = {
   size?: Size;
   isLabelBold?: boolean;
 };
+
 export type InputProps = BasicInputProps & {
   isError?: boolean;
   isDisabled?: boolean;
+};
+
+export type SelectionState = {
+  [key: string]: boolean;
 };

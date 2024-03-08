@@ -5,6 +5,7 @@ export const enum Size {
   l = 'l',
   xl = 'xl',
 }
+
 export function sizeToNumber(size: Size): number {
   switch (size) {
     case Size.xl:

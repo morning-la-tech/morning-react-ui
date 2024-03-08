@@ -2,9 +2,9 @@ import { ChangeEvent, forwardRef } from 'react';
 import classNames from 'classnames';
 import Image from 'next/image';
 import ParentInput from '@/components/inputs/ParentInput';
-import { Size, sizeToNumber } from '@/util/Enum';
+import { Size, sizeToNumber } from '@/utils/Enum';
 import { InputProps } from '@/components/inputs/types';
-import styles from './input.module.css';
+import styles from '../input.module.css';
 
 type TextInputProps = InputProps & {
   placeholder?: string;
