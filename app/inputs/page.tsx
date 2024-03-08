@@ -2,12 +2,12 @@
 
 import Link from 'next/link';
 import { ChangeEvent, ChangeEventHandler, useState } from 'react';
-import TextInput from '@/components/inputs/TextInput';
+import TextInput from '@/components/inputs/textField/TextInput';
 import Container from '@/components/layout/Container';
 import Columns from '@/components/layout/Columns';
 import Column from '@/components/layout/Column';
-import { Size } from '@/util/Enum';
-import NumberInput from '@/components/inputs/NumberInput';
+import { Size } from '@/utils/Enum';
+import NumberInput from '@/components/inputs/textField/NumberInput';
 
 export default function Page() {
   const [value, setValue] = useState<string>('');
