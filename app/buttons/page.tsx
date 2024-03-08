@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button, ButtonVariant } from '@/components/buttons';
 import buttonStyles from '@/components/buttons/button.module.css';
-import { Size, sizeToNumber } from '@/util/Enum';
+import { Size, sizeToNumber } from '@/utils/Enum';
 import Container from '@/components/layout/Container';
 import Columns from '@/components/layout/Columns';
 import Column from '@/components/layout/Column';

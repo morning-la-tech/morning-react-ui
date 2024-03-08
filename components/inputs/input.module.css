@@ -74,7 +74,11 @@
     position: relative;
 }
 
-.image.xs, .image.s, .image.m, .image.l, .image.xl {
+.image.xs,
+.image.s,
+.image.m,
+.image.l,
+.image.xl {
     z-index: 1;
     position: absolute;
 }

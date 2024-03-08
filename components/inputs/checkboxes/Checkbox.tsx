@@ -1,26 +1,19 @@
 import classNames from 'classnames';
-import { Size } from '@/util/Enum';
+import { Size } from '@/utils/Enum';
 import styles from './checkbox.module.css';
 
-interface CheckboxProps {
-  label: string;
-  value: boolean;
+type CheckboxProps = {
   onChange: (value: boolean) => void;
   size?: Size;
-  className?: string;
-}
+  label: string;
+  value: boolean;
+};
 
-const Checkbox = ({
-  label,
-  value,
-  onChange,
-  size = Size.m,
-  className,
-}: CheckboxProps) => {
+const Checkbox = ({ label, value, onChange, size = Size.m }: CheckboxProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e.target.checked);
   };
-  const checkboxClass = classNames(styles.checkbox, styles[size], className);
+  const checkboxClass = classNames(styles.checkbox, styles[size]);
 
   return (
     <label className={checkboxClass}>

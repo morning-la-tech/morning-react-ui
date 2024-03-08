@@ -1,9 +1,9 @@
 import React, { ChangeEvent, forwardRef, useEffect, useState } from 'react';
 import classNames from 'classnames';
-import { Size } from '@/util/Enum';
+import { Size } from '@/utils/Enum';
 import ParentInput from '@/components/inputs/ParentInput';
 import { InputProps } from '@/components/inputs/types';
-import styles from './input.module.css';
+import styles from '../input.module.css';
 
 type NumberInputProps = InputProps & {
   value: number | undefined;
