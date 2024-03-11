@@ -1,123 +1,163 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-import { Size } from '@/utils/Enum';
 import Checkbox from '@/components/inputs/checkboxes/Checkbox';
+import { Size } from '@/utils/Enum';
+import { SelectionState, TriState } from '@/components/inputs/types';
+import Container from '@/components/layout/Container';
+import Columns from '@/components/layout/Columns';
+import Column from '@/components/layout/Column';
 import MultiCheckbox from '@/components/inputs/checkboxes/MultiCheckbox';
 
-type MultiCheckboxState = {
-  [key in Size]?: { [label: string]: boolean };
-};
-
-const CheckboxPage = () => {
-  const initialCheckboxStates = {
-    'XS Checkbox': false,
-    'S Checkbox': false,
-    'M Checkbox': false,
-    'L Checkbox': false,
+const CheckboxGroup = () => {
+  const initialOptions = {
+    option1: false,
+    option2: false,
+    option3: true,
+  };
+  const [valueCheckbox, setValueCheckbox] = useState<TriState>(TriState.false);
+  const handleChange = (value: TriState) => {
+    setValueCheckbox(value);
   };
 
-  const [checkboxStates, setCheckboxStates] = useState(initialCheckboxStates);
+  const [options, setOptions] = useState<SelectionState>(initialOptions);
 
-  const sizes = [Size.xs, Size.s, Size.m, Size.l];
-  const initialLabels = {
-    'Multi Checkbox Option 1': false,
-    'Multi Checkbox Option 2': false,
-    'Multi Checkbox Option 3': false,
+  const handleOptionsChange = (optionsModified: SelectionState) => {
+    setOptions(optionsModified);
   };
 
-  const createInitialStates = () =>
-    sizes.reduce((acc, size) => ({ ...acc, [size]: { ...initialLabels } }), {});
-
-  const [multiSelectionStateInline, setMultiSelectionStateInline] =
-    useState<MultiCheckboxState>(createInitialStates());
-  const [multiSelectionStateColumn, setMultiSelectionStateColumn] =
-    useState<MultiCheckboxState>(createInitialStates());
-
-  const handleCheckboxChange = (label: string, newValue: boolean) => {
-    setCheckboxStates((prev) => ({ ...prev, [label]: newValue }));
+  const renderCheckbox = (props: {
+    label: string;
+    size?: Size;
+    value: TriState;
+    onChange: (value: TriState) => void;
+    isError?: boolean;
+    disabled?: boolean;
+  }) => {
+    return (
+      <>
+        <Checkbox {...props} size={Size.xs} />
+        <Checkbox {...props} size={Size.s} />
+        <Checkbox {...props} size={Size.m} />
+        <Checkbox {...props} size={Size.l} />
+        <Checkbox {...props} size={Size.xl} />
+      </>
+    );
   };
 
-  const handleMultiCheckboxChange = (
-    size: Size,
-    label: string,
-    newValue: boolean,
-    isInline: boolean,
-  ) => {
-    const updateFunction = isInline
-      ? setMultiSelectionStateInline
-      : setMultiSelectionStateColumn;
-    updateFunction((prevState) => ({
-      ...prevState,
-      [size]: {
-        ...prevState[size],
-        [label]: newValue,
-      },
-    }));
+  const renderMultiCheckbox = (props: {
+    label: string;
+    size?: Size;
+    options: SelectionState;
+    onChange: (options: SelectionState) => void;
+    isSelectAll?: boolean;
+    isError?: boolean;
+    disabled?: boolean;
+    inline?: boolean;
+  }) => {
+    return (
+      <>
+        <MultiCheckbox {...props} label='MultiCheckbox xs' size={Size.xs} />
+        <MultiCheckbox {...props} label='MultiCheckbox s' size={Size.s} />
+        <MultiCheckbox {...props} label='MultiCheckbox m' size={Size.m} />
+        <MultiCheckbox {...props} label='MultiCheckbox l' size={Size.l} />
+        <MultiCheckbox {...props} label='MultiCheckbox xl' size={Size.xl} />
+      </>
+    );
   };
-
-  const renderIndividualCheckboxes = () =>
-    Object.entries(checkboxStates).map(([label, isChecked], index) => (
-      <Checkbox
-        key={label}
-        label={label}
-        value={isChecked}
-        onChange={(newValue) => handleCheckboxChange(label, newValue)}
-        size={sizes[index]}
-      />
-    ));
-
-  const renderMultiCheckboxesForSize = (isInline: boolean) =>
-    sizes.map((size) => (
-      <div key={size}>
-        <h3>{`Size ${size.toUpperCase()} - ${isInline ? 'Inline' : 'Column'}`}</h3>
-        <MultiCheckbox
-          options={
-            (isInline
-              ? multiSelectionStateInline[size]
-              : multiSelectionStateColumn[size]) ?? {}
-          }
-          onChange={(id, newValue) =>
-            handleMultiCheckboxChange(size, id, newValue, isInline)
-          }
-          size={size}
-          label={`Preferences - ${size.toUpperCase()} ${isInline ? 'Inline' : 'Column'}`}
-          sublabel={isInline ? 'Inline' : 'Column'}
-          isLabelBold={true}
-          inline={isInline}
-        />
-      </div>
-    ));
 
   return (
-    <div style={{ margin: '0 auto', maxWidth: '1200px', padding: '20px' }}>
-      <Link href={'/'}>Home</Link>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-around',
-          margin: '20px',
-        }}
-      >
-        <div>
-          <h2>Individual Checkboxes</h2>
-          {renderIndividualCheckboxes()}
-        </div>
-        <div>
-          <h2>MultiCheckbox - All Sizes</h2>
-          <div>
-            <h3>Inline</h3>
-            {renderMultiCheckboxesForSize(true)}
-          </div>
-          <div>
-            <h3>Column</h3>
-            {renderMultiCheckboxesForSize(false)}
-          </div>
-        </div>
-      </div>
+    <div style={{ display: 'flex', flexDirection: 'row' }}>
+      <Container>
+        <Link href={'/'}>Home</Link>
+        <Columns>
+          <Column>
+            <h1>Checkbox</h1>
+            {renderCheckbox({
+              label: 'Label',
+              value: valueCheckbox,
+              onChange: handleChange,
+            })}
+            {renderCheckbox({
+              label: 'Label',
+              value: valueCheckbox,
+              onChange: handleChange,
+              isError: true,
+            })}
+            {renderCheckbox({
+              label: 'Label',
+              value: valueCheckbox,
+              onChange: handleChange,
+              disabled: true,
+            })}
+            {renderCheckbox({
+              label: 'Label',
+              value: TriState.indeterminate,
+              onChange: handleChange,
+            })}
+          </Column>
+          <Column>
+            <h1>MultiCheckbox inline</h1>
+            {renderMultiCheckbox({
+              label: 'Label',
+              options: options,
+              onChange: handleOptionsChange,
+              isSelectAll: true,
+              inline: true,
+            })}
+            {renderMultiCheckbox({
+              label: 'Label',
+              options: options,
+              onChange: handleOptionsChange,
+              inline: true,
+            })}
+            {renderMultiCheckbox({
+              label: 'Label',
+              options: options,
+              onChange: handleOptionsChange,
+              isError: true,
+              inline: true,
+            })}
+            {renderMultiCheckbox({
+              label: 'Label',
+              options: options,
+              onChange: handleOptionsChange,
+              disabled: true,
+              inline: true,
+            })}
+          </Column>
+          <Column>
+            <h1>Multicheckbox</h1>
+            {renderMultiCheckbox({
+              label: 'Label',
+              options: options,
+              onChange: handleOptionsChange,
+              isSelectAll: true,
+            })}
+            {renderMultiCheckbox({
+              label: 'Label',
+              options: options,
+              onChange: handleOptionsChange,
+            })}
+          </Column>
+          <Column>
+            {renderMultiCheckbox({
+              label: 'Label',
+              options: options,
+              onChange: handleOptionsChange,
+              isError: true,
+            })}
+            {renderMultiCheckbox({
+              label: 'Label',
+              options: options,
+              onChange: handleOptionsChange,
+              disabled: true,
+            })}
+          </Column>
+        </Columns>
+      </Container>
     </div>
   );
 };
 
-export default CheckboxPage;
+export default CheckboxGroup;
