@@ -7,7 +7,7 @@ type SeparatorProps = {
 
 const Separator = ({
   height = '1px',
-  backgroundColor = '#E5E9EB',
+  backgroundColor = 'var(--ash)',
 }: SeparatorProps) => {
   const separatorStyle = {
     height: height,

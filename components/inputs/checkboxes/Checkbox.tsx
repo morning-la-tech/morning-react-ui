@@ -1,25 +1,70 @@
+import { CSSProperties } from 'react';
 import classNames from 'classnames';
-import { Size } from '@/utils/Enum';
+import { Size, sizeToFontSize, sizeToNumber } from '@/utils/Enum';
 import styles from './checkbox.module.css';
+import { TriState } from '../types';
 
 type CheckboxProps = {
-  onChange: (value: boolean) => void;
-  size?: Size;
   label: string;
-  value: boolean;
+  onChange: (value: TriState) => void;
+  size?: Size;
+  disabled?: boolean;
+  value: TriState;
+  isError?: boolean;
+  style?: CSSProperties;
 };
 
-const Checkbox = ({ label, value, onChange, size = Size.m }: CheckboxProps) => {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(e.target.checked);
-  };
-  const checkboxClass = classNames(styles.checkbox, styles[size]);
+type CheckboxHTMLProps = Omit<
+  React.HTMLProps<HTMLLabelElement>,
+  keyof CheckboxProps
+>;
 
+const Checkbox = ({
+  label,
+  onChange,
+  size = Size.m,
+  value,
+  disabled = false,
+  isError = false,
+  style,
+  ...props
+}: CheckboxProps & CheckboxHTMLProps) => {
+  const checkboxClass = classNames({
+    [styles.checkbox]: true,
+    [styles.active]: value === TriState.true,
+    [styles.empty]: value === TriState.false,
+    [styles.minus]: value === TriState.indeterminate,
+    ['disabled']: disabled,
+  });
+  const handleClick = () => {
+    if (disabled) return;
+    onChange(value === TriState.false ? TriState.true : TriState.false);
+  };
   return (
-    <label className={checkboxClass}>
-      <input type='checkbox' checked={value} onChange={handleChange} />
-      {label}
-    </label>
+    <div
+      className={styles.wrapper}
+      style={{
+        lineHeight: `${sizeToNumber(size)}px`,
+        fontSize: `${sizeToFontSize(size)}px`,
+        ...style,
+      }}
+    >
+      <span
+        className={checkboxClass}
+        onClick={handleClick}
+        style={{
+          width: `${sizeToNumber(size)}px`,
+          height: `${sizeToNumber(size)}px`,
+        }}
+      ></span>
+      <label
+        className={`${isError ? styles.error : styles.label} ${disabled ? 'disabled' : 'pointer'}`}
+        onClick={handleClick}
+        {...props}
+      >
+        {label}
+      </label>
+    </div>
   );
 };
 
