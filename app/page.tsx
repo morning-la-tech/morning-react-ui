@@ -6,6 +6,7 @@ export default function Home() {
       <Link href={'/buttons'}>Buttons</Link>
       <Link href={'/inputs'}>Inputs</Link>
       <Link href={'/checkbox'}>Checkbox</Link>
+      <Link href={'/utils'}>Utils</Link>
     </div>
   );
 }
