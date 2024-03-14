@@ -67,7 +67,8 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       if (time.match(/:/g)) {
         // If matched, will then split the string using ':' to get an hour value and a minute value
         const [hours, minutes] = time.split(':');
-        // Will reformat the string value using the last 2 char of each part
+        // Will reformat the string value using the first 2 char of each part locking the date in place
+        // i.e. if a date if fully formed, the input will not change. User will have to erase char to change time value.
         return `${hours.slice(0, 2)}:${minutes.length ? minutes.slice(0, 2) : ''}`;
       }
 
