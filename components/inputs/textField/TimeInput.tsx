@@ -42,7 +42,7 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
 
     const isStringValidAsTime = (time: string): boolean => {
       if (
-        time.replace(/[0-9:]/g, '') > 0 ||
+        time.replace(/[0-9:]/g, '').length > 0 ||
         time.split(':').length > 2 ||
         time.replace(/:/g, '').length > 4
       ) {
@@ -68,7 +68,7 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
         // If matched, will then split the string using ':' to get an hour value and a minute value
         const [hours, minutes] = time.split(':');
         // Will reformat the string value using the last 2 char of each part
-        return `${hours.slice(-2)}:${minutes.length ? minutes.slice(-2) : ''}`;
+        return `${hours.slice(0, 2)}:${minutes.length ? minutes.slice(0, 2) : ''}`;
       }
 
       // If the pattern 'HH:mm' is not matched, will try to see if a ':' was in previous value
@@ -98,10 +98,11 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
       const newValue = event.target.value;
       const reformatedNewValue = reformatTime(newValue, event);
+      const validAsTime = isStringValidAsTime(reformatedNewValue);
 
-      setError(!isStringValidAsTime(reformatedNewValue));
+      setError(!validAsTime);
 
-      if (isStringValidAsTime(reformatedNewValue)) {
+      if (validAsTime) {
         setInputValue(reformatedNewValue);
       }
     };
