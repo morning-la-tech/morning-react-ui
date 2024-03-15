@@ -62,7 +62,10 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
      * Function used to reformat the input value to a readable time value
      * Function is called on every change in input value
      */
-    const reformatTime = (time: string, event): string => {
+    const reformatTime = (
+      time: string,
+      event: ChangeEvent<HTMLInputElement>,
+    ): string => {
       // First try to find a ':' in the input value to match a pattern like 'HH:mm'
       if (time.match(/:/g)) {
         // If matched, will then split the string using ':' to get an hour value and a minute value
