@@ -8,10 +8,13 @@ import Columns from '@/components/layout/Columns';
 import Column from '@/components/layout/Column';
 import { Size } from '@/utils/Enum';
 import NumberInput from '@/components/inputs/textField/NumberInput';
+import TimeInput from '@/components/inputs/textField/TimeInput';
 
 export default function Page() {
   const [value, setValue] = useState<string>('');
   const [numberValue, setNumberValue] = useState<number | undefined>(undefined);
+  const [timeValue, setTimeValue] = useState<Date>(new Date());
+  const [isTimeValueError, setIsTimeValueError] = useState<boolean>(false);
 
   const handleTextChange: ChangeEventHandler<HTMLInputElement> = (
     e: ChangeEvent<HTMLInputElement>,
@@ -22,6 +25,10 @@ export default function Page() {
 
   const handleNumberChange = (newNumberValue: number) => {
     setNumberValue(newNumberValue);
+  };
+
+  const handleTimeChange = (newTimeValue: Date) => {
+    setTimeValue(newTimeValue);
   };
 
   const renderTextInputs = (props: {
@@ -67,6 +74,27 @@ export default function Page() {
         <NumberInput {...props} size={Size.m} />
         <NumberInput {...props} size={Size.l} />
         <NumberInput {...props} size={Size.xl} />
+      </>
+    );
+  };
+
+  const renderTimeInputs = (props: {
+    label?: string;
+    isLabelBold?: boolean;
+    sublabel?: string;
+    size?: Size;
+    value: Date;
+    onChange: (event: Date) => void;
+    placeholder?: string;
+    isError?: boolean;
+    isDisabled?: boolean;
+  }) => {
+    return (
+      <>
+        <TimeInput {...props} size={Size.xs} />
+        <TimeInput {...props} size={Size.s} />
+        <TimeInput {...props} size={Size.m} />
+        <TimeInput {...props} size={Size.l} />
       </>
     );
   };
@@ -148,6 +176,28 @@ export default function Page() {
               isDisabled: true,
               value: numberValue,
               onChange: handleNumberChange,
+            })}
+          </Column>
+          <Column>
+            <h1>TimeInput</h1>
+            {renderTimeInputs({
+              value: timeValue,
+              isError: isTimeValueError,
+              setError: setIsTimeValueError,
+              onChange: handleTimeChange,
+            })}
+            {renderTimeInputs({
+              isError: true,
+              value: timeValue,
+              setError: setIsTimeValueError,
+              onChange: handleTimeChange,
+            })}
+            {renderTimeInputs({
+              isDisabled: true,
+              isError: isTimeValueError,
+              value: timeValue,
+              setError: setIsTimeValueError,
+              onChange: handleTimeChange,
             })}
           </Column>
         </Columns>
