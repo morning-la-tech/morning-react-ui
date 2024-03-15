@@ -19,7 +19,7 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       label,
       sublabel,
       isLabelBold,
-      size,
+      size = Size.m,
       value,
       isError,
       isDisabled,
