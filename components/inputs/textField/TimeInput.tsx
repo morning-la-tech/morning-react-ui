@@ -1,6 +1,7 @@
 import React, { ChangeEvent, forwardRef, useState, useEffect } from 'react';
 import classNames from 'classnames';
 import { format, setMinutes, setHours } from 'date-fns';
+import { Size } from '@/utils/Enum';
 import ParentInput from '@/components/inputs/ParentInput';
 import { BasicInputProps, InputProps } from '@/components/inputs/types';
 import styles from '../input.module.css';
