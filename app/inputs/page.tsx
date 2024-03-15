@@ -80,14 +80,15 @@ export default function Page() {
 
   const renderTimeInputs = (props: {
     label?: string;
-    isLabelBold?: boolean;
     sublabel?: string;
+    isLabelBold?: boolean;
     size?: Size;
     value: Date;
-    onChange: (event: Date) => void;
-    placeholder?: string;
     isError?: boolean;
     isDisabled?: boolean;
+    onChange: (event: Date) => void;
+    setError: (isError: boolean) => void;
+    callback?: () => boolean;
   }) => {
     return (
       <>
