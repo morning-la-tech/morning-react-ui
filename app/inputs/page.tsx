@@ -13,7 +13,7 @@ import TimeInput from '@/components/inputs/textField/TimeInput';
 export default function Page() {
   const [value, setValue] = useState<string>('');
   const [numberValue, setNumberValue] = useState<number | undefined>(undefined);
-  const [timeValue, setTimeValue] = useState<Date>(new Date());
+  const [timeValue, setTimeValue] = useState<Date | null>(null);
   const [isTimeValueError, setIsTimeValueError] = useState<boolean>(false);
 
   const handleTextChange: ChangeEventHandler<HTMLInputElement> = (
@@ -27,7 +27,7 @@ export default function Page() {
     setNumberValue(newNumberValue);
   };
 
-  const handleTimeChange = (newTimeValue: Date) => {
+  const handleTimeChange = (newTimeValue: Date | null) => {
     setTimeValue(newTimeValue);
   };
 
@@ -83,10 +83,10 @@ export default function Page() {
     sublabel?: string;
     isLabelBold?: boolean;
     size?: Size;
-    value: Date;
+    value: Date | null;
     isError?: boolean;
     disabled?: boolean;
-    onChange: (event: Date) => void;
+    onChange: (event: Date | null) => void;
     setError: (isError: boolean) => void;
     callback?: () => boolean;
   }) => {
