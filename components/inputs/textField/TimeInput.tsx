@@ -8,7 +8,7 @@ import styles from '../input.module.css';
 
 type TimeInputProps = BasicInputProps &
   InputProps & {
-    value: Date;
+    value: Date | null;
     onChange: (time: Date) => void;
     setError: (isError: boolean) => void;
     callback?: () => boolean;
@@ -30,8 +30,8 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     },
     ref,
   ) => {
-    const [inputValue, setInputValue] = useState<string>(
-      format(value, 'HH:mm'),
+    const [inputValue, setInputValue] = useState<string | null>(
+      value ? format(value, 'HH:mm') : null,
     );
 
     const stringToTime = (time: string): [number, number] => {
@@ -64,9 +64,13 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
      * Function is called on every change in input value
      */
     const reformatTime = (
-      time: string,
+      time: string | null,
       event: ChangeEvent<HTMLInputElement>,
-    ): string => {
+    ): string | null => {
+      if (time == null) {
+        return null;
+      }
+
       // First try to find a ':' in the input value to match a pattern like 'HH:mm'
       if (time.match(/:/g)) {
         // If matched, will then split the string using ':' to get an hour value and a minute value
@@ -77,7 +81,7 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       }
 
       // If the pattern 'HH:mm' is not matched, will try to see if a ':' was in previous value
-      if (inputValue.match(/:/g)) {
+      if (inputValue != null && inputValue.match(/:/g)) {
         // If that was the case, means that the ':' was erased
         // Will then split the previous value using ':' to get a previous hour value and previous minute value
         // Erasing a ':' means that user tried to erased last digit of hour value, will reformat a time value accordingly
@@ -103,6 +107,12 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
       const newValue = event.target.value;
       const reformatedNewValue = reformatTime(newValue, event);
+
+      if (reformatedNewValue == null) {
+        setInputValue(reformatedNewValue);
+        return;
+      }
+
       const validAsTime = isStringValidAsTime(reformatedNewValue);
 
       setError(!validAsTime);
@@ -113,13 +123,13 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     };
 
     const handleBlur = () => {
-      const [hours, minutes] = stringToTime(inputValue);
+      const [hours, minutes] = inputValue ? stringToTime(inputValue) : [0, 0];
       setError(false);
       onChange(setMinutes(setHours(new Date(), hours), minutes));
     };
 
     useEffect(() => {
-      setInputValue(format(value, 'HH:mm'));
+      setInputValue(value ? format(value, 'HH:mm') : null);
     }, [value]);
 
     return (
@@ -142,7 +152,7 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
             placeholder={'HH:MM'}
             disabled={disabled}
             type='text'
-            value={inputValue}
+            value={inputValue ?? ''}
             onChange={handleChange}
             onBlur={handleBlur}
           />
