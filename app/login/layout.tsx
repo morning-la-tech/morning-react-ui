@@ -1,8 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import './globals.css';
-import Header from '@/components/layout/Header';
-import ThemeProvider from './ThemeProvider';
+import '../globals.css';
+import ThemeProvider from '../ThemeProvider';
 
 const inter = Inter({
   weight: 'variable',
@@ -23,10 +22,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <ThemeProvider>
-          <Header>librairie de composants</Header>
-          {children}
-        </ThemeProvider>
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );
