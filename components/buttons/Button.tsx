@@ -1,8 +1,14 @@
 import React, { ButtonHTMLAttributes, ReactElement, ReactNode } from 'react';
+import { Inter } from 'next/font/google';
 import classNames from 'classnames';
 import Loading from '@/components/utils/Loading';
 import { Size, sizeToNumber } from '@/utils/Enum';
 import styles from './button.module.css';
+
+const inter = Inter({
+  weight: 'variable',
+  subsets: ['latin'],
+});
 
 export enum ButtonVariant {
   Primary = 'primary',
@@ -34,6 +40,7 @@ const Button = ({
     styles[variant],
     styles[size],
     className,
+    inter.className,
   );
   return (
     <button className={buttonClass} {...props}>

@@ -1,12 +1,37 @@
-import Link from 'next/link';
+'use client';
+
+import { useRouter } from 'next/navigation';
+import Container from '@/components/layout/Container';
+import { Button, ButtonVariant } from '@/components/buttons';
 
 export default function Home() {
+  const router = useRouter();
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <Link href={'/buttons'}>Buttons</Link>
-      <Link href={'/inputs'}>Inputs</Link>
-      <Link href={'/checkbox'}>Checkbox</Link>
-      <Link href={'/utils'}>Utils</Link>
-    </div>
+    <Container style={{ gap: '10px' }}>
+      <Button
+        variant={ButtonVariant.Secondary}
+        onClick={() => router.push('/buttons')}
+      >
+        Buttons
+      </Button>
+      <Button
+        variant={ButtonVariant.Secondary}
+        onClick={() => router.push('/inputs')}
+      >
+        Inputs
+      </Button>
+      <Button
+        variant={ButtonVariant.Secondary}
+        onClick={() => router.push('/checkbox')}
+      >
+        Checkbox
+      </Button>
+      <Button
+        variant={ButtonVariant.Secondary}
+        onClick={() => router.push('/utils')}
+      >
+        Utils
+      </Button>
+    </Container>
   );
 }
