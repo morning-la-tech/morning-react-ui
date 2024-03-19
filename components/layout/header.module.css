@@ -1,0 +1,18 @@
+.bar {
+    display: flex;
+    place-content: center center;
+    width: 100%;
+    background-color: var(--cloud);
+    font-family: var(--titling-font);
+    font-size: 16px;
+    font-weight: bolder;
+
+    .container {
+        display: flex;
+        width: 1400px;
+        height: 50px;
+        padding: 14px 100px;
+        box-sizing: border-box;
+        align-items: center;
+    }
+}
