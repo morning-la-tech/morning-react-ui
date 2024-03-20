@@ -88,7 +88,8 @@ export default function Page() {
     disabled?: boolean;
     onChange: (event: Date | null) => void;
     setError: (isError: boolean) => void;
-    callback?: () => boolean;
+    callback?: (date: Date) => boolean;
+    isRequired?: boolean;
   }) => {
     return (
       <>

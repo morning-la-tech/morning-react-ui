@@ -9,9 +9,10 @@ import styles from '../input.module.css';
 type TimeInputProps = BasicInputProps &
   InputProps & {
     value: Date | null;
-    onChange: (time: Date) => void;
+    onChange: (time: Date | null) => void;
     setError: (isError: boolean) => void;
-    callback?: () => boolean;
+    callback?: (time: Date) => boolean;
+    isRequired?: boolean;
   };
 
 const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
@@ -27,6 +28,7 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       onChange,
       setError,
       callback,
+      isRequired,
     },
     ref,
   ) => {
@@ -50,13 +52,7 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
         return false;
       }
       const [hours, minutes] = stringToTime(time);
-      return (
-        hours >= 0 &&
-        hours < 24 &&
-        minutes >= 0 &&
-        minutes < 60 &&
-        (callback ? callback() : true)
-      );
+      return hours >= 0 && hours < 24 && minutes >= 0 && minutes < 60;
     };
 
     /**
@@ -67,7 +63,7 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       time: string | null,
       event: ChangeEvent<HTMLInputElement>,
     ): string | null => {
-      if (time == null) {
+      if (time == null || time == '') {
         return null;
       }
 
@@ -101,7 +97,20 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       }
 
       // If nothing neither current nor previous values have ':', then proceed as normal
-      return time.length < 2 ? time : `${time}:`;
+      return time.length < 2
+        ? time
+        : parseInt(time) >= 24
+          ? `${time[0]}:${time[1]}`
+          : `${time}:`;
+    };
+
+    const handleCallback = (timeValue: string) => {
+      if (callback) {
+        // Custom check here
+        const [hours, minutes] = stringToTime(timeValue);
+        const time = setMinutes(setHours(new Date(), hours), minutes);
+        setError(!callback(time));
+      }
     };
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -110,22 +119,32 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
 
       if (reformatedNewValue == null) {
         setInputValue(reformatedNewValue);
+        setError(isRequired ?? false);
         return;
       }
 
       const validAsTime = isStringValidAsTime(reformatedNewValue);
-
       setError(!validAsTime);
 
       if (validAsTime) {
+        handleCallback(reformatedNewValue);
         setInputValue(reformatedNewValue);
       }
     };
 
     const handleBlur = () => {
-      const [hours, minutes] = inputValue ? stringToTime(inputValue) : [0, 0];
       setError(false);
-      onChange(setMinutes(setHours(new Date(), hours), minutes));
+
+      if (!inputValue) {
+        onChange(null);
+        setError(isRequired ?? false);
+        return;
+      }
+
+      const [hours, minutes] = stringToTime(inputValue);
+      const time = setMinutes(setHours(new Date(), hours), minutes);
+      handleCallback(inputValue);
+      onChange(time);
     };
 
     useEffect(() => {
