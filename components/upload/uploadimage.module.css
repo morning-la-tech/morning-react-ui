@@ -1,0 +1,19 @@
+.uploadAera {
+    background-color: var(--silver);
+    width: 100%;
+    height: 230px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .imageIcon {
+        background-color: var(--iron);
+        mask-size: 33px 29px;
+        mask-image: url("https://cdn.morning.fr/icons/image.svg");
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 33px;
+        height: 29px;
+    }
+}
