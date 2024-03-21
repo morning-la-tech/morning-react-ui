@@ -89,3 +89,13 @@
     font-style: normal;
     font-display: swap;
 }
+
+h1 {
+    font-size: var(--font-size-l);
+    font-family: var(--titling-font);
+}
+
+h2 {
+    font-size: var(--font-size-normal);
+    font-family: var(--titling-font);
+}
