@@ -16,10 +16,6 @@
     border-color: var(--brick);
 }
 
-.input.disabled {
-    opacity: 0.5;
-}
-
 .input.xs {
     font-size: var(--font-size-xs);
     padding: 4px 8px;
