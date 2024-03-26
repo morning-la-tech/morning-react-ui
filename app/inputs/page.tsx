@@ -40,7 +40,7 @@ export default function Page() {
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     placeholder?: string;
     isError?: boolean;
-    isDisabled?: boolean;
+    disabled?: boolean;
     imageSrc?: string;
     imageAlt?: string;
   }) => {
@@ -65,7 +65,7 @@ export default function Page() {
     min?: number;
     max?: number;
     isError?: boolean;
-    isDisabled?: boolean;
+    disabled?: boolean;
   }) => {
     return (
       <>
@@ -85,7 +85,7 @@ export default function Page() {
     size?: Size;
     value: Date;
     isError?: boolean;
-    isDisabled?: boolean;
+    disabled?: boolean;
     onChange: (event: Date) => void;
     setError: (isError: boolean) => void;
     callback?: () => boolean;
@@ -143,7 +143,7 @@ export default function Page() {
             })}
             {renderTextInputs({
               placeholder: 'Disabled input',
-              isDisabled: true,
+              disabled: true,
               value: value,
               onChange: handleTextChange,
             })}
@@ -174,7 +174,7 @@ export default function Page() {
             })}
             {renderNumberInputs({
               label: 'Disabled',
-              isDisabled: true,
+              disabled: true,
               value: numberValue,
               onChange: handleNumberChange,
             })}
@@ -194,7 +194,7 @@ export default function Page() {
               onChange: handleTimeChange,
             })}
             {renderTimeInputs({
-              isDisabled: true,
+              disabled: true,
               isError: isTimeValueError,
               value: timeValue,
               setError: setIsTimeValueError,

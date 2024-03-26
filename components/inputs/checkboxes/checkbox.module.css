@@ -1,45 +1,43 @@
-.checkbox {
+.wrapper {
     display: flex;
     align-items: center;
     user-select: none;
+    gap: 4px;
+    padding: 6px 0;
 }
 
-.checkbox.xs {
-    font-size: 10px;
-    line-height: 12px;
+.checkbox {
+    display: inline-block;
+    mask-size: contain;
+    transition: 0.1s ease-in-out;
+    cursor: pointer;
+
+    &.active {
+        mask-image: url("https://cdn.morning.fr/icons/checkbox-active.svg");
+        background-color: var(--sapphire);
+    }
+
+    &.empty {
+        mask-image: url("https://cdn.morning.fr/icons/checkbox-empty.svg");
+        background-color: var(--ash);
+    }
+
+    &.minus {
+        mask-image: url("https://cdn.morning.fr/icons/checkbox-minus.svg");
+        background-color: var(--sapphire);
+    }
+
+    &.active:hover,
+    &.minus:hover {
+        background-color: var(--azure);
+        transition: 0.5s ease-in-out;
+    }
 }
 
-.checkbox.xs input {
-    width: 7px;
-    height: 7px;
+.label {
+    color: var(--coal);
 }
 
-.checkbox.s {
-    font-size: 12px;
-    line-height: 16px;
-}
-
-.checkbox.s input {
-    width: 10px;
-    height: 10px;
-}
-
-.checkbox.m {
-    font-size: 14px;
-    line-height: 20px;
-}
-
-.checkbox.m input {
-    width: 12px;
-    height: 12px;
-}
-
-.checkbox.l {
-    font-size: 16px;
-    line-height: 24px;
-}
-
-.checkbox.l input {
-    width: 14px;
-    height: 14px;
+.error {
+    color: var(--brick);
 }

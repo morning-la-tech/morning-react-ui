@@ -2,8 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/layout/Header';
-import { ToastProvider } from '@/components/Context/ToastContext';
-import ThemeProvider from './ThemeProvider';
+import { Providers } from './Providers';
 
 const inter = Inter({
   weight: 'variable',
@@ -24,10 +23,10 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <ThemeProvider>
+        <Providers>
           <Header>librairie de composants</Header>
-            <ToastProvider>{children}</ToastProvider>
-        </ThemeProvider>
+          {children}
+        </Providers>
       </body>
     </html>
   );
