@@ -5,12 +5,18 @@ export type BasicInputProps = {
   sublabel?: string;
   size?: Size;
   isLabelBold?: boolean;
+  disabled?: boolean;
 };
 
 export type InputProps = BasicInputProps & {
   isError?: boolean;
-  isDisabled?: boolean;
 };
+
+export const enum TriState {
+  true = 'true',
+  false = 'false',
+  indeterminate = 'indeterminate',
+}
 
 export type SelectionState = {
   [key: string]: boolean;
