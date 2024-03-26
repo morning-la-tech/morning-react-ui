@@ -8,6 +8,7 @@ import { Size, sizeToNumber } from '@/utils/Enum';
 import Container from '@/components/layout/Container';
 import Columns from '@/components/layout/Columns';
 import Column from '@/components/layout/Column';
+import LinkButton from '@/components/buttons/LinkButton';
 
 export default function Page() {
   const handleClick = () => {
@@ -18,6 +19,26 @@ export default function Page() {
     <Image
       className={buttonStyles.image}
       src='https://cdn.morning.fr/logos/logo_google.png'
+      alt='Google logo'
+      width={sizeToNumber(size)}
+      height={sizeToNumber(size)}
+    />
+  );
+
+  const getPlusImage = (size: Size) => (
+    <Image
+      className={buttonStyles.image}
+      src='https://cdn.morning.fr/icons/plus.svg'
+      alt='Google logo'
+      width={sizeToNumber(size)}
+      height={sizeToNumber(size)}
+    />
+  );
+
+  const getArrowUpImage = (size: Size) => (
+    <Image
+      className={buttonStyles.image}
+      src='https://cdn.morning.fr/icons/arrow-up-right-from-square.svg'
       alt='Google logo'
       width={sizeToNumber(size)}
       height={sizeToNumber(size)}
@@ -85,6 +106,69 @@ export default function Page() {
       </>
     );
   };
+
+  // eslint-disable-next-line complexity
+  const renderLinkButtons = (
+    props: {
+      isLoading?: boolean;
+      className?: string;
+      variant?: ButtonVariant;
+      disabled?: boolean;
+    },
+    hasStartImage: undefined | true = undefined,
+    hasEndImage: undefined | true = undefined,
+    content = <>Button</>,
+  ) => {
+    return (
+      <>
+        <LinkButton
+          onClick={handleClick}
+          {...props}
+          startImage={hasStartImage && getPlusImage(Size.m)}
+          endImage={hasEndImage && getArrowUpImage(Size.m)}
+        >
+          {content}
+        </LinkButton>
+        <LinkButton
+          onClick={handleClick}
+          {...props}
+          startImage={hasStartImage && getPlusImage(Size.l)}
+          endImage={hasEndImage && getArrowUpImage(Size.l)}
+          size={Size.l}
+        >
+          {content}
+        </LinkButton>
+        <LinkButton
+          onClick={handleClick}
+          {...props}
+          startImage={hasStartImage && getPlusImage(Size.m)}
+          endImage={hasEndImage && getArrowUpImage(Size.m)}
+          size={Size.m}
+        >
+          {content}
+        </LinkButton>
+        <LinkButton
+          onClick={handleClick}
+          {...props}
+          startImage={hasStartImage && getPlusImage(Size.s)}
+          endImage={hasEndImage && getArrowUpImage(Size.s)}
+          size={Size.s}
+        >
+          {content}
+        </LinkButton>
+        <LinkButton
+          onClick={handleClick}
+          {...props}
+          startImage={hasStartImage && getArrowUpImage(Size.xs)}
+          endImage={hasEndImage && getPlusImage(Size.xs)}
+          size={Size.xs}
+        >
+          {content}
+        </LinkButton>
+      </>
+    );
+  };
+
   return (
     <div style={{ display: 'flex', flexDirection: 'row' }}>
       <Container>
@@ -97,30 +181,6 @@ export default function Page() {
             {renderButtons({}, true, true)}
             {renderButtons({}, true, undefined, <></>)}
             {renderButtons({ isLoading: true })}
-          </Column>
-          <Column>
-            {renderButtons({ className: buttonStyles.hover })}
-            {renderButtons({ className: buttonStyles.hover }, true)}
-            {renderButtons({ className: buttonStyles.hover }, true, true)}
-            {renderButtons(
-              { className: buttonStyles.hover },
-              true,
-              undefined,
-              <></>,
-            )}
-            {renderButtons({ className: buttonStyles.hover, isLoading: true })}
-          </Column>
-          <Column>
-            {renderButtons({ className: buttonStyles.active })}
-            {renderButtons({ className: buttonStyles.active }, true)}
-            {renderButtons({ className: buttonStyles.active }, true, true)}
-            {renderButtons(
-              { className: buttonStyles.active },
-              true,
-              undefined,
-              <></>,
-            )}
-            {renderButtons({ className: buttonStyles.active, isLoading: true })}
           </Column>
           <Column>
             {renderButtons({ disabled: true })}
@@ -147,76 +207,6 @@ export default function Page() {
           <Column>
             {renderButtons({
               variant: ButtonVariant.Secondary,
-              className: buttonStyles.hover,
-            })}
-            {renderButtons(
-              {
-                variant: ButtonVariant.Secondary,
-                className: buttonStyles.hover,
-              },
-              true,
-            )}
-            {renderButtons(
-              {
-                variant: ButtonVariant.Secondary,
-                className: buttonStyles.hover,
-              },
-              true,
-              true,
-            )}
-            {renderButtons(
-              {
-                variant: ButtonVariant.Secondary,
-                className: buttonStyles.hover,
-              },
-              true,
-              undefined,
-              <></>,
-            )}
-            {renderButtons({
-              variant: ButtonVariant.Secondary,
-              className: buttonStyles.hover,
-              isLoading: true,
-            })}
-          </Column>
-          <Column>
-            {renderButtons({
-              variant: ButtonVariant.Secondary,
-              className: buttonStyles.active,
-            })}
-            {renderButtons(
-              {
-                variant: ButtonVariant.Secondary,
-                className: buttonStyles.active,
-              },
-              true,
-            )}
-            {renderButtons(
-              {
-                variant: ButtonVariant.Secondary,
-                className: buttonStyles.active,
-              },
-              true,
-              true,
-            )}
-            {renderButtons(
-              {
-                variant: ButtonVariant.Secondary,
-                className: buttonStyles.active,
-              },
-              true,
-              undefined,
-              <></>,
-            )}
-            {renderButtons({
-              variant: ButtonVariant.Secondary,
-              className: buttonStyles.active,
-              isLoading: true,
-            })}
-          </Column>
-          <Column>
-            {renderButtons({
-              variant: ButtonVariant.Secondary,
               disabled: true,
             })}
             {renderButtons(
@@ -239,6 +229,18 @@ export default function Page() {
               disabled: true,
               isLoading: true,
             })}
+          </Column>
+          <Column>
+            {renderLinkButtons({})}
+            {renderLinkButtons({}, true)}
+            {renderLinkButtons({}, true, true)}
+            {renderLinkButtons({}, true, undefined, <></>)}
+          </Column>
+          <Column>
+            {renderLinkButtons({ disabled: true })}
+            {renderLinkButtons({ disabled: true }, true)}
+            {renderLinkButtons({ disabled: true }, true, true)}
+            {renderLinkButtons({ disabled: true }, true, undefined, <></>)}
           </Column>
         </Columns>
       </Container>
