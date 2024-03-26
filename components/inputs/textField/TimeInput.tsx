@@ -23,7 +23,7 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       size = Size.m,
       value,
       isError,
-      isDisabled,
+      disabled,
       onChange,
       setError,
       callback,
@@ -128,6 +128,7 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
         sublabel={sublabel}
         isLabelBold={isLabelBold}
         size={size}
+        disabled={disabled}
       >
         <div className={styles.wrapper}>
           <input
@@ -135,11 +136,11 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
               styles.input,
               styles[size],
               { [styles.error]: isError },
-              { [styles.disabled]: isDisabled },
+              { [styles.disabled]: disabled },
             )}
             ref={ref}
             placeholder={'HH:MM'}
-            disabled={isDisabled}
+            disabled={disabled}
             type='text'
             value={inputValue}
             onChange={handleChange}

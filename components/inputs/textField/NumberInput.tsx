@@ -24,7 +24,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       min,
       max,
       isError,
-      isDisabled,
+      disabled,
     },
     ref,
   ) => {
@@ -85,6 +85,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         sublabel={sublabel}
         isLabelBold={isLabelBold}
         size={size}
+        disabled={disabled}
       >
         <input
           type='number'
@@ -92,7 +93,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
             styles.input,
             styles[size],
             { [styles.error]: isError },
-            { [styles.disabled]: isDisabled },
+            { [styles.disabled]: 'disabled' },
           )}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
@@ -101,7 +102,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
           value={isNaN(getValidValue(inputValue)) ? '' : inputValue}
           min={min}
           max={max}
-          disabled={isDisabled}
+          disabled={disabled}
         />
       </ParentInput>
     );
