@@ -1,0 +1,42 @@
+.linkButton {
+    border: none;
+    font-size: var(--font-size-normal);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    background-color: transparent;
+    filter: var(--filter-azure);
+    color: var(--azure);
+    border-bottom: solid;
+    bottom: 1px;
+    border-color: transparent;
+
+    .image {
+        display: flex;
+    }
+}
+
+.content,
+.icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+}
+
+.linkButton:hover {
+    filter: var(--filter-sapphire);
+    color: var(--sapphire);
+    border-bottom: solid;
+    bottom: 1px;
+}
+
+.linkButton:active {
+    filter: var(--filter-navy);
+    color: var(--filter-navy);
+    border-bottom: solid;
+    bottom: 1px;
+}
