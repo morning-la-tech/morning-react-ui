@@ -1,43 +1,44 @@
 .wrapper {
-    display: flex;
-    align-items: center;
-    user-select: none;
-    gap: 4px;
-    padding: 6px 0;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  gap: 4px;
+  padding: 6px 0;
 }
 
 .checkbox {
-    display: inline-block;
-    mask-size: contain;
-    transition: 0.1s ease-in-out;
-    cursor: pointer;
+  display: inline-block;
+  mask-size: contain;
+  transition: 0.1s ease-in-out;
+  cursor: pointer;
 
-    &.active {
-        mask-image: url("https://cdn.morning.fr/icons/checkbox-active.svg");
-        background-color: var(--sapphire);
-    }
+  &.active {
+    mask-image: url('https://cdn.morning.fr/icons/checkbox-active.svg');
+    background-color: var(--sapphire);
+  }
 
-    &.empty {
-        mask-image: url("https://cdn.morning.fr/icons/checkbox-empty.svg");
-        background-color: var(--ash);
-    }
+  &.empty {
+    mask-image: url('https://cdn.morning.fr/icons/checkbox-empty.svg');
+    background-color: var(--iron);
+  }
 
-    &.minus {
-        mask-image: url("https://cdn.morning.fr/icons/checkbox-minus.svg");
-        background-color: var(--sapphire);
-    }
+  &.minus {
+    mask-image: url('https://cdn.morning.fr/icons/checkbox-minus.svg');
+    background-color: var(--sapphire);
+  }
 
-    &.active:hover,
-    &.minus:hover {
-        background-color: var(--azure);
-        transition: 0.5s ease-in-out;
-    }
+  &.active:hover,
+  &.minus:hover {
+    background-color: var(--azure);
+    transition: 0.5s ease-in-out;
+  }
 }
 
 .label {
-    color: var(--coal);
+  color: var(--coal);
+  white-space: nowrap;
 }
 
 .error {
-    color: var(--brick);
+  color: var(--brick);
 }
