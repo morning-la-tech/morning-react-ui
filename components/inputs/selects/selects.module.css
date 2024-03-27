@@ -1,0 +1,32 @@
+.wrapper {
+  position: relative;
+}
+
+.dropdown {
+  position: absolute;
+  box-sizing: border-box;
+  width: 100%;
+  background-color: var(--white);
+  box-shadow:
+    0 0 1px 0 rgb(26 32 36 / 32%),
+    0 4px 8px 0 rgb(91 104 113 / 24%);
+  border-radius: 4px;
+  z-index: 1;
+  margin-top: 6px;
+  outline: none;
+  padding: 6px 0;
+  border: 1px solid var(--ash);
+  overflow-y: auto;
+}
+
+.textOverflowEllipsis {
+  text-overflow: ellipsis;
+}
+
+.oneTrueAndBlur {
+  color: var(--navy);
+}
+
+.focus {
+  color: var(--black);
+}
