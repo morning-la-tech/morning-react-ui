@@ -12,7 +12,7 @@ import React, {
 import classNames from 'classnames';
 import Image from 'next/image';
 import ParentInput from '@/components/inputs/ParentInput';
-import { Size, sizeToFontSize, sizeToHeight, sizeToNumber } from '@/utils/Enum';
+import { Size, sizeToNumber } from '@/utils/Enum';
 import { InputProps } from '@/components/inputs/types';
 import styles from '../input.module.css';
 import useInput from './useInput';
@@ -52,8 +52,10 @@ const TextInput = forwardRef<HTMLInputElement, TextInputHtmlProps>(
       imageAlt,
       showClearButton,
       showDropdownIcon,
-      onClear,
+      onClear = () =>
+        onChange({ target: { value: '' } } as ChangeEvent<HTMLInputElement>),
       isDropdownActive,
+      className,
       ...props
     },
     ref,
@@ -123,14 +125,14 @@ const TextInput = forwardRef<HTMLInputElement, TextInputHtmlProps>(
           )}
           <input
             type='text'
-            className={classNames(styles.input, `font-size-${size}`)}
+            {...props}
+            className={classNames(styles.input, `font-size-${size}`, className)}
             ref={inputRef}
             value={value}
             placeholder={placeholder}
             disabled={disabled}
             onChange={handleChange}
             onClick={handleKeyUpOrClick}
-            {...props}
           />
           {showClearButton && (
             <Image
@@ -139,7 +141,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputHtmlProps>(
               onClick={onClear}
               width={sizeToNumber(size)}
               height={sizeToNumber(size)}
-              className={'pointer'}
+              className='cursorPointer'
             />
           )}
           {showDropdownIcon && (

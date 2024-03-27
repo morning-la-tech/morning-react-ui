@@ -6,6 +6,7 @@
   align-items: center;
   display: flex;
   gap: 4px;
+  width: 100%;
 }
 
 .wrapper:focus-within {
@@ -19,10 +20,10 @@
 
 .input {
   border: none;
-  flex-grow: 1;
   background-color: var(--white);
   user-select: none;
   border-radius: 6px;
+  flex-grow: 1;
 }
 
 .input:focus {

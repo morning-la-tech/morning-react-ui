@@ -1,3 +1,16 @@
+.wrapper {
+  display: flex;
+  gap: 6px;
+}
+
+.inline {
+  flex-flow: row wrap;
+}
+
 .column {
-    flex-direction: column;
+  flex-flow: column;
+}
+
+.checkboxHovered {
+  background-color: var(--cloud);
 }
