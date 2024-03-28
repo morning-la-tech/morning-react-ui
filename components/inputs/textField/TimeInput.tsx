@@ -1,6 +1,8 @@
 import React, { ChangeEvent, forwardRef, useState, useEffect } from 'react';
 import classNames from 'classnames';
 import { format, setMinutes, setHours } from 'date-fns';
+import { isAfter } from '@/node_modules/date-fns/isAfter';
+import { isEqual } from '@/node_modules/date-fns/isEqual';
 import { Size } from '@/utils/Enum';
 import ParentInput from '@/components/inputs/ParentInput';
 import { BasicInputProps, InputProps } from '@/components/inputs/types';
@@ -8,11 +10,10 @@ import styles from '../input.module.css';
 
 type TimeInputProps = BasicInputProps &
   InputProps & {
-    value: Date | null;
+    value: Date | false | null;
+    min?: string;
+    max?: string;
     onChange: (time: Date | null) => void;
-    setError: (isError: boolean) => void;
-    callback?: (time: Date) => boolean;
-    isRequired?: boolean;
   };
 
 const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
@@ -23,18 +24,19 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       isLabelBold,
       size = Size.m,
       value,
-      isError,
       disabled,
+      isError,
+      min,
+      max,
       onChange,
-      setError,
-      callback,
-      isRequired,
     },
     ref,
   ) => {
     const [inputValue, setInputValue] = useState<string | null>(
       value ? format(value, 'HH:mm') : null,
     );
+
+    const [error, setError] = useState<boolean>(false);
 
     const stringToTime = (time: string): [number, number] => {
       const [hours, minutes] = time
@@ -53,6 +55,33 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       }
       const [hours, minutes] = stringToTime(time);
       return hours >= 0 && hours < 24 && minutes >= 0 && minutes < 60;
+    };
+
+    const isWithinEdges = (
+      time: string,
+      minEdge?: string,
+      maxEdge?: string,
+    ): boolean => {
+      const [hour, minute] = stringToTime(time);
+      const reference = setMinutes(setHours(new Date(), hour), minute);
+      let isRefAfterMin = true;
+      let isRefBeforeMax = true;
+
+      if (minEdge && isStringValidAsTime(minEdge)) {
+        const [minHour, minMinute] = stringToTime(minEdge);
+        const minTime = setMinutes(setHours(new Date(), minHour), minMinute);
+        isRefAfterMin =
+          isEqual(reference, minTime) || isAfter(reference, minTime);
+      }
+
+      if (maxEdge && isStringValidAsTime(maxEdge)) {
+        const [maxHour, maxMinute] = stringToTime(maxEdge);
+        const maxTime = setMinutes(setHours(new Date(), maxHour), maxMinute);
+        isRefBeforeMax =
+          isEqual(reference, maxTime) || isAfter(maxTime, reference);
+      }
+
+      return isRefBeforeMax && isRefAfterMin;
     };
 
     /**
@@ -104,22 +133,13 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
           : `${time}:`;
     };
 
-    const handleCallback = (timeValue: string) => {
-      if (callback) {
-        // Custom check here
-        const [hours, minutes] = stringToTime(timeValue);
-        const time = setMinutes(setHours(new Date(), hours), minutes);
-        setError(!callback(time));
-      }
-    };
-
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
       const newValue = event.target.value;
       const reformatedNewValue = reformatTime(newValue, event);
 
       if (reformatedNewValue == null) {
         setInputValue(reformatedNewValue);
-        setError(isRequired ?? false);
+        setError(false);
         return;
       }
 
@@ -127,24 +147,25 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       setError(!validAsTime);
 
       if (validAsTime) {
-        handleCallback(reformatedNewValue);
+        setError(!isWithinEdges(reformatedNewValue, min, max));
         setInputValue(reformatedNewValue);
       }
     };
 
     const handleBlur = () => {
-      setError(false);
-
       if (!inputValue) {
         onChange(null);
-        setError(isRequired ?? false);
+        setError(false);
         return;
       }
 
+      setError(!isWithinEdges(inputValue, min, max));
       const [hours, minutes] = stringToTime(inputValue);
-      const time = setMinutes(setHours(new Date(), hours), minutes);
-      handleCallback(inputValue);
-      onChange(time);
+      onChange(
+        isWithinEdges(inputValue, min, max)
+          ? setMinutes(setHours(new Date(), hours), minutes)
+          : false,
+      );
     };
 
     useEffect(() => {
@@ -164,7 +185,7 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
             className={classNames(
               styles.input,
               styles[size],
-              { [styles.error]: isError },
+              { [styles.error]: isError || error },
               { [styles.disabled]: disabled },
             )}
             ref={ref}
