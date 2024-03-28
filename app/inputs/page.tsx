@@ -13,8 +13,7 @@ import TimeInput from '@/components/inputs/textField/TimeInput';
 export default function Page() {
   const [value, setValue] = useState<string>('');
   const [numberValue, setNumberValue] = useState<number | undefined>(undefined);
-  const [timeValue, setTimeValue] = useState<Date | null>(null);
-  const [isTimeValueError, setIsTimeValueError] = useState<boolean>(false);
+  const [timeValue, setTimeValue] = useState<Date | false | null>(null);
 
   const handleTextChange: ChangeEventHandler<HTMLInputElement> = (
     e: ChangeEvent<HTMLInputElement>,
@@ -83,13 +82,12 @@ export default function Page() {
     sublabel?: string;
     isLabelBold?: boolean;
     size?: Size;
-    value: Date | null;
-    isError?: boolean;
+    value: Date | false | null;
     disabled?: boolean;
+    isError?: boolean;
+    min?: string;
+    max?: string;
     onChange: (event: Date | null) => void;
-    setError: (isError: boolean) => void;
-    callback?: (date: Date) => boolean;
-    isRequired?: boolean;
   }) => {
     return (
       <>
@@ -183,22 +181,39 @@ export default function Page() {
           <Column>
             <h1>TimeInput</h1>
             {renderTimeInputs({
+              label: 'Normal',
               value: timeValue,
-              isError: isTimeValueError,
-              setError: setIsTimeValueError,
               onChange: handleTimeChange,
             })}
             {renderTimeInputs({
+              label: 'Error',
               isError: true,
               value: timeValue,
-              setError: setIsTimeValueError,
               onChange: handleTimeChange,
             })}
             {renderTimeInputs({
+              label: 'Disabled',
               disabled: true,
-              isError: isTimeValueError,
               value: timeValue,
-              setError: setIsTimeValueError,
+              onChange: handleTimeChange,
+            })}
+            {renderTimeInputs({
+              label: '> 8:00',
+              min: '8:00',
+              value: timeValue,
+              onChange: handleTimeChange,
+            })}
+            {renderTimeInputs({
+              label: '< 22:00',
+              max: '22:00',
+              value: timeValue,
+              onChange: handleTimeChange,
+            })}
+            {renderTimeInputs({
+              label: '8:00 < x < 22:00',
+              min: '8:00',
+              max: '22:00',
+              value: timeValue,
               onChange: handleTimeChange,
             })}
           </Column>
