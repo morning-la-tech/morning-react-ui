@@ -9,5 +9,6 @@
         padding: 14px 100px;
         display: flex;
         flex-direction: column;
+        gap: 10px;
     }
 }

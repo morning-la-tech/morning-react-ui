@@ -1,11 +1,19 @@
+.upload {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
 .uploadAera {
     background-color: var(--silver);
     width: 100%;
-    height: 230px;
+    height: 100%;
     border-radius: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 
     .imageIcon {
         background-color: var(--iron);
@@ -15,5 +23,16 @@
         background-repeat: no-repeat;
         width: 33px;
         height: 29px;
+    }
+
+    .selectedImage {
+        width: 100%;
+        height: 100%;
+        border-radius: 5px;
+        object-fit: cover;
+    }
+
+    &.pending .selectedImage {
+        opacity: .5;
     }
 }
