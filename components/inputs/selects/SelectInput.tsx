@@ -89,7 +89,7 @@ const SelectInput = ({
               onMouseLeave={() => setHighlightedIndex(null)}
               ref={optionRefs[index]}
             >
-              <span style={{ height: '20px' }}>{option}</span>
+              <span>{option}</span>
               {selectedOption === option && (
                 <span
                   className={styles.selectedOptionIcon}
