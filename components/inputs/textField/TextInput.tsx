@@ -18,7 +18,6 @@ import styles from '../input.module.css';
 import useInput from './useInput';
 
 type TextInputProps = InputProps & {
-  placeholder?: string;
   value: string;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onCursorPositionChange?: (position: number | null) => void;
