@@ -22,28 +22,6 @@
     justify-content: space-between;
 }
 
-.option:hover {
-    background-color: var(--cloud);
-}
-
-.option.xs, .option.s {
-    height: 16px;
-    padding: 4px 10px 4px 12px;
-    font-size: 12px;
-}
-
-.option.m {
-    height: 16px;
-    padding: 6px 10px 6px 16px;
-    font-size: 14px;
-}
-
-.option.l, .option.xl {
-    height: 24px;
-    padding: 6px 12px 6px 16px;
-    font-size: 16px;
-}
-
 .option:first-child:last-child {
     margin: 6px 0;
 }
@@ -61,45 +39,11 @@
 }
 
 .selectedOptionIcon {
-    filter: var(--filter-sapphire);
+    mask-size: contain;
+    mask-image: url('https://storage.googleapis.com/morning-react-ui-data/icons/success.svg');
+    background-color: var(--sapphire);
 }
 
 .highlightedOption {
     background-color: var(--cloud);
-}
-
-.arrow {
-    z-index: 1;
-    position: absolute;
-    transform-origin: center;
-    transition: transform 0.3s ease;
-}
-
-.arrow.xs {
-    top: 23px;
-    right: 8px;
-}
-
-.arrow.s {
-    top: 25px;
-    right: 8px;
-}
-
-.arrow.m {
-    top: 28px;
-    right: 10px;
-}
-
-.arrow.l {
-    top: 30px;
-    right: 12px;
-}
-
-.arrow.xl {
-    top: 34px;
-    right: 12px;
-}
-
-.arrowUp {
-    transform: rotate(180deg);
 }

@@ -1,14 +1,12 @@
-import {
+import React, {
   ChangeEvent,
   ChangeEventHandler,
+  KeyboardEvent,
   useState,
   useEffect,
-  useRef,
-  useCallback,
   forwardRef,
 } from 'react';
 import classNames from 'classnames';
-import Image from 'next/image';
 import { Size, sizeToNumber } from '@/utils/Enum';
 import TextInput from '@/components/inputs/textField/TextInput';
 import styles from '@/components/inputs/selectField/selectInput.module.css';
@@ -22,26 +20,27 @@ type SelectInputProps = InputProps & {
 };
 
 const SelectInput = forwardRef<HTMLInputElement, SelectInputProps>(
-  ({
-    label,
-    sublabel,
-    isLabelBold,
-    size = Size.m,
-    options,
-    placeholder,
-    disabled,
-    onChange,
-    isRequired,
-    value,
-  }) => {
+  (
+    {
+      label,
+      sublabel,
+      isLabelBold,
+      size = Size.m,
+      options,
+      placeholder,
+      disabled,
+      onChange,
+      value,
+    },
+    ref,
+  ) => {
     const [inputValue, setInputValue] = useState<string>('');
-    const [selectedOption, setSelectedOption] = useState('');
     const [searchText, setSearchText] = useState('');
     const [filteredOptions, setFilteredOptions] = useState(options);
     const [isDropdownDisplayed, setIsDropdownDisplayed] =
       useState<boolean>(false);
-    const wrapperRef = useRef<HTMLDivElement>(null);
     const [highlightedIndex, setHighlightedIndex] = useState(0);
+    const [selectedOption, setSelectedOption] = useState('');
 
     const resetSearch = () => {
       setIsDropdownDisplayed(false);
@@ -87,54 +86,49 @@ const SelectInput = forwardRef<HTMLInputElement, SelectInputProps>(
     const handleBlur = () => {
       if (selectedOption) {
         setInputValue(selectedOption);
+        setIsDropdownDisplayed(false);
       } else {
         resetSearch();
       }
       setHighlightedIndex(0);
     };
 
-    const handleKeyDown = useCallback(
-      (event: KeyboardEvent) => {
-        if (!isDropdownDisplayed) return;
+    const handleKeyDown = (
+      event: KeyboardEvent<HTMLInputElement | HTMLDivElement>,
+    ) => {
+      if (!isDropdownDisplayed) {
+        return;
+      }
+      let newIndex = highlightedIndex;
 
-        let newIndex = highlightedIndex;
-        switch (event.key) {
-          case 'ArrowDown':
-            event.preventDefault();
-            newIndex = (highlightedIndex + 1) % filteredOptions.length;
-            break;
-          case 'ArrowUp':
-            event.preventDefault();
-            newIndex =
-              (highlightedIndex - 1 + filteredOptions.length) %
-              filteredOptions.length;
-            break;
-          case 'Enter':
-            event.preventDefault();
-            if (highlightedIndex >= 0 && filteredOptions.length > 0) {
-              const selected = filteredOptions[newIndex];
-              selectOption(selected);
-            }
-            break;
-          case 'Escape':
-            setIsDropdownDisplayed(false);
-            break;
-        }
-        setHighlightedIndex(newIndex);
-      },
-      [highlightedIndex, filteredOptions, isDropdownDisplayed],
-    );
+      switch (event.key) {
+        case 'ArrowDown':
+          event.preventDefault();
+          newIndex = (highlightedIndex + 1) % filteredOptions.length;
+          break;
+        case 'ArrowUp':
+          event.preventDefault();
+          newIndex =
+            (highlightedIndex - 1 + filteredOptions.length) %
+            filteredOptions.length;
+          break;
+        case 'Enter':
+          event.preventDefault();
+          if (highlightedIndex >= 0 && filteredOptions.length > 0) {
+            const selected = filteredOptions[newIndex];
+            selectOption(selected);
+          }
+          break;
+        case 'Escape':
+          setIsDropdownDisplayed(false);
+          break;
+      }
+      setHighlightedIndex(newIndex);
+    };
 
     useEffect(() => {
       setFilteredOptions(options);
       setHighlightedIndex(0);
-      if (highlightedIndex >= 0 && highlightedIndex < options.length) {
-        wrapperRef.current
-          ?.querySelectorAll('.option')
-          [
-            highlightedIndex
-          ]?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      }
     }, [options]);
 
     useEffect(() => {
@@ -149,40 +143,10 @@ const SelectInput = forwardRef<HTMLInputElement, SelectInputProps>(
       }
     }, [searchText, options]);
 
-    useEffect(() => {
-      const handleClickOutside = (event: MouseEvent) => {
-        if (
-          wrapperRef.current &&
-          !wrapperRef.current.contains(event.target as Node)
-        ) {
-          setIsDropdownDisplayed(false);
-        }
-      };
-
-      document.addEventListener('keydown', handleKeyDown);
-      document.addEventListener('mousedown', handleClickOutside);
-
-      return () => {
-        document.removeEventListener('keydown', handleKeyDown);
-        document.removeEventListener('mousedown', handleClickOutside);
-      };
-    }, [handleKeyDown, wrapperRef]);
-
     return (
-      <div className={styles.wrapper} ref={wrapperRef} tabIndex={-1}>
-        <Image
-          src={
-            'https://storage.googleapis.com/morning-react-ui-data/icons/arrow.svg'
-          }
-          alt={'arrow down'}
-          className={classNames(styles[size], styles.arrow, {
-            [styles.arrowUp]: isDropdownDisplayed,
-          })}
-          height={sizeToNumber(size)}
-          width={sizeToNumber(size)}
-        />
+      <div className={styles.wrapper} tabIndex={-1}>
         <TextInput
-          placeholder={selectedOption || placeholder}
+          placeholder={value || placeholder}
           size={size}
           value={inputValue}
           label={label}
@@ -191,30 +155,38 @@ const SelectInput = forwardRef<HTMLInputElement, SelectInputProps>(
           onChange={handleTextChange}
           onFocus={handleFocus}
           disabled={disabled}
-          isRequired={isRequired}
           onBlur={handleBlur}
+          showDropdownIcon
+          isDropdownActive={isDropdownDisplayed}
+          onKeyDown={(e) => handleKeyDown(e)}
+          ref={ref}
         />
         {isDropdownDisplayed && (
           <div className={styles.dropdown}>
             {filteredOptions?.map((option, index) => (
               <div
-                className={classNames(styles.option, styles[size], {
-                  [styles.selectedOption]: selectedOption === option,
-                  [styles.highlightedOption]: index === highlightedIndex,
-                })}
+                className={classNames(
+                  styles.option,
+                  `font-size-${size}`,
+                  `padding-${size}`,
+                  {
+                    [styles.selectedOption]: value === option,
+                    [styles.highlightedOption]: index === highlightedIndex,
+                  },
+                )}
                 key={index}
-                onClick={() => selectOption(option)}
                 onMouseDown={() => selectOption(option)}
+                onMouseMove={() => setHighlightedIndex(index)}
               >
                 {option}
-                {selectedOption === option && (
-                  <Image
-                    src='https://storage.googleapis.com/morning-react-ui-data/icons/success.svg'
-                    alt='Selected'
-                    width={sizeToNumber(size)}
-                    height={sizeToNumber(size)}
+                {value === option && (
+                  <span
                     className={styles.selectedOptionIcon}
-                  />
+                    style={{
+                      width: `${sizeToNumber(size)}px`,
+                      height: `${sizeToNumber(size)}px`,
+                    }}
+                  ></span>
                 )}
               </div>
             ))}

@@ -47,7 +47,6 @@ export default function Page() {
     placeholder?: string;
     isError?: boolean;
     disabled?: boolean;
-    isRequired?: boolean;
     imageSrc?: string;
     imageAlt?: string;
   }) => {
@@ -73,7 +72,6 @@ export default function Page() {
     max?: number;
     isError?: boolean;
     disabled?: boolean;
-    isRequired?: boolean;
     placeholder?: string;
   }) => {
     return (
@@ -96,7 +94,6 @@ export default function Page() {
     placeholder?: string;
     disabled?: boolean;
     isError?: boolean;
-    isRequired?: boolean;
     value: string;
     onChange: (value: string) => void;
   }) => {
@@ -174,12 +171,6 @@ export default function Page() {
               value: textValue,
               onChange: handleTextChange,
             })}
-            {renderTextInputs({
-              placeholder: 'Required',
-              value: textValue,
-              isRequired: true,
-              onChange: handleTextChange,
-            })}
           </Column>
           <Column>
             <h1>TextInput with images</h1>
@@ -208,13 +199,6 @@ export default function Page() {
               onChange: handleNumberChange,
             })}
             {renderNumberInputs({
-              label: 'Required',
-              isRequired: true,
-              value: numberValue,
-              placeholder: 'placeholder',
-              onChange: handleNumberChange,
-            })}
-            {renderNumberInputs({
               label: 'Disabled',
               disabled: true,
               value: numberValue,
@@ -229,15 +213,6 @@ export default function Page() {
               sublabel: 'Sublabel',
               placeholder: 'Placeholder',
               options: ['one', 'two', 'three', 'four', 'five'],
-              value: selectValue,
-              onChange: handleSelectChange,
-            })}
-            {renderSelectInputs({
-              label: 'Required',
-              sublabel: 'Sublabel',
-              placeholder: 'Placeholder',
-              options: ['one', 'two', 'three', 'four', 'five'],
-              isRequired: true,
               value: selectValue,
               onChange: handleSelectChange,
             })}
