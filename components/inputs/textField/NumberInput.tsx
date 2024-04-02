@@ -29,10 +29,11 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       size = Size.m,
       value,
       onChange,
-      min,
+      min = 0,
       max,
       isError,
       disabled,
+      placeholder,
     },
     ref,
   ) => {
@@ -60,12 +61,18 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
       const newValue = event.target.value;
       if (newValue === '') {
-        setInputValue(NaN);
+        onChange(NaN);
+        setInputValue(undefined);
         return;
       }
       const parsedValue = parseInt(newValue, 10);
-      if (!isNaN(parsedValue)) {
-        validateAndSet(parsedValue);
+      if (
+        !isNaN(parsedValue) &&
+        parsedValue >= min &&
+        (max === undefined || parsedValue <= max)
+      ) {
+        setInputValue(parsedValue);
+        onChange(parsedValue);
       }
     };
 
@@ -122,6 +129,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
             min={min}
             max={max}
             disabled={disabled}
+            placeholder={placeholder}
           />
         </div>
       </ParentInput>
