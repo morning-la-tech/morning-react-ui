@@ -36,3 +36,8 @@
         opacity: .5;
     }
 }
+
+.uploadIcon {
+    position: static!important;
+    padding: 4px;
+}

@@ -6,7 +6,7 @@ const Navigation = ({ children }: PropsWithChildren) => {
   return (
     <nav className={styles.bar}>
       <div className={styles.container}>
-        <Link href={'/'}>Home</Link>
+        <Link href={'/'}>&lt;&lt;</Link>
         <div style={{ marginLeft: '1em' }}> {children} </div>
       </div>
     </nav>
