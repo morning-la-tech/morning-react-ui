@@ -1,4 +1,6 @@
 import Image from 'next/image';
+import classNames from 'classnames';
+import { space_grotesk } from '@/app/fonts';
 import styles from './LoginPage.module.css';
 import GoogleLoginButton from '../buttons/GoogleLoginButton';
 
@@ -32,7 +34,9 @@ const LoginPage = ({ onClick, title, body }: Props) => (
     </div>
     <div className={styles.loginForm}>
       <div className={styles.title}>{title}</div>
-      <div className={styles.body}>{body}</div>
+      <div className={classNames(styles.body, space_grotesk.variable)}>
+        {body}
+      </div>
       <GoogleLoginButton onClick={onClick} />
     </div>
   </div>

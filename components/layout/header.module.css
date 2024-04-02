@@ -3,9 +3,9 @@
     place-content: center center;
     width: 100%;
     background-color: var(--cloud);
-    font-family: var(--titling-font);
+    font-family: var(--inter);
     font-size: 16px;
-    font-weight: bolder;
+    font-weight: 900;
 
     .container {
         display: flex;

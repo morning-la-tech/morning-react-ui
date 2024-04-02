@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import Separator from '@/components/utils/Separator';
 import Container from '@/components/layout/Container';
 import Columns from '@/components/layout/Columns';
@@ -8,6 +7,7 @@ import Column from '@/components/layout/Column';
 import EmptyState from '@/components/utils/EmptyState';
 import { Button } from '@/components/buttons';
 import { useToast } from '@/components/Context/ToastContext';
+import Navigation from '@/components/layout/Navigation';
 
 export default function Page() {
   const { addToast } = useToast();
@@ -21,9 +21,11 @@ export default function Page() {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'row' }}>
+    <>
+      <Navigation>
+        <h1 className={'font-size-xl'}>Utils</h1>
+      </Navigation>
       <Container>
-        <Link href={'/'}>Home</Link>
         <h1>Separator</h1>
         <Separator />
         <Columns>
@@ -43,6 +45,6 @@ export default function Page() {
           </Column>
         </Columns>
       </Container>
-    </div>
+    </>
   );
 }

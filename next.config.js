@@ -8,7 +8,13 @@ const nextConfig = {
     },
   },
   images: {
-    domains: ['cdn.morning.fr'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'cdn.morning.fr',
+        port: '',
+      },
+    ],
   },
 };
 

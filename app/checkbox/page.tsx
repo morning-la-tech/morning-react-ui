@@ -1,6 +1,5 @@
 'use client';
 import { useState } from 'react';
-import Link from 'next/link';
 import Checkbox from '@/components/inputs/checkboxes/Checkbox';
 import { Size } from '@/utils/Enum';
 import { SelectionState, TriState } from '@/components/inputs/types';
@@ -8,6 +7,7 @@ import Container from '@/components/layout/Container';
 import Columns from '@/components/layout/Columns';
 import Column from '@/components/layout/Column';
 import MultiCheckbox from '@/components/inputs/checkboxes/MultiCheckbox';
+import Navigation from '@/components/layout/Navigation';
 
 const CheckboxGroup = () => {
   const initialOptions = {
@@ -67,96 +67,100 @@ const CheckboxGroup = () => {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'row' }}>
-      <Container>
-        <Link href={'/'}>Home</Link>
-        <Columns>
-          <Column>
-            <h1>Checkbox</h1>
-            {renderCheckbox({
-              label: 'Label',
-              value: valueCheckbox,
-              onChange: handleChange,
-            })}
-            {renderCheckbox({
-              label: 'Label',
-              value: valueCheckbox,
-              onChange: handleChange,
-              isError: true,
-            })}
-            {renderCheckbox({
-              label: 'Label',
-              value: valueCheckbox,
-              onChange: handleChange,
-              disabled: true,
-            })}
-            {renderCheckbox({
-              label: 'Label',
-              value: TriState.indeterminate,
-              onChange: handleChange,
-            })}
-          </Column>
-          <Column>
-            <h1>MultiCheckbox inline</h1>
-            {renderMultiCheckbox({
-              label: 'Label',
-              options: options,
-              onChange: handleOptionsChange,
-              isSelectAll: true,
-              inline: true,
-            })}
-            {renderMultiCheckbox({
-              label: 'Label',
-              options: options,
-              onChange: handleOptionsChange,
-              inline: true,
-            })}
-            {renderMultiCheckbox({
-              label: 'Label',
-              options: options,
-              onChange: handleOptionsChange,
-              isError: true,
-              inline: true,
-            })}
-            {renderMultiCheckbox({
-              label: 'Label',
-              options: options,
-              onChange: handleOptionsChange,
-              disabled: true,
-              inline: true,
-            })}
-          </Column>
-          <Column>
-            <h1>Multicheckbox</h1>
-            {renderMultiCheckbox({
-              label: 'Label',
-              options: options,
-              onChange: handleOptionsChange,
-              isSelectAll: true,
-            })}
-            {renderMultiCheckbox({
-              label: 'Label',
-              options: options,
-              onChange: handleOptionsChange,
-            })}
-          </Column>
-          <Column>
-            {renderMultiCheckbox({
-              label: 'Label',
-              options: options,
-              onChange: handleOptionsChange,
-              isError: true,
-            })}
-            {renderMultiCheckbox({
-              label: 'Label',
-              options: options,
-              onChange: handleOptionsChange,
-              disabled: true,
-            })}
-          </Column>
-        </Columns>
-      </Container>
-    </div>
+    <>
+      <Navigation>
+        <h1 className={'font-size-xl'}>Check boxes</h1>
+      </Navigation>
+      <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <Container>
+          <Columns>
+            <Column>
+              <h1>Checkbox</h1>
+              {renderCheckbox({
+                label: 'Label',
+                value: valueCheckbox,
+                onChange: handleChange,
+              })}
+              {renderCheckbox({
+                label: 'Label',
+                value: valueCheckbox,
+                onChange: handleChange,
+                isError: true,
+              })}
+              {renderCheckbox({
+                label: 'Label',
+                value: valueCheckbox,
+                onChange: handleChange,
+                disabled: true,
+              })}
+              {renderCheckbox({
+                label: 'Label',
+                value: TriState.indeterminate,
+                onChange: handleChange,
+              })}
+            </Column>
+            <Column>
+              <h1>MultiCheckbox inline</h1>
+              {renderMultiCheckbox({
+                label: 'Label',
+                options: options,
+                onChange: handleOptionsChange,
+                isSelectAll: true,
+                inline: true,
+              })}
+              {renderMultiCheckbox({
+                label: 'Label',
+                options: options,
+                onChange: handleOptionsChange,
+                inline: true,
+              })}
+              {renderMultiCheckbox({
+                label: 'Label',
+                options: options,
+                onChange: handleOptionsChange,
+                isError: true,
+                inline: true,
+              })}
+              {renderMultiCheckbox({
+                label: 'Label',
+                options: options,
+                onChange: handleOptionsChange,
+                disabled: true,
+                inline: true,
+              })}
+            </Column>
+            <Column>
+              <h1>Multicheckbox</h1>
+              {renderMultiCheckbox({
+                label: 'Label',
+                options: options,
+                onChange: handleOptionsChange,
+                isSelectAll: true,
+              })}
+              {renderMultiCheckbox({
+                label: 'Label',
+                options: options,
+                onChange: handleOptionsChange,
+              })}
+            </Column>
+            <Column>
+              {renderMultiCheckbox({
+                label: 'Label',
+                options: options,
+                onChange: handleOptionsChange,
+                isError: true,
+              })}
+              {renderMultiCheckbox({
+                label: 'Label',
+                options: options,
+                onChange: handleOptionsChange,
+                disabled: true,
+              })}
+            </Column>
+          </Columns>
+        </Container>
+      </div>
+    </>
   );
 };
 
