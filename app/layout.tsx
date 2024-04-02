@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, Space_Grotesk } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/layout/Header';
 import { Providers } from './Providers';
@@ -7,6 +7,13 @@ import { Providers } from './Providers';
 const inter = Inter({
   weight: 'variable',
   subsets: ['latin'],
+  variable: '--inter',
+});
+
+const spaceGrotesk = Space_Grotesk({
+  weight: 'variable',
+  subsets: ['latin'],
+  variable: '--space-grotesk',
 });
 
 export const metadata: Metadata = {
@@ -22,7 +29,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <body className={inter.className}>
+      <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
         <Providers>
           <Header>librairie de composants</Header>
           {children}

@@ -8,7 +8,7 @@ import Columns from '@/components/layout/Columns';
 import Column from '@/components/layout/Column';
 import { Size } from '@/utils/Enum';
 import NumberInput from '@/components/inputs/textField/NumberInput';
-import SelectInput from '@/components/inputs/selectField/SelectInput';
+import SelectInput from '@/components/inputs/selects/SelectInput';
 import TimeInput from '@/components/inputs/textField/TimeInput';
 
 export default function Page() {
@@ -47,7 +47,6 @@ export default function Page() {
     placeholder?: string;
     isError?: boolean;
     disabled?: boolean;
-    isRequired?: boolean;
     imageSrc?: string;
     imageAlt?: string;
   }) => {
@@ -73,7 +72,6 @@ export default function Page() {
     max?: number;
     isError?: boolean;
     disabled?: boolean;
-    isRequired?: boolean;
     placeholder?: string;
   }) => {
     return (
@@ -96,8 +94,7 @@ export default function Page() {
     placeholder?: string;
     disabled?: boolean;
     isError?: boolean;
-    isRequired?: boolean;
-    value: string;
+    selectedOption: string;
     onChange: (value: string) => void;
   }) => {
     return (
@@ -174,12 +171,6 @@ export default function Page() {
               value: textValue,
               onChange: handleTextChange,
             })}
-            {renderTextInputs({
-              placeholder: 'Required',
-              value: textValue,
-              isRequired: true,
-              onChange: handleTextChange,
-            })}
           </Column>
           <Column>
             <h1>TextInput with images</h1>
@@ -208,13 +199,6 @@ export default function Page() {
               onChange: handleNumberChange,
             })}
             {renderNumberInputs({
-              label: 'Required',
-              isRequired: true,
-              value: numberValue,
-              placeholder: 'placeholder',
-              onChange: handleNumberChange,
-            })}
-            {renderNumberInputs({
               label: 'Disabled',
               disabled: true,
               value: numberValue,
@@ -229,16 +213,7 @@ export default function Page() {
               sublabel: 'Sublabel',
               placeholder: 'Placeholder',
               options: ['one', 'two', 'three', 'four', 'five'],
-              value: selectValue,
-              onChange: handleSelectChange,
-            })}
-            {renderSelectInputs({
-              label: 'Required',
-              sublabel: 'Sublabel',
-              placeholder: 'Placeholder',
-              options: ['one', 'two', 'three', 'four', 'five'],
-              isRequired: true,
-              value: selectValue,
+              selectedOption: selectValue,
               onChange: handleSelectChange,
             })}
             {renderSelectInputs({
@@ -247,7 +222,7 @@ export default function Page() {
               placeholder: 'Placeholder',
               options: ['one', 'two', 'three', 'four', 'five'],
               disabled: true,
-              value: selectValue,
+              selectedOption: selectValue,
               onChange: handleSelectChange,
             })}
           </Column>

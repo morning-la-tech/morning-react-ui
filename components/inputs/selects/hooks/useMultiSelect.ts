@@ -160,12 +160,13 @@ const useMultiSelect = ({
     }
   }, [highlightedIndex, checkboxRefs]);
 
+  // Calculate the height to display the right number of element before scrolling
   useEffect(() => {
     checkboxRefs;
     if (checkboxRefs.length < rowToDisplay) {
       return;
     }
-    if (checkboxRefs[rowToDisplay + 1].current) {
+    if (checkboxRefs[rowToDisplay + 1]?.current) {
       const last = checkboxRefs[rowToDisplay + 1].current?.offsetTop;
       const first = checkboxRefs[0]?.current?.offsetTop;
       if (last && first) {

@@ -19,6 +19,12 @@
   overflow-y: auto;
 }
 
+.selectList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
 .textOverflowEllipsis {
   text-overflow: ellipsis;
 }
@@ -29,4 +35,26 @@
 
 .focus {
   color: var(--black);
+}
+
+.option {
+  color: var(--black);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.selectedOption {
+  background-color: var(--silver);
+}
+
+.selectedOptionIcon {
+  mask-size: contain;
+  mask-image: url('https://storage.googleapis.com/morning-react-ui-data/icons/success.svg');
+  background-color: var(--sapphire);
+}
+
+.highlightedOption {
+  background-color: var(--cloud);
 }
