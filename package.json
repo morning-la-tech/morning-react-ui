@@ -19,9 +19,11 @@
     "*.css": "stylelint --fix"
   },
   "dependencies": {
+    "@nytimes/react-prosemirror": "^0.6.1",
     "classnames": "^2.5.1",
     "date-fns": "^3.3.1",
     "next": "14.0.4",
+    "prosemirror-view": "^1.33.3",
     "react": "^18",
     "react-dom": "^18",
     "react-uuid": "^2.0.0"

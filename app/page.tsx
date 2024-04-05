@@ -32,6 +32,12 @@ export default function Home() {
       >
         Utils
       </Button>
+      <Button
+        variant={ButtonVariant.Secondary}
+        onClick={() => router.push('/textarea')}
+      >
+        Text Area
+      </Button>
     </Container>
   );
 }

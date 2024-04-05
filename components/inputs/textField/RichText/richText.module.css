@@ -1,0 +1,20 @@
+.wrapper {
+    flex-direction: column;
+}
+
+.controls {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+
+    .control::before {
+        border: none;
+    }
+}
+
+.textAreaContainer {
+    outline: 0px solid transparent;
+    position: relative;
+    width: 300px;
+    height: 300px;
+}
