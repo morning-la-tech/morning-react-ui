@@ -45,8 +45,8 @@
   justify-content: space-between;
 }
 
-.selectedOption {
-  background-color: var(--silver);
+.optionText {
+  align-content: center;
 }
 
 .selectedOptionIcon {
@@ -56,5 +56,11 @@
 }
 
 .highlightedOption {
-  background-color: var(--cloud);
+  background-color: var(--silver);
+}
+
+.emptyState {
+  font-style: italic;
+  color: var(--iron);
+  cursor: default;
 }
