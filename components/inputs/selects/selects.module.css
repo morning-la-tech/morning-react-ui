@@ -45,8 +45,8 @@
   justify-content: space-between;
 }
 
-.selectedOption {
-  background-color: var(--silver);
+.optionText {
+  align-content: center;
 }
 
 .selectedOptionIcon {
@@ -56,5 +56,36 @@
 }
 
 .highlightedOption {
-  background-color: var(--cloud);
+  background-color: var(--silver);
+}
+
+.emptyState {
+  font-style: italic;
+  color: var(--iron);
+  cursor: default;
+}
+
+.padding-xs {
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+.padding-s {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.padding-m {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.padding-l {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.padding-xl {
+  padding-top: 9px;
+  padding-bottom: 9px;
 }

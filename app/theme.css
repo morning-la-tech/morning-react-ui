@@ -60,16 +60,24 @@
   --gap-xs: 8px;
 
   /* Padding */
-  --padding-xl: 9px 14px;
-  --padding-l: 8px 12px;
-  --padding-m: 6px 10px;
+  --padding-xl: 7px 14px;
+  --padding-l: 6px 12px;
+  --padding-m: 5px 10px;
   --padding-s: 4px 8px;
   --padding-xs: 3px 6px;
+
+  /* heights */
+  --height-xl: 28px;
+  --height-l: 24px;
+  --height-m: 20px;
+  --height-s: 16px;
+  --height-xs: 12px;
 }
 
 /* Fonts */
 body, input, textarea, select {
   font-family: var(--inter);
+  padding: 0;
 }
 
 @font-face {
@@ -185,4 +193,24 @@ body, input, textarea, select {
 
 .padding-xl {
   padding: var(--padding-xl);
+}
+
+.height-xs {
+  height: var(--height-xs);
+}
+
+.height-s {
+  height: var(--height-s);
+}
+
+.height-m {
+  height: var(--height-m);
+}
+
+.height-l {
+  height: var(--height-l);
+}
+
+.height-xl {
+  height: var(--height-xl);
 }

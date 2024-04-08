@@ -10,6 +10,7 @@ type SelectInputProps = InputProps & {
   selectedOption: string;
   onChange: (value: string) => void;
   rowToDisplay?: number;
+  emptyStateText?: string;
 };
 
 const SelectInput = ({
@@ -23,6 +24,7 @@ const SelectInput = ({
   onChange,
   selectedOption,
   rowToDisplay = 8,
+  emptyStateText = 'Aucun résultat dans la liste',
 }: SelectInputProps) => {
   const {
     isDropdownDisplayed,
@@ -67,6 +69,18 @@ const SelectInput = ({
             maxHeight: maxHeight ? `${maxHeight}px` : '',
           }}
         >
+          {filteredOptions.length === 0 && (
+            <div
+              className={classNames(
+                styles.option,
+                `font-size-${size}`,
+                `padding-${size}`,
+                styles.emptyState,
+              )}
+            >
+              {emptyStateText}
+            </div>
+          )}
           {filteredOptions?.map((option, index) => (
             <div
               className={classNames(
@@ -74,7 +88,6 @@ const SelectInput = ({
                 `font-size-${size}`,
                 `padding-${size}`,
                 {
-                  [styles.selectedOption]: selectedOption === option,
                   [styles.highlightedOption]: index === highlightedIndex,
                 },
               )}
@@ -89,7 +102,9 @@ const SelectInput = ({
               onMouseLeave={() => setHighlightedIndex(null)}
               ref={optionRefs[index]}
             >
-              <span>{option}</span>
+              <span className={classNames(`height-${size}`, styles.option)}>
+                {option}
+              </span>
               {selectedOption === option && (
                 <span
                   className={styles.selectedOptionIcon}
