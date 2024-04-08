@@ -1,16 +1,46 @@
-import classNames from 'classnames';
-import { Dispatch, FormEvent, useRef } from 'react';
+import React, { Dispatch, useState } from 'react';
 import Image from 'next/image';
-import inputStyle from '@/components/inputs/input.module.css';
-import { Button, ButtonVariant } from '@/components/buttons';
+import { ProseMirror } from '@nytimes/react-prosemirror';
+import classNames from 'classnames';
+import { EditorState } from 'prosemirror-state';
+import { Schema } from 'prosemirror-model';
 import ParentInput from '@/components/inputs/ParentInput';
+import inputStyle from '@/components/inputs/input.module.css';
 import { InputProps } from '@/components/inputs/types';
+import { Button, ButtonVariant } from '@/components/buttons';
+import { ItalicButton } from '@/components/inputs/textField/RichText/ItalicButton';
+import { BoldButton } from '@/components/inputs/textField/RichText/BoldButton';
 import richStyle from './richText.module.css';
+import {UnderlineButton} from "@/components/inputs/textField/RichText/UnderlineButton";
+import {schema} from "prosemirror-schema-basic";
+import {StrikeButton} from "@/components/inputs/textField/RichText/StrikeButton";
 
 type RichTextProps = InputProps & {
   text: string;
   setText: Dispatch<string>;
 };
+
+const mySchema = new Schema({
+  nodes: schema.spec.nodes,
+  marks: {
+    em: {
+      parseDOM: [{tag: "em"}],
+      toDOM() { return ["em", 0]; }
+    },
+    strong: {
+      parseDOM: [{tag: "strong"}],
+      toDOM() { return ["strong", 0]; }
+    },
+    underline: {
+      parseDOM: [{tag: "u"}],
+      toDOM() { return ["u", 0]; }
+    },
+    strikethrough: {
+      parseDOM: [{tag: "s"}, {style: "text-decoration", getAttrs: value => value === "line-through" && null}],
+      toDOM() { return ["s", 0]; }
+    }
+  }
+});
 
 const RichText = ({
   label,
@@ -21,50 +51,8 @@ const RichText = ({
   text,
   setText,
 }: RichTextProps) => {
-  const editableRef = useRef<HTMLDivElement>(null);
-  const makeTextUnderline = () => {
-    const selection = window.getSelection();
-    if (!selection?.rangeCount) {
-      return;
-    }
-    document.execCommand('underline', true);
-  };
-
-  const makeTextStrike = () => {
-    const selection = window.getSelection();
-    if (!selection?.rangeCount) {
-      return;
-    }
-    document.execCommand('strikeThrough', true);
-  };
-
-  const makeTextBold = () => {
-    const selection = window.getSelection();
-    if (!selection?.rangeCount) {
-      return;
-    }
-    document.execCommand('bold', true);
-  };
-
-  const makeTextItalic = () => {
-    const selection = window.getSelection();
-    if (!selection?.rangeCount) {
-      return;
-    }
-    document.execCommand('italic', true);
-  };
-
-  const makeTextLink = () => {
-    const selection = window.getSelection();
-    if (!selection?.rangeCount) {
-      return;
-    }
-    document.execCommand('createLink', true);
-  };
-
-  const handleInput = (inputEvent: FormEvent<HTMLDivElement>) => {
-    setText(inputEvent.nativeEvent.target?.innerHTML);
-  };
+  const [mount, setMount] = useState<HTMLElement | null>(null);
+  const [state, setState] = useState(EditorState.create({ schema: mySchema }));
 
   return (
     <ParentInput
@@ -74,82 +62,40 @@ const RichText = ({
       size={size}
       disabled={disabled}
     >
-      <div
-        className={classNames(
-          inputStyle.wrapper,
-          richStyle.wrapper,
-          'padding-m',
-        )}
+      <ProseMirror
+        mount={mount}
+        state={state}
+        dispatchTransaction={(tr) => {
+          setState((s) => s.apply(tr));
+        }}
       >
         <div
-          ref={editableRef}
-          contentEditable
-          className={classNames(richStyle.textAreaContainer)}
-          onInput={handleInput}
-        ></div>
-        <aside className={richStyle.controls}>
-          <Button
-            variant={ButtonVariant.Secondary}
-            className={richStyle.control}
-            onClick={makeTextItalic}
-          >
-            <Image
-              src={'https://cdn.morning.fr/icons/italic.svg'}
-              width={24}
-              height={24}
-              alt={'italic'}
-            />
-          </Button>
-          <Button
-            variant={ButtonVariant.Secondary}
-            className={richStyle.control}
-            onClick={makeTextBold}
-          >
-            <Image
-              src={'https://cdn.morning.fr/icons/bold.svg'}
-              width={24}
-              height={24}
-              alt={'bold'}
-            />
-          </Button>
-          <Button
-            variant={ButtonVariant.Secondary}
-            className={richStyle.control}
-            onClick={makeTextUnderline}
-          >
-            <Image
-              src={'https://cdn.morning.fr/icons/underline.svg'}
-              width={24}
-              height={24}
-              alt={'underline'}
-            />
-          </Button>
-          <Button
-            variant={ButtonVariant.Secondary}
-            className={richStyle.control}
-            onClick={makeTextStrike}
-          >
-            <Image
-              src={'https://cdn.morning.fr/icons/strike.svg'}
-              width={24}
-              height={24}
-              alt={'strike'}
-            />
-          </Button>
-          <Button
-            variant={ButtonVariant.Secondary}
-            className={richStyle.control}
-            onClick={makeTextLink}
-          >
-            <Image
-              src={'https://cdn.morning.fr/icons/link.svg'}
-              width={24}
-              height={24}
-              alt={'link'}
-            />
-          </Button>
-        </aside>
-      </div>
+          className={classNames(
+            inputStyle.wrapper,
+            richStyle.wrapper,
+            'padding-m',
+          )}
+        >
+          <div className={richStyle.textAreaContainer} ref={setMount} />
+          <aside className={richStyle.controls}>
+            <ItalicButton />
+            <BoldButton />
+            <UnderlineButton />
+            <StrikeButton />
+            <Button
+              variant={ButtonVariant.Secondary}
+              className={richStyle.control}
+            >
+              <Image
+                src={'https://cdn.morning.fr/icons/link.svg'}
+                width={24}
+                height={24}
+                alt={'link'}
+              />
+            </Button>
+          </aside>
+        </div>
+      </ProseMirror>
     </ParentInput>
   );
 };
