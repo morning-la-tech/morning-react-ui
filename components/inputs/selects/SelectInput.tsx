@@ -1,16 +1,14 @@
 import classNames from 'classnames';
 import { Size, sizeToNumber } from '@/utils/Enum';
 import TextInput from '@/components/inputs/textField/TextInput';
-import { InputProps } from '@/components/inputs/types';
+import { SelectsProps } from '@/components/inputs/types';
 import styles from './selects.module.css';
 import useSelectInput from './hooks/useSelectInput';
 
-type SelectInputProps = InputProps & {
+type SelectInputProps = SelectsProps & {
   options: string[];
   selectedOption: string;
   onChange: (value: string) => void;
-  rowToDisplay?: number;
-  emptyStateText?: string;
 };
 
 const SelectInput = ({
@@ -70,7 +68,7 @@ const SelectInput = ({
           }}
         >
           {filteredOptions.length === 0 && (
-            <div
+            <span
               className={classNames(
                 styles.option,
                 `font-size-${size}`,
@@ -79,7 +77,7 @@ const SelectInput = ({
               )}
             >
               {emptyStateText}
-            </div>
+            </span>
           )}
           {filteredOptions?.map((option, index) => (
             <div

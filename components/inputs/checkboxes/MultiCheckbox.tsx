@@ -113,6 +113,11 @@ const MultiCheckbox = ({
                 setHoveredIndex(adjustedIndex);
               }
             }}
+            onMouseLeave={() => {
+              if (setHoveredIndex) {
+                setHoveredIndex(null);
+              }
+            }}
             ref={checkboxRefs[index + +isSelectAll]}
           />
         );
@@ -150,6 +155,12 @@ const MultiCheckbox = ({
               }
             }}
             ref={checkboxRefs[0]}
+            onMouseLeave={() => {
+              if (setHoveredIndex) {
+                setHoveredIndex(null);
+              }
+            }}
+            className={'bold'}
           />
         )}
         {checkboxes}

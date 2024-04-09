@@ -215,7 +215,7 @@ const useMultiSelect = ({
     }
 
     // Do nothing if no index is highlighted
-    if (highlightedIndex === null) {
+    if (highlightedIndex === null || Object.keys(filteredOptions).length < 1) {
       return;
     }
 
@@ -241,7 +241,7 @@ const useMultiSelect = ({
   };
 
   const handleEnter = () => {
-    if (highlightedIndex === null) {
+    if (highlightedIndex === null || Object.keys(filteredOptions).length < 1) {
       return;
     }
     makeHighlightedIndexSelected();
