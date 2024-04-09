@@ -1,11 +1,14 @@
 'use client';
 import { useState } from 'react';
-import Link from 'next/link';
 import MultiSelect from '@/components/inputs/selects/MultiSelect';
 import { SelectionState } from '@/components/inputs/types';
 import Container from '@/components/layout/Container';
 import { Size } from '@/utils/Enum';
 import NumberInput from '@/components/inputs/textField/NumberInput';
+import Columns from '@/components/layout/Columns';
+import Column from '@/components/layout/Column';
+import SelectInput from '@/components/inputs/selects/SelectInput';
+import Navigation from '@/components/layout/Navigation';
 
 export default function Selects() {
   const initialOptions = {
@@ -58,45 +61,127 @@ export default function Selects() {
   };
   const [optionsToDisplay, setOptionsToDisplay] = useState(8);
   const [options, setOptions] = useState<SelectionState>(initialOptions);
+  const [selectValue, setSelectValue] = useState<string>('');
+
+  const handleSelectChange = (newSelectValue: string) => {
+    setSelectValue(newSelectValue);
+  };
+
+  const renderSelectInputs = (props: {
+    label?: string;
+    sublabel?: string;
+    isLabelBold?: boolean;
+    size?: Size;
+    options: string[];
+    placeholder?: string;
+    disabled?: boolean;
+    isError?: boolean;
+    selectedOption: string;
+    onChange: (value: string) => void;
+  }) => {
+    return (
+      <>
+        <SelectInput {...props} size={Size.xs} />
+        <SelectInput {...props} size={Size.s} />
+        <SelectInput {...props} size={Size.m} />
+        <SelectInput {...props} size={Size.l} />
+      </>
+    );
+  };
+
+  const renderMultiSelectInputs = (props: {
+    label?: string;
+    sublabel?: string;
+    isLabelBold?: boolean;
+    size?: Size;
+    options: SelectionState;
+    placeholder?: string;
+    disabled?: boolean;
+    isError?: boolean;
+    onChange: (value: SelectionState) => void;
+    rowToDisplay?: number;
+  }) => {
+    return (
+      <>
+        <MultiSelect {...props} size={Size.xs} />
+        <MultiSelect {...props} size={Size.s} />
+        <MultiSelect {...props} size={Size.m} />
+        <MultiSelect {...props} size={Size.l} />
+      </>
+    );
+  };
 
   return (
     <Container style={{ gap: '30px' }}>
-      <Link href={'/'}>Home</Link>
-      <h1>MultiSelect</h1>
+      <Navigation>
+        <h1 className={'font-size-xl'}>Selects</h1>
+      </Navigation>
       <NumberInput
         label='Elements displayed in the dropdown'
         value={optionsToDisplay}
         onChange={setOptionsToDisplay}
         min={1}
       />
-      <MultiSelect
-        label='L'
-        options={options}
-        onChange={setOptions}
-        size={Size.l}
-        rowToDisplay={optionsToDisplay}
-      />
-      <MultiSelect
-        label='M'
-        options={options}
-        onChange={setOptions}
-        size={Size.m}
-        rowToDisplay={optionsToDisplay}
-      />
-      <MultiSelect
-        label='S'
-        options={options}
-        onChange={setOptions}
-        size={Size.s}
-        rowToDisplay={optionsToDisplay}
-      />
-      <MultiSelect
-        label='XS'
-        options={options}
-        onChange={setOptions}
-        size={Size.xs}
-        rowToDisplay={optionsToDisplay}
-      />
+      <Columns>
+        <Column>
+          <h1>MultiSelect</h1>
+          {renderMultiSelectInputs({
+            label: 'Simple',
+            sublabel: 'Sublabel',
+            placeholder: 'Placeholder',
+            options: options,
+            onChange: setOptions,
+            rowToDisplay: optionsToDisplay,
+          })}
+          {renderMultiSelectInputs({
+            label: 'Simple',
+            sublabel: 'Sublabel',
+            placeholder: 'Placeholder',
+            options: options,
+            onChange: setOptions,
+            rowToDisplay: optionsToDisplay,
+            disabled: true,
+          })}
+          {renderMultiSelectInputs({
+            label: 'Simple',
+            sublabel: 'Sublabel',
+            placeholder: 'Placeholder',
+            options: options,
+            onChange: setOptions,
+            rowToDisplay: optionsToDisplay,
+            isError: true,
+          })}
+        </Column>
+        <Column>
+          <h1>SelectInput</h1>
+          {renderSelectInputs({
+            label: 'Simple',
+            sublabel: 'Sublabel',
+            placeholder: 'Placeholder',
+            options: ['one', 'two', 'three', 'four', 'five'],
+            selectedOption: selectValue,
+            onChange: handleSelectChange,
+          })}
+          {renderSelectInputs({
+            label: 'Disabled',
+            sublabel: 'Sublabel',
+            placeholder: 'Placeholder',
+            options: ['one', 'two', 'three', 'four', 'five'],
+            disabled: true,
+            selectedOption: selectValue,
+            onChange: handleSelectChange,
+          })}
+          {renderSelectInputs({
+            label: 'Disabled',
+            sublabel: 'Sublabel',
+            placeholder: 'Placeholder',
+            options: ['one', 'two', 'three', 'four', 'five'],
+            isError: true,
+            selectedOption: selectValue,
+            onChange: handleSelectChange,
+          })}
+        </Column>
+      </Columns>
     </Container>
   );
 }

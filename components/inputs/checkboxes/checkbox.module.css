@@ -10,7 +10,6 @@
   display: inline-block;
   mask-size: contain;
   transition: 0.1s ease-in-out;
-  cursor: pointer;
 
   &.active {
     mask-image: url('https://cdn.morning.fr/icons/checkbox-active.svg');

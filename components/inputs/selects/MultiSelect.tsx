@@ -4,18 +4,12 @@ import { atLeastOneTrue, setAllFalse } from '@/utils/selectionStateUtils';
 import TextInput from '../textField/TextInput';
 import MultiCheckbox from '../checkboxes/MultiCheckbox';
 import styles from './selects.module.css';
-import { SelectionState } from '../types';
+import { SelectionState, SelectsProps } from '../types';
 import useMultiSelect from './hooks/useMultiSelect';
 
-type MultiSelectProps = {
-  label?: string;
-  sublabel?: string;
-  isLabelBold?: boolean;
-  size?: Size;
+type MultiSelectProps = SelectsProps & {
   options: SelectionState;
   onChange: (newSelection: SelectionState) => void;
-  placeholder?: string;
-  rowToDisplay?: number;
 };
 
 const MultiSelect = ({
@@ -23,10 +17,13 @@ const MultiSelect = ({
   sublabel,
   isLabelBold,
   size = Size.m,
+  disabled = false,
   options,
   onChange,
+  isError,
   placeholder = 'MultiSelect',
   rowToDisplay = 8,
+  emptyStateText = 'Aucun résultat dans la liste',
 }: MultiSelectProps) => {
   const {
     keyboardNavigation,
@@ -76,6 +73,8 @@ const MultiSelect = ({
           setCursorPosition(position);
         }}
         setCursorPosition={adjustCursorPosition}
+        isError={isError}
+        disabled={disabled}
       />
       {isDropdownDisplayed && (
         <div
@@ -88,19 +87,32 @@ const MultiSelect = ({
           onClick={makeHighlightedIndexSelected}
           tabIndex={-1}
         >
-          <MultiCheckbox
-            options={filteredOptions}
-            size={size}
-            onChange={(optionsToChange) => {
-              onChange({ ...options, ...optionsToChange });
-            }}
-            styleCheckbox={{ padding: '6px 10px', cursor: 'pointer' }}
-            hoveredIndex={highlightedIndex}
-            setHoveredIndex={setHighlightedIndex}
-            isSelectAll={displaySelectAll}
-            checkboxRefs={checkboxRefs}
-            setCheckboxRefs={setCheckboxRefs}
-          />
+          {Object.keys(filteredOptions).length > 0 ? (
+            <MultiCheckbox
+              options={filteredOptions}
+              size={size}
+              onChange={(optionsToChange) => {
+                onChange({ ...options, ...optionsToChange });
+              }}
+              styleCheckbox={{ padding: '6px 10px', cursor: 'pointer' }}
+              hoveredIndex={highlightedIndex}
+              setHoveredIndex={setHighlightedIndex}
+              isSelectAll={displaySelectAll}
+              checkboxRefs={checkboxRefs}
+              setCheckboxRefs={setCheckboxRefs}
+            />
+          ) : (
+            <span
+              className={classNames(
+                styles.option,
+                `font-size-${size}`,
+                `padding-${size}`,
+                styles.emptyState,
+              )}
+            >
+              {emptyStateText}
+            </span>
+          )}
         </div>
       )}
     </div>
