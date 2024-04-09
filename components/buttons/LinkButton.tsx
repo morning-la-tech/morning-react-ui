@@ -1,20 +1,20 @@
-import React, { ButtonHTMLAttributes, ReactElement, ReactNode } from 'react';
+import React, { ButtonHTMLAttributes, ReactNode } from 'react';
 import classNames from 'classnames';
 import { Size, sizeToFontSize, sizeToNumber } from '@/utils/Enum';
 import styles from '@/components/buttons/linkButton.module.css';
 
 type LinkButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   children: ReactNode;
-  startImage?: ReactElement;
-  endImage?: ReactElement;
+  startImageURL?: string;
+  endImageURL?: string;
   className?: string;
   size?: Size;
 };
 
 const LinkButton = ({
   children,
-  startImage,
-  endImage,
+  startImageURL,
+  endImageURL,
   size = Size.m,
   className,
   ...props
@@ -29,9 +29,27 @@ const LinkButton = ({
       }}
       {...props}
     >
-      {startImage && <span className={styles.image}>{startImage}</span>}
+      {startImageURL && (
+        <span
+          className={styles.image}
+          style={{
+            maskImage: `url("${startImageURL}")`,
+            width: `${sizeToNumber(size)}px`,
+            height: `${sizeToNumber(size)}px`,
+          }}
+        ></span>
+      )}
       {children}
-      {endImage && <span className={styles.image}>{endImage}</span>}
+      {endImageURL && (
+        <span
+          className={styles.image}
+          style={{
+            maskImage: `url("${endImageURL}")`,
+            width: `${sizeToNumber(size)}px`,
+            height: `${sizeToNumber(size)}px`,
+          }}
+        ></span>
+      )}
     </button>
   );
 };

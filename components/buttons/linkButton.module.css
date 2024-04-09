@@ -4,17 +4,21 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 2px;
     position: relative;
     cursor: pointer;
     background-color: transparent;
-    filter: var(--filter-azure);
     color: var(--azure);
     border-bottom: solid;
     bottom: 1px;
     border-color: transparent;
+    width: fit-content;
+    padding: 0;
 
     .image {
         display: flex;
+        background-color: var(--azure);
+        mask-size: contain;
     }
 }
 
@@ -27,15 +31,24 @@
 }
 
 .linkButton:hover {
-    filter: var(--filter-sapphire);
     color: var(--sapphire);
-    border-bottom: solid;
-    bottom: 1px;
+    box-shadow: 0 1px var(--sapphire);
+
+    .image {
+        background-color: var(--sapphire);
+    }
 }
 
 .linkButton:active {
-    filter: var(--filter-navy);
-    color: var(--filter-navy);
-    border-bottom: solid;
-    bottom: 1px;
+    color: var(--navy);
+    box-shadow: 0 1px var(--navy);
+
+    .image {
+        background-color: var(--navy);
+    }
+}
+
+.linkButton:disabled {
+    cursor: not-allowed;
+    box-shadow: none;
 }
