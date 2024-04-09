@@ -50,7 +50,10 @@ const Checkbox = forwardRef<HTMLDivElement, CheckboxProps & CheckboxHTMLProps>(
         {...props}
       >
         <span
-          className={checkboxClass}
+          className={classNames(checkboxClass, {
+            ['disabled']: disabled,
+            ['cursorPointer']: !disabled,
+          })}
           onClick={handleClick}
           style={{
             width: `${sizeToNumber(size)}px`,
@@ -63,7 +66,6 @@ const Checkbox = forwardRef<HTMLDivElement, CheckboxProps & CheckboxHTMLProps>(
             [styles.label]: !isError,
             ['disabled']: disabled,
             ['cursorPointer']: !disabled,
-            pointer: !disabled,
           })}
           onClick={handleClick}
         >

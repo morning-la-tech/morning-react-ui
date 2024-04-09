@@ -160,12 +160,13 @@ const useMultiSelect = ({
     }
   }, [highlightedIndex, checkboxRefs]);
 
+  // Calculate the height to display the right number of element before scrolling
   useEffect(() => {
     checkboxRefs;
     if (checkboxRefs.length < rowToDisplay) {
       return;
     }
-    if (checkboxRefs[rowToDisplay + 1].current) {
+    if (checkboxRefs[rowToDisplay + 1]?.current) {
       const last = checkboxRefs[rowToDisplay + 1].current?.offsetTop;
       const first = checkboxRefs[0]?.current?.offsetTop;
       if (last && first) {
@@ -214,7 +215,7 @@ const useMultiSelect = ({
     }
 
     // Do nothing if no index is highlighted
-    if (highlightedIndex === null) {
+    if (highlightedIndex === null || Object.keys(filteredOptions).length < 1) {
       return;
     }
 
@@ -240,7 +241,7 @@ const useMultiSelect = ({
   };
 
   const handleEnter = () => {
-    if (highlightedIndex === null) {
+    if (highlightedIndex === null || Object.keys(filteredOptions).length < 1) {
       return;
     }
     makeHighlightedIndexSelected();

@@ -66,18 +66,23 @@
   --padding-s: 4px 8px;
   --padding-xs: 3px 6px;
 
-  /* Filter */
-  --filter-sky: invert(84%) sepia(23%) saturate(553%) hue-rotate(193deg)
-    brightness(111%) contrast(104%);
-  --filter-azure: invert(46%) sepia(97%) saturate(2009%) hue-rotate(195deg)
-    brightness(105%) contrast(94%);
-  --filter-sapphire: invert(57%) sepia(78%) saturate(7478%) hue-rotate(206deg)
-    brightness(101%) contrast(93%);
-  --filter-navy: invert(20%) sepia(45%) saturate(5421%) hue-rotate(212deg)
-    brightness(94%) contrast(97%);
+  /* heights */
+  --height-xl: 28px;
+  --height-l: 24px;
+  --height-m: 20px;
+  --height-s: 16px;
+  --height-xs: 12px;
 }
 
 /* Fonts */
+body,
+input,
+textarea,
+select {
+  font-family: var(--inter);
+  padding: 0;
+}
+
 @font-face {
   font-family: 'Titling gothic fb';
   src: url('https://cdn.morning.fr/fonts/TitlingGothicFBNormalMedium.otf')
@@ -193,10 +198,31 @@
   padding: var(--padding-xl);
 }
 
-h1, h2 {
-    font-weight: bolder;
+h1,
+h2 {
+  font-weight: bolder;
 }
 
 .error {
   border: 1px solid var(--brick);
+}
+
+.height-xs {
+  height: var(--height-xs);
+}
+
+.height-s {
+  height: var(--height-s);
+}
+
+.height-m {
+  height: var(--height-m);
+}
+
+.height-l {
+  height: var(--height-l);
+}
+
+.height-xl {
+  height: var(--height-xl);
 }
