@@ -8,7 +8,6 @@ import Columns from '@/components/layout/Columns';
 import Column from '@/components/layout/Column';
 import { Size } from '@/utils/Enum';
 import NumberInput from '@/components/inputs/textField/NumberInput';
-import SelectInput from '@/components/inputs/selects/SelectInput';
 import TimeInput from '@/components/inputs/textField/TimeInput';
 
 export default function Page() {
@@ -16,7 +15,6 @@ export default function Page() {
   const [numberValue, setNumberValue] = useState<number | undefined>(undefined);
   const [timeValue, setTimeValue] = useState<Date>(new Date());
   const [isTimeValueError, setIsTimeValueError] = useState<boolean>(false);
-  const [selectValue, setSelectValue] = useState<string>('');
 
   const handleTextChange: ChangeEventHandler<HTMLInputElement> = (
     e: ChangeEvent<HTMLInputElement>,
@@ -27,10 +25,6 @@ export default function Page() {
 
   const handleNumberChange = (newNumberValue: number) => {
     setNumberValue(newNumberValue);
-  };
-
-  const handleSelectChange = (newSelectValue: string) => {
-    setSelectValue(newSelectValue);
   };
 
   const handleTimeChange = (newTimeValue: Date) => {
@@ -81,29 +75,6 @@ export default function Page() {
         <NumberInput {...props} size={Size.m} />
         <NumberInput {...props} size={Size.l} />
         <NumberInput {...props} size={Size.xl} />
-      </>
-    );
-  };
-
-  const renderSelectInputs = (props: {
-    label?: string;
-    sublabel?: string;
-    isLabelBold?: boolean;
-    size?: Size;
-    options: string[];
-    placeholder?: string;
-    disabled?: boolean;
-    isError?: boolean;
-    selectedOption: string;
-    onChange: (value: string) => void;
-  }) => {
-    return (
-      <>
-        <SelectInput {...props} size={Size.xs} />
-        <SelectInput {...props} size={Size.s} />
-        <SelectInput {...props} size={Size.m} />
-        <SelectInput {...props} size={Size.l} />
-        <SelectInput {...props} size={Size.xl} />
       </>
     );
   };
@@ -204,26 +175,6 @@ export default function Page() {
               value: numberValue,
               placeholder: 'placeholder',
               onChange: handleNumberChange,
-            })}
-          </Column>
-          <Column>
-            <h1>SelectInput</h1>
-            {renderSelectInputs({
-              label: 'Simple',
-              sublabel: 'Sublabel',
-              placeholder: 'Placeholder',
-              options: ['one', 'two', 'three', 'four', 'five'],
-              selectedOption: selectValue,
-              onChange: handleSelectChange,
-            })}
-            {renderSelectInputs({
-              label: 'Disabled',
-              sublabel: 'Sublabel',
-              placeholder: 'Placeholder',
-              options: ['one', 'two', 'three', 'four', 'five'],
-              disabled: true,
-              selectedOption: selectValue,
-              onChange: handleSelectChange,
             })}
           </Column>
           <Column>

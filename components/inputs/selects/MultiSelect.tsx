@@ -17,6 +17,7 @@ const MultiSelect = ({
   sublabel,
   isLabelBold,
   size = Size.m,
+  disabled = false,
   options,
   onChange,
   isError,
@@ -73,6 +74,7 @@ const MultiSelect = ({
         }}
         setCursorPosition={adjustCursorPosition}
         isError={isError}
+        disabled={disabled}
       />
       {isDropdownDisplayed && (
         <div

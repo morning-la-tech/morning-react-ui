@@ -82,14 +82,18 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (!(event.key === 'ArrowUp' || event.key === 'ArrowDown')) {
+      const blockedKeys = ['e', 'E', '+', '-'];
+      if (blockedKeys.includes(event.key)) {
+        event.preventDefault();
         return;
       }
-      event.preventDefault();
-      const testedValue = getValidValue(inputValue);
-      let newValue = isNaN(testedValue) ? 0 : testedValue;
-      event.key === 'ArrowUp' ? newValue++ : newValue--;
-      validateAndSet(newValue);
+      if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+        event.preventDefault();
+        const testedValue = getValidValue(inputValue);
+        let newValue = isNaN(testedValue) ? 0 : testedValue;
+        event.key === 'ArrowUp' ? newValue++ : newValue--;
+        validateAndSet(newValue);
+      }
     };
 
     useEffect(() => {

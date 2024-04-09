@@ -22,6 +22,7 @@ const SelectInput = ({
   onChange,
   selectedOption,
   rowToDisplay = 8,
+  isError = false,
   emptyStateText = 'Aucun résultat dans la liste',
 }: SelectInputProps) => {
   const {
@@ -57,6 +58,7 @@ const SelectInput = ({
         onKeyDown={(e) => handleKeyDown(e)}
         onMouseDown={(e) => e.preventDefault()}
         ref={inputRef}
+        isError={isError}
       />
       {isDropdownDisplayed && (
         <div
