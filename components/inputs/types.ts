@@ -10,6 +10,12 @@ export type BasicInputProps = {
 
 export type InputProps = BasicInputProps & {
   isError?: boolean;
+  placeholder?: string;
+};
+
+export type SelectsProps = InputProps & {
+  rowToDisplay?: number;
+  emptyStateText?: string;
 };
 
 export const enum TriState {

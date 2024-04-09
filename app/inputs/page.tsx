@@ -11,7 +11,7 @@ import TimeInput from '@/components/inputs/textField/TimeInput';
 import Navigation from '@/components/layout/Navigation';
 
 export default function Page() {
-  const [value, setValue] = useState<string>('');
+  const [textValue, setTextValue] = useState<string>('');
   const [numberValue, setNumberValue] = useState<number | undefined>(undefined);
   const [timeValue, setTimeValue] = useState<Date>(new Date());
   const [isTimeValueError, setIsTimeValueError] = useState<boolean>(false);
@@ -20,7 +20,7 @@ export default function Page() {
     e: ChangeEvent<HTMLInputElement>,
   ): void => {
     const newValue: string = e.target.value;
-    setValue(newValue);
+    setTextValue(newValue);
   };
 
   const handleNumberChange = (newNumberValue: number) => {
@@ -66,6 +66,7 @@ export default function Page() {
     max?: number;
     isError?: boolean;
     disabled?: boolean;
+    placeholder?: string;
   }) => {
     return (
       <>
@@ -103,7 +104,7 @@ export default function Page() {
   return (
     <>
       <Navigation>
-        <h1 className={'font-size-xl'}>Check boxes</h1>
+        <h1 className={'font-size-xl'}> Text Inputs</h1>
       </Navigation>
       <div style={{ display: 'flex', flexDirection: 'row' }}>
         <Container>
@@ -113,21 +114,21 @@ export default function Page() {
               {renderTextInputs({
                 label: 'Label',
                 placeholder: 'With label',
-                value: value,
+                value: textValue,
                 onChange: handleTextChange,
               })}
               {renderTextInputs({
                 label: 'Label',
                 isLabelBold: true,
                 placeholder: 'With bold label',
-                value: value,
+                value: textValue,
                 onChange: handleTextChange,
               })}
               {renderTextInputs({
                 label: 'Label',
                 sublabel: 'Sublabel',
                 placeholder: 'With label and sublabel',
-                value: value,
+                value: textValue,
                 onChange: handleTextChange,
               })}
             </Column>
@@ -135,19 +136,19 @@ export default function Page() {
               <h1>TextInput</h1>
               {renderTextInputs({
                 placeholder: 'Simple input',
-                value: value,
+                value: textValue,
                 onChange: handleTextChange,
               })}
               {renderTextInputs({
                 placeholder: 'Error input',
                 isError: true,
-                value: value,
+                value: textValue,
                 onChange: handleTextChange,
               })}
               {renderTextInputs({
                 placeholder: 'Disabled input',
                 disabled: true,
-                value: value,
+                value: textValue,
                 onChange: handleTextChange,
               })}
             </Column>
@@ -157,7 +158,7 @@ export default function Page() {
                 placeholder: 'Input with image',
                 imageSrc: 'https://cdn.morning.fr/logos/logo_google.png',
                 imageAlt: 'google logo',
-                value: value,
+                value: textValue,
                 onChange: handleTextChange,
               })}
             </Column>

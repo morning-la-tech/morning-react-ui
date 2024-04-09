@@ -15,8 +15,8 @@ import styles from './multiCheckbox.module.css';
 type MultiCheckboxProps = BasicInputProps & {
   options: SelectionState;
   onChange: (options: SelectionState) => void;
-  checkboxRefs: React.RefObject<HTMLInputElement>[];
-  setCheckboxRefs: React.Dispatch<
+  checkboxRefs?: React.RefObject<HTMLInputElement>[];
+  setCheckboxRefs?: React.Dispatch<
     React.SetStateAction<React.RefObject<HTMLInputElement>[]>
   >;
   inline?: boolean;
@@ -71,6 +71,9 @@ const MultiCheckbox = ({
   };
 
   useEffect(() => {
+    if (!setCheckboxRefs) {
+      return;
+    }
     const requiredRefsCount =
       Object.keys(options).length + (isSelectAll ? 1 : 0);
 
@@ -113,7 +116,12 @@ const MultiCheckbox = ({
                 setHoveredIndex(adjustedIndex);
               }
             }}
-            ref={checkboxRefs[index + +isSelectAll]}
+            onMouseLeave={() => {
+              if (setHoveredIndex) {
+                setHoveredIndex(null);
+              }
+            }}
+            ref={checkboxRefs ? checkboxRefs[index + +isSelectAll] : undefined}
           />
         );
       })}
@@ -149,7 +157,13 @@ const MultiCheckbox = ({
                 setHoveredIndex(0);
               }
             }}
-            ref={checkboxRefs[0]}
+            ref={checkboxRefs ? checkboxRefs[0] : undefined}
+            onMouseLeave={() => {
+              if (setHoveredIndex) {
+                setHoveredIndex(null);
+              }
+            }}
+            className={'bold'}
           />
         )}
         {checkboxes}
