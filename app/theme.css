@@ -1,12 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
-
 :root {
   -webkit-font-smoothing: antialiased;
 
   --titling-font: 'Titling Gothic FB Nrm Bd', sans-serif;
   --titling-extended-font: 'Titling gothic extended', sans-serif;
   --titling-comp-font: 'Titling Gothic FB Comp', sans-serif;
-  --space-grotesk: 'Space Grotesk', sans-serif;
   --white: #fff;
   --black: #000;
 
@@ -190,4 +187,12 @@
 
 .padding-xl {
   padding: var(--padding-xl);
+}
+
+h1, h2 {
+    font-weight: bolder;
+}
+
+.error {
+  border: 1px solid var(--brick);
 }
