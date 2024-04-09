@@ -60,9 +60,9 @@
   --gap-xs: 8px;
 
   /* Padding */
-  --padding-xl: 9px 14px;
-  --padding-l: 8px 12px;
-  --padding-m: 6px 10px;
+  --padding-xl: 7px 14px;
+  --padding-l: 6px 12px;
+  --padding-m: 5px 10px;
   --padding-s: 4px 8px;
   --padding-xs: 3px 6px;
 
@@ -77,6 +77,7 @@
 /* Fonts */
 body, input, textarea, select {
   font-family: var(--inter);
+  padding: 0;
 }
 
 @font-face {

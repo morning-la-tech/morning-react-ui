@@ -100,7 +100,7 @@ const SelectInput = ({
               onMouseLeave={() => setHighlightedIndex(null)}
               ref={optionRefs[index]}
             >
-              <span className={classNames(`height-${size}`, styles.optionText)}>
+              <span className={classNames(`height-${size}`, styles.option)}>
                 {option}
               </span>
               {selectedOption === option && (

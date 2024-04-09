@@ -22,7 +22,6 @@
   border: none;
   background-color: var(--white);
   user-select: none;
-  border-radius: 6px;
   flex-grow: 1;
 }
 
