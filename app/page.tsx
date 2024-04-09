@@ -22,6 +22,12 @@ export default function Home() {
       </Button>
       <Button
         variant={ButtonVariant.Secondary}
+        onClick={() => router.push('/selects')}
+      >
+        Selects
+      </Button>
+      <Button
+        variant={ButtonVariant.Secondary}
         onClick={() => router.push('/checkbox')}
       >
         Checkbox
@@ -31,6 +37,12 @@ export default function Home() {
         onClick={() => router.push('/utils')}
       >
         Utils
+      </Button>
+      <Button
+        variant={ButtonVariant.Secondary}
+        onClick={() => router.push('/upload')}
+      >
+        Upload
       </Button>
     </Container>
   );
