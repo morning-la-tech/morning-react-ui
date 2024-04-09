@@ -1,12 +1,20 @@
-import React, { ChangeEvent, forwardRef, useState, useEffect } from 'react';
+import React, {
+  ChangeEvent,
+  forwardRef,
+  useState,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+} from 'react';
 import classNames from 'classnames';
 import { format, setMinutes, setHours } from 'date-fns';
 import { isAfter } from '@/node_modules/date-fns/isAfter';
 import { isEqual } from '@/node_modules/date-fns/isEqual';
-import { Size } from '@/utils/Enum';
+import { Size, sizeToHeight } from '@/utils/Enum';
 import ParentInput from '@/components/inputs/ParentInput';
 import { BasicInputProps, InputProps } from '@/components/inputs/types';
 import styles from '../input.module.css';
+import useInput from './useInput';
 
 type TimeInputProps = BasicInputProps &
   InputProps & {
@@ -34,7 +42,9 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
   ) => {
     const [inputValue, setInputValue] = useState<string | null>(
       value ? format(value, 'HH:mm') : null,
+    const inputRef = useRef<HTMLInputElement>(null);
     );
+    useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
 
     const [error, setError] = useState<boolean>(false);
 
@@ -172,6 +182,8 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       setInputValue(value ? format(value, 'HH:mm') : null);
     }, [value]);
 
+    const { handleWrapperClick } = useInput({ inputRef });
+
     return (
       <ParentInput
         label={label}
@@ -180,15 +192,21 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
         size={size}
         disabled={disabled}
       >
-        <div className={styles.wrapper}>
+        <div
+          className={classNames(
+            styles.wrapper,
+            `padding-${size}`,
+            { ['cursorText']: !disabled },
+            {
+              [styles.error]: isError,
+            },
+          )}
+          style={{ height: `${sizeToHeight(size)}px` }}
+          onClick={handleWrapperClick}
+        >
           <input
-            className={classNames(
-              styles.input,
-              styles[size],
-              { [styles.error]: isError || error },
-              { [styles.disabled]: disabled },
-            )}
-            ref={ref}
+            className={classNames(styles.input, `font-size-${size}`)}
+            ref={inputRef}
             placeholder={'HH:MM'}
             disabled={disabled}
             type='text'

@@ -1,13 +1,9 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import './globals.css';
+import { ReactNode } from 'react';
 import Header from '@/components/layout/Header';
 import { Providers } from './Providers';
-
-const inter = Inter({
-  weight: 'variable',
-  subsets: ['latin'],
-});
+import { inter } from './fonts';
 
 export const metadata: Metadata = {
   title: 'React UI',
@@ -15,11 +11,7 @@ export const metadata: Metadata = {
   icons: { icon: '/favicon.ico', apple: '/apple-icon-180x180.png' },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang='en'>
       <body className={inter.className}>

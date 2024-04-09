@@ -1,6 +1,6 @@
-import { CSSProperties } from 'react';
+import { CSSProperties, forwardRef, HTMLProps } from 'react';
 import classNames from 'classnames';
-import { Size, sizeToFontSize, sizeToNumber } from '@/utils/Enum';
+import { Size, sizeToNumber } from '@/utils/Enum';
 import styles from './checkbox.module.css';
 import { TriState } from '../types';
 
@@ -14,58 +14,68 @@ type CheckboxProps = {
   style?: CSSProperties;
 };
 
-type CheckboxHTMLProps = Omit<
-  React.HTMLProps<HTMLLabelElement>,
-  keyof CheckboxProps
->;
+type CheckboxHTMLProps = Omit<HTMLProps<HTMLDivElement>, keyof CheckboxProps>;
 
-const Checkbox = ({
-  label,
-  onChange,
-  size = Size.m,
-  value,
-  disabled = false,
-  isError = false,
-  style,
-  ...props
-}: CheckboxProps & CheckboxHTMLProps) => {
-  const checkboxClass = classNames({
-    [styles.checkbox]: true,
-    [styles.active]: value === TriState.true,
-    [styles.empty]: value === TriState.false,
-    [styles.minus]: value === TriState.indeterminate,
-    ['disabled']: disabled,
-  });
-  const handleClick = () => {
-    if (disabled) return;
-    onChange(value === TriState.false ? TriState.true : TriState.false);
-  };
-  return (
-    <div
-      className={styles.wrapper}
-      style={{
-        lineHeight: `${sizeToNumber(size)}px`,
-        fontSize: `${sizeToFontSize(size)}px`,
-        ...style,
-      }}
-    >
-      <span
-        className={checkboxClass}
-        onClick={handleClick}
-        style={{
-          width: `${sizeToNumber(size)}px`,
-          height: `${sizeToNumber(size)}px`,
-        }}
-      ></span>
-      <label
-        className={`${isError ? styles.error : styles.label} ${disabled ? 'disabled' : 'pointer'}`}
-        onClick={handleClick}
+const Checkbox = forwardRef<HTMLDivElement, CheckboxProps & CheckboxHTMLProps>(
+  (
+    {
+      label,
+      onChange,
+      size = Size.m,
+      value,
+      disabled = false,
+      isError = false,
+      className,
+      ...props
+    },
+    ref,
+  ) => {
+    const checkboxClass = classNames({
+      [styles.checkbox]: true,
+      [styles.active]: value === TriState.true,
+      [styles.empty]: value === TriState.false,
+      [styles.minus]: value === TriState.indeterminate,
+      ['disabled']: disabled,
+    });
+    const handleClick = () => {
+      if (disabled) {
+        return;
+      }
+      onChange(value === TriState.false ? TriState.true : TriState.false);
+    };
+    return (
+      <div
+        className={classNames(styles.wrapper, `font-size-${size}`, className)}
+        ref={ref}
         {...props}
       >
-        {label}
-      </label>
-    </div>
-  );
-};
+        <span
+          className={classNames(checkboxClass, {
+            ['disabled']: disabled,
+            ['cursorPointer']: !disabled,
+          })}
+          onClick={handleClick}
+          style={{
+            width: `${sizeToNumber(size)}px`,
+            height: `${sizeToNumber(size)}px`,
+          }}
+        ></span>
+        <label
+          className={classNames({
+            [styles.error]: isError,
+            [styles.label]: !isError,
+            ['disabled']: disabled,
+            ['cursorPointer']: !disabled,
+          })}
+          onClick={handleClick}
+        >
+          {label}
+        </label>
+      </div>
+    );
+  },
+);
+
+Checkbox.displayName = 'Checkbox';
 
 export default Checkbox;
