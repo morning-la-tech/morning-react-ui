@@ -8,9 +8,10 @@ import {
   setAllTrue,
   updateSelectionState,
 } from '@/utils/selectionStateUtils';
-import { BasicInputProps, SelectionState, TriState } from '../types';
-import Checkbox from './Checkbox';
-import styles from './multiCheckbox.module.css';
+import { SelectionState, TriState } from '@/types/dataTypes';
+import Checkbox from './single/Checkbox';
+import styles from './multiToggleInputs.module.css';
+import { BasicInputProps } from '../propsTypes';
 
 type MultiCheckboxProps = BasicInputProps & {
   options: SelectionState;

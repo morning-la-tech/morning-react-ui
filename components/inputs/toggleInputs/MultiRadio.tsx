@@ -1,9 +1,12 @@
 import React from 'react';
+import classNames from 'classnames';
 import ParentInput from '@/components/inputs/ParentInput';
 import { Size } from '@/utils/Enum';
 import { setAtTrueAndOthersAtFalse } from '@/utils/selectionStateUtils';
-import { BasicInputProps, SelectionState } from '../types';
-import Radio from './Radio';
+import { SelectionState } from '@/types/dataTypes';
+import Radio from './single/Radio';
+import styles from './multiToggleInputs.module.css';
+import { BasicInputProps } from '../propsTypes';
 
 type MultiRadioProps = BasicInputProps & {
   options: SelectionState;
@@ -19,6 +22,7 @@ const MultiRadio = ({
   sublabel,
   isLabelBold,
   disabled = false,
+  inline = true,
 }: MultiRadioProps) => {
   const radios = (
     <>
@@ -51,7 +55,14 @@ const MultiRadio = ({
       isLabelBold={isLabelBold}
       disabled={disabled}
     >
-      {radios}
+      <div
+        className={classNames(styles.wrapper, {
+          [styles.inline]: inline,
+          [styles.column]: !inline,
+        })}
+      >
+        {radios}
+      </div>
     </ParentInput>
   );
 };

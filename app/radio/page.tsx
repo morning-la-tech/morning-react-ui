@@ -2,9 +2,9 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Size } from '@/utils/Enum';
-import { SelectionState } from '@/components/inputs/types';
-import Radio from '@/components/inputs/radio/Radio';
-import MultiRadio from '@/components/inputs/radio/MultiRadio';
+import { SelectionState } from '@/types/dataTypes';
+import Radio from '@/components/inputs/toggleInputs/single/Radio';
+import MultiRadio from '@/components/inputs/toggleInputs/MultiRadio';
 import Container from '@/components/layout/Container';
 import Columns from '@/components/layout/Columns';
 import Column from '@/components/layout/Column';
@@ -65,9 +65,10 @@ const RadioGroup = () => {
     <div style={{ display: 'flex', flexDirection: 'row' }}>
       <Container>
         <Link href={'/'}>Home</Link>
+        <h1>Radio</h1>
         <Columns>
           <Column>
-            <h1>Radio</h1>
+            <h3>Single radio</h3>
             {renderRadio({
               label: 'Label',
               value: valueRadio,
@@ -86,16 +87,33 @@ const RadioGroup = () => {
             })}
           </Column>
           <Column>
-            <h1>MultiRadio</h1>
+            <h3>MultiRadio</h3>
+            {renderMultiRadio({
+              label: 'Label',
+              options: options,
+              onChange: handleOptionsChange,
+              inline: false,
+            })}
+          </Column>
+          <Column>
+            <h1>MultiRadio disabled</h1>
+            {renderMultiRadio({
+              label: 'Label',
+              options: options,
+              onChange: handleOptionsChange,
+              inline: false,
+              disabled: true,
+            })}
+          </Column>
+          <Column>
+            <h3>Multiradio inline</h3>
             {renderMultiRadio({
               label: 'Label',
               options: options,
               onChange: handleOptionsChange,
               inline: true,
             })}
-          </Column>
-          <Column>
-            <h1>Disabled</h1>
+            <h3>Multiradio inline disabled</h3>
             {renderMultiRadio({
               label: 'Label',
               options: options,

@@ -1,4 +1,4 @@
-import { SelectionState, TriState } from '@/components/inputs/types';
+import { SelectionState, TriState } from '@/types/dataTypes';
 
 const atLeastOneTrue = (selectionState: SelectionState): boolean => {
   return Object.values(selectionState).some((value) => value === true);
