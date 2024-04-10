@@ -34,6 +34,12 @@ export default function Home() {
       </Button>
       <Button
         variant={ButtonVariant.Secondary}
+        onClick={() => router.push('/datetime')}
+      >
+        Date & Time
+      </Button>
+      <Button
+        variant={ButtonVariant.Secondary}
         onClick={() => router.push('/utils')}
       >
         Utils

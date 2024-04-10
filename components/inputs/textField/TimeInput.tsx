@@ -21,7 +21,7 @@ type TimeInputProps = BasicInputProps &
     value: Date | false | null;
     min?: string;
     max?: string;
-    onChange: (time: Date | null) => void;
+    onChange: (time: Date | false | null) => void;
   };
 
 const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
@@ -42,8 +42,8 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
   ) => {
     const [inputValue, setInputValue] = useState<string | null>(
       value ? format(value, 'HH:mm') : null,
-    const inputRef = useRef<HTMLInputElement>(null);
     );
+    const inputRef = useRef<HTMLInputElement>(null);
     useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
 
     const [error, setError] = useState<boolean>(false);
@@ -198,7 +198,7 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
             `padding-${size}`,
             { ['cursorText']: !disabled },
             {
-              [styles.error]: isError,
+              [styles.error]: isError || error,
             },
           )}
           style={{ height: `${sizeToHeight(size)}px` }}
