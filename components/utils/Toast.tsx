@@ -2,14 +2,14 @@ import { useEffect } from 'react';
 import Image from 'next/image';
 import styles from './toast.module.css';
 
-interface ToastProps {
+type ToastProps = {
   onClose: () => void;
   type: 'success' | 'error';
   message: string;
   delay?: number;
-}
+};
 
-export const Toast = ({ type, onClose, message, delay = 3000 }: ToastProps) => {
+const Toast = ({ type, onClose, message, delay = 3000 }: ToastProps) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       onClose();
@@ -38,3 +38,5 @@ export const Toast = ({ type, onClose, message, delay = 3000 }: ToastProps) => {
     </div>
   );
 };
+
+export default Toast;

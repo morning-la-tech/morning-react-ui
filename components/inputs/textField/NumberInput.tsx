@@ -9,7 +9,7 @@ import React, {
 import classNames from 'classnames';
 import { Size } from '@/utils/Enum';
 import ParentInput from '@/components/inputs/ParentInput';
-import { InputProps } from '@/components/inputs/types';
+import { InputProps } from '@/components/inputs/propsTypes';
 import styles from '../input.module.css';
 import useInput from './useInput';
 
