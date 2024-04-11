@@ -125,7 +125,12 @@ const TextInput = forwardRef<HTMLInputElement, TextInputHtmlProps>(
           <input
             type='text'
             {...props}
-            className={classNames(styles.input, `font-size-${size}`, className)}
+            className={classNames(
+              styles.input,
+              `font-size-${size}`,
+              `height-${size}`,
+              className,
+            )}
             ref={inputRef}
             value={value}
             placeholder={placeholder}
