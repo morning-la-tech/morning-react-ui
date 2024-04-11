@@ -25,26 +25,6 @@ export default function Page() {
     />
   );
 
-  const getPlusImage = (size: Size) => (
-    <Image
-      className={buttonStyles.image}
-      src='https://cdn.morning.fr/icons/plus.svg'
-      alt='Google logo'
-      width={sizeToNumber(size)}
-      height={sizeToNumber(size)}
-    />
-  );
-
-  const getArrowUpImage = (size: Size) => (
-    <Image
-      className={buttonStyles.image}
-      src='https://cdn.morning.fr/icons/arrow-up-right-from-square.svg'
-      alt='Google logo'
-      width={sizeToNumber(size)}
-      height={sizeToNumber(size)}
-    />
-  );
-
   // eslint-disable-next-line complexity
   const renderButtons = (
     props: {
@@ -124,16 +104,26 @@ export default function Page() {
         <LinkButton
           onClick={handleClick}
           {...props}
-          startImage={hasStartImage && getPlusImage(Size.m)}
-          endImage={hasEndImage && getArrowUpImage(Size.m)}
+          startImageURL={
+            hasStartImage && 'https://cdn.morning.fr/icons/plus.svg'
+          }
+          endImageURL={
+            hasEndImage &&
+            'https://cdn.morning.fr/icons/arrow-up-right-from-square.svg'
+          }
         >
           {content}
         </LinkButton>
         <LinkButton
           onClick={handleClick}
           {...props}
-          startImage={hasStartImage && getPlusImage(Size.l)}
-          endImage={hasEndImage && getArrowUpImage(Size.l)}
+          startImageURL={
+            hasStartImage && 'https://cdn.morning.fr/icons/plus.svg'
+          }
+          endImageURL={
+            hasEndImage &&
+            'https://cdn.morning.fr/icons/arrow-up-right-from-square.svg'
+          }
           size={Size.l}
         >
           {content}
@@ -141,8 +131,8 @@ export default function Page() {
         <LinkButton
           onClick={handleClick}
           {...props}
-          startImage={hasStartImage && getPlusImage(Size.m)}
-          endImage={hasEndImage && getArrowUpImage(Size.m)}
+          startImageURL='https://cdn.morning.fr/icons/plus.svg'
+          endImageURL='https://cdn.morning.fr/icons/arrow-up-right-from-square.svg'
           size={Size.m}
         >
           {content}
@@ -150,8 +140,8 @@ export default function Page() {
         <LinkButton
           onClick={handleClick}
           {...props}
-          startImage={hasStartImage && getPlusImage(Size.s)}
-          endImage={hasEndImage && getArrowUpImage(Size.s)}
+          startImageURL='https://cdn.morning.fr/icons/plus.svg'
+          endImageURL='https://cdn.morning.fr/icons/arrow-up-right-from-square.svg'
           size={Size.s}
         >
           {content}
@@ -159,8 +149,8 @@ export default function Page() {
         <LinkButton
           onClick={handleClick}
           {...props}
-          startImage={hasStartImage && getArrowUpImage(Size.xs)}
-          endImage={hasEndImage && getPlusImage(Size.xs)}
+          startImageURL='https://cdn.morning.fr/icons/plus.svg'
+          endImageURL='https://cdn.morning.fr/icons/arrow-up-right-from-square.svg'
           size={Size.xs}
         >
           {content}
