@@ -124,7 +124,11 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         >
           <input
             type='number'
-            className={classNames(styles.input, `font-size-${size}`)}
+            className={classNames(
+              styles.input,
+              `font-size-${size}`,
+              `height-${size}`,
+            )}
             ref={inputRef}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
