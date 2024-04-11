@@ -9,7 +9,7 @@ interface ToastProps {
   delay?: number;
 }
 
-export const Toast = ({ type, onClose, message, delay = 3000 }: ToastProps) => {
+export const Toast = ({ type, onClose, message, delay = 4000 }: ToastProps) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       onClose();
