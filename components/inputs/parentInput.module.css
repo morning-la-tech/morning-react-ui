@@ -1,6 +1,7 @@
 .label {
   display: block;
   font-weight: 600;
+  color: var(--iron);
 }
 
 .label.bold {
@@ -9,7 +10,7 @@
 
 .sublabel {
   display: block;
-  color: var(--iron);
+  color: var(--coal);
   font-weight: 400;
 }
 
