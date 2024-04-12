@@ -139,18 +139,21 @@ export default function Page() {
                 label: 'Simple',
                 sublabel: 'Sublabel',
                 value: numberValue,
+                placeholder: 'Number',
                 onChange: handleNumberChange,
               })}
               {renderNumberInputs({
                 label: 'Error',
                 isError: true,
                 value: numberValue,
+                placeholder: 'Number',
                 onChange: handleNumberChange,
               })}
               {renderNumberInputs({
                 label: 'Disabled',
                 disabled: true,
                 value: numberValue,
+                placeholder: 'Number',
                 onChange: handleNumberChange,
               })}
             </Column>

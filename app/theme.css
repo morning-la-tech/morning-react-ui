@@ -78,7 +78,8 @@
 body,
 input,
 textarea,
-select {
+select,
+button {
   font-family: var(--inter);
   padding: 0;
 }
