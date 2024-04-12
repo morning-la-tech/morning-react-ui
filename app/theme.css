@@ -134,6 +134,10 @@ select {
   user-select: none;
 }
 
+.fontWeightMedium {
+  font-weight: 600;
+}
+
 .bold {
   font-weight: 700;
 }

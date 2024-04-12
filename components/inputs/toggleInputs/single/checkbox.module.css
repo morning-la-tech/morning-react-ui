@@ -9,7 +9,6 @@
 .checkbox {
   display: inline-block;
   mask-size: contain;
-  transition: 0.1s ease-in-out;
 
   &.active {
     mask-image: url('https://cdn.morning.fr/icons/checkbox-active.svg');
@@ -29,7 +28,11 @@
   &.active:hover,
   &.minus:hover {
     background-color: var(--azure);
-    transition: 0.5s ease-in-out;
+  }
+
+  &.empty:hover {
+    background-color: var(--sapphire);
+    transition: 0.7s ease-in-out;
   }
 }
 

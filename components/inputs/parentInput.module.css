@@ -9,7 +9,7 @@
 
 .sublabel {
   display: block;
-  color: var(--iron);
+  color: var(--coal);
   font-weight: 400;
 }
 
@@ -23,4 +23,8 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
+}
+
+.parentInput input::placeholder {
+  color: var(--iron);
 }
