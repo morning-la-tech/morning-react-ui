@@ -1,7 +1,6 @@
 'use client';
 import { useState } from 'react';
 import MultiSelect from '@/components/inputs/selects/MultiSelect';
-import { SelectionState } from '@/components/inputs/types';
 import Container from '@/components/layout/Container';
 import { Size } from '@/utils/Enum';
 import NumberInput from '@/components/inputs/textField/NumberInput';
@@ -9,6 +8,7 @@ import Columns from '@/components/layout/Columns';
 import Column from '@/components/layout/Column';
 import SelectInput from '@/components/inputs/selects/SelectInput';
 import Navigation from '@/components/layout/Navigation';
+import { SelectionState } from '@/types';
 
 export default function Selects() {
   const initialOptions = {

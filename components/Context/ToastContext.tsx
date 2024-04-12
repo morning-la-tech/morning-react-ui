@@ -1,6 +1,6 @@
 'use client';
 
-import React, {
+import {
   createContext,
   useState,
   useContext,
@@ -8,7 +8,7 @@ import React, {
   PropsWithChildren,
 } from 'react';
 import uuid from 'react-uuid';
-import { Toast } from '@/components/utils/Toast';
+import Toast from '@/components/utils/Toast';
 
 export type ToastMessageType = 'success' | 'error';
 
@@ -18,10 +18,10 @@ export interface ToastMessage {
   message: string;
 }
 
-interface ToastContextProps {
+type ToastContextProps = {
   addToast: (type: ToastMessageType, message: string) => void;
   removeToast: (id: string) => void;
-}
+};
 
 const ToastContext = createContext<ToastContextProps>({} as ToastContextProps);
 

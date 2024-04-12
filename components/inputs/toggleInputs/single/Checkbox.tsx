@@ -1,8 +1,8 @@
 import { CSSProperties, forwardRef, HTMLProps } from 'react';
 import classNames from 'classnames';
 import { Size, sizeToNumber } from '@/utils/Enum';
+import { TriState } from '@/types/dataTypes';
 import styles from './checkbox.module.css';
-import { TriState } from '../types';
 
 type CheckboxProps = {
   label: string;

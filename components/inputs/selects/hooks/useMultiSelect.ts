@@ -18,7 +18,7 @@ import {
   toggleSelectionStateAtIndex,
   updateSelectionState,
 } from '@/utils/selectionStateUtils';
-import { SelectionState } from '@/components/inputs/types';
+import { SelectionState } from '@/types/dataTypes';
 import { Size } from '@/utils/Enum';
 import { normalizeString } from '@/utils/stringUtils';
 
