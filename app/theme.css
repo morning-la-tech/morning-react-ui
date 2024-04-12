@@ -13,7 +13,8 @@
   --ash: #e5e9eb;
   --stone: #b0babf;
   --iron: #6e7c87;
-  --coal: #252c32;
+  --coal-rgb: 37, 44, 50;
+  --coal: rgb(var(--coal-rgb));
 
   /* Blue */
   --sky: #ebf7ff;
@@ -40,6 +41,14 @@
   --vanilla: #fffcc2;
   --sunflower: #f8dc4f;
   --mustard: #d29404;
+
+  /* Shadows */
+  --shadow-1: 0px 1px 2px rgb(91 104 113 / 32%), 0px 0px 1px rgb(26 32 36 / 32%);
+  --shadow-2: 0px 4px 8px rgb(91 104 113 / 24%), 0px 0px 1px rgb(26 32 36 / 32%);
+  --shadow-3: 0px 8px 16px rgb(91 104 113 / 24%), 0px 0px 1px rgb(26 32 36 / 32%);
+  --shadow-4: 0px 12px 24px rgb(91 104 113 / 24%), 0px 0px 1px rgb(26 32 36 / 32%);
+  --shadow-5: 0px 24px 32px rgb(91 104 113 / 24%), 0px 0px 1px rgb(26 32 36 / 32%);
+  --shadow-6: 0px 40px 64px rgb(91 104 113 / 24%), 0px 0px 1px rgb(26 32 36 / 32%);
 
   /* Font size */
   --font-size-xxl: 24px;

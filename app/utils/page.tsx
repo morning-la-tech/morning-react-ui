@@ -8,9 +8,12 @@ import EmptyState from '@/components/utils/EmptyState';
 import { Button } from '@/components/buttons';
 import { useToast } from '@/components/Context/ToastContext';
 import Navigation from '@/components/layout/Navigation';
+import Modal from '@/components/modal/Modal';
+import useModal from '@/components/modal/useModal';
 
 export default function Page() {
   const { addToast } = useToast();
+  const { isModalShowing, handleShowModal, hide } = useModal();
 
   const handleClickSuccess = () => {
     addToast('success', 'Bravo');
@@ -43,7 +46,18 @@ export default function Page() {
             <Button onClick={handleClickSuccess}>Success</Button>
             <Button onClick={handleClickError}>Error</Button>
           </Column>
+          <Column>
+            <h1>Modal</h1>
+            <Button onClick={handleShowModal}>Modal</Button>
+          </Column>
         </Columns>
+        <Modal
+          isModalShowing={isModalShowing}
+          hide={hide}
+          title={'This is a title'}
+        >
+          <div>This is a children</div>
+        </Modal>
       </Container>
     </>
   );
