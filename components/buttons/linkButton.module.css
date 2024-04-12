@@ -14,10 +14,12 @@
     border-color: transparent;
     width: fit-content;
     padding: 0;
+    transition: color 300ms, box-shadow 300ms;
 
     .image {
         display: flex;
         background-color: var(--azure);
+        transition: background-color 300ms;
         mask-size: contain;
     }
 }
