@@ -24,16 +24,6 @@
     mask-image: url('https://cdn.morning.fr/icons/checkbox-minus.svg');
     background-color: var(--sapphire);
   }
-
-  &.active:hover,
-  &.minus:hover {
-    background-color: var(--azure);
-  }
-
-  &.empty:hover {
-    background-color: var(--sapphire);
-    transition: 0.7s ease-in-out;
-  }
 }
 
 .label {
