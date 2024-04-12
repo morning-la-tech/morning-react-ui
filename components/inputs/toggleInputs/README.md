@@ -89,7 +89,7 @@ The `MultiCheckbox` component allows rendering multiple checkboxes with a shared
 | `hoveredIndex`       | `number` (optional)                    | Index of the currently hovered checkbox.                               |
 | `setHoveredIndex`    | `(index: number \| undefined) => void` | Function to set the hovered checkbox index. (optional)                 |
 | `selectAll`          | `boolean` (optional)                   | If `true`, includes a select-all checkbox. Default is `false`.         |
-| `selectAllLabel`     | `string` (optional)                    | Label for the select-all checkbox. Default is 'Tout selectionner'.     |
+| `selectAllLabel`     | `string` (optional)                    | Label for the select-all checkbox. Default is 'Tout sélectionner'.     |
 | `disabled`           | `boolean` (optional)                   | If `true`, all checkboxes will be disabled. Default is `false`.        |
 
 ## Usage

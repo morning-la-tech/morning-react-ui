@@ -12,7 +12,7 @@ import { isAfter } from '@/node_modules/date-fns/isAfter';
 import { isEqual } from '@/node_modules/date-fns/isEqual';
 import { Size, sizeToHeight } from '@/utils/Enum';
 import ParentInput from '@/components/inputs/ParentInput';
-import { BasicInputProps, InputProps } from '@/components/inputs/types';
+import { BasicInputProps, InputProps } from '@/components/inputs/propsTypes';
 import styles from '../input.module.css';
 import useInput from './useInput';
 

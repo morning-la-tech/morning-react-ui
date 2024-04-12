@@ -1,12 +1,12 @@
 'use client';
 import { useState } from 'react';
-import Checkbox from '@/components/inputs/checkboxes/Checkbox';
+import Checkbox from '@/components/inputs/toggleInputs/single/Checkbox';
 import { Size } from '@/utils/Enum';
-import { SelectionState, TriState } from '@/components/inputs/types';
+import { SelectionState, TriState } from '@/types/dataTypes';
 import Container from '@/components/layout/Container';
 import Columns from '@/components/layout/Columns';
 import Column from '@/components/layout/Column';
-import MultiCheckbox from '@/components/inputs/checkboxes/MultiCheckbox';
+import MultiCheckbox from '@/components/inputs/toggleInputs/MultiCheckbox';
 import Navigation from '@/components/layout/Navigation';
 
 const CheckboxGroup = () => {

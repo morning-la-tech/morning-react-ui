@@ -1,4 +1,4 @@
-import { SelectionState, TriState } from '@/components/inputs/types';
+import { SelectionState, TriState } from '@/types/dataTypes';
 
 const atLeastOneTrue = (selectionState: SelectionState): boolean => {
   return Object.values(selectionState).some((value) => value === true);
@@ -45,12 +45,26 @@ const updateSelectionState = (
   return updatedState;
 };
 
+const setAtTrueAndOthersAtFalse = (
+  selectionState: SelectionState,
+  keyToUpdate: string,
+): SelectionState => {
+  const updatedState: SelectionState = { ...selectionState };
+  Object.keys(updatedState).forEach((key) => {
+    updatedState[key] = false;
+  });
+
+  updatedState[keyToUpdate] = true;
+  return updatedState;
+};
+
 const selectionStateTrueToString = (
   selectionState: SelectionState | undefined,
 ): string => {
   if (selectionState === undefined) {
     return '';
   }
+
   const stringRepresentation = Object.entries(selectionState)
     .filter(([, value]) => value)
     .map(([key]) => key)
@@ -165,4 +179,5 @@ export {
   getCurrentElementFromCursorPosition,
   getElementPositionInSelectionState,
   toggleSelectionStateAtIndex,
+  setAtTrueAndOthersAtFalse,
 };
