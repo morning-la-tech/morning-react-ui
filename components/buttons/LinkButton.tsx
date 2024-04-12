@@ -1,6 +1,6 @@
 import React, { ButtonHTMLAttributes, ReactNode } from 'react';
 import classNames from 'classnames';
-import { Size, sizeToFontSize, sizeToNumber } from '@/utils/Enum';
+import { Size, sizeToNumber } from '@/utils/Enum';
 import styles from '@/components/buttons/linkButton.module.css';
 
 type LinkButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -22,10 +22,9 @@ const LinkButton = ({
   const linkButtonClass = classNames(styles.linkButton, className);
   return (
     <button
-      className={linkButtonClass}
+      className={classNames(linkButtonClass, `font-size-${size}`)}
       style={{
         lineHeight: `${sizeToNumber(size)}px`,
-        fontSize: `${sizeToFontSize(size)}px`,
       }}
       {...props}
     >
