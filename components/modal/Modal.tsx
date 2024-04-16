@@ -1,8 +1,15 @@
 import { ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import classNames from 'classnames';
-import { Size, sizeToNumber } from '@/utils/Enum';
+import { Size } from '@/utils/Enum';
+import Button, { ButtonVariant } from '@/components/buttons/Button';
 import styles from './modal.module.css';
+
+export type ModalButtonProps = {
+  label: string;
+  variant?: ButtonVariant;
+  onClick: () => void;
+};
 
 type Props = {
   children: ReactNode;
@@ -14,6 +21,7 @@ type Props = {
   closeOnClickOutside?: boolean;
   size?: Size;
   className?: string;
+  buttons?: ModalButtonProps[];
 };
 
 const Modal = ({
@@ -24,8 +32,8 @@ const Modal = ({
   title,
   hasCloseButton = true,
   closeOnClickOutside = true,
-  size = Size.m,
   className,
+  buttons = [],
 }: Props) => {
   const modalClass = classNames(styles.modal, className);
   return (
@@ -41,21 +49,23 @@ const Modal = ({
           onClick={(e) => e.stopPropagation()}
         >
           <div className={styles.header}>
-            <span className={classNames(styles.title, `font-size-${size}`)}>
-              {title}
-            </span>
+            <span className={styles.title}>{title}</span>
             {hasCloseButton && (
-              <button
-                className={styles.closeButton}
-                style={{
-                  width: `${sizeToNumber(size)}px`,
-                  height: `${sizeToNumber(size)}px`,
-                }}
-                onClick={hide}
-              ></button>
+              <button className={styles.closeButton} onClick={hide}></button>
             )}
           </div>
           {children}
+          <div className={styles.footer}>
+            {buttons.map((button, index) => (
+              <Button
+                key={index}
+                onClick={button.onClick}
+                variant={button.variant}
+              >
+                {button.label}
+              </Button>
+            ))}
+          </div>
         </div>
       </div>,
       document.body,

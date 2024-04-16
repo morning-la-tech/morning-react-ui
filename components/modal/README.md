@@ -40,29 +40,35 @@ The following props are used to control the Modal's behavior:
 - closeOnClickOutside (boolean, optional): Determines if clicking outside closes the modal. Default is true.
 - size (Size, optional): Size of the modal and the close button, influenced by a predefined enum. Default is Size.m.
 - className (string, optional): Additional class names for custom styling.
+- buttons (ModalButtonProps[], optional): An array of button configurations to display in the modal's footer. Each button can have a label, an optional variant, and an onClick handler.
 
 ## Styling
 The modal's style can be customized through modal.module.css. Default styles include centering the modal both vertically and horizontally, applying a shadow for depth, and ensuring the content is scrollable if it exceeds the modal's viewport. Adjust modal.module.css as needed to match your application's theme and requirements.
 
 Example
-Here’s an example of how to trigger a modal on a button click, with custom content:
+Here’s an example of how to trigger a modal on a button click, with custom content and footer buttons:
 
-```jsx
-import Modal from './Modal';
+```tsx
+import Modal, { ModalButtonProps } from './Modal';
 
 function MyComponent() {
   const [showModal, setShowModal] = useState(false);
+  const buttons: ModalButtonProps[] = [
+    { label: 'Cancel', onClick: () => setShowModal(false), variant: 'secondary' },
+    { label: 'Save', onClick: () => console.log('Save clicked'), variant: 'primary' }
+  ];
 
   return (
     <>
       <button onClick={() => setShowModal(true)}>Show Details</button>
-      <Modal 
+      <Modal
         isShowing={showModal}
         hide={() => setShowModal(false)}
         title='User Information'
         hasCloseButton
         size={Size.s}
         top='10%'
+        buttons={buttons}
       >
         <div style={{ padding: '20px' }}>
           <h2>Modal Title</h2>
@@ -74,6 +80,7 @@ function MyComponent() {
 }
 
 export default MyComponent;
+
 ```
 
 # useModal Hook
@@ -99,7 +106,7 @@ The useModal hook returns an object with the following properties:
 ## Usage
 Here is a basic example showing how to use the useModal to control the opening and closing of a modal, as well as managing the closure with the "Escape" key:
 
-```jsx
+```tsx
 import useModal from './useModal';
 import Modal from './Modal';
 import Button from './Button';

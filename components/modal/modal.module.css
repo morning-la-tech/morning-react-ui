@@ -17,6 +17,8 @@
     border-radius: 10px;
     box-shadow: var(--shadow-6);
     padding: 25px;
+    display: grid;
+    gap: 20px;
 }
 
 .header {
@@ -26,7 +28,8 @@
 }
 
 .title {
-    font-weight: bold;
+    font-weight: 600;
+    font-size: 18px;
 }
 
 .closeButton {
@@ -37,4 +40,12 @@
     mask-image: url('https://cdn.morning.fr/icons/cross.svg');
     mask-size: contain;
     background-color: var(--coal);
+    width: 24px;
+    height: 24px;
+}
+
+.footer {
+    display: flex;
+    gap: 12px;
+    justify-content: end;
 }
