@@ -4,7 +4,9 @@ export { default as TextInput } from '@/components/inputs/textField/TextInput';
 
 export { default as NumberInput } from '@/components/inputs/textField/NumberInput';
 
-export { default as TimeInput } from '@/components/inputs/textField/TimeInput';
+export { default as TimeInput } from '@/components/inputs/datetimeField/TimeInput';
+
+export { default as DateInput } from '@/components/inputs/datetimeField/DateInput';
 
 export { default as SelectInput } from '@/components/inputs/selects/SelectInput';
 
