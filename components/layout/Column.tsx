@@ -4,7 +4,7 @@ import { Size } from '@/utils/Enum';
 import styles from './column.module.css';
 
 type ColumnProps = PropsWithChildren & {
-  size: Size;
+  size?: Size;
 };
 
 const Column = ({ children, size = Size.s }: ColumnProps) => {

@@ -7,7 +7,7 @@ import React, {
   KeyboardEvent,
   MouseEvent,
   useEffect,
-  InputHTMLAttributes,
+  InputHTMLAttributes, Dispatch,
 } from 'react';
 import classNames from 'classnames';
 import Image from 'next/image';
@@ -20,7 +20,7 @@ import useInput from './useInput';
 type TextInputProps = InputProps & {
   placeholder?: string;
   value: string;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onChange: Dispatch<string>;
   onCursorPositionChange?: (position: number | null) => void;
   setCursorPosition?: (input: HTMLInputElement) => void;
   imageSrc?: string;
@@ -81,7 +81,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputHtmlProps>(
     };
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-      onChange(event);
+      onChange(event.target.value);
       handleCursorChange(event.target.selectionStart);
     };
 

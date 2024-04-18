@@ -2,5 +2,20 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    align-items: flex-start;
+}
+
+.xs {
+    width: 20%;
+}
+.s {
+    width: 25%;
+}
+.m {
+    width: 33%;
+}
+.l {
+    width: 50%;
+}
+.xl {
+    width: 100%;
 }

@@ -23,6 +23,7 @@
 .parentInput {
     display: flex;
     flex-direction: column;
+    flex: 1;
 }
 
 .parentInput.xs {
@@ -34,7 +35,7 @@
 }
 
 .parentInput.m {
-    font-size: var(--font-size-normal);
+    font-size: var(--font-size-m);
 }
 
 .parentInput.l {
@@ -58,7 +59,7 @@
 }
 
 .sublabel.l {
-    font-size: var(--font-size-normal);
+    font-size: var(--font-size-m);
 }
 
 .sublabel.xl {
