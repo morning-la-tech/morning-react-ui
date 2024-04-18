@@ -9,7 +9,7 @@ import React, {
 import classNames from 'classnames';
 import { Size } from '@/utils/Enum';
 import ParentInput from '@/components/inputs/ParentInput';
-import { InputProps } from '@/components/inputs/types';
+import { InputProps } from '@/components/inputs/propsTypes';
 import styles from '../input.module.css';
 import useInput from './useInput';
 
@@ -29,10 +29,11 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       size = Size.m,
       value,
       onChange,
-      min,
+      min = 0,
       max,
       isError,
       disabled,
+      placeholder,
     },
     ref,
   ) => {
@@ -60,12 +61,18 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
       const newValue = event.target.value;
       if (newValue === '') {
-        setInputValue(NaN);
+        onChange(NaN);
+        setInputValue(undefined);
         return;
       }
       const parsedValue = parseInt(newValue, 10);
-      if (!isNaN(parsedValue)) {
-        validateAndSet(parsedValue);
+      if (
+        !isNaN(parsedValue) &&
+        parsedValue >= min &&
+        (max === undefined || parsedValue <= max)
+      ) {
+        setInputValue(parsedValue);
+        onChange(parsedValue);
       }
     };
 
@@ -75,14 +82,18 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (!(event.key === 'ArrowUp' || event.key === 'ArrowDown')) {
+      const blockedKeys = ['e', 'E', '+', '-'];
+      if (blockedKeys.includes(event.key)) {
+        event.preventDefault();
         return;
       }
-      event.preventDefault();
-      const testedValue = getValidValue(inputValue);
-      let newValue = isNaN(testedValue) ? 0 : testedValue;
-      event.key === 'ArrowUp' ? newValue++ : newValue--;
-      validateAndSet(newValue);
+      if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+        event.preventDefault();
+        const testedValue = getValidValue(inputValue);
+        let newValue = isNaN(testedValue) ? 0 : testedValue;
+        event.key === 'ArrowUp' ? newValue++ : newValue--;
+        validateAndSet(newValue);
+      }
     };
 
     useEffect(() => {
@@ -113,7 +124,11 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         >
           <input
             type='number'
-            className={classNames(styles.input, `font-size-${size}`)}
+            className={classNames(
+              styles.input,
+              `font-size-${size}`,
+              `height-${size}`,
+            )}
             ref={inputRef}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
@@ -122,6 +137,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
             min={min}
             max={max}
             disabled={disabled}
+            placeholder={placeholder}
           />
         </div>
       </ParentInput>

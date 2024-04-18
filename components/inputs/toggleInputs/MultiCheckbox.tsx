@@ -1,0 +1,176 @@
+import { createRef, CSSProperties, useEffect, useState } from 'react';
+import classNames from 'classnames';
+import ParentInput from '@/components/inputs/ParentInput';
+import { Size } from '@/utils/Enum';
+import {
+  getSelectionStatus,
+  setAllFalse,
+  setAllTrue,
+  updateSelectionState,
+} from '@/utils/selectionStateUtils';
+import { SelectionState, TriState } from '@/types/dataTypes';
+import Checkbox from './single/Checkbox';
+import styles from './multiToggleInputs.module.css';
+import { BasicInputProps } from '../propsTypes';
+
+type MultiCheckboxProps = BasicInputProps & {
+  options: SelectionState;
+  onChange: (options: SelectionState) => void;
+  checkboxRefs?: React.RefObject<HTMLInputElement>[];
+  setCheckboxRefs?: React.Dispatch<
+    React.SetStateAction<React.RefObject<HTMLInputElement>[]>
+  >;
+  inline?: boolean;
+  styleCheckbox?: CSSProperties;
+  styleMultiCheckbox?: CSSProperties;
+  hoveredIndex?: number | null;
+  setHoveredIndex?: (index: number | null) => void;
+  isSelectAll?: boolean;
+  selectAllLabel?: string;
+  disabled?: boolean;
+  isError?: boolean;
+};
+
+const MultiCheckbox = ({
+  options,
+  onChange,
+  checkboxRefs,
+  setCheckboxRefs,
+  size = Size.m,
+  inline = false,
+  label,
+  sublabel,
+  isLabelBold,
+  styleCheckbox: styleCheckboxProps,
+  styleMultiCheckbox,
+  hoveredIndex,
+  setHoveredIndex,
+  isSelectAll = false,
+  selectAllLabel = 'Tout sélectionner',
+  disabled = false,
+  isError = false,
+}: MultiCheckboxProps) => {
+  const [selectAllCheckbox, setSelectAllCheckbox] = useState<TriState>(
+    TriState.false,
+  );
+
+  const handleSelectAllChange = (value: TriState) => {
+    if (value === TriState.true) {
+      onChange(setAllTrue(options));
+    } else if (value === TriState.false) {
+      onChange(setAllFalse(options));
+    }
+  };
+
+  useEffect(() => {
+    setSelectAllCheckbox(getSelectionStatus(options));
+  }, [options]);
+
+  const styleSelectAll = {
+    ...styleCheckboxProps,
+    ...(hoveredIndex === 0 && { backgroundColor: 'var(--cloud)' }),
+  };
+
+  useEffect(() => {
+    if (!setCheckboxRefs) {
+      return;
+    }
+    const requiredRefsCount =
+      Object.keys(options).length + (isSelectAll ? 1 : 0);
+
+    setCheckboxRefs((prevRefs) => {
+      const newRefs = Array(requiredRefsCount)
+        .fill(null)
+        .map((_, index) => prevRefs[index] || createRef<HTMLInputElement>());
+      return newRefs;
+    });
+  }, [options, isSelectAll, setCheckboxRefs]);
+
+  const checkboxes = (
+    <>
+      {Object.entries(options).map(([key, value], index) => {
+        const adjustedIndex = isSelectAll ? index + 1 : index;
+        const isHovered = adjustedIndex === hoveredIndex;
+        const checkboxState = value ? TriState.true : TriState.false;
+
+        const handleChange = (changedValue: TriState) => {
+          if (changedValue === TriState.true) {
+            onChange(updateSelectionState(options, key, true));
+          } else {
+            onChange(updateSelectionState(options, key, false));
+          }
+        };
+
+        return (
+          <Checkbox
+            key={key}
+            label={key}
+            className={classNames({ [styles.checkboxHovered]: isHovered })}
+            value={checkboxState}
+            onChange={handleChange}
+            size={size}
+            style={styleCheckboxProps}
+            disabled={disabled}
+            isError={isError}
+            onMouseMove={() => {
+              if (setHoveredIndex) {
+                setHoveredIndex(adjustedIndex);
+              }
+            }}
+            onMouseLeave={() => {
+              if (setHoveredIndex) {
+                setHoveredIndex(null);
+              }
+            }}
+            ref={checkboxRefs ? checkboxRefs[index + +isSelectAll] : undefined}
+          />
+        );
+      })}
+    </>
+  );
+
+  return (
+    <ParentInput
+      label={label}
+      sublabel={sublabel}
+      size={size}
+      isLabelBold={isLabelBold}
+      disabled={disabled}
+    >
+      <div
+        className={classNames(styles.wrapper, {
+          [styles.inline]: inline,
+          [styles.column]: !inline,
+        })}
+        style={styleMultiCheckbox}
+      >
+        {isSelectAll && (
+          <Checkbox
+            label={selectAllLabel}
+            value={selectAllCheckbox}
+            onChange={handleSelectAllChange}
+            style={styleSelectAll}
+            size={size}
+            disabled={disabled}
+            isError={isError}
+            onMouseMove={() => {
+              if (setHoveredIndex) {
+                setHoveredIndex(0);
+              }
+            }}
+            ref={checkboxRefs ? checkboxRefs[0] : undefined}
+            onMouseLeave={() => {
+              if (setHoveredIndex) {
+                setHoveredIndex(null);
+              }
+            }}
+            className={'fontWeightMedium'}
+          />
+        )}
+        {checkboxes}
+      </div>
+    </ParentInput>
+  );
+};
+
+export default MultiCheckbox;

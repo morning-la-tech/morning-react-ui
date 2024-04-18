@@ -10,12 +10,7 @@
     "prettier"
   ],
   "parser": "@typescript-eslint/parser",
-  "plugins": [
-    "@typescript-eslint",
-    "react",
-    "import",
-    "prettier"
-  ],
+  "plugins": ["@typescript-eslint", "react", "import", "prettier"],
   "rules": {
     "prettier/prettier": [
       "error",
@@ -27,26 +22,18 @@
       }
     ],
     "no-shadow": "off",
-    "@typescript-eslint/no-shadow": [
-      "error"
-    ],
+    "curly": [2, "all"],
+    "@typescript-eslint/no-shadow": "error",
     "no-use-before-define": "off",
-    "@typescript-eslint/no-use-before-define": [
-      "error"
-    ],
+    "@typescript-eslint/no-use-before-define": "error",
     "react/react-in-jsx-scope": "off",
     "react/jsx-filename-extension": [
       "warn",
       {
-        "extensions": [
-          ".tsx"
-        ]
+        "extensions": [".tsx"]
       }
     ],
-    "complexity": [
-      "error",
-      10
-    ],
+    "complexity": ["error", 10],
     "no-await-in-loop": "warn",
     "no-eval": "error",
     "no-implied-eval": "error",
@@ -54,7 +41,12 @@
     "import/order": [
       "error",
       {
-        "groups": ["builtin", "external", "internal", ["parent", "sibling", "index"]]
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          ["parent", "sibling", "index"]
+        ]
       }
     ],
     "react-hooks/exhaustive-deps": "off",
@@ -67,24 +59,21 @@
         "allowTemplateLiterals": true
       }
     ],
-    "template-curly-spacing": [
-      "error",
-      "never"
-    ],
+    "template-curly-spacing": ["error", "never"],
     "padding-line-between-statements": [
-        "error",
-        { "blankLine": "always", "prev": "*", "next": "export" },
-        { "blankLine": "always", "prev": "import", "next": "*" },
-        { "blankLine": "never", "prev": "import", "next": "import" }
-      ],
-      "@typescript-eslint/no-unused-vars": ["error", {
+      "error",
+      { "blankLine": "always", "prev": "*", "next": "export" },
+      { "blankLine": "always", "prev": "import", "next": "*" },
+      { "blankLine": "never", "prev": "import", "next": "import" }
+    ],
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
         "argsIgnorePattern": "^_",
         "varsIgnorePattern": "^_"
-      }],
-      "no-unused-vars": ["error", {
-        "argsIgnorePattern": "^_",
-        "varsIgnorePattern": "^_"
-      }]
+      }
+    ],
+    "no-unused-vars": "off"
   },
   "env": {
     "browser": true
@@ -93,6 +82,11 @@
     "react": {
       "pragma": "React",
       "version": "detect"
+    },
+    "import/resolver": {
+      "typescript": {
+        "project": "./tsconfig.json"
+      }
     }
   }
 }

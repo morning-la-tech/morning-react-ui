@@ -1,10 +1,10 @@
-import { SelectionState, TriState } from '@/components/inputs/types';
+import { SelectionState, TriState } from '@/types/dataTypes';
 
 const atLeastOneTrue = (selectionState: SelectionState): boolean => {
   return Object.values(selectionState).some((value) => value === true);
 };
 
-const allTrue = (selectionState: SelectionState): boolean => {
+const isAllTrue = (selectionState: SelectionState): boolean => {
   return Object.values(selectionState).every((value) => value === true);
 };
 
@@ -45,13 +45,74 @@ const updateSelectionState = (
   return updatedState;
 };
 
-const selectionStateToString = (selectionState: SelectionState): string => {
+const setAtTrueAndOthersAtFalse = (
+  selectionState: SelectionState,
+  keyToUpdate: string,
+): SelectionState => {
+  const updatedState: SelectionState = { ...selectionState };
+  Object.keys(updatedState).forEach((key) => {
+    updatedState[key] = false;
+  });
+
+  updatedState[keyToUpdate] = true;
+  return updatedState;
+};
+
+const selectionStateTrueToString = (
+  selectionState: SelectionState | undefined,
+): string => {
+  if (selectionState === undefined) {
+    return '';
+  }
+
   const stringRepresentation = Object.entries(selectionState)
     .filter(([, value]) => value)
     .map(([key]) => key)
     .join(', ');
 
-  return stringRepresentation.length > 0 ? `${stringRepresentation},` : '';
+  return stringRepresentation.length > 0 ? `${stringRepresentation}, ` : '';
+};
+
+const mergeAndValidateStates = (
+  initialState: SelectionState | undefined,
+  newState: SelectionState | undefined,
+): SelectionState => {
+  const validatedState: SelectionState = initialState
+    ? { ...initialState }
+    : {};
+  if (!newState) {
+    return validatedState;
+  }
+
+  const keysForUpdate: string[] = [];
+  Object.keys(newState).forEach((key) => {
+    if (newState[key] === false || newState[key] === undefined) {
+      delete validatedState[key];
+    } else if (newState[key] && !(key in validatedState)) {
+      keysForUpdate.push(key);
+    }
+  });
+
+  keysForUpdate.forEach((key) => {
+    validatedState[key] = true;
+  });
+  return validatedState;
+};
+
+const toggleSelectionStateAtIndex = (
+  state: SelectionState,
+  position: number | null,
+): SelectionState => {
+  const keys = Object.keys(state);
+  if (position === null || position < 0 || position >= keys.length) {
+    return state;
+  }
+
+  const keyToToggle = keys[position];
+  return {
+    ...state,
+    [keyToToggle]: !state[keyToToggle],
+  };
 };
 
 const removeLastElement = (
@@ -67,9 +128,12 @@ const removeLastElement = (
 };
 
 const getCurrentElementFromCursorPosition = (
-  selectionState: SelectionState,
-  cursorPosition: number,
+  selectionState: SelectionState | undefined,
+  cursorPosition: number | null,
 ): string | null => {
+  if (!(selectionState && cursorPosition)) {
+    return null;
+  }
   let cumulativeLength = 0;
   const activeKeys = Object.entries(selectionState)
     .filter(([, value]) => value)
@@ -84,15 +148,6 @@ const getCurrentElementFromCursorPosition = (
     cumulativeLength = nextCumulativeLength;
   }
   return null;
-};
-
-const removeElementFromSelectionState = (
-  selectionState: SelectionState,
-  keyToRemove: string,
-): SelectionState => {
-  const updatedSelectionState = { ...selectionState };
-  delete updatedSelectionState[keyToRemove];
-  return updatedSelectionState;
 };
 
 const getElementPositionInSelectionState = (
@@ -113,14 +168,16 @@ const getElementPositionInSelectionState = (
 
 export {
   atLeastOneTrue,
-  allTrue,
+  isAllTrue,
+  mergeAndValidateStates,
   setAllTrue,
   setAllFalse,
   getSelectionStatus,
   updateSelectionState,
-  selectionStateToString,
+  selectionStateTrueToString,
   removeLastElement,
   getCurrentElementFromCursorPosition,
-  removeElementFromSelectionState,
   getElementPositionInSelectionState,
+  toggleSelectionStateAtIndex,
+  setAtTrueAndOthersAtFalse,
 };

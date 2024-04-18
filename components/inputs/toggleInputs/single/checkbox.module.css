@@ -1,0 +1,36 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  user-select: none;
+  gap: 4px;
+  padding: 6px 0;
+}
+
+.checkbox {
+  display: inline-block;
+  mask-size: contain;
+
+  &.active {
+    mask-image: url('https://cdn.morning.fr/icons/checkbox-active.svg');
+    background-color: var(--sapphire);
+  }
+
+  &.empty {
+    mask-image: url('https://cdn.morning.fr/icons/checkbox-empty.svg');
+    background-color: var(--iron);
+  }
+
+  &.minus {
+    mask-image: url('https://cdn.morning.fr/icons/checkbox-minus.svg');
+    background-color: var(--sapphire);
+  }
+}
+
+.label {
+  color: var(--coal);
+  white-space: nowrap;
+}
+
+.error {
+  color: var(--brick);
+}

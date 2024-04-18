@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import Image from 'next/image';
 import { Button, ButtonVariant } from '@/components/buttons';
 import buttonStyles from '@/components/buttons/button.module.css';
@@ -9,6 +8,7 @@ import Container from '@/components/layout/Container';
 import Columns from '@/components/layout/Columns';
 import Column from '@/components/layout/Column';
 import LinkButton from '@/components/buttons/LinkButton';
+import Navigation from '@/components/layout/Navigation';
 
 export default function Page() {
   const handleClick = () => {
@@ -19,26 +19,6 @@ export default function Page() {
     <Image
       className={buttonStyles.image}
       src='https://cdn.morning.fr/logos/logo_google.png'
-      alt='Google logo'
-      width={sizeToNumber(size)}
-      height={sizeToNumber(size)}
-    />
-  );
-
-  const getPlusImage = (size: Size) => (
-    <Image
-      className={buttonStyles.image}
-      src='https://cdn.morning.fr/icons/plus.svg'
-      alt='Google logo'
-      width={sizeToNumber(size)}
-      height={sizeToNumber(size)}
-    />
-  );
-
-  const getArrowUpImage = (size: Size) => (
-    <Image
-      className={buttonStyles.image}
-      src='https://cdn.morning.fr/icons/arrow-up-right-from-square.svg'
       alt='Google logo'
       width={sizeToNumber(size)}
       height={sizeToNumber(size)}
@@ -124,16 +104,26 @@ export default function Page() {
         <LinkButton
           onClick={handleClick}
           {...props}
-          startImage={hasStartImage && getPlusImage(Size.m)}
-          endImage={hasEndImage && getArrowUpImage(Size.m)}
+          startImageURL={
+            hasStartImage && 'https://cdn.morning.fr/icons/plus.svg'
+          }
+          endImageURL={
+            hasEndImage &&
+            'https://cdn.morning.fr/icons/arrow-up-right-from-square.svg'
+          }
         >
           {content}
         </LinkButton>
         <LinkButton
           onClick={handleClick}
           {...props}
-          startImage={hasStartImage && getPlusImage(Size.l)}
-          endImage={hasEndImage && getArrowUpImage(Size.l)}
+          startImageURL={
+            hasStartImage && 'https://cdn.morning.fr/icons/plus.svg'
+          }
+          endImageURL={
+            hasEndImage &&
+            'https://cdn.morning.fr/icons/arrow-up-right-from-square.svg'
+          }
           size={Size.l}
         >
           {content}
@@ -141,8 +131,8 @@ export default function Page() {
         <LinkButton
           onClick={handleClick}
           {...props}
-          startImage={hasStartImage && getPlusImage(Size.m)}
-          endImage={hasEndImage && getArrowUpImage(Size.m)}
+          startImageURL='https://cdn.morning.fr/icons/plus.svg'
+          endImageURL='https://cdn.morning.fr/icons/arrow-up-right-from-square.svg'
           size={Size.m}
         >
           {content}
@@ -150,8 +140,8 @@ export default function Page() {
         <LinkButton
           onClick={handleClick}
           {...props}
-          startImage={hasStartImage && getPlusImage(Size.s)}
-          endImage={hasEndImage && getArrowUpImage(Size.s)}
+          startImageURL='https://cdn.morning.fr/icons/plus.svg'
+          endImageURL='https://cdn.morning.fr/icons/arrow-up-right-from-square.svg'
           size={Size.s}
         >
           {content}
@@ -159,8 +149,8 @@ export default function Page() {
         <LinkButton
           onClick={handleClick}
           {...props}
-          startImage={hasStartImage && getArrowUpImage(Size.xs)}
-          endImage={hasEndImage && getPlusImage(Size.xs)}
+          startImageURL='https://cdn.morning.fr/icons/plus.svg'
+          endImageURL='https://cdn.morning.fr/icons/arrow-up-right-from-square.svg'
           size={Size.xs}
         >
           {content}
@@ -170,80 +160,84 @@ export default function Page() {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'row' }}>
-      <Container>
-        <Link href={'/'}>Home</Link>
-        <h1>Buttons</h1>
-        <Columns>
-          <Column>
-            {renderButtons({})}
-            {renderButtons({}, true)}
-            {renderButtons({}, true, true)}
-            {renderButtons({}, true, undefined, <></>)}
-            {renderButtons({ isLoading: true })}
-          </Column>
-          <Column>
-            {renderButtons({ disabled: true })}
-            {renderButtons({ disabled: true }, true)}
-            {renderButtons({ disabled: true }, true, true)}
-            {renderButtons({ disabled: true }, true, undefined, <></>)}
-            {renderButtons({ disabled: true, isLoading: true })}
-          </Column>
-          <Column>
-            {renderButtons({ variant: ButtonVariant.Secondary })}
-            {renderButtons({ variant: ButtonVariant.Secondary }, true)}
-            {renderButtons({ variant: ButtonVariant.Secondary }, true, true)}
-            {renderButtons(
-              { variant: ButtonVariant.Secondary },
-              true,
-              undefined,
-              <></>,
-            )}
-            {renderButtons({
-              variant: ButtonVariant.Secondary,
-              isLoading: true,
-            })}
-          </Column>
-          <Column>
-            {renderButtons({
-              variant: ButtonVariant.Secondary,
-              disabled: true,
-            })}
-            {renderButtons(
-              { variant: ButtonVariant.Secondary, disabled: true },
-              true,
-            )}
-            {renderButtons(
-              { variant: ButtonVariant.Secondary, disabled: true },
-              true,
-              true,
-            )}
-            {renderButtons(
-              { variant: ButtonVariant.Secondary, disabled: true },
-              true,
-              undefined,
-              <></>,
-            )}
-            {renderButtons({
-              variant: ButtonVariant.Secondary,
-              disabled: true,
-              isLoading: true,
-            })}
-          </Column>
-          <Column>
-            {renderLinkButtons({})}
-            {renderLinkButtons({}, true)}
-            {renderLinkButtons({}, true, true)}
-            {renderLinkButtons({}, true, undefined, <></>)}
-          </Column>
-          <Column>
-            {renderLinkButtons({ disabled: true })}
-            {renderLinkButtons({ disabled: true }, true)}
-            {renderLinkButtons({ disabled: true }, true, true)}
-            {renderLinkButtons({ disabled: true }, true, undefined, <></>)}
-          </Column>
-        </Columns>
-      </Container>
-    </div>
+    <>
+      <Navigation>
+        <h1 className={'font-size-xl'}>Buttons</h1>
+      </Navigation>
+      <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <Container>
+          <h1>Buttons</h1>
+          <Columns>
+            <Column>
+              {renderButtons({})}
+              {renderButtons({}, true)}
+              {renderButtons({}, true, true)}
+              {renderButtons({}, true, undefined, <></>)}
+              {renderButtons({ isLoading: true })}
+            </Column>
+            <Column>
+              {renderButtons({ disabled: true })}
+              {renderButtons({ disabled: true }, true)}
+              {renderButtons({ disabled: true }, true, true)}
+              {renderButtons({ disabled: true }, true, undefined, <></>)}
+              {renderButtons({ disabled: true, isLoading: true })}
+            </Column>
+            <Column>
+              {renderButtons({ variant: ButtonVariant.Secondary })}
+              {renderButtons({ variant: ButtonVariant.Secondary }, true)}
+              {renderButtons({ variant: ButtonVariant.Secondary }, true, true)}
+              {renderButtons(
+                { variant: ButtonVariant.Secondary },
+                true,
+                undefined,
+                <></>,
+              )}
+              {renderButtons({
+                variant: ButtonVariant.Secondary,
+                isLoading: true,
+              })}
+            </Column>
+            <Column>
+              {renderButtons({
+                variant: ButtonVariant.Secondary,
+                disabled: true,
+              })}
+              {renderButtons(
+                { variant: ButtonVariant.Secondary, disabled: true },
+                true,
+              )}
+              {renderButtons(
+                { variant: ButtonVariant.Secondary, disabled: true },
+                true,
+                true,
+              )}
+              {renderButtons(
+                { variant: ButtonVariant.Secondary, disabled: true },
+                true,
+                undefined,
+                <></>,
+              )}
+              {renderButtons({
+                variant: ButtonVariant.Secondary,
+                disabled: true,
+                isLoading: true,
+              })}
+            </Column>
+            <Column>
+              {renderLinkButtons({})}
+              {renderLinkButtons({}, true)}
+              {renderLinkButtons({}, true, true)}
+              {renderLinkButtons({}, true, undefined, <></>)}
+            </Column>
+            <Column>
+              {renderLinkButtons({ disabled: true })}
+              {renderLinkButtons({ disabled: true }, true)}
+              {renderLinkButtons({ disabled: true }, true, true)}
+              {renderLinkButtons({ disabled: true }, true, undefined, <></>)}
+            </Column>
+          </Columns>
+        </Container>
+      </div>
+    </>
   );
 }

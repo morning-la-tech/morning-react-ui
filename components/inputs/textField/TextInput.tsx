@@ -1,4 +1,4 @@
-import React, {
+import {
   forwardRef,
   useRef,
   useImperativeHandle,
@@ -7,18 +7,18 @@ import React, {
   KeyboardEvent,
   MouseEvent,
   useEffect,
-  InputHTMLAttributes, Dispatch,
+  InputHTMLAttributes,
+  Dispatch,
 } from 'react';
 import classNames from 'classnames';
 import Image from 'next/image';
 import ParentInput from '@/components/inputs/ParentInput';
 import { Size, sizeToNumber } from '@/utils/Enum';
-import { InputProps } from '@/components/inputs/types';
+import { InputProps } from '@/components/inputs/propsTypes';
 import styles from '../input.module.css';
 import useInput from './useInput';
 
 type TextInputProps = InputProps & {
-  placeholder?: string;
   value: string;
   onChange: Dispatch<string>;
   onCursorPositionChange?: (position: number | null) => void;
@@ -52,8 +52,9 @@ const TextInput = forwardRef<HTMLInputElement, TextInputHtmlProps>(
       imageAlt,
       showClearButton,
       showDropdownIcon,
-      onClear,
+      onClear = () => onChange(''),
       isDropdownActive,
+      className,
       ...props
     },
     ref,
@@ -123,14 +124,19 @@ const TextInput = forwardRef<HTMLInputElement, TextInputHtmlProps>(
           )}
           <input
             type='text'
-            className={classNames(styles.input, `font-size-${size}`)}
+            {...props}
+            className={classNames(
+              styles.input,
+              `font-size-${size}`,
+              `height-${size}`,
+              className,
+            )}
             ref={inputRef}
             value={value}
             placeholder={placeholder}
             disabled={disabled}
             onChange={handleChange}
             onClick={handleKeyUpOrClick}
-            {...props}
           />
           {showClearButton && (
             <Image
@@ -139,7 +145,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputHtmlProps>(
               onClick={onClear}
               width={sizeToNumber(size)}
               height={sizeToNumber(size)}
-              className={'pointer'}
+              className='cursorPointer'
             />
           )}
           {showDropdownIcon && (

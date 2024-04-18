@@ -6,6 +6,7 @@
     display: flex;
     flex-direction: row;
     width: 100%;
+    user-select: none;
 
     .control::before {
         border: none;
@@ -13,8 +14,21 @@
 }
 
 .textAreaContainer {
-    outline: 0px solid transparent;
-    position: relative;
+    z-index: 2;
+    outline: 0 solid transparent;
     min-height: 100px;
     flex: 1;
+    min-width: 100%;
+}
+
+.textAreaContainer p {
+    margin-top: 0;
+}
+
+.placeholder {
+    color: var(--iron);
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
 }
