@@ -15,7 +15,7 @@ type Props = {
   children: ReactNode;
   isModalShowing: boolean;
   hide: () => void;
-  top?: string;
+  top?: string | false;
   title?: string;
   hasCloseButton?: boolean;
   closeOnClickOutside?: boolean;
@@ -28,7 +28,7 @@ const Modal = ({
   children,
   isModalShowing,
   hide,
-  top = '50%',
+  top = '200px',
   title,
   hasCloseButton = true,
   closeOnClickOutside = true,
@@ -45,7 +45,7 @@ const Modal = ({
       >
         <div
           className={modalClass}
-          style={{ top: top }}
+          style={top ? { top } : undefined}
           onClick={(e) => e.stopPropagation()}
         >
           <div className={styles.header}>

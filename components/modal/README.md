@@ -34,7 +34,7 @@ The following props are used to control the Modal's behavior:
 - children (ReactNode): The content to be displayed inside the modal.
 - isShowing (boolean): Controls the visibility of the modal.
 - hide (() => void): A function to be called to close the modal, typically triggered by an event such as clicking on an overlay. 
-- top (string, optional): Adjusts the vertical position of the modal. Accepts any valid CSS value for top (e.g., "50%", "100px"). Default is "50%".
+- top (string | false, optional): Adjusts the vertical position of the modal. Accepts any valid CSS value for top (e.g., "50%", "100px"). Default is "200px". Set the value to false in order to center the modal vertically.
 - title (string, optional): Text to be displayed as the modal's title.
 - hasCloseButton (boolean, optional): Determines if a close button is shown. Default is true.
 - closeOnClickOutside (boolean, optional): Determines if clicking outside closes the modal. Default is true.

@@ -19,6 +19,7 @@
     padding: 25px;
     display: grid;
     gap: 20px;
+    align-self: center;
 }
 
 .header {
