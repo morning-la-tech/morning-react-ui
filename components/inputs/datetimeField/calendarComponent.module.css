@@ -10,7 +10,7 @@
   border-style: solid;
   border-color: var(--ash);
   background-color: var(--white);
-  box-shadow: 0 8px 16px #5B68713D;
+  box-shadow: var(--shadow-3);
   user-select: none;
 }
 
