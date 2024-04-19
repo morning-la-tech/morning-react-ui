@@ -8,13 +8,16 @@ import React, {
 } from 'react';
 import classNames from 'classnames';
 import { format, setMinutes, setHours } from 'date-fns';
-import { isAfter } from '@/node_modules/date-fns/isAfter';
-import { isEqual } from '@/node_modules/date-fns/isEqual';
 import { Size, sizeToHeight } from '@/utils/Enum';
 import ParentInput from '@/components/inputs/ParentInput';
-import { BasicInputProps, InputProps } from '@/components/inputs/propsTypes';
+import {
+  isStringValidAsTime,
+  isTimeWithinEdges,
+  stringToTime,
+} from '@/utils/datetimeUtils';
 import styles from '../input.module.css';
-import useInput from './useInput';
+import useInput from '../textField/useInput';
+import { BasicInputProps, InputProps } from '../propsTypes';
 
 type TimeInputProps = BasicInputProps &
   InputProps & {
@@ -47,52 +50,6 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
 
     const [error, setError] = useState<boolean>(false);
-
-    const stringToTime = (time: string): [number, number] => {
-      const [hours, minutes] = time
-        .split(':')
-        .map((part) => (part.length ? parseInt(part.slice(-2)) : 0));
-      return [hours, minutes || 0];
-    };
-
-    const isStringValidAsTime = (time: string): boolean => {
-      if (
-        time.replace(/[0-9:]/g, '').length > 0 ||
-        time.split(':').length > 2 ||
-        time.replace(/:/g, '').length > 4
-      ) {
-        return false;
-      }
-      const [hours, minutes] = stringToTime(time);
-      return hours >= 0 && hours < 24 && minutes >= 0 && minutes < 60;
-    };
-
-    const isWithinEdges = (
-      time: string,
-      minEdge?: string,
-      maxEdge?: string,
-    ): boolean => {
-      const [hour, minute] = stringToTime(time);
-      const reference = setMinutes(setHours(new Date(), hour), minute);
-      let isRefAfterMin = true;
-      let isRefBeforeMax = true;
-
-      if (minEdge && isStringValidAsTime(minEdge)) {
-        const [minHour, minMinute] = stringToTime(minEdge);
-        const minTime = setMinutes(setHours(new Date(), minHour), minMinute);
-        isRefAfterMin =
-          isEqual(reference, minTime) || isAfter(reference, minTime);
-      }
-
-      if (maxEdge && isStringValidAsTime(maxEdge)) {
-        const [maxHour, maxMinute] = stringToTime(maxEdge);
-        const maxTime = setMinutes(setHours(new Date(), maxHour), maxMinute);
-        isRefBeforeMax =
-          isEqual(reference, maxTime) || isAfter(maxTime, reference);
-      }
-
-      return isRefBeforeMax && isRefAfterMin;
-    };
 
     /**
      * Function used to reformat the input value to a readable time value
@@ -157,7 +114,7 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       setError(!validAsTime);
 
       if (validAsTime) {
-        setError(!isWithinEdges(reformatedNewValue, min, max));
+        setError(!isTimeWithinEdges(reformatedNewValue, min, max));
         setInputValue(reformatedNewValue);
       }
     };
@@ -169,10 +126,10 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
         return;
       }
 
-      setError(!isWithinEdges(inputValue, min, max));
+      setError(!isTimeWithinEdges(inputValue, min, max));
       const [hours, minutes] = stringToTime(inputValue);
       onChange(
-        isWithinEdges(inputValue, min, max)
+        isTimeWithinEdges(inputValue, min, max)
           ? setMinutes(setHours(new Date(), hours), minutes)
           : false,
       );
