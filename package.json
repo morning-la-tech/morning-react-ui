@@ -28,6 +28,7 @@
     "myst-spec": "^0.0.5",
     "next": "14.0.4",
     "prosemirror-commands": "^1.5.2",
+    "prosemirror-history": "^1.4.0",
     "prosemirror-keymap": "^1.2.2",
     "prosemirror-model": "^1.19.4",
     "prosemirror-schema-basic": "^1.2.2",

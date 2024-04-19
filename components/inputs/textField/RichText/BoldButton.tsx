@@ -2,10 +2,15 @@ import { useEditorEventCallback } from '@nytimes/react-prosemirror';
 import { toggleMark } from 'prosemirror-commands';
 import Image from 'next/image';
 import React from 'react';
+import classNames from 'classnames';
 import { Button, ButtonVariant } from '@/components/buttons';
 import richStyle from '@/components/inputs/textField/RichText/richText.module.css';
 
-export function BoldButton() {
+type ButtonProp = {
+  active: boolean;
+};
+
+export function BoldButton({ active }: ButtonProp) {
   const onClick = useEditorEventCallback((view) => {
     const toggle = toggleMark(view.state.schema.marks.strong);
     toggle(view.state, view.dispatch, view);
@@ -14,7 +19,10 @@ export function BoldButton() {
   return (
     <Button
       variant={ButtonVariant.Secondary}
-      className={richStyle.control}
+      className={classNames({
+        [richStyle.control]: true,
+        [richStyle.active]: active,
+      })}
       onClick={onClick}
     >
       <Image

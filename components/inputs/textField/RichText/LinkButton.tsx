@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import { useEditorEventCallback } from '@nytimes/react-prosemirror';
 import Image from 'next/image';
+import classNames from 'classnames';
 import { Button, ButtonVariant } from '@/components/buttons';
 import richStyle from '@/components/inputs/textField/RichText/richText.module.css';
 import TextInput from '@/components/inputs/textField/TextInput';
 import Modal from '@/components/modal/Modal';
 
-export function LinkButton() {
+type ButtonProp = {
+  active: boolean;
+};
+
+export function LinkButton({ active }: ButtonProp) {
   const [selectedText, setSelectedText] = useState<string>('');
   const [isInvalidText, setInvalidText] = useState<boolean>(false);
   const [url, setUrl] = useState<string>('');
@@ -110,7 +115,10 @@ export function LinkButton() {
       </Modal>
       <Button
         variant={ButtonVariant.Secondary}
-        className={richStyle.control}
+        className={classNames({
+          [richStyle.control]: true,
+          [richStyle.active]: active,
+        })}
         onClick={onClick}
       >
         <Image
