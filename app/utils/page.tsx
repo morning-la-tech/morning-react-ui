@@ -25,18 +25,18 @@ export default function Page() {
 
   const buttons: ModalButtonProps[] = [
     {
-      label: 'Validate',
-      variant: ButtonVariant.Primary,
-      onClick: () => {
-        addToast('success', 'Validated');
-        hide();
-      },
-    },
-    {
       label: 'Cancel',
       variant: ButtonVariant.Secondary,
       onClick: () => {
         addToast('error', 'Canceled');
+        hide();
+      },
+    },
+    {
+      label: 'Validate',
+      variant: ButtonVariant.Primary,
+      onClick: () => {
+        addToast('success', 'Validated');
         hide();
       },
     },

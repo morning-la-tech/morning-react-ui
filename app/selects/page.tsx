@@ -112,76 +112,78 @@ export default function Selects() {
   };
 
   return (
-    <Container style={{ gap: '30px' }}>
+    <>
       <Navigation>
         <h1 className={'font-size-xl'}>Selects</h1>
       </Navigation>
-      <NumberInput
-        label='Elements displayed in the dropdown'
-        value={optionsToDisplay}
-        onChange={setOptionsToDisplay}
-        min={1}
-      />
-      <Columns>
-        <Column>
-          <h1>MultiSelect</h1>
-          {renderMultiSelectInputs({
-            label: 'Simple',
-            sublabel: 'Sublabel',
-            placeholder: 'Placeholder',
-            options: options,
-            onChange: setOptions,
-            rowToDisplay: optionsToDisplay,
-          })}
-          {renderMultiSelectInputs({
-            label: 'Simple',
-            sublabel: 'Sublabel',
-            placeholder: 'Placeholder',
-            options: options,
-            onChange: setOptions,
-            rowToDisplay: optionsToDisplay,
-            disabled: true,
-          })}
-          {renderMultiSelectInputs({
-            label: 'Simple',
-            sublabel: 'Sublabel',
-            placeholder: 'Placeholder',
-            options: options,
-            onChange: setOptions,
-            rowToDisplay: optionsToDisplay,
-            isError: true,
-          })}
-        </Column>
-        <Column>
-          <h1>SelectInput</h1>
-          {renderSelectInputs({
-            label: 'Simple',
-            sublabel: 'Sublabel',
-            placeholder: 'Placeholder',
-            options: ['one', 'two', 'three', 'four', 'five'],
-            selectedOption: selectValue,
-            onChange: handleSelectChange,
-          })}
-          {renderSelectInputs({
-            label: 'Disabled',
-            sublabel: 'Sublabel',
-            placeholder: 'Placeholder',
-            options: ['one', 'two', 'three', 'four', 'five'],
-            disabled: true,
-            selectedOption: selectValue,
-            onChange: handleSelectChange,
-          })}
-          {renderSelectInputs({
-            label: 'Disabled',
-            sublabel: 'Sublabel',
-            placeholder: 'Placeholder',
-            options: ['one', 'two', 'three', 'four', 'five'],
-            isError: true,
-            selectedOption: selectValue,
-            onChange: handleSelectChange,
-          })}
-        </Column>
-      </Columns>
-    </Container>
+      <Container style={{ gap: '30px' }}>
+        <NumberInput
+          label='Elements displayed in the dropdown'
+          value={optionsToDisplay}
+          onChange={setOptionsToDisplay}
+          min={1}
+        />
+        <Columns>
+          <Column>
+            <h1>MultiSelect</h1>
+            {renderMultiSelectInputs({
+              label: 'Simple',
+              sublabel: 'Sublabel',
+              placeholder: 'Placeholder',
+              options: options,
+              onChange: setOptions,
+              rowToDisplay: optionsToDisplay,
+            })}
+            {renderMultiSelectInputs({
+              label: 'Simple',
+              sublabel: 'Sublabel',
+              placeholder: 'Placeholder',
+              options: options,
+              onChange: setOptions,
+              rowToDisplay: optionsToDisplay,
+              disabled: true,
+            })}
+            {renderMultiSelectInputs({
+              label: 'Simple',
+              sublabel: 'Sublabel',
+              placeholder: 'Placeholder',
+              options: options,
+              onChange: setOptions,
+              rowToDisplay: optionsToDisplay,
+              isError: true,
+            })}
+          </Column>
+          <Column>
+            <h1>SelectInput</h1>
+            {renderSelectInputs({
+              label: 'Simple',
+              sublabel: 'Sublabel',
+              placeholder: 'Placeholder',
+              options: ['one', 'two', 'three', 'four', 'five'],
+              selectedOption: selectValue,
+              onChange: handleSelectChange,
+            })}
+            {renderSelectInputs({
+              label: 'Disabled',
+              sublabel: 'Sublabel',
+              placeholder: 'Placeholder',
+              options: ['one', 'two', 'three', 'four', 'five'],
+              disabled: true,
+              selectedOption: selectValue,
+              onChange: handleSelectChange,
+            })}
+            {renderSelectInputs({
+              label: 'Disabled',
+              sublabel: 'Sublabel',
+              placeholder: 'Placeholder',
+              options: ['one', 'two', 'three', 'four', 'five'],
+              isError: true,
+              selectedOption: selectValue,
+              onChange: handleSelectChange,
+            })}
+          </Column>
+        </Columns>
+      </Container>
+    </>
   );
 }
