@@ -1,6 +1,5 @@
 'use client';
-
-import React, { Dispatch, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ProseMirror, useNodeViews } from '@nytimes/react-prosemirror';
 import classNames from 'classnames';
 import { DOMSerializer } from 'prosemirror-model';
@@ -19,8 +18,9 @@ import richStyle from './richText.module.css';
 
 type RichTextProps = InputProps & {
   text: string;
-  setText: Dispatch<string>;
-  textLength?: Dispatch<number>;
+  setText: (value: string) => void;
+  setTextLength?: (length: number) => void;
+  maxChars?: number;
 };
 
 const RichText = ({
@@ -33,13 +33,14 @@ const RichText = ({
   setText,
   placeholder,
   isError,
-  textLength = undefined,
+  maxChars,
+  setTextLength,
 }: RichTextProps) => {
   const { nodeViews, renderNodeViews } = useNodeViews(reactNodeViews);
   const [mount, setMount] = useState<HTMLElement | null>(null);
   const [innerText, setInnerText] = useState(text);
 
-  const { hasMark, editorState, setEditorState } = useEditor(text);
+  const { hasMark, editorState, setEditorState } = useEditor(text, maxChars);
 
   useEffect(() => {
     const fragment = DOMSerializer.fromSchema(editor_schema).serializeFragment(
@@ -48,11 +49,11 @@ const RichText = ({
     const tmp = document.createElement('div');
     tmp.appendChild(fragment);
     setText(tmp.innerHTML);
-    setInnerText(tmp.innerText[0]);
-    if (textLength) {
-      textLength(tmp.innerText.length);
+    setInnerText(tmp.innerText);
+    if (setTextLength) {
+      setTextLength(tmp.innerText.length);
     }
-  }, [editorState]);
+  }, [editorState, setText, setInnerText, setTextLength]);
 
   const handleWrapperClick = () => {
     if (mount) {
@@ -73,7 +74,7 @@ const RichText = ({
         state={editorState}
         nodeViews={nodeViews}
         dispatchTransaction={(tr) => {
-          setEditorState((s) => s.apply(tr));
+          setEditorState(editorState.apply(tr));
         }}
       >
         <div

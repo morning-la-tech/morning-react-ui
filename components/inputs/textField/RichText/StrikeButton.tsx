@@ -13,7 +13,13 @@ type ButtonProp = {
 export function StrikeButton({ active }: ButtonProp) {
   const onClick = useEditorEventCallback((view) => {
     const toggle = toggleMark(view.state.schema.marks.strikethrough);
-    toggle(view.state, view.dispatch, view);
+    toggle(view.state, view.dispatch);
+
+    setTimeout(() => {
+      if (view.dom instanceof HTMLElement) {
+        view.dom.focus();
+      }
+    }, 0);
   });
 
   return (
@@ -23,13 +29,14 @@ export function StrikeButton({ active }: ButtonProp) {
         [richStyle.control]: true,
         [richStyle.active]: active,
       })}
+      onMouseDown={(event) => event.preventDefault()}
       onClick={onClick}
     >
       <Image
         src={'https://cdn.morning.fr/icons/strike.svg'}
         width={24}
         height={24}
-        alt={'strike'}
+        alt={'Strike'}
       />
     </Button>
   );

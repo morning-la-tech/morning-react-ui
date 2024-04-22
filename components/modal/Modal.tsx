@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 import { createPortal } from 'react-dom';
 import classNames from 'classnames';
 import { Size } from '@/utils/Enum';
@@ -35,16 +35,30 @@ const Modal = ({
   className,
   buttons = [],
 }: Props) => {
-  const modalClass = classNames(styles.modal, className);
+  const [isMouseDownOutside, setMouseDownOutside] = useState(false);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    const isOutside = e.target === e.currentTarget;
+    setMouseDownOutside(isOutside);
+  };
+
+  const handleMouseUp = (e: React.MouseEvent) => {
+    const isOutside = e.target === e.currentTarget;
+    if (isMouseDownOutside && isOutside && closeOnClickOutside) {
+      hide();
+    }
+  };
+
   return (
     isModalShowing &&
     createPortal(
       <div
         className={styles.overlay}
-        onClick={closeOnClickOutside ? hide : (e) => e.stopPropagation()}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
       >
         <div
-          className={modalClass}
+          className={classNames(styles.modal, className)}
           style={top ? { top } : undefined}
           onClick={(e) => e.stopPropagation()}
         >

@@ -1,5 +1,4 @@
 'use client';
-
 import Separator from '@/components/utils/Separator';
 import Container from '@/components/layout/Container';
 import Columns from '@/components/layout/Columns';
@@ -13,7 +12,7 @@ import useModal from '@/components/modal/useModal';
 
 export default function Page() {
   const { addToast } = useToast();
-  const { isModalShowing, handleShowModal, hide } = useModal();
+  const { isModalShowing, handleShowModal, hideModal } = useModal();
 
   const handleClickSuccess = () => {
     addToast('success', 'Bravo');
@@ -25,19 +24,19 @@ export default function Page() {
 
   const buttons: ModalButtonProps[] = [
     {
-      label: 'Validate',
-      variant: ButtonVariant.Primary,
-      onClick: () => {
-        addToast('success', 'Validated');
-        hide();
-      },
-    },
-    {
       label: 'Cancel',
       variant: ButtonVariant.Secondary,
       onClick: () => {
         addToast('error', 'Canceled');
-        hide();
+        hideModal();
+      },
+    },
+    {
+      label: 'Validate',
+      variant: ButtonVariant.Primary,
+      onClick: () => {
+        addToast('success', 'Validated');
+        hideModal();
       },
     },
   ];
@@ -72,7 +71,7 @@ export default function Page() {
         </Columns>
         <Modal
           isModalShowing={isModalShowing}
-          hide={hide}
+          hide={hideModal}
           title={'This is a title'}
           buttons={buttons}
         >

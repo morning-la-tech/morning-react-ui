@@ -14,6 +14,11 @@ export function BoldButton({ active }: ButtonProp) {
   const onClick = useEditorEventCallback((view) => {
     const toggle = toggleMark(view.state.schema.marks.strong);
     toggle(view.state, view.dispatch, view);
+    setTimeout(() => {
+      if (view.dom instanceof HTMLElement) {
+        view.dom.focus();
+      }
+    }, 0);
   });
 
   return (
@@ -23,13 +28,14 @@ export function BoldButton({ active }: ButtonProp) {
         [richStyle.control]: true,
         [richStyle.active]: active,
       })}
+      onMouseDown={(event) => event.preventDefault()}
       onClick={onClick}
     >
       <Image
         src={'https://cdn.morning.fr/icons/bold.svg'}
         width={24}
         height={24}
-        alt={'bold'}
+        alt={'Bold'}
       />
     </Button>
   );

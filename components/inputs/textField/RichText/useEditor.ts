@@ -15,7 +15,10 @@ import {
 import { liftListItem, splitListItem } from 'prosemirror-schema-list';
 import { schema } from 'prosemirror-schema-basic';
 import { react } from '@nytimes/react-prosemirror';
+import { history, undo, redo } from 'prosemirror-history';
 import { editor_schema } from '@/components/inputs/textField/RichText/config/setup';
+import maxLengthPlugin from './plugins/maxLengthPlugin';
+import handleBlurPlugin from './plugins/handleBlur';
 
 type EditorHook = {
   editorState: EditorState;
@@ -23,7 +26,7 @@ type EditorHook = {
   hasMark: (markName: string) => boolean;
 };
 
-const useEditor = (text: string): EditorHook => {
+const useEditor = (text: string, maxChars?: number): EditorHook => {
   const parser = (content: string) => {
     if (typeof window == 'undefined') {
       return;
@@ -38,8 +41,13 @@ const useEditor = (text: string): EditorHook => {
       doc: parser(text),
       schema: editor_schema,
       plugins: [
+        history(),
+        handleBlurPlugin(),
         keymap({
           ...baseKeymap,
+          'Mod-z': undo,
+          'Mod-y': redo,
+          'Shift-Mod-z': redo,
           Enter: chainCommands(
             newlineInCode,
             createParagraphNear,
@@ -55,26 +63,29 @@ const useEditor = (text: string): EditorHook => {
           'Cmd-s': toggleMark(editor_schema.marks['strikethrough']),
         }),
         react(),
+        ...(maxChars ? [maxLengthPlugin(maxChars)] : []),
       ],
     }),
   );
 
   const hasMark = (markType: string): boolean => {
-    const { from, $from, to, empty } = state.selection;
+    const { from, to, $from, empty } = state.selection;
+    const mark = editor_schema.marks[markType];
     if (empty) {
-      return Boolean(
-        state.storedMarks?.some((mark) => mark.type.name === markType) ||
-          $from.marks().some((mark) => mark.type.name === markType),
-      );
+      const applicableMarks = state.storedMarks || $from.marks();
+      return applicableMarks.some((markInstance) => markInstance.type === mark);
     } else {
-      let checkMarkActive = false;
+      let allMarked = true;
       state.doc.nodesBetween(from, to, (node) => {
-        if (node.marks.some((mark) => mark.type.name === markType)) {
-          checkMarkActive = true;
+        if (!node.isInline) {
+          return true;
+        }
+        if (!node.marks.some((markInstance) => markInstance.type === mark)) {
+          allMarked = false;
           return false;
         }
       });
-      return checkMarkActive;
+      return allMarked;
     }
   };
 

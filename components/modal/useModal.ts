@@ -3,7 +3,7 @@ import { useEffect, useState, useCallback } from 'react';
 const useModal = (onClose?: () => void, closeOnEscape: boolean = true) => {
   const [isModalShowing, setIsModalShowing] = useState<boolean>(false);
 
-  const hide = useCallback(() => {
+  const hideModal = useCallback(() => {
     if (isModalShowing && onClose) {
       onClose();
     }
@@ -12,6 +12,10 @@ const useModal = (onClose?: () => void, closeOnEscape: boolean = true) => {
 
   const handleShowModal = () => {
     setIsModalShowing(true);
+  };
+
+  const toggleModal = () => {
+    setIsModalShowing(!isModalShowing);
   };
 
   useEffect(() => {
@@ -28,7 +32,7 @@ const useModal = (onClose?: () => void, closeOnEscape: boolean = true) => {
   useEffect(() => {
     const handleEsc = (event: KeyboardEvent) => {
       if (event.key === 'Escape' && isModalShowing && closeOnEscape) {
-        hide();
+        hideModal();
       }
     };
 
@@ -37,12 +41,13 @@ const useModal = (onClose?: () => void, closeOnEscape: boolean = true) => {
     return () => {
       window.removeEventListener('keydown', handleEsc);
     };
-  }, [isModalShowing, hide, closeOnEscape]);
+  }, [isModalShowing, hideModal, closeOnEscape]);
 
   return {
     isModalShowing,
-    hide,
+    hideModal,
     handleShowModal,
+    toggleModal,
   };
 };
 

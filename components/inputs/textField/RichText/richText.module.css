@@ -1,38 +1,50 @@
 .wrapper {
-    flex-direction: column;
+  flex-direction: column;
 }
 
 .controls {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    user-select: none;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  user-select: none;
 
-    .control::before {
-        border: none;
-    }
+  .control::before {
+    border: none;
+  }
 }
 
 .textAreaContainer {
-    z-index: 2;
-    outline: 0 solid transparent;
-    min-height: 100px;
-    flex: 1;
-    min-width: 100%;
+  z-index: 2;
+  outline: 0 solid transparent;
+  height: 200px;
+  flex: none;
+  min-width: 100%;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .textAreaContainer p {
-    margin-top: 0;
+  margin-top: 0;
 }
 
 .placeholder {
-    color: var(--iron);
-    position: absolute;
-    z-index: 1;
-    left: 0;
-    top: 0;
+  color: var(--iron);
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 0;
 }
 
 .active {
-    background-color: var(--silver);
+  background-color: var(--silver);
+}
+
+.linkModal {
+  width: 600px;
+}
+
+.linkModal {
+  width: 600px;
 }
