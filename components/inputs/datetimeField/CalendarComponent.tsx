@@ -159,7 +159,7 @@ const CalendarComponent = ({
             : false,
           [styles.outOfMonth]: !isSameMonth(day, displayedDate),
           [styles.today]: isToday(day),
-          [styles.outOfBoundery]: !isDateWithinEdges(
+          [styles.outOfBoundary]: !isDateWithinEdges(
             format(day, 'dd/MM/yyyy'),
             from,
             to,
