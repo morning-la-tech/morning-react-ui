@@ -1,6 +1,5 @@
 'use client';
 import { useState } from 'react';
-import Link from 'next/link';
 import { Size } from '@/utils/Enum';
 import { SelectionState } from '@/types/dataTypes';
 import Radio from '@/components/inputs/toggleInputs/single/Radio';
@@ -8,6 +7,7 @@ import MultiRadio from '@/components/inputs/toggleInputs/MultiRadio';
 import Container from '@/components/layout/Container';
 import Columns from '@/components/layout/Columns';
 import Column from '@/components/layout/Column';
+import Navigation from '@/components/layout/Navigation';
 
 const RadioGroup = () => {
   const initialOptions = {
@@ -62,9 +62,11 @@ const RadioGroup = () => {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'row' }}>
+    <>
+      <Navigation>
+        <h1 className={'font-size-xl'}>Radio</h1>
+      </Navigation>
       <Container>
-        <Link href={'/'}>Home</Link>
         <h1>Radio</h1>
         <Columns>
           <Column>
@@ -124,7 +126,7 @@ const RadioGroup = () => {
           </Column>
         </Columns>
       </Container>
-    </div>
+    </>
   );
 };
 
