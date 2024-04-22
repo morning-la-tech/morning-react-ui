@@ -35,7 +35,6 @@
   font-family: var(--inter);
 }
 
-
 .calendarHeaderActions img {
   cursor: pointer;
 }
@@ -69,11 +68,11 @@
 }
 
 .days.outOfMonth,
-.days.outOfBoundery {
+.days.outOfBoundary {
   color: var(--stone);
 }
 
-.days.outOfBoundery:hover {
+.days.outOfBoundary:hover {
   cursor: not-allowed;
 }
 
@@ -87,7 +86,7 @@
   border-radius: 100px;
 }
 
-.days:hover:not(.days.outOfBoundery, .days.selected) {
+.days:hover:not(.days.outOfBoundary, .days.selected) {
   background-color: var(--sky);
   border-radius: 100px;
 }
