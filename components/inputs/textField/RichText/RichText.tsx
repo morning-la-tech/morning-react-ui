@@ -54,6 +54,12 @@ const RichText = ({
     }
   }, [editorState]);
 
+  const handleWrapperClick = () => {
+    if (mount) {
+      mount.focus();
+    }
+  };
+
   return (
     <ParentInput
       label={label}
@@ -75,6 +81,7 @@ const RichText = ({
             [`padding-${size}`]: true,
             [inputStyle.error]: isError,
           })}
+          onClick={handleWrapperClick}
         >
           <div className={richStyle.textAreaContainer} ref={setMount} />
           {renderNodeViews()}
