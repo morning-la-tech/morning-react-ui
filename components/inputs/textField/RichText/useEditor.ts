@@ -1,5 +1,4 @@
 'use client';
-
 import { EditorState } from 'prosemirror-state';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { DOMParser } from 'prosemirror-model';
@@ -60,11 +59,23 @@ const useEditor = (text: string): EditorHook => {
     }),
   );
 
-  const hasMark = (name: string): boolean => {
-    return (
-      state.selection.$head.marks().filter((mark) => mark.type.name == name)
-        .length > 0
-    );
+  const hasMark = (markType: string): boolean => {
+    const { from, $from, to, empty } = state.selection;
+    if (empty) {
+      return Boolean(
+        state.storedMarks?.some((mark) => mark.type.name === markType) ||
+          $from.marks().some((mark) => mark.type.name === markType),
+      );
+    } else {
+      let checkMarkActive = false;
+      state.doc.nodesBetween(from, to, (node) => {
+        if (node.marks.some((mark) => mark.type.name === markType)) {
+          checkMarkActive = true;
+          return false;
+        }
+      });
+      return checkMarkActive;
+    }
   };
 
   return {
