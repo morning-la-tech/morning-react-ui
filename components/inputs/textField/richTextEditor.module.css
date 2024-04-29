@@ -1,0 +1,44 @@
+.wrapper {
+  position: relative;
+  border: 1px solid var(--ash);
+  border-radius: 6px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.wrapper:focus-within {
+  outline: none;
+  border: 1px solid var(--sapphire);
+}
+
+.input {
+  border: none;
+  background-color: var(--white);
+  user-select: none;
+  flex-grow: 1;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.controls {
+  display: flex;
+  justify-content: flex-start;
+  padding: 4px;
+}
+
+.control {
+  padding: 5px 10px;
+  cursor: pointer;
+  background-color: var(--white);
+  margin-right: 2px;
+  border: none;
+}
+
+.control:hover,
+.control.ql-active {
+  background-color: var(--silver);
+}

@@ -27,6 +27,7 @@
     "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18",
+    "react-quill": "^2.0.0",
     "react-uuid": "^2.0.0",
     "sharp": "^0.33.3",
     "uuid": "^9.0.1"
