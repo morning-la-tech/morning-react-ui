@@ -106,6 +106,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputHtmlProps>(
         <div
           className={classNames(
             styles.wrapper,
+            styles.flex,
             `padding-${size}`,
             { ['cursorText']: !disabled },
             {

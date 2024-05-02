@@ -56,6 +56,12 @@ export default function Home() {
       >
         Upload
       </Button>
+      <Button
+        variant={ButtonVariant.Secondary}
+        onClick={() => router.push('/textarea')}
+      >
+        Textarea
+      </Button>
     </Container>
   );
 }
