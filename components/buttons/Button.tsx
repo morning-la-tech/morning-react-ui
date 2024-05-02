@@ -9,7 +9,7 @@ export enum ButtonVariant {
   Secondary = 'secondary',
 }
 
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   children: ReactNode;
   startImage?: ReactElement;
   endImage?: ReactElement;
@@ -27,6 +27,7 @@ const Button = ({
   size = Size.m,
   variant = ButtonVariant.Primary,
   className,
+  type = 'button',
   ...props
 }: ButtonProps) => {
   const buttonClass = classNames(
@@ -36,7 +37,7 @@ const Button = ({
     className,
   );
   return (
-    <button className={buttonClass} {...props}>
+    <button className={buttonClass} type={type} {...props}>
       <div
         className={styles.content}
         style={{ visibility: isLoading ? 'hidden' : 'visible' }}

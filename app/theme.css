@@ -13,8 +13,7 @@
   --ash: #e5e9eb;
   --stone: #b0babf;
   --iron: #6e7c87;
-  --coal-rgb: 37, 44, 50;
-  --coal: rgb(var(--coal-rgb));
+  --coal: #3b4754;
 
   /* Blue */
   --sky: #ebf7ff;
@@ -84,14 +83,17 @@
   --height-xs: 12px;
 }
 
-/* Fonts */
-body,
 input,
+button,
 textarea,
-select,
-button {
-  font-family: var(--inter);
-  padding: 0;
+select {
+  font: inherit;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 @font-face {
@@ -240,4 +242,35 @@ h2 {
 
 .height-xl {
   height: var(--height-xl);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+}
+
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+img,
+picture,
+svg,
+video,
+canvas {
+  max-width: 100%;
+  height: auto;
+  background-repeat: no-repeat;
+  background-size: cover;
+  vertical-align: middle;
+  font-style: italic;
 }

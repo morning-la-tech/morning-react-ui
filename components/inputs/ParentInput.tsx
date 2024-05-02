@@ -8,6 +8,7 @@ type ParentInputProps = BasicInputProps & {
   children: React.ReactNode;
   inputRef?: React.RefObject<HTMLInputElement>;
   style?: CSSProperties;
+  onClick?: () => void;
 };
 
 const ParentInput = forwardRef<HTMLDivElement, ParentInputProps>(
@@ -20,12 +21,16 @@ const ParentInput = forwardRef<HTMLDivElement, ParentInputProps>(
       children,
       inputRef,
       disabled,
+      onClick,
     },
     ref,
   ) => {
     const focusInput = () => {
       if (inputRef?.current) {
         inputRef.current.focus();
+      }
+      if (onClick) {
+        onClick();
       }
     };
 
@@ -52,12 +57,12 @@ const ParentInput = forwardRef<HTMLDivElement, ParentInputProps>(
               </label>
             )}
             {sublabel && (
-              <div
+              <label
                 className={classNames(styles.sublabel, styles[size])}
                 onClick={focusInput}
               >
                 {sublabel}
-              </div>
+              </label>
             )}
           </div>
         )}
