@@ -42,12 +42,20 @@ const Modal = ({
   return (
     isModalShowing &&
     createPortal(
+<<<<<<< HEAD
       <div className={styles.wrapper}>
         <div
           className={styles.overlay}
           onMouseDown={handleMouseDown}
           onMouseUp={handleMouseUp}
         />
+=======
+      <div
+        className={styles.overlay}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+      >
+>>>>>>> 2b76e52 (Text area & Modal changement)
         <div
           className={classNames(styles.modal, className)}
           style={top ? { top } : undefined}
