@@ -108,7 +108,7 @@
     /* Visual "inner border" */
     box-sizing: border-box;
     pointer-events: none;
-    border-radius: 6px
+    border-radius: 6px;
 }
 
 .secondary.hover,
