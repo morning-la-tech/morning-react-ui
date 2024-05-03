@@ -1,6 +1,6 @@
+import { getAttributes } from '@tiptap/core';
 import { Link } from '@tiptap/extension-link';
 import { Plugin, PluginKey } from '@tiptap/pm/state';
-import { getAttributes } from '@tiptap/core';
 
 export const ControlClickLink = Link.extend({
   addOptions() {

@@ -1,5 +1,5 @@
-import Image from 'next/image';
 import { PropsWithChildren } from 'react';
+import Image from 'next/image';
 import styles from './header.module.css';
 
 const Header = ({ children }: PropsWithChildren) => {

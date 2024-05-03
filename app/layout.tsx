@@ -1,9 +1,9 @@
+import { ReactNode } from 'react';
 import type { Metadata } from 'next';
 import './globals.css';
-import { ReactNode } from 'react';
 import Header from '@/components/layout/Header';
-import { Providers } from './Providers';
 import { inter } from './fonts';
+import { Providers } from './Providers';
 
 export const metadata: Metadata = {
   title: 'React UI',

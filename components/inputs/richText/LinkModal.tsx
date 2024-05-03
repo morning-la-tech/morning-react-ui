@@ -81,13 +81,11 @@ const LinkModal = ({ editor, isModalShowing, hideModal }: LinkModalProps) => {
     const { from, to } = selectionRange.current;
     const isEmptySelection = from === to;
     const normalizedUrl = url ? validateAndNormalizeUrl(url) : '';
-
     if (url && !normalizedUrl) {
       setInvalidUrl(true);
       return;
     }
     editor.chain().focus();
-
     if (!isEmptySelection) {
       if (normalizedUrl) {
         editor

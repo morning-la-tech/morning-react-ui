@@ -1,6 +1,6 @@
 import React, { RefObject, useEffect, useRef, useState } from 'react';
-import { format } from '@/node_modules/date-fns/format';
-import { fr } from 'date-fns/locale/fr';
+import Image from 'next/image';
+import classNames from 'classnames';
 import {
   addMonths,
   isBefore,
@@ -14,15 +14,15 @@ import {
   addWeeks,
   getDayOfYear,
 } from 'date-fns';
-import Image from 'next/image';
-import classNames from 'classnames';
-import { Size, sizeToNumber } from '@/utils/Enum';
-import { capitalizeStr } from '@/utils/stringUtils';
+import { fr } from 'date-fns/locale/fr';
+import { format } from '@/node_modules/date-fns/format';
 import {
   isDateWithinEdges,
   roundUpYear,
   stringToDate,
 } from '@/utils/datetimeUtils';
+import { Size, sizeToNumber } from '@/utils/Enum';
+import { capitalizeStr } from '@/utils/stringUtils';
 import styles from './calendarComponent.module.css';
 
 type CalendarComponentProps = {

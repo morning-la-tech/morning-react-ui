@@ -32,14 +32,12 @@ export const newCharInString = (
     }
     return str2[i];
   }
-
   return '';
 };
 
 export const stripHtml = (htmlString: string) => {
   return htmlString.replace(/<[^>]*>/g, '');
 };
-<<<<<<< HEAD
 
 export const validateAndNormalizeUrl = (urlToValidate: string) => {
   if (!urlToValidate) {
@@ -57,5 +55,3 @@ export const validateAndNormalizeUrl = (urlToValidate: string) => {
     return null;
   }
 };
-=======
->>>>>>> fb899a2 (Text area & Modal changement)
