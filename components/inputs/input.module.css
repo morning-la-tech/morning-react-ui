@@ -3,10 +3,13 @@
   border: 1px solid var(--ash);
   border-radius: 6px;
   box-sizing: border-box;
-  align-items: center;
-  display: flex;
   gap: 4px;
   width: 100%;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
 }
 
 .wrapper:focus-within {

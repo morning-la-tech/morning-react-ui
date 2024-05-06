@@ -8,12 +8,13 @@ import EmptyState from '@/components/utils/EmptyState';
 import { Button, ButtonVariant } from '@/components/buttons';
 import { useToast } from '@/components/Context/ToastContext';
 import Navigation from '@/components/layout/Navigation';
-import Modal, { ModalButtonProps } from '@/components/modal/Modal';
-import useModal from '@/components/modal/useModal';
+import ModalForm from '@/components/modals/ModalForm';
+import useModal from '@/components/modals/useModal';
+import { ButtonProps } from '@/components/buttons/Button';
 
 export default function Page() {
   const { addToast } = useToast();
-  const { isModalShowing, handleShowModal, hide } = useModal();
+  const { isModalShowing, handleShowModal, hideModal } = useModal();
 
   const handleClickSuccess = () => {
     addToast('success', 'Bravo');
@@ -23,22 +24,23 @@ export default function Page() {
     addToast('error', 'Echec');
   };
 
-  const buttons: ModalButtonProps[] = [
+  const buttons: ButtonProps[] = [
     {
-      label: 'Cancel',
+      children: 'Cancel',
       variant: ButtonVariant.Secondary,
       onClick: () => {
         addToast('error', 'Canceled');
-        hide();
+        hideModal();
       },
     },
     {
-      label: 'Validate',
+      children: 'Validate',
       variant: ButtonVariant.Primary,
       onClick: () => {
         addToast('success', 'Validated');
-        hide();
+        hideModal();
       },
+      type: 'submit',
     },
   ];
 
@@ -70,14 +72,14 @@ export default function Page() {
             <Button onClick={handleShowModal}>Modal</Button>
           </Column>
         </Columns>
-        <Modal
+        <ModalForm
           isModalShowing={isModalShowing}
-          hide={hide}
+          hide={hideModal}
           title={'This is a title'}
           buttons={buttons}
         >
           <div>This is the child of the modal component</div>
-        </Modal>
+        </ModalForm>
       </Container>
     </>
   );
