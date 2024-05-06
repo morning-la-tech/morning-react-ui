@@ -1,11 +1,10 @@
 'use client';
-
 import { useState } from 'react';
 import RichText from '@/components/inputs/richText/RichText';
-import Navigation from '@/components/layout/Navigation';
-import Container from '@/components/layout/Container';
-import Columns from '@/components/layout/Columns';
 import Column from '@/components/layout/Column';
+import Columns from '@/components/layout/Columns';
+import Container from '@/components/layout/Container';
+import Navigation from '@/components/layout/Navigation';
 import { stripHtml } from '@/utils';
 
 const Page = () => {

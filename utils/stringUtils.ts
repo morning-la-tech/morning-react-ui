@@ -32,7 +32,6 @@ export const newCharInString = (
     }
     return str2[i];
   }
-
   return '';
 };
 

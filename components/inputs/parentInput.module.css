@@ -1,30 +1,30 @@
 .label {
-  display: block;
-  font-weight: 600;
+    display: block;
+    font-weight: 600;
 }
 
 .label.bold {
-  font-weight: 700;
+    font-weight: 700;
 }
 
 .sublabel {
-  display: block;
-  color: var(--coal);
-  font-weight: 400;
+    display: block;
+    color: var(--coal);
+    font-weight: 400;
 }
 
 .labelsContainer {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .parentInput {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 
 .parentInput input::placeholder {
-  color: var(--iron);
+    color: var(--iron);
 }

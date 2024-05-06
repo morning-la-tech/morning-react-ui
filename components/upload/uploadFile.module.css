@@ -18,7 +18,7 @@
     .imageIcon {
         background-color: var(--iron);
         mask-size: 33px 29px;
-        mask-image: url("https://cdn.morning.fr/icons/image.svg");
+        mask-image: url('https://cdn.morning.fr/icons/image.svg');
         background-position: center;
         background-repeat: no-repeat;
         width: 33px;
@@ -33,11 +33,11 @@
     }
 
     &.pending .selectedImage {
-        opacity: .5;
+        opacity: 0.5;
     }
 }
 
 .uploadIcon {
-    position: static!important;
+    position: static !important;
     padding: 4px;
 }

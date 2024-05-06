@@ -1,12 +1,12 @@
 import { FormEvent, ReactNode } from 'react';
-import { createPortal } from 'react-dom';
 import classNames from 'classnames';
-import { Size } from '@/utils/Enum';
+import { createPortal } from 'react-dom';
 import { ButtonProps } from '@/components/buttons/Button';
-import styles from './modal.module.css';
-import useModals from './utils/useModals';
-import ModalHeader from './utils/ModalHeader';
+import { Size } from '@/utils/Enum';
 import Form from '../form/Form';
+import styles from './modal.module.css';
+import ModalHeader from './utils/ModalHeader';
+import useModals from './utils/useModals';
 
 type Props = {
   children: ReactNode;
