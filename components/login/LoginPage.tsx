@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import classNames from 'classnames';
 import { space_grotesk } from '@/app/fonts';
-import styles from './LoginPage.module.css';
 import GoogleLoginButton from '../buttons/GoogleLoginButton';
+import styles from './LoginPage.module.css';
 
 type Props = {
   onClick: () => void;

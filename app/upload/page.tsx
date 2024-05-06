@@ -4,8 +4,8 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Container from '@/components/layout/Container';
 import Navigation from '@/components/layout/Navigation';
-import { UploadFile } from '@/components/upload';
 import Row from '@/components/layout/Row';
+import { UploadFile } from '@/components/upload';
 
 const UploadPage = () => {
   const [firstFile, setFirstFile] = useState<string | undefined>(undefined);

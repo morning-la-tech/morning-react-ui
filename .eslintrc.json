@@ -45,8 +45,43 @@
           "builtin",
           "external",
           "internal",
-          ["parent", "sibling", "index"]
-        ]
+          "parent",
+          "sibling",
+          "index"
+        ],
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "builtin",
+            "position": "before"
+          },
+          {
+            "pattern": "next/**",
+            "group": "builtin",
+            "position": "before"
+          },
+          {
+            "pattern": "*",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@/**",
+            "group": "internal",
+            "position": "after"
+          },
+          {
+            "pattern": ".",
+            "group": "internal",
+            "position": "after"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["react", "next/*"],
+        "newlines-between": "never",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
       }
     ],
     "react-hooks/exhaustive-deps": "off",

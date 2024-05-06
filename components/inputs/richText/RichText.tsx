@@ -1,7 +1,3 @@
-import { useEditor, EditorContent } from '@tiptap/react';
-import { StarterKit } from '@tiptap/starter-kit';
-import { Underline } from '@tiptap/extension-underline';
-import Image from 'next/image';
 import {
   ChangeEvent,
   forwardRef,
@@ -9,17 +5,21 @@ import {
   useRef,
   useEffect,
 } from 'react';
-import { Placeholder } from '@tiptap/extension-placeholder';
+import Image from 'next/image';
 import classNames from 'classnames';
+import { Placeholder } from '@tiptap/extension-placeholder';
+import { Underline } from '@tiptap/extension-underline';
+import { useEditor, EditorContent } from '@tiptap/react';
+import { StarterKit } from '@tiptap/starter-kit';
+import inputStyle from '@/components/inputs/input.module.css';
 import { useModal } from '@/components/modals';
 import { stripHtml } from '@/utils';
-import styles from './richText.module.css';
-import inputStyle from '../input.module.css';
-import ActivationButton from './ActivationButton';
-import LinkModal from './LinkModal';
 import ParentInput from '../ParentInput';
 import { InputProps } from '../propsTypes';
+import ActivationButton from './ActivationButton';
 import { ControlClickLink } from './ControlClickLink';
+import LinkModal from './LinkModal';
+import styles from './richText.module.css';
 
 type RichTextProps = InputProps & {
   value: string;

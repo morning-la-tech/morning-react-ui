@@ -1,9 +1,9 @@
 import classNames from 'classnames';
-import { Size, sizeToNumber } from '@/utils/Enum';
-import TextInput from '@/components/inputs/textField/TextInput';
 import { SelectsProps } from '@/components/inputs/propsTypes';
-import styles from './selects.module.css';
+import TextInput from '@/components/inputs/textField/TextInput';
+import { Size, sizeToNumber } from '@/utils/Enum';
 import useSelectInput from './hooks/useSelectInput';
+import styles from './selects.module.css';
 
 type SelectInputProps = SelectsProps & {
   options: string[];

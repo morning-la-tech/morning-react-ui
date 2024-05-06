@@ -1,6 +1,7 @@
 import { createRef, CSSProperties, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import ParentInput from '@/components/inputs/ParentInput';
+import { SelectionState, TriState } from '@/types/dataTypes';
 import { Size } from '@/utils/Enum';
 import {
   getSelectionStatus,
@@ -8,10 +9,9 @@ import {
   setAllTrue,
   updateSelectionState,
 } from '@/utils/selectionStateUtils';
-import { SelectionState, TriState } from '@/types/dataTypes';
-import Checkbox from './single/Checkbox';
-import styles from './multiToggleInputs.module.css';
 import { BasicInputProps } from '../propsTypes';
+import styles from './multiToggleInputs.module.css';
+import Checkbox from './single/Checkbox';
 
 type MultiCheckboxProps = BasicInputProps & {
   options: SelectionState;

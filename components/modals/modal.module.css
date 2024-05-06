@@ -1,51 +1,50 @@
 .wrapper {
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: center;
 }
 
 .overlay {
-  z-index: 2;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: var(--coal);
-  opacity: 0.5;
+    z-index: 2;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--coal);
+    opacity: 0.5;
 }
 
 .modal {
-  z-index: 3;
-  background-color: var(--white);
-  opacity: 1;
-  position: fixed;
-  border-radius: 10px;
-  box-shadow: var(--shadow-6);
-  padding: 25px;
-  display: grid;
-  gap: 20px;
-  align-self: center;
+    z-index: 3;
+    background-color: var(--white);
+    position: fixed;
+    border-radius: 10px;
+    box-shadow: var(--shadow-6);
+    padding: 25px;
+    display: grid;
+    gap: 20px;
+    align-self: center;
 }
 
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .title {
-  font-weight: 600;
-  font-size: 18px;
+    font-weight: 600;
+    font-size: 18px;
 }
 
 .closeButton {
-  cursor: pointer;
-  position: relative;
-  top: 0;
-  right: 0;
-  mask-image: url('https://cdn.morning.fr/icons/cross.svg');
-  mask-size: contain;
-  background-color: var(--coal);
-  width: 24px;
-  height: 24px;
+    cursor: pointer;
+    position: relative;
+    top: 0;
+    right: 0;
+    mask-image: url('https://cdn.morning.fr/icons/cross.svg');
+    mask-size: contain;
+    background-color: var(--coal);
+    width: 24px;
+    height: 24px;
 }

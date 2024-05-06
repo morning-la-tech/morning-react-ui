@@ -1,12 +1,12 @@
 import classNames from 'classnames';
+import TextInput from '@/components/inputs/textField/TextInput';
+import MultiCheckbox from '@/components/inputs/toggleInputs/MultiCheckbox';
+import { SelectionState } from '@/types/dataTypes';
 import { Size } from '@/utils/Enum';
 import { atLeastOneTrue, setAllFalse } from '@/utils/selectionStateUtils';
-import MultiCheckbox from '@/components/inputs/toggleInputs/MultiCheckbox';
-import TextInput from '@/components/inputs/textField/TextInput';
-import { SelectionState } from '@/types/dataTypes';
-import styles from './selects.module.css';
-import useMultiSelect from './hooks/useMultiSelect';
 import { SelectsProps } from '../propsTypes';
+import useMultiSelect from './hooks/useMultiSelect';
+import styles from './selects.module.css';
 
 type MultiSelectProps = SelectsProps & {
   options: SelectionState;

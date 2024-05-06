@@ -7,20 +7,20 @@ import React, {
   useImperativeHandle,
 } from 'react';
 import classNames from 'classnames';
-import { format } from '@/node_modules/date-fns/format';
 import ParentInput from '@/components/inputs/ParentInput';
-import { Size, sizeToHeight } from '@/utils/Enum';
+import { format } from '@/node_modules/date-fns/format';
 import {
   isStringValidAsDate,
   isDateWithinEdges,
   roundUpYear,
   stringToDate,
 } from '@/utils/datetimeUtils';
+import { Size, sizeToHeight } from '@/utils/Enum';
 import { newCharInString } from '@/utils/stringUtils';
 import styles from '../input.module.css';
+import { BasicInputProps, InputProps } from '../propsTypes';
 import useInput from '../textField/useInput';
 import CalendarComponent from './CalendarComponent';
-import { BasicInputProps, InputProps } from '../propsTypes';
 
 type DateInputProps = BasicInputProps &
   InputProps & {
