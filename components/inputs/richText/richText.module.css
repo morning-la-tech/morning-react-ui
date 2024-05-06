@@ -1,0 +1,32 @@
+.richTextWrapper {
+  padding: 6px 12px;
+  flex-grow: 1;
+}
+
+.active {
+  background-color: var(--silver);
+}
+
+.controls {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  user-select: none;
+
+  .control {
+    padding: 4px;
+  }
+
+  .control::before {
+    border: none;
+  }
+}
+
+.linkModal {
+  width: 600px;
+}
+
+.editorContentContainer {
+  height: 76px;
+  overflow-y: auto;
+}

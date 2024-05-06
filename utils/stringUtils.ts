@@ -35,3 +35,24 @@ export const newCharInString = (
 
   return '';
 };
+
+export const stripHtml = (htmlString: string) => {
+  return htmlString.replace(/<[^>]*>/g, '');
+};
+
+export const validateAndNormalizeUrl = (urlToValidate: string) => {
+  if (!urlToValidate) {
+    return '';
+  }
+  const hasValidScheme = /^(https?:\/\/|ftp:\/\/)/i.test(urlToValidate);
+  if (!hasValidScheme) {
+    urlToValidate = `https://${urlToValidate}`;
+  }
+  const pattern =
+    /^(https?:\/\/|ftp:\/\/)([\w-]+(\.[\w-]+)+|localhost|[\d.]+)(:[\d]+)?(\/[\w .-]*)*\/?$/;
+  if (pattern.test(urlToValidate)) {
+    return urlToValidate;
+  } else {
+    return null;
+  }
+};
