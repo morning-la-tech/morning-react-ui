@@ -1,22 +1,23 @@
-import { useEffect } from 'react';
+import { useEffect, useId } from 'react';
 import Image from 'next/image';
 import styles from './toast.module.css';
 
 type ToastProps = {
-  onClose: () => void;
   type: 'success' | 'error';
   message: string;
   delay?: number;
+  onClose: () => void;
 };
 
-const Toast = ({ type, onClose, message, delay = 3000 }: ToastProps) => {
+const Toast = ({ type, message, delay = 3000, onClose }: ToastProps) => {
+  const toastId = useId();
+
   useEffect(() => {
     const timer = setTimeout(() => {
       onClose();
     }, delay);
-
     return () => clearTimeout(timer);
-  }, [onClose]);
+  }, [onClose, delay]);
 
   const imageSrc =
     type === 'success'
@@ -24,7 +25,7 @@ const Toast = ({ type, onClose, message, delay = 3000 }: ToastProps) => {
       : 'https://cdn.morning.fr/icons/cross.svg';
 
   return (
-    <div className={`${styles.toastContainer} ${styles[type]}`}>
+    <div className={`${styles.toastContainer} ${styles[type]}`} id={toastId}>
       <span className={styles.toastMessage}>
         <Image
           src={imageSrc}
