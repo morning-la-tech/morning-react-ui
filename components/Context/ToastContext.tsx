@@ -6,20 +6,18 @@ import {
   useCallback,
   PropsWithChildren,
 } from 'react';
-import uuid from 'react-uuid';
 import Toast from '@/components/utils/Toast';
 
 export type ToastMessageType = 'success' | 'error';
 
 export interface ToastMessage {
-  id: string;
   type: ToastMessageType;
   message: string;
+  onClose: () => void;
 }
 
 type ToastContextProps = {
   addToast: (type: ToastMessageType, message: string) => void;
-  removeToast: (id: string) => void;
 };
 
 const ToastContext = createContext<ToastContextProps>({} as ToastContextProps);
@@ -30,25 +28,26 @@ export const ToastProvider = ({ children }: PropsWithChildren) => {
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
 
   const addToast = useCallback((type: ToastMessageType, message: string) => {
-    const id = uuid();
-    setToasts((currentToasts) => [...currentToasts, { id, type, message }]);
-  }, []);
-
-  const removeToast = useCallback((id: string) => {
-    setToasts((currentToasts) =>
-      currentToasts.filter((currentToast) => currentToast.id !== id),
-    );
+    const onClose = () => {
+      setToasts((currentToasts) =>
+        currentToasts.filter((toast) => toast.message !== message),
+      );
+    };
+    setToasts((currentToasts) => [
+      ...currentToasts,
+      { type, message, onClose },
+    ]);
   }, []);
 
   return (
-    <ToastContext.Provider value={{ addToast, removeToast }}>
+    <ToastContext.Provider value={{ addToast }}>
       {children}
-      {toasts.map((toast) => (
+      {toasts.map((toast, index) => (
         <Toast
-          key={toast.id}
+          key={index}
           type={toast.type}
-          onClose={() => removeToast(toast.id)}
           message={toast.message}
+          onClose={toast.onClose}
         />
       ))}
     </ToastContext.Provider>
