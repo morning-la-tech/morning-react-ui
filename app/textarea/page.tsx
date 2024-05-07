@@ -60,7 +60,7 @@ const Page = () => {
               isError={stripHtml(textArea).length > 150}
             />
           </Column>
-          <Column></Column>
+          <Column>{textArea}</Column>
         </Columns>
         <Columns>
           <Column>
