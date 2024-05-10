@@ -1,14 +1,14 @@
 'use client';
 
 import Image from 'next/image';
-import { Button, ButtonVariant } from '@/components/buttons';
-import buttonStyles from '@/components/buttons/button.module.css';
-import LinkButton from '@/components/buttons/LinkButton';
-import Column from '@/components/layout/Column';
-import Columns from '@/components/layout/Columns';
-import Container from '@/components/layout/Container';
-import Navigation from '@/components/layout/Navigation';
-import { Size, sizeToNumber } from '@/utils/Enum';
+import { Button, ButtonVariant } from '../../components/buttons';
+import buttonStyles from '../../components/buttons/button.module.css';
+import LinkButton from '../../components/buttons/LinkButton';
+import Column from '../../components/layout/Column';
+import Columns from '../../components/layout/Columns';
+import Container from '../../components/layout/Container';
+import Navigation from '../../components/layout/Navigation';
+import { Size, sizeToNumber } from '../../utils/Enum';
 
 export default function Page() {
   const handleClick = () => {

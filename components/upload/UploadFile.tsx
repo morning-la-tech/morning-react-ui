@@ -10,10 +10,10 @@ import {
 } from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
-import { Button, ButtonVariant } from '@/components/buttons';
-import { useToast } from '@/components/Context/ToastContext';
-import { uploadFile } from '@/services/googleCloudStorage';
-import { generateFileName } from '@/utils/file';
+import { Button, ButtonVariant } from '../../components/buttons';
+import { useToast } from '../../components/Context/ToastContext';
+import { uploadFile } from '../../services/googleCloudStorage';
+import { generateFileName } from '../../utils/file';
 import styles from './uploadFile.module.css';
 
 interface UploadFileProps {

@@ -1,7 +1,7 @@
 import React, { ButtonHTMLAttributes, ReactElement, ReactNode } from 'react';
 import classNames from 'classnames';
-import Loading from '@/components/utils/Loading';
-import { Size, sizeToNumber } from '@/utils/Enum';
+import Loading from '../../components/utils/Loading';
+import { Size, sizeToNumber } from '../../utils/Enum';
 import styles from './button.module.css';
 
 export enum ButtonVariant {

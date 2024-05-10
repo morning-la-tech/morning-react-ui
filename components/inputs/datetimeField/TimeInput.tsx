@@ -8,13 +8,13 @@ import React, {
 } from 'react';
 import classNames from 'classnames';
 import { format, setMinutes, setHours } from 'date-fns';
-import ParentInput from '@/components/inputs/ParentInput';
+import ParentInput from '../../../components/inputs/ParentInput';
 import {
   isStringValidAsTime,
   isTimeWithinEdges,
   stringToTime,
-} from '@/utils/datetimeUtils';
-import { Size, sizeToHeight } from '@/utils/Enum';
+} from '../../../utils/datetimeUtils';
+import { Size, sizeToHeight } from '../../../utils/Enum';
 import styles from '../input.module.css';
 import { BasicInputProps, InputProps } from '../propsTypes';
 import useInput from '../textField/useInput';

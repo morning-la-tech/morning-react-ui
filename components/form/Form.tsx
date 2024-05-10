@@ -1,5 +1,5 @@
 import { ReactNode, FormEvent } from 'react';
-import Button, { ButtonProps } from '@/components/buttons/Button';
+import Button, { ButtonProps } from '../../components/buttons/Button';
 import styles from './form.module.css';
 
 type FormProps = {

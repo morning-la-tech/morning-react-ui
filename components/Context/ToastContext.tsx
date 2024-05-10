@@ -6,7 +6,7 @@ import {
   useCallback,
   PropsWithChildren,
 } from 'react';
-import Toast from '@/components/utils/Toast';
+import Toast from '../../components/utils/Toast';
 
 export type ToastMessageType = 'success' | 'error';
 

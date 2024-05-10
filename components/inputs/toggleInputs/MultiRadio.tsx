@@ -1,9 +1,9 @@
 import React from 'react';
 import classNames from 'classnames';
-import ParentInput from '@/components/inputs/ParentInput';
-import { SelectionState } from '@/types/dataTypes';
-import { Size } from '@/utils/Enum';
-import { setAtTrueAndOthersAtFalse } from '@/utils/selectionStateUtils';
+import { Size } from '../..//../utils/Enum';
+import ParentInput from '../../../components/inputs/ParentInput';
+import { SelectionState } from '../../../types/dataTypes';
+import { setAtTrueAndOthersAtFalse } from '../../../utils/selectionStateUtils';
 import { BasicInputProps } from '../propsTypes';
 import styles from './multiToggleInputs.module.css';
 import Radio from './single/Radio';

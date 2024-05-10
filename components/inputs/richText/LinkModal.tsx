@@ -1,9 +1,9 @@
 import { useState, ChangeEvent, useEffect, useRef, FormEvent } from 'react';
 import { Editor } from '@tiptap/react';
-import { ButtonVariant } from '@/components/buttons';
-import TextInput from '@/components/inputs/textField/TextInput';
-import FormModal from '@/components/modals/ModalForm';
-import { validateAndNormalizeUrl } from '@/utils';
+import { ButtonVariant } from '../../../components/buttons';
+import TextInput from '../../../components/inputs/textField/TextInput';
+import FormModal from '../../../components/modals/ModalForm';
+import { validateAndNormalizeUrl } from '../../../utils';
 import styles from './richText.module.css';
 
 type LinkModalProps = {

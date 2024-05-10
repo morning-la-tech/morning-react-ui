@@ -1,6 +1,6 @@
 import { CSSProperties, forwardRef } from 'react';
 import classNames from 'classnames';
-import { Size, sizeToNumber } from '@/utils/Enum';
+import { Size, sizeToNumber } from '../../../../utils/Enum';
 import styles from './radio.module.css';
 
 type RadioProps = {

@@ -1,13 +1,13 @@
 'use client';
 
 import { ChangeEvent, ChangeEventHandler, useState } from 'react';
-import NumberInput from '@/components/inputs/textField/NumberInput';
-import TextInput from '@/components/inputs/textField/TextInput';
-import Column from '@/components/layout/Column';
-import Columns from '@/components/layout/Columns';
-import Container from '@/components/layout/Container';
-import Navigation from '@/components/layout/Navigation';
-import { Size } from '@/utils/Enum';
+import NumberInput from '../../components/inputs/textField/NumberInput';
+import Column from '../../components/layout/Column';
+import Columns from '../../components/layout/Columns';
+import Container from '../../components/layout/Container';
+import Navigation from '../../components/layout/Navigation';
+import { Size } from '../../utils/Enum';
+import TextInput from './../../components/inputs/textField/TextInput';
 
 export default function Page() {
   const [textValue, setTextValue] = useState<string>('');

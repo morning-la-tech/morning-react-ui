@@ -1,7 +1,7 @@
 import { forwardRef, CSSProperties } from 'react';
 import classNames from 'classnames';
-import { BasicInputProps } from '@/components/inputs/propsTypes';
-import { Size } from '@/utils/Enum';
+import { BasicInputProps } from '../../components/inputs/propsTypes';
+import { Size } from '../../utils/Enum';
 import styles from './parentInput.module.css';
 
 type ParentInputProps = BasicInputProps & {

@@ -7,16 +7,16 @@ import React, {
   useImperativeHandle,
 } from 'react';
 import classNames from 'classnames';
-import ParentInput from '@/components/inputs/ParentInput';
-import { format } from '@/node_modules/date-fns/format';
+import ParentInput from '../../../components/inputs/ParentInput';
+import { format } from '../../../node_modules/date-fns/format';
 import {
   isStringValidAsDate,
   isDateWithinEdges,
   roundUpYear,
   stringToDate,
-} from '@/utils/datetimeUtils';
-import { Size, sizeToHeight } from '@/utils/Enum';
-import { newCharInString } from '@/utils/stringUtils';
+} from '../../../utils/datetimeUtils';
+import { Size, sizeToHeight } from '../../../utils/Enum';
+import { newCharInString } from '../../../utils/stringUtils';
 import styles from '../input.module.css';
 import { BasicInputProps, InputProps } from '../propsTypes';
 import useInput from '../textField/useInput';

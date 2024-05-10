@@ -15,14 +15,14 @@ import {
   getDayOfYear,
 } from 'date-fns';
 import { fr } from 'date-fns/locale/fr';
-import { format } from '@/node_modules/date-fns/format';
+import { format } from '../../../node_modules/date-fns/format';
 import {
   isDateWithinEdges,
   roundUpYear,
   stringToDate,
-} from '@/utils/datetimeUtils';
-import { Size, sizeToNumber } from '@/utils/Enum';
-import { capitalizeStr } from '@/utils/stringUtils';
+} from '../../../utils/datetimeUtils';
+import { Size, sizeToNumber } from '../../../utils/Enum';
+import { capitalizeStr } from '../../../utils/stringUtils';
 import styles from './calendarComponent.module.css';
 
 type CalendarComponentProps = {

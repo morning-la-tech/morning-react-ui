@@ -11,9 +11,9 @@ import {
 } from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
-import ParentInput from '@/components/inputs/ParentInput';
-import { InputProps } from '@/components/inputs/propsTypes';
-import { Size, sizeToNumber } from '@/utils/Enum';
+import ParentInput from '../../../components/inputs/ParentInput';
+import { InputProps } from '../../../components/inputs/propsTypes';
+import { Size, sizeToNumber } from '../../../utils/Enum';
 import styles from '../input.module.css';
 import useInput from './useInput';
 

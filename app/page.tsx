@@ -1,8 +1,8 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { Button, ButtonVariant } from '@/components/buttons';
-import Container from '@/components/layout/Container';
+import { Button, ButtonVariant } from '../components/buttons';
+import Container from '../components/layout/Container';
 
 export default function Home() {
   const router = useRouter();

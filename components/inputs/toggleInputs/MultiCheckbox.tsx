@@ -1,14 +1,14 @@
 import { createRef, CSSProperties, useEffect, useState } from 'react';
 import classNames from 'classnames';
-import ParentInput from '@/components/inputs/ParentInput';
-import { SelectionState, TriState } from '@/types/dataTypes';
-import { Size } from '@/utils/Enum';
+import ParentInput from '../../../components/inputs/ParentInput';
+import { SelectionState, TriState } from '../../../types/dataTypes';
+import { Size } from '../../../utils/Enum';
 import {
   getSelectionStatus,
   setAllFalse,
   setAllTrue,
   updateSelectionState,
-} from '@/utils/selectionStateUtils';
+} from '../../../utils/selectionStateUtils';
 import { BasicInputProps } from '../propsTypes';
 import styles from './multiToggleInputs.module.css';
 import Checkbox from './single/Checkbox';

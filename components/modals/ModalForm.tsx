@@ -1,8 +1,8 @@
 import { FormEvent, ReactNode } from 'react';
 import classNames from 'classnames';
 import { createPortal } from 'react-dom';
-import { ButtonProps } from '@/components/buttons/Button';
-import { Size } from '@/utils/Enum';
+import { ButtonProps } from '../../components/buttons/Button';
+import { Size } from '../../utils/Enum';
 import Form from '../form/Form';
 import styles from './modal.module.css';
 import ModalHeader from './utils/ModalHeader';

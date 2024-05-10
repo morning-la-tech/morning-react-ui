@@ -7,8 +7,8 @@ import {
   ChangeEventHandler,
   KeyboardEvent,
 } from 'react';
-import { SelectionState } from '@/types/dataTypes';
-import { Size } from '@/utils/Enum';
+import { SelectionState } from '../../../../types/dataTypes';
+import { Size } from '../../../../utils/Enum';
 import {
   atLeastOneTrue,
   getCurrentElementFromCursorPosition,
@@ -19,8 +19,8 @@ import {
   mergeAndValidateStates,
   toggleSelectionStateAtIndex,
   updateSelectionState,
-} from '@/utils/selectionStateUtils';
-import { normalizeString } from '@/utils/stringUtils';
+} from '../../../../utils/selectionStateUtils';
+import { normalizeString } from '../../../../utils/stringUtils';
 
 type UseMultiSelectProps = {
   options: SelectionState;

@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import type { Metadata } from 'next';
 import './globals.css';
-import Header from '@/components/layout/Header';
+import Header from '../components/layout/Header';
 import { inter } from './fonts';
 import { Providers } from './Providers';
 
