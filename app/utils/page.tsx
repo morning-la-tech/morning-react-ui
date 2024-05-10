@@ -1,15 +1,15 @@
 'use client';
-import { Button, ButtonVariant } from '@/components/buttons';
-import { ButtonProps } from '@/components/buttons/Button';
-import { useToast } from '@/components/Context/ToastContext';
-import Column from '@/components/layout/Column';
-import Columns from '@/components/layout/Columns';
-import Container from '@/components/layout/Container';
-import Navigation from '@/components/layout/Navigation';
-import ModalForm from '@/components/modals/ModalForm';
-import useModal from '@/components/modals/useModal';
-import EmptyState from '@/components/utils/EmptyState';
-import Separator from '@/components/utils/Separator';
+import { Button, ButtonVariant } from 'morning-react-ui/components/buttons';
+import { ButtonProps } from 'morning-react-ui/components/buttons/Button';
+import { useToast } from 'morning-react-ui/components/Context/ToastContext';
+import Column from 'morning-react-ui/components/layout/Column';
+import Columns from 'morning-react-ui/components/layout/Columns';
+import Container from 'morning-react-ui/components/layout/Container';
+import Navigation from 'morning-react-ui/components/layout/Navigation';
+import ModalForm from 'morning-react-ui/components/modals/ModalForm';
+import useModal from 'morning-react-ui/components/modals/useModal';
+import EmptyState from 'morning-react-ui/components/utils/EmptyState';
+import Separator from 'morning-react-ui/components/utils/Separator';
 
 export default function Page() {
   const { addToast } = useToast();

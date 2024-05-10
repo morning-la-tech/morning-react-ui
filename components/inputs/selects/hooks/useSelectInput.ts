@@ -7,8 +7,8 @@ import {
   useRef,
   createRef,
 } from 'react';
-import { Size } from '@/utils/Enum';
-import { normalizeString } from '@/utils/stringUtils';
+import { Size } from 'morning-react-ui/utils/Enum';
+import { normalizeString } from 'morning-react-ui/utils/stringUtils';
 
 type UseSelectInputProps = {
   options: string[];

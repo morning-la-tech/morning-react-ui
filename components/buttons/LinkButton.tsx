@@ -1,7 +1,7 @@
 import React, { ButtonHTMLAttributes, ReactNode } from 'react';
 import classNames from 'classnames';
-import styles from '@/components/buttons/linkButton.module.css';
-import { Size, sizeToNumber } from '@/utils/Enum';
+import styles from 'morning-react-ui/components/buttons/linkButton.module.css';
+import { Size, sizeToNumber } from 'morning-react-ui/utils/Enum';
 
 type LinkButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   children: ReactNode;

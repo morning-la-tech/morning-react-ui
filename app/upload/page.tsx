@@ -2,10 +2,10 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import Container from '@/components/layout/Container';
-import Navigation from '@/components/layout/Navigation';
-import Row from '@/components/layout/Row';
-import { UploadFile } from '@/components/upload';
+import Container from 'morning-react-ui/components/layout/Container';
+import Navigation from 'morning-react-ui/components/layout/Navigation';
+import Row from 'morning-react-ui/components/layout/Row';
+import { UploadFile } from 'morning-react-ui/components/upload';
 
 const UploadPage = () => {
   const [firstFile, setFirstFile] = useState<string | undefined>(undefined);
