@@ -1,14 +1,14 @@
 'use client';
 
 import Image from 'next/image';
-import { Button, ButtonVariant } from '@/components/buttons';
-import buttonStyles from '@/components/buttons/button.module.css';
-import LinkButton from '@/components/buttons/LinkButton';
-import Column from '@/components/layout/Column';
-import Columns from '@/components/layout/Columns';
-import Container from '@/components/layout/Container';
-import Navigation from '@/components/layout/Navigation';
-import { Size, sizeToNumber } from '@/utils/Enum';
+import { Button, ButtonVariant } from 'morning-react-ui/components/buttons';
+import buttonStyles from 'morning-react-ui/components/buttons/button.module.css';
+import LinkButton from 'morning-react-ui/components/buttons/LinkButton';
+import Column from 'morning-react-ui/components/layout/Column';
+import Columns from 'morning-react-ui/components/layout/Columns';
+import Container from 'morning-react-ui/components/layout/Container';
+import Navigation from 'morning-react-ui/components/layout/Navigation';
+import { Size, sizeToNumber } from 'morning-react-ui/utils/Enum';
 
 export default function Page() {
   const handleClick = () => {

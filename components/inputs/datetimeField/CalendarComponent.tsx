@@ -15,14 +15,14 @@ import {
   getDayOfYear,
 } from 'date-fns';
 import { fr } from 'date-fns/locale/fr';
-import { format } from '@/node_modules/date-fns/format';
+import { format } from 'morning-react-ui/node_modules/date-fns/format';
 import {
   isDateWithinEdges,
   roundUpYear,
   stringToDate,
-} from '@/utils/datetimeUtils';
-import { Size, sizeToNumber } from '@/utils/Enum';
-import { capitalizeStr } from '@/utils/stringUtils';
+} from 'morning-react-ui/utils/datetimeUtils';
+import { Size, sizeToNumber } from 'morning-react-ui/utils/Enum';
+import { capitalizeStr } from 'morning-react-ui/utils/stringUtils';
 import styles from './calendarComponent.module.css';
 
 type CalendarComponentProps = {

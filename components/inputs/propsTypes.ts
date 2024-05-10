@@ -1,4 +1,4 @@
-import { Size } from '@/utils/Enum';
+import { Size } from 'morning-react-ui/utils/Enum';
 
 export type BasicInputProps = {
   label?: string;

@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { Button, ButtonVariant } from '@/components/buttons';
+import { Button, ButtonVariant } from 'morning-react-ui/components/buttons';
 import styles from './richText.module.css';
 
 type ButtonProp = {

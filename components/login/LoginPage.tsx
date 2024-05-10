@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import classNames from 'classnames';
-import { space_grotesk } from '@/app/fonts';
+import { space_grotesk } from 'morning-react-ui/app/fonts';
 import GoogleLoginButton from '../buttons/GoogleLoginButton';
 import styles from './LoginPage.module.css';
 

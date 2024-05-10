@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react';
 import classNames from 'classnames';
-import { Size } from '@/utils/Enum';
+import { Size } from 'morning-react-ui/utils/Enum';
 import styles from './column.module.css';
 
 type ColumnProps = PropsWithChildren & {
