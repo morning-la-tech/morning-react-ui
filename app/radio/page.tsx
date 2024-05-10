@@ -1,13 +1,13 @@
 'use client';
 import { useState } from 'react';
-import MultiRadio from '@/components/inputs/toggleInputs/MultiRadio';
-import Radio from '@/components/inputs/toggleInputs/single/Radio';
-import Column from '@/components/layout/Column';
-import Columns from '@/components/layout/Columns';
-import Container from '@/components/layout/Container';
-import Navigation from '@/components/layout/Navigation';
-import { SelectionState } from '@/types/dataTypes';
-import { Size } from '@/utils/Enum';
+import MultiRadio from 'morning-react-ui/components/inputs/toggleInputs/MultiRadio';
+import Radio from 'morning-react-ui/components/inputs/toggleInputs/single/Radio';
+import Column from 'morning-react-ui/components/layout/Column';
+import Columns from 'morning-react-ui/components/layout/Columns';
+import Container from 'morning-react-ui/components/layout/Container';
+import Navigation from 'morning-react-ui/components/layout/Navigation';
+import { SelectionState } from 'morning-react-ui/types/dataTypes';
+import { Size } from 'morning-react-ui/utils/Enum';
 
 const RadioGroup = () => {
   const initialOptions = {

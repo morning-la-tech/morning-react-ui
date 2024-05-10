@@ -1,7 +1,7 @@
-export { default as EmptyState } from '@/components/utils/EmptyState';
+export { default as EmptyState } from 'morning-react-ui/components/utils/EmptyState';
 
-export { default as Loading } from '@/components/utils/Loading';
+export { default as Loading } from 'morning-react-ui/components/utils/Loading';
 
-export { default as Separator } from '@/components/utils/Separator';
+export { default as Separator } from 'morning-react-ui/components/utils/Separator';
 
-export { default as Toast } from '@/components/utils/Toast';
+export { default as Toast } from 'morning-react-ui/components/utils/Toast';

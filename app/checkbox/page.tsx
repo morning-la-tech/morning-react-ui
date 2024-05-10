@@ -1,13 +1,13 @@
 'use client';
 import { useState } from 'react';
-import MultiCheckbox from '@/components/inputs/toggleInputs/MultiCheckbox';
-import Checkbox from '@/components/inputs/toggleInputs/single/Checkbox';
-import Column from '@/components/layout/Column';
-import Columns from '@/components/layout/Columns';
-import Container from '@/components/layout/Container';
-import Navigation from '@/components/layout/Navigation';
-import { SelectionState, TriState } from '@/types/dataTypes';
-import { Size } from '@/utils/Enum';
+import MultiCheckbox from 'morning-react-ui/components/inputs/toggleInputs/MultiCheckbox';
+import Checkbox from 'morning-react-ui/components/inputs/toggleInputs/single/Checkbox';
+import Column from 'morning-react-ui/components/layout/Column';
+import Columns from 'morning-react-ui/components/layout/Columns';
+import Container from 'morning-react-ui/components/layout/Container';
+import Navigation from 'morning-react-ui/components/layout/Navigation';
+import { SelectionState, TriState } from 'morning-react-ui/types/dataTypes';
+import { Size } from 'morning-react-ui/utils/Enum';
 
 const CheckboxGroup = () => {
   const initialOptions = {

@@ -3,13 +3,13 @@
 import { useState } from 'react';
 import { format } from 'date-fns';
 import { addWeeks } from 'date-fns/addWeeks';
-import DateInput from '@/components/inputs/datetimeField/DateInput';
-import TimeInput from '@/components/inputs/datetimeField/TimeInput';
-import Column from '@/components/layout/Column';
-import Columns from '@/components/layout/Columns';
-import Container from '@/components/layout/Container';
-import Navigation from '@/components/layout/Navigation';
-import { Size } from '@/utils/Enum';
+import DateInput from 'morning-react-ui/components/inputs/datetimeField/DateInput';
+import TimeInput from 'morning-react-ui/components/inputs/datetimeField/TimeInput';
+import Column from 'morning-react-ui/components/layout/Column';
+import Columns from 'morning-react-ui/components/layout/Columns';
+import Container from 'morning-react-ui/components/layout/Container';
+import Navigation from 'morning-react-ui/components/layout/Navigation';
+import { Size } from 'morning-react-ui/utils/Enum';
 
 export default function Page() {
   const [timeValue, setTimeValue] = useState<Date | false | null>(null);

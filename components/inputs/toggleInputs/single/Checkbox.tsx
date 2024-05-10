@@ -1,7 +1,7 @@
 import { CSSProperties, forwardRef, HTMLProps } from 'react';
 import classNames from 'classnames';
-import { TriState } from '@/types/dataTypes';
-import { Size, sizeToNumber } from '@/utils/Enum';
+import { TriState } from 'morning-react-ui/types/dataTypes';
+import { Size, sizeToNumber } from 'morning-react-ui/utils/Enum';
 import styles from './checkbox.module.css';
 
 type CheckboxProps = {
