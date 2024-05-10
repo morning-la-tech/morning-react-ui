@@ -1,11 +1,11 @@
 'use client';
 import { useState } from 'react';
-import RichText from '@/components/inputs/richText/RichText';
-import Column from '@/components/layout/Column';
-import Columns from '@/components/layout/Columns';
-import Container from '@/components/layout/Container';
-import Navigation from '@/components/layout/Navigation';
-import { stripHtml } from '@/utils';
+import RichText from 'morning-react-ui/components/inputs/richText/RichText';
+import Column from 'morning-react-ui/components/layout/Column';
+import Columns from 'morning-react-ui/components/layout/Columns';
+import Container from 'morning-react-ui/components/layout/Container';
+import Navigation from 'morning-react-ui/components/layout/Navigation';
+import { stripHtml } from 'morning-react-ui/utils';
 
 const Page = () => {
   const [textArea, setTextArea] = useState<string>('');

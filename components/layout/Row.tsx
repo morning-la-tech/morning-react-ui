@@ -1,5 +1,5 @@
 import { PropsWithChildren } from 'react';
-import { PropsWithStyle } from '@/types/BaseTypes';
+import { PropsWithStyle } from 'morning-react-ui/types/BaseTypes';
 import styles from './row.module.css';
 
 const Row = ({ children, style }: PropsWithChildren & PropsWithStyle) => {
