@@ -55,7 +55,7 @@ export default function Page() {
           <Column>
             <h1>EmptyState</h1>
             <EmptyState
-              imageSrc='https://cdn.morning.fr/icons/empty-state.svg'
+              imageSrc={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/empty-state.svg`}
               text='This is a custom text'
               imageHeight={126}
               imageWidth={162}

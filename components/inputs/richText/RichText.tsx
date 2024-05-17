@@ -153,7 +153,7 @@ const RichText = forwardRef<HTMLInputElement, RichTextProps>(
               disabled={disabled}
             >
               <Image
-                src='https://cdn.morning.fr/icons/italic.svg'
+                src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/italic.svg`}
                 alt='Italic'
                 width={24}
                 height={24}
@@ -165,7 +165,7 @@ const RichText = forwardRef<HTMLInputElement, RichTextProps>(
               disabled={disabled}
             >
               <Image
-                src='https://cdn.morning.fr/icons/bold.svg'
+                src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/bold.svg`}
                 alt='Bold'
                 width={24}
                 height={24}
@@ -177,7 +177,7 @@ const RichText = forwardRef<HTMLInputElement, RichTextProps>(
               disabled={disabled}
             >
               <Image
-                src='https://cdn.morning.fr/icons/strike.svg'
+                src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/strike.svg`}
                 alt='Strike'
                 width={24}
                 height={24}
@@ -189,7 +189,7 @@ const RichText = forwardRef<HTMLInputElement, RichTextProps>(
               disabled={disabled}
             >
               <Image
-                src='https://cdn.morning.fr/icons/underline.svg'
+                src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/underline.svg`}
                 alt='Strike'
                 width={24}
                 height={24}
@@ -201,7 +201,7 @@ const RichText = forwardRef<HTMLInputElement, RichTextProps>(
               disabled={disabled}
             >
               <Image
-                src='https://cdn.morning.fr/icons/link.svg'
+                src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/link.svg`}
                 alt='Strike'
                 width={24}
                 height={24}
