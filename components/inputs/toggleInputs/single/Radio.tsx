@@ -1,7 +1,7 @@
 import { CSSProperties, forwardRef } from 'react';
 import classNames from 'classnames';
 import { Size, sizeToNumber } from 'morning-react-ui/utils/Enum';
-import styles from './radio.module.css';
+import styles from './radio.module.scss';
 
 type RadioProps = {
   label: string;

@@ -1,4 +1,4 @@
-import './theme.css';
+import './theme.scss';
 
 const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>;

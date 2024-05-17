@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import classNames from 'classnames';
 import { createPortal } from 'react-dom';
 import { Size } from 'morning-react-ui/utils/Enum';
-import styles from './modal.module.css';
+import styles from './modal.module.scss';
 import ModalHeader from './utils/ModalHeader';
 import useModals from './utils/useModals';
 
