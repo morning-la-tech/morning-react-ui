@@ -32,7 +32,7 @@ const SessionInformer = ({ session, size, signOut }: SessionInformerProps) => {
 
   const getImage = () => (
     <Image
-      src='https://cdn.morning.fr/icons/power-off.svg'
+      src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/power-off.svg`}
       alt='Power Off'
       width={size}
       height={size}

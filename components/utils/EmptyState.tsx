@@ -9,7 +9,7 @@ type EmptyStateProps = {
   imageHeight?: number;
 };
 
-const EmptyState: React.FC<EmptyStateProps> = ({
+const EmptyState = ({
   imageSrc,
   text = '',
   imageWidth = 162,
