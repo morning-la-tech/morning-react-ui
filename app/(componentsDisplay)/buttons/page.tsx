@@ -1,5 +1,4 @@
 'use client';
-
 import Image from 'next/image';
 import { Button, ButtonVariant } from 'morning-react-ui/components/buttons';
 import buttonStyles from 'morning-react-ui/components/buttons/button.module.css';
@@ -18,7 +17,7 @@ export default function Page() {
   const getImage = (size: Size) => (
     <Image
       className={buttonStyles.image}
-      src='https://cdn.morning.fr/logos/logo_google.png'
+      src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}logos/logo_google.png`}
       alt='Google logo'
       width={sizeToNumber(size)}
       height={sizeToNumber(size)}
@@ -105,11 +104,12 @@ export default function Page() {
           onClick={handleClick}
           {...props}
           startImageURL={
-            hasStartImage && 'https://cdn.morning.fr/icons/plus.svg'
+            hasStartImage &&
+            `${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/plus.svg`
           }
           endImageURL={
             hasEndImage &&
-            'https://cdn.morning.fr/icons/arrow-up-right-from-square.svg'
+            `${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/arrow-up-right-from-square.svg`
           }
         >
           {content}
@@ -118,11 +118,12 @@ export default function Page() {
           onClick={handleClick}
           {...props}
           startImageURL={
-            hasStartImage && 'https://cdn.morning.fr/icons/plus.svg'
+            hasStartImage &&
+            `${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/plus.svg`
           }
           endImageURL={
             hasEndImage &&
-            'https://cdn.morning.fr/icons/arrow-up-right-from-square.svg'
+            `${process.env.NEXT_PUBLIC_MORNING_CDN_URL}}icons/arrow-up-right-from-square.svg`
           }
           size={Size.l}
         >
@@ -131,8 +132,8 @@ export default function Page() {
         <LinkButton
           onClick={handleClick}
           {...props}
-          startImageURL='https://cdn.morning.fr/icons/plus.svg'
-          endImageURL='https://cdn.morning.fr/icons/arrow-up-right-from-square.svg'
+          startImageURL={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/plus.svg`}
+          endImageURL={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/arrow-up-right-from-square.svg`}
           size={Size.m}
         >
           {content}
@@ -140,8 +141,8 @@ export default function Page() {
         <LinkButton
           onClick={handleClick}
           {...props}
-          startImageURL='https://cdn.morning.fr/icons/plus.svg'
-          endImageURL='https://cdn.morning.fr/icons/arrow-up-right-from-square.svg'
+          startImageURL={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/plus.svg`}
+          endImageURL={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/arrow-up-right-from-square.svg`}
           size={Size.s}
         >
           {content}
@@ -149,8 +150,8 @@ export default function Page() {
         <LinkButton
           onClick={handleClick}
           {...props}
-          startImageURL='https://cdn.morning.fr/icons/plus.svg'
-          endImageURL='https://cdn.morning.fr/icons/arrow-up-right-from-square.svg'
+          startImageURL={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/plus.svg`}
+          endImageURL={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}}icons/arrow-up-right-from-square.svg`}
           size={Size.xs}
         >
           {content}

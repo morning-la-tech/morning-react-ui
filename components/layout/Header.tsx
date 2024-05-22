@@ -15,7 +15,7 @@ const Header = ({ title, children }: HeaderProps) => {
     <header className={styles.bar}>
       <div className={styles.container}>
         <Image
-          src='https://cdn.morning.fr/logos/logo_morning_black.png'
+          src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}logos/logo_morning_black.png`}
           alt='logo'
           width={90}
           height={22}

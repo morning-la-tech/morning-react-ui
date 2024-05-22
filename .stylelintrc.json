@@ -1,5 +1,6 @@
 {
-  "extends": "stylelint-config-standard",
+  "extends": ["stylelint-config-standard", "stylelint-config-standard-scss"],
+  "plugins": ["stylelint-scss"],
   "rules": {
     "block-no-empty": true,
     "color-no-invalid-hex": true,
@@ -46,6 +47,10 @@
       {
         "ignore": ["with-var-inside"]
       }
-    ]
+    ],
+    "scss/at-rule-no-unknown": true,
+    "scss/dollar-variable-pattern": "^foo-[a-z]+",
+    "scss/percent-placeholder-pattern": "^foo-[a-z]+",
+    "scss/at-import-partial-extension-blacklist": ["scss"]
   }
 }
