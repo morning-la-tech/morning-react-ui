@@ -21,8 +21,8 @@ const Toast = ({ type, message, delay = 3000, onClose }: ToastProps) => {
 
   const imageSrc =
     type === 'success'
-      ? 'https://cdn.morning.fr/icons/success.svg'
-      : 'https://cdn.morning.fr/icons/cross.svg';
+      ? `${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/success.svg`
+      : `${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/cross.svg`;
 
   return (
     <div className={`${styles.toastContainer} ${styles[type]}`} id={toastId}>

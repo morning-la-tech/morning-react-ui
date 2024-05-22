@@ -141,7 +141,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputHtmlProps>(
           />
           {showClearButton && (
             <Image
-              src='https://cdn.morning.fr/icons/clear-button.svg'
+              src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/clear-button.svg`}
               alt='Clear'
               onClick={onClear}
               width={sizeToNumber(size)}
@@ -151,7 +151,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputHtmlProps>(
           )}
           {showDropdownIcon && (
             <Image
-              src='https://cdn.morning.fr/icons/arrow.svg'
+              src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/arrow.svg`}
               alt='Dropdown'
               width={sizeToNumber(size)}
               height={sizeToNumber(size)}

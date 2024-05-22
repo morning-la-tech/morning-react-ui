@@ -28,7 +28,8 @@ const UploadPage = () => {
             destinationPath={'uploads/'}
             onChange={setFirstFile}
             fileUrl={
-              firstFile && `https://cdn.morning.fr/resize/500/300/${firstFile}`
+              firstFile &&
+              `${process.env.NEXT_PUBLIC_MORNING_CDN_URL}500/300/${firstFile}`
             }
           ></UploadFile>
           <UploadFile
@@ -37,7 +38,7 @@ const UploadPage = () => {
             destinationPath={'uploads'}
             fileUrl={
               secondFile &&
-              `https://cdn.morning.fr/resize/500/300/${secondFile}`
+              `${process.env.NEXT_PUBLIC_MORNING_CDN_URL}resize/500/300/${secondFile}`
             }
             onChange={setSecondFile}
           ></UploadFile>
@@ -58,10 +59,7 @@ const UploadPage = () => {
               destinationBucket={'react-ui-tests'}
               destinationPath={'uploads/'}
               onChange={setThirdFile}
-              fileUrl={
-                thirdFile &&
-                `https://cdn.morning.fr/resize/500/300/${thirdFile}`
-              }
+              fileUrl={thirdFile && `/resize/500/300/${thirdFile}`}
               fileType={'image/*'}
             ></UploadFile>
           </Row>
@@ -74,7 +72,8 @@ const UploadPage = () => {
             destinationPath={'uploads/'}
             onChange={setFirstFile}
             fileUrl={
-              firstFile && `https://cdn.morning.fr/resize/500/300/${firstFile}`
+              firstFile &&
+              `${process.env.NEXT_PUBLIC_MORNING_CDN_URL}resize/500/300/${firstFile}`
             }
           ></UploadFile>
           <UploadFile
@@ -83,7 +82,8 @@ const UploadPage = () => {
             destinationPath={'uploads/'}
             onChange={setFirstFile}
             fileUrl={
-              firstFile && `https://cdn.morning.fr/resize/500/300/${firstFile}`
+              firstFile &&
+              `${process.env.NEXT_PUBLIC_MORNING_CDN_URL}resize/500/300/${firstFile}`
             }
             maxFileSize={20}
             maxSizeErrorMessage={'On pensait que 20Mo était large.'}
@@ -94,7 +94,8 @@ const UploadPage = () => {
             destinationPath={'uploads/'}
             onChange={setFirstFile}
             fileUrl={
-              firstFile && `https://cdn.morning.fr/resize/500/300/${firstFile}`
+              firstFile &&
+              `${process.env.NEXT_PUBLIC_MORNING_CDN_URL}resize/500/300/${firstFile}`
             }
             maxFileSize={1}
             maxSizeErrorMessage={
@@ -109,7 +110,7 @@ const UploadPage = () => {
             <dd>
               {firstFile}
               <Image
-                src={`https://cdn.morning.fr/resize/800/400/${firstFile}`}
+                src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}resize/800/400/${firstFile}`}
                 alt={'premier fichier'}
                 width={500}
                 height={400}

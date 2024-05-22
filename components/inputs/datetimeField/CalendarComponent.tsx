@@ -211,7 +211,7 @@ const CalendarComponent = ({
           </div>
           <div className={classNames(styles.calendarHeaderActions)}>
             <Image
-              src='https://cdn.morning.fr/icons/chevron-left.svg'
+              src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/chevron-left.svg`}
               alt='Dropdown'
               width={sizeToNumber(Size.l)}
               height={sizeToNumber(Size.l)}
@@ -220,7 +220,7 @@ const CalendarComponent = ({
               }}
             />
             <Image
-              src='https://cdn.morning.fr/icons/chevron-right.svg'
+              src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/chevron-right.svg`}
               alt='Dropdown'
               width={sizeToNumber(Size.l)}
               height={sizeToNumber(Size.l)}
