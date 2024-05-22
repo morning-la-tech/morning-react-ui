@@ -2,7 +2,7 @@ import { CSSProperties, forwardRef, HTMLProps } from 'react';
 import classNames from 'classnames';
 import { TriState } from 'morning-react-ui/types/dataTypes';
 import { Size, sizeToNumber } from 'morning-react-ui/utils/Enum';
-import styles from './checkbox.module.css';
+import styles from './checkbox.module.scss';
 
 type CheckboxProps = {
   label: string;

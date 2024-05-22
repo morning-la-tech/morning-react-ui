@@ -15,7 +15,7 @@ const LoginPage = ({ onClick, title, body }: Props) => (
     <div className={styles.banner}>
       <div className={styles.backgroundImageContainer}>
         <Image
-          src='https://cdn.morning.fr/images/login_background.jpeg'
+          src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}images/login_background.jpeg`}
           alt='Fond de connexion'
           fill
           priority
@@ -25,7 +25,7 @@ const LoginPage = ({ onClick, title, body }: Props) => (
       </div>
       <div className={styles.logoContainer}>
         <Image
-          src='https://cdn.morning.fr/logos/logo_morning_white.png'
+          src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}logos/logo_morning_white.png`}
           alt='logo'
           width={160}
           height={39}

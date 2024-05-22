@@ -1,5 +1,4 @@
 'use client';
-
 import {
   ChangeEvent,
   Dispatch,
@@ -14,7 +13,7 @@ import { Button, ButtonVariant } from 'morning-react-ui/components/buttons';
 import { useToast } from 'morning-react-ui/components/Context/ToastContext';
 import { uploadFile } from 'morning-react-ui/services/googleCloudStorage';
 import { generateFileName } from 'morning-react-ui/utils/file';
-import styles from './uploadFile.module.css';
+import styles from './uploadFile.module.scss';
 
 interface UploadFileProps {
   buttonLabel: string;
@@ -108,7 +107,7 @@ const UploadFile = ({
       />
       <div
         aria-label='preview'
-        className={classNames(styles.uploadAera, {
+        className={classNames(styles.uploadArea, {
           [styles.pending]: isPending,
           ['error']: hasError,
         })}
@@ -131,7 +130,7 @@ const UploadFile = ({
         variant={ButtonVariant.Secondary}
         startImage={
           <Image
-            src={'https://cdn.morning.fr/icons/file-upload.svg'}
+            src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/file-upload.svg`}
             alt={'file upload'}
             className={styles.uploadIcon}
             fill

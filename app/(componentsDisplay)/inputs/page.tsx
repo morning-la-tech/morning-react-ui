@@ -127,7 +127,7 @@ export default function Page() {
               <h1>TextInput with images</h1>
               {renderTextInputs({
                 placeholder: 'Input with image',
-                imageSrc: 'https://cdn.morning.fr/logos/logo_google.png',
+                imageSrc: `${process.env.NEXT_PUBLIC_MORNING_CDN_URL}logos/logo_google.png`,
                 imageAlt: 'google logo',
                 value: textValue,
                 onChange: handleTextChange,

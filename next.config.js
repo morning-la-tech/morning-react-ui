@@ -21,6 +21,9 @@ const nextConfig = {
       },
     ],
   },
+  sassOptions: {
+    additionalData: `$cdn-url: '${process.env.NEXT_PUBLIC_MORNING_CDN_URL}';`,
+  },
 };
 
 module.exports = nextConfig;
