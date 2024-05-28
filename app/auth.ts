@@ -8,8 +8,8 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     sessionToken: {
       name:
         process.env.NODE_ENV === 'production'
-          ? '__Secure-next-auth.session-token'
-          : 'next-auth.session-token',
+          ? '__Secure-auth.session-token'
+          : 'auth.session-token',
       options: {
         httpOnly: true,
         sameSite: 'lax',
