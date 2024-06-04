@@ -62,6 +62,12 @@ export default function Home() {
       >
         Textarea
       </Button>
+      <Button
+        variant={ButtonVariant.Secondary}
+        onClick={() => router.push('/pagination')}
+      >
+        Pagination
+      </Button>
     </Container>
   );
 }
