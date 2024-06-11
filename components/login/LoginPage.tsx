@@ -32,12 +32,15 @@ const LoginPage = ({ onClick, title, body }: Props) => (
         />
       </div>
     </div>
+
     <div className={styles.loginForm}>
-      <div className={styles.title}>{title}</div>
-      <div className={classNames(styles.body, space_grotesk.variable)}>
-        {body}
+      <div className={styles.loginBody}>
+        <div className={styles.title}>{title}</div>
+        <div className={classNames(styles.body, space_grotesk.variable)}>
+          {body}
+        </div>
+        <GoogleLoginButton onClick={onClick} />
       </div>
-      <GoogleLoginButton onClick={onClick} />
     </div>
   </div>
 );
