@@ -2,6 +2,7 @@
     display: flex;
     width: 100%;
     min-height: 100vh;
+    background-color: var(--snow);
 }
 
 .banner {
@@ -25,12 +26,17 @@
 }
 
 .loginForm {
-    width: 450px;
     margin: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    flex: 0;
+}
+
+.loginBody {
+    display: flex;
+    flex-direction: column;
     gap: 16px;
 }
 
@@ -41,6 +47,7 @@
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+    white-space: nowrap;
 }
 
 .body {
@@ -68,6 +75,10 @@
         overflow: hidden;
     }
 
+    .loginBody {
+        flex: 0;
+    }
+
     .backgroundImageContainer {
         position: absolute;
         top: 50%;
@@ -84,15 +95,12 @@
     }
 
     .loginForm {
-        width: calc(100%);
+        background-color: var(--snow);
         padding: 40px;
-        box-sizing: border-box;
-        flex-direction: column;
-        gap: 16px;
-        background-color: var(--white);
         border-radius: 12px 12px 0 0;
         z-index: 1;
         margin-top: -20px;
+        flex-direction: row;
     }
 
     .title,
