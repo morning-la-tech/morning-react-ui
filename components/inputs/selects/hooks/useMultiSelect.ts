@@ -160,17 +160,35 @@ const useMultiSelect = ({
     }
   }, [highlightedIndex, checkboxRefs]);
 
-  // Calculate the height to display the right number of element before scrolling
+  // Calculate the height to display the right number of elements before scrolling
   useEffect(() => {
-    checkboxRefs;
-    if (checkboxRefs.length < rowToDisplay) {
+    if (checkboxRefs.length === 0) {
+      setMaxHeight(0);
       return;
     }
-    if (checkboxRefs[rowToDisplay + 1]?.current) {
-      const last = checkboxRefs[rowToDisplay + 1].current?.offsetTop;
-      const first = checkboxRefs[0]?.current?.offsetTop;
-      if (last && first) {
-        setMaxHeight(last - first);
+
+    const paddingBottom = 15;
+    if (checkboxRefs.length < rowToDisplay) {
+      const lastRef = checkboxRefs[checkboxRefs.length - 1]?.current;
+      const firstRef = checkboxRefs[0]?.current;
+      if (lastRef && firstRef) {
+        setMaxHeight(
+          lastRef.offsetTop -
+            firstRef.offsetTop +
+            firstRef.offsetHeight +
+            paddingBottom,
+        );
+      }
+    } else {
+      const lastRef = checkboxRefs[rowToDisplay - 1]?.current;
+      const firstRef = checkboxRefs[0]?.current;
+      if (lastRef && firstRef) {
+        setMaxHeight(
+          lastRef.offsetTop -
+            firstRef.offsetTop +
+            firstRef.offsetHeight +
+            paddingBottom,
+        );
       }
     }
   }, [size, rowToDisplay, checkboxRefs]);
