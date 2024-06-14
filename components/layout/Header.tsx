@@ -1,5 +1,5 @@
 'use client';
-import { ReactNode } from 'react';
+import { ReactNode, CSSProperties } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import styles from './header.module.css';
@@ -7,12 +7,13 @@ import styles from './header.module.css';
 type HeaderProps = {
   title?: string;
   children?: ReactNode;
+  style?: CSSProperties;
 };
 
-const Header = ({ title, children }: HeaderProps) => {
+const Header = ({ title, children, style }: HeaderProps) => {
   const router = useRouter();
   return (
-    <header className={styles.bar}>
+    <header className={styles.bar} style={style}>
       <div className={styles.container}>
         <Image
           src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}logos/logo_morning_black.png`}

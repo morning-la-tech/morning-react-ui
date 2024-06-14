@@ -3,7 +3,6 @@
     place-content: center center;
     width: 100%;
     background-color: var(--cloud);
-    font-family: var(--inter);
     font-size: 16px;
     font-weight: 900;
 }
