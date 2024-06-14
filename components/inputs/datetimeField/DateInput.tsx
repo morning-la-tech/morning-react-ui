@@ -7,8 +7,8 @@ import React, {
   useImperativeHandle,
 } from 'react';
 import classNames from 'classnames';
+import { format } from 'date-fns/format';
 import ParentInput from 'morning-react-ui/components/inputs/ParentInput';
-import { format } from 'morning-react-ui/node_modules/date-fns/format';
 import {
   isStringValidAsDate,
   isDateWithinEdges,
