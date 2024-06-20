@@ -13,6 +13,7 @@ type Props = {
   hasBorder?: boolean;
   size?: Size;
 };
+
 const PaginationComponent = ({
   pagination,
   setCurrentPage,
@@ -20,7 +21,7 @@ const PaginationComponent = ({
   size = Size.m,
 }: Props) => {
   const {
-    amountOfPages,
+    totalPages,
     start,
     end,
     getNext,
@@ -28,9 +29,8 @@ const PaginationComponent = ({
     displayNextDots,
     displayPreviousDots,
     displayLastItem,
-  } = usePagination({
-    pagination,
-  });
+  } = usePagination({ pagination });
+
   const pages: Element[] = [];
 
   for (let page = start; page <= end; page++) {
@@ -80,10 +80,10 @@ const PaginationComponent = ({
       )}
       {displayLastItem && (
         <PaginationItem
-          page={amountOfPages}
+          page={totalPages}
           size={size}
           setCurrentPage={setCurrentPage}
-          isSelected={amountOfPages === pagination.currentPage}
+          isSelected={totalPages === pagination.currentPage}
         />
       )}
     </div>
