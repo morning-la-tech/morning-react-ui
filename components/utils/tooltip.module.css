@@ -1,0 +1,26 @@
+.tooltipContainer {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltipBox {
+    position: fixed;
+    z-index: 1000;
+    background-color: var(--black);
+    color: var(--white);
+    padding: 5px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+    font-size: 14px;
+    transform: translateX(-50%);
+    visibility: hidden;
+    opacity: 0;
+    transition:
+        opacity 0.3s,
+        visibility 0.3s;
+}
+
+.tooltipVisible {
+    visibility: visible;
+    opacity: 1;
+}
