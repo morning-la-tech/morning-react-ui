@@ -4,7 +4,6 @@
     display: flex;
     align-items: center;
     user-select: none;
-    cursor: pointer;
 
     .pageNumber:hover {
         background-color: var(--cloud);
@@ -15,6 +14,7 @@
         align-items: center;
         justify-content: center;
         border-radius: 6px;
+        cursor: pointer;
 
         &.selected {
             color: var(--white);
