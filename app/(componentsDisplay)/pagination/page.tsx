@@ -4,7 +4,8 @@ import Column from 'morning-react-ui/components/layout/Column';
 import Columns from 'morning-react-ui/components/layout/Columns';
 import Container from 'morning-react-ui/components/layout/Container';
 import Navigation from 'morning-react-ui/components/layout/Navigation';
-import { Pagination } from 'morning-react-ui/components/pagination';
+import PaginationComponent from 'morning-react-ui/components/pagination/Pagination';
+import { Pagination } from 'morning-react-ui/components/pagination/types';
 import { Size } from 'morning-react-ui/utils/Enum';
 
 interface TableProps {
@@ -15,8 +16,8 @@ const Table = ({ page }: TableProps) => {
   const rows = 10;
   const columns = ['A', 'B', 'C', 'D', 'E', 'F'];
 
-  const generateTableData = (current_page: number) => {
-    const startRow = current_page * rows;
+  const generateTableData = (currentPage: number) => {
+    const startRow = currentPage * rows;
     return Array.from({ length: rows }, (_, rowIndex) =>
       Array.from(
         { length: columns.length },
@@ -51,10 +52,10 @@ const Table = ({ page }: TableProps) => {
 
 const Page = () => {
   const [page, setPage] = useState(1);
-  const pagination = {
+  const pagination: Pagination = {
     currentPage: page,
-    pageSize: 10,
-    total: 100,
+    itemsPerPage: 10,
+    totalItems: 100,
   };
 
   return (
@@ -67,7 +68,7 @@ const Page = () => {
           <Column>
             <Columns>
               <Column>
-                <Pagination
+                <PaginationComponent
                   size={Size.l}
                   pagination={pagination}
                   setCurrentPage={setPage}
@@ -76,7 +77,7 @@ const Page = () => {
             </Columns>
             <Columns>
               <Column>
-                <Pagination
+                <PaginationComponent
                   size={Size.m}
                   pagination={pagination}
                   setCurrentPage={setPage}
@@ -85,7 +86,7 @@ const Page = () => {
             </Columns>
             <Columns>
               <Column>
-                <Pagination
+                <PaginationComponent
                   size={Size.s}
                   pagination={pagination}
                   setCurrentPage={setPage}
@@ -94,7 +95,7 @@ const Page = () => {
             </Columns>
             <Columns>
               <Column>
-                <Pagination
+                <PaginationComponent
                   size={Size.l}
                   hasBorder={true}
                   pagination={pagination}
@@ -104,7 +105,7 @@ const Page = () => {
             </Columns>
             <Columns>
               <Column>
-                <Pagination
+                <PaginationComponent
                   size={Size.m}
                   hasBorder={true}
                   pagination={pagination}
@@ -114,7 +115,7 @@ const Page = () => {
             </Columns>
             <Columns>
               <Column>
-                <Pagination
+                <PaginationComponent
                   size={Size.s}
                   hasBorder={true}
                   pagination={pagination}
