@@ -8,13 +8,13 @@ const usePagination = ({ pagination }: PaginationProps) => {
   const GROWTH_LIMIT = 5;
   const DOTS_TOGGLE_SIZE = 8;
 
-  const amountOfPages = Math.ceil(pagination.total / pagination.pageSize);
+  const totalPages = Math.ceil(pagination.totalItems / pagination.itemsPerPage);
 
   const getBoundaries = (): { start: number; end: number } => {
-    if (amountOfPages <= DOTS_TOGGLE_SIZE) {
+    if (totalPages <= DOTS_TOGGLE_SIZE) {
       return {
         start: 2,
-        end: Math.min(amountOfPages, DOTS_TOGGLE_SIZE - 1),
+        end: Math.min(totalPages, DOTS_TOGGLE_SIZE - 1),
       };
     }
     if (pagination.currentPage < GROWTH_LIMIT) {
@@ -22,7 +22,7 @@ const usePagination = ({ pagination }: PaginationProps) => {
     }
     if (
       pagination.currentPage >= GROWTH_LIMIT &&
-      pagination.currentPage <= amountOfPages - GROWTH_LIMIT + 1
+      pagination.currentPage <= totalPages - GROWTH_LIMIT + 1
     ) {
       return {
         start: pagination.currentPage - 1,
@@ -30,8 +30,8 @@ const usePagination = ({ pagination }: PaginationProps) => {
       };
     }
     return {
-      start: amountOfPages - GROWTH_LIMIT + 1,
-      end: amountOfPages - 1,
+      start: totalPages - GROWTH_LIMIT + 1,
+      end: totalPages - 1,
     };
   };
 
@@ -43,8 +43,8 @@ const usePagination = ({ pagination }: PaginationProps) => {
   };
 
   const getNext = (): number => {
-    if (pagination.currentPage >= amountOfPages - GROWTH_LIMIT) {
-      return amountOfPages;
+    if (pagination.currentPage >= totalPages - GROWTH_LIMIT) {
+      return totalPages;
     }
     return pagination.currentPage + GROWTH_LIMIT;
   };
@@ -53,16 +53,16 @@ const usePagination = ({ pagination }: PaginationProps) => {
     ...getBoundaries(),
     getPrevious,
     getNext,
-    amountOfPages,
+    totalPages,
     displayPreviousDots:
-      amountOfPages > DOTS_TOGGLE_SIZE &&
+      totalPages > DOTS_TOGGLE_SIZE &&
       pagination.currentPage >= GROWTH_LIMIT &&
-      amountOfPages !== GROWTH_LIMIT,
+      totalPages !== GROWTH_LIMIT,
     displayNextDots:
-      amountOfPages > DOTS_TOGGLE_SIZE &&
-      amountOfPages > GROWTH_LIMIT &&
-      pagination.currentPage <= amountOfPages - GROWTH_LIMIT + 1,
-    displayLastItem: amountOfPages >= DOTS_TOGGLE_SIZE,
+      totalPages > DOTS_TOGGLE_SIZE &&
+      totalPages > GROWTH_LIMIT &&
+      pagination.currentPage <= totalPages - GROWTH_LIMIT + 1,
+    displayLastItem: totalPages >= DOTS_TOGGLE_SIZE,
   };
 };
 
