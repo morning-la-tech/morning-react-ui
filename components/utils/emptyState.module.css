@@ -13,4 +13,6 @@
 
 .emptyStateText {
     margin: 0;
+    white-space: pre-wrap;
+    text-align: center;
 }
