@@ -166,6 +166,12 @@ const getElementPositionInSelectionState = (
   return { start: startIndex, end: endIndex };
 };
 
+const selectionStateToArray = (selectionState: SelectionState): string[] => {
+  return Object.entries(selectionState)
+    .filter(([_, value]) => value === true)
+    .map(([key]) => key);
+};
+
 export {
   atLeastOneTrue,
   isAllTrue,
@@ -180,4 +186,5 @@ export {
   getElementPositionInSelectionState,
   toggleSelectionStateAtIndex,
   setAtTrueAndOthersAtFalse,
+  selectionStateToArray,
 };
