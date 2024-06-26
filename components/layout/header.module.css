@@ -9,12 +9,14 @@
 
 .container {
     display: flex;
-    width: 1400px;
     height: 50px;
     padding: 14px 100px;
-    box-sizing: border-box;
-    align-items: center;
-    position: relative;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.imageAndTitle {
+    display: flex;
 }
 
 .children {
