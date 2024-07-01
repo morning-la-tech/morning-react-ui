@@ -40,6 +40,10 @@
     background-color: var(--brick);
 }
 
+.warning {
+    background-color: var(--amber);
+}
+
 .toastMessage {
     display: flex;
     align-items: center;

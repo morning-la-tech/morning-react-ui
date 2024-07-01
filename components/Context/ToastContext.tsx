@@ -8,7 +8,7 @@ import {
 } from 'react';
 import Toast from 'morning-react-ui/components/utils/Toast';
 
-export type ToastMessageType = 'success' | 'error';
+export type ToastMessageType = 'success' | 'error' | 'warning';
 
 export interface ToastMessage {
   type: ToastMessageType;

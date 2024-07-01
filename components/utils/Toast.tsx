@@ -3,13 +3,20 @@ import Image from 'next/image';
 import styles from './toast.module.css';
 
 type ToastProps = {
-  type: 'success' | 'error';
+  type: 'success' | 'error' | 'warning';
   message: string;
+  iconUrl?: string;
   delay?: number;
   onClose: () => void;
 };
 
-const Toast = ({ type, message, delay = 3000, onClose }: ToastProps) => {
+const Toast = ({
+  type,
+  message,
+  iconUrl,
+  delay = 3000,
+  onClose,
+}: ToastProps) => {
   const toastId = useId();
 
   useEffect(() => {
@@ -19,16 +26,19 @@ const Toast = ({ type, message, delay = 3000, onClose }: ToastProps) => {
     return () => clearTimeout(timer);
   }, [onClose, delay]);
 
-  const imageSrc =
-    type === 'success'
+  const defaultIconUrl =
+    iconUrl ||
+    (type === 'success'
       ? `${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/success.svg`
-      : `${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/cross.svg`;
+      : type === 'error'
+        ? `${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/circle-xmark.svg`
+        : `${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/cross.svg`);
 
   return (
     <div className={`${styles.toastContainer} ${styles[type]}`} id={toastId}>
       <span className={styles.toastMessage}>
         <Image
-          src={imageSrc}
+          src={defaultIconUrl}
           alt={type}
           width={24}
           height={24}
