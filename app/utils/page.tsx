@@ -23,6 +23,10 @@ export default function Page() {
     addToast('error', 'Echec');
   };
 
+  const handleClickWarning = () => {
+    addToast('warning', 'Attention');
+  };
+
   const buttons: ButtonProps[] = [
     {
       children: 'Cancel',
@@ -64,6 +68,7 @@ export default function Page() {
             <h1>Toaster</h1>
             <Button onClick={handleClickSuccess}>Success</Button>
             <Button onClick={handleClickError}>Error</Button>
+            <Button onClick={handleClickWarning}>Warning</Button>
           </Column>
           <Column>
             <h1>Modal</h1>
