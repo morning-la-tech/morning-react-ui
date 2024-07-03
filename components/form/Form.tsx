@@ -1,4 +1,4 @@
-import { ReactNode, HTMLProps } from 'react';
+import { ReactNode, HTMLProps, FormEvent } from 'react';
 import Button, {
   ButtonProps,
 } from 'morning-react-ui/components/buttons/Button';
@@ -7,11 +7,16 @@ import styles from './form.module.css';
 interface FormProps extends HTMLProps<HTMLFormElement> {
   children: ReactNode;
   buttons: ButtonProps[];
+  onSubmit?: (event: FormEvent<HTMLFormElement>) => void;
 }
 
-const Form = ({ children, buttons, ...props }: FormProps) => {
+const Form = ({ children, buttons, onSubmit, ...props }: FormProps) => {
   return (
-    <form {...props} className={`${styles.form} ${props.className || ''}`}>
+    <form
+      {...props}
+      onSubmit={onSubmit}
+      className={`${styles.form} ${props.className || ''}`}
+    >
       {children}
       <div className={styles.buttons}>
         {buttons.map((button, index) => (
