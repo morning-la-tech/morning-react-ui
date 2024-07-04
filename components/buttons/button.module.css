@@ -16,9 +16,25 @@
 
 .button .image {
     display: flex;
+    flex-shrink: 0;
+}
+
+.button.xxl .image,
+.button.xl .image,
+.button.l .image {
+    width: 24px;
+    height: 24px;
+}
+
+.button.m .image {
     width: 20px;
     height: 20px;
-    flex-shrink: 0;
+}
+
+.button.s .image,
+.button.xs .image {
+    width: 16px;
+    height: 16px;
 }
 
 .button.xxl,
