@@ -147,6 +147,7 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
         sublabel={sublabel}
         isLabelBold={isLabelBold}
         size={size}
+        inputRef={inputRef}
         disabled={disabled}
       >
         <div

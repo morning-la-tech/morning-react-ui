@@ -26,6 +26,7 @@
     background-color: var(--white);
     user-select: none;
     flex-grow: 1;
+    width: 100%;
 }
 
 .input:focus {
