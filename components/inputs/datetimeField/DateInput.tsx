@@ -27,7 +27,7 @@ type DateInputProps = BasicInputProps &
     value?: Date | null;
     from?: string;
     to?: string;
-    onChange: (time: Date | null) => void;
+    onChange: (time: Date | null | undefined) => void;
   };
 
 const DateInput = forwardRef<HTMLInputElement, DateInputProps>(
