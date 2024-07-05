@@ -8,9 +8,16 @@ interface FormProps extends HTMLProps<HTMLFormElement> {
   children: ReactNode;
   buttons: ButtonProps[];
   onSubmit?: (event: FormEvent<HTMLFormElement>) => void;
+  buttonContainerStyle?: React.CSSProperties;
 }
 
-const Form = ({ children, buttons, onSubmit, ...props }: FormProps) => {
+const Form = ({
+  children,
+  buttons,
+  onSubmit,
+  buttonContainerStyle = {},
+  ...props
+}: FormProps) => {
   return (
     <form
       {...props}
@@ -18,7 +25,7 @@ const Form = ({ children, buttons, onSubmit, ...props }: FormProps) => {
       className={`${styles.form} ${props.className || ''}`}
     >
       {children}
-      <div className={styles.buttons}>
+      <div className={styles.buttons} style={buttonContainerStyle}>
         {buttons.map((button, index) => (
           <Button
             key={index}
