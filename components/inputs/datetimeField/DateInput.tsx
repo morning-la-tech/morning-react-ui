@@ -1,4 +1,4 @@
-import React, {
+import {
   ChangeEvent,
   forwardRef,
   useEffect,
@@ -24,10 +24,10 @@ import CalendarComponent from './CalendarComponent';
 
 type DateInputProps = BasicInputProps &
   InputProps & {
-    value: Date | false | null;
+    value?: Date | null;
     from?: string;
     to?: string;
-    onChange: (time: Date | false | null) => void;
+    onChange: (time: Date | null) => void;
   };
 
 const DateInput = forwardRef<HTMLInputElement, DateInputProps>(
@@ -214,7 +214,7 @@ const DateInput = forwardRef<HTMLInputElement, DateInputProps>(
       onChange(
         isDateWithinEdges(inputValue, from, to)
           ? new Date(roundUpYear(year), month - 1, day)
-          : false,
+          : null,
       );
     };
 

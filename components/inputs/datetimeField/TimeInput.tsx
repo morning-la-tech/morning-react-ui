@@ -21,10 +21,10 @@ import useInput from '../textField/useInput';
 
 type TimeInputProps = BasicInputProps &
   InputProps & {
-    value: Date | false | null;
+    value?: Date | null;
     min?: string;
     max?: string;
-    onChange: (time: Date | false | null) => void;
+    onChange: (time: Date | null) => void;
   };
 
 const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
@@ -131,7 +131,7 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       onChange(
         isTimeWithinEdges(inputValue, min, max)
           ? setMinutes(setHours(new Date(), hours), minutes)
-          : false,
+          : null,
       );
     };
 

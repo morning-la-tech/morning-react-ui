@@ -1,5 +1,4 @@
 'use client';
-
 import { useState } from 'react';
 import { format } from 'date-fns';
 import { addWeeks } from 'date-fns/addWeeks';
@@ -12,14 +11,14 @@ import Navigation from 'morning-react-ui/components/layout/Navigation';
 import { Size } from 'morning-react-ui/utils/Enum';
 
 export default function Page() {
-  const [timeValue, setTimeValue] = useState<Date | false | null>(null);
-  const [dateValue, setDateValue] = useState<Date | false | null>(null);
+  const [timeValue, setTimeValue] = useState<Date | null | undefined>(null);
+  const [dateValue, setDateValue] = useState<Date | null | undefined>(null);
 
-  const handleTimeChange = (newTimeValue: Date | false | null) => {
+  const handleTimeChange = (newTimeValue: Date | null | undefined) => {
     setTimeValue(newTimeValue);
   };
 
-  const handleDateChange = (newDateValue: Date | false | null) => {
+  const handleDateChange = (newDateValue: Date | null | undefined) => {
     setDateValue(newDateValue);
   };
 
@@ -28,12 +27,12 @@ export default function Page() {
     sublabel?: string;
     isLabelBold?: boolean;
     size?: Size;
-    value: Date | false | null;
+    value?: Date | null;
     disabled?: boolean;
     isError?: boolean;
     min?: string;
     max?: string;
-    onChange: (event: Date | false | null) => void;
+    onChange: (event: Date | null) => void;
   }) => {
     return (
       <>
@@ -50,12 +49,12 @@ export default function Page() {
     sublabel?: string;
     isLabelBold?: boolean;
     size?: Size;
-    value: Date | false | null;
+    value?: Date | null;
     disabled?: boolean;
     isError?: boolean;
     from?: string;
     to?: string;
-    onChange: (event: Date | false | null) => void;
+    onChange: (event: Date | null) => void;
   }) => {
     return (
       <>

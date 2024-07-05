@@ -20,6 +20,7 @@ type Props = {
   size?: Size;
   className?: string;
   buttons?: ButtonProps[];
+  buttonContainerStyle?: React.CSSProperties;
 };
 
 const Modal = ({
@@ -33,6 +34,7 @@ const Modal = ({
   closeOnClickOutside = true,
   className,
   buttons = [],
+  buttonContainerStyle = {},
 }: Props) => {
   const { handleMouseDown, handleMouseUp } = useModals(
     closeOnClickOutside,
@@ -58,7 +60,11 @@ const Modal = ({
             title={title}
             hasCloseButton={hasCloseButton}
           />
-          <Form onSubmit={onSubmit} buttons={buttons}>
+          <Form
+            onSubmit={onSubmit}
+            buttons={buttons}
+            buttonContainerStyle={buttonContainerStyle}
+          >
             {children}
           </Form>
         </div>
