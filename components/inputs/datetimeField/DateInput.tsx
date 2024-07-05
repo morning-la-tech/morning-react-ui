@@ -234,6 +234,7 @@ const DateInput = forwardRef<HTMLInputElement, DateInputProps>(
         sublabel={sublabel}
         isLabelBold={isLabelBold}
         size={size}
+        inputRef={inputRef}
       >
         <div
           className={classNames(
