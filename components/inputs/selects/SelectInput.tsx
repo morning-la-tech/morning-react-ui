@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import { SelectsProps } from 'morning-react-ui/components/inputs/propsTypes';
 import TextInput from 'morning-react-ui/components/inputs/textField/TextInput';
@@ -40,6 +41,13 @@ const SelectInput = ({
     optionRefs,
   } = useSelectInput({ options, selectedOption, size, onChange, rowToDisplay });
 
+  const optionsRef = useRef(options);
+  useEffect(() => {
+    if (options !== optionsRef.current) {
+      optionsRef.current = options;
+    }
+  }, [options]);
+
   return (
     <div className={styles.wrapper} tabIndex={-1}>
       <TextInput
@@ -81,7 +89,7 @@ const SelectInput = ({
               {emptyStateText}
             </span>
           )}
-          {filteredOptions?.map((option, index) => (
+          {filteredOptions.map((option, index) => (
             <div
               className={classNames(
                 styles.option,
