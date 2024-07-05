@@ -24,7 +24,7 @@ type TimeInputProps = BasicInputProps &
     value?: Date | null;
     min?: string;
     max?: string;
-    onChange: (time: Date | null) => void;
+    onChange: (time: Date | null | undefined) => void;
   };
 
 const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(

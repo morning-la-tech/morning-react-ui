@@ -32,7 +32,7 @@ export default function Page() {
     isError?: boolean;
     min?: string;
     max?: string;
-    onChange: (event: Date | null) => void;
+    onChange: (event: Date | null | undefined) => void;
   }) => {
     return (
       <>
@@ -54,7 +54,7 @@ export default function Page() {
     isError?: boolean;
     from?: string;
     to?: string;
-    onChange: (event: Date | null) => void;
+    onChange: (event: Date | null | undefined) => void;
   }) => {
     return (
       <>
