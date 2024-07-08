@@ -14,7 +14,7 @@ import styles from '../input.module.css';
 import useInput from './useInput';
 
 type NumberInputProps = InputProps & {
-  value: number | undefined;
+  value?: number | null;
   onChange: (value: number) => void;
   min?: number;
   max?: number;
@@ -38,11 +38,13 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     ref,
   ) => {
     const inputRef = useRef<HTMLInputElement>(null);
-    const [inputValue, setInputValue] = useState<number | undefined>(value);
+    const [inputValue, setInputValue] = useState<number | undefined | null>(
+      value,
+    );
     useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
 
-    const getValidValue = (val: number | undefined): number => {
-      if (val === undefined) {
+    const getValidValue = (val: number | undefined | null): number => {
+      if (val === undefined || val === null) {
         return NaN;
       }
       return isNaN(val) ? NaN : val;
@@ -133,7 +135,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
             onChange={handleChange}
             onKeyDown={handleKeyDown}
             onBlur={handleBlur}
-            value={isNaN(getValidValue(inputValue)) ? '' : inputValue}
+            value={isNaN(getValidValue(inputValue)) ? '' : inputValue ?? ''}
             min={min}
             max={max}
             disabled={disabled}
