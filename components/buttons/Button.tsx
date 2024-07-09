@@ -7,6 +7,7 @@ import styles from './button.module.css';
 export enum ButtonVariant {
   Primary = 'primary',
   Secondary = 'secondary',
+  Danger = 'danger',
 }
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
