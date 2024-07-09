@@ -21,6 +21,7 @@ type Props = {
   className?: string;
   buttons?: ButtonProps[];
   buttonContainerStyle?: React.CSSProperties;
+  maxWidth?: string;
 };
 
 const Modal = ({
@@ -35,11 +36,17 @@ const Modal = ({
   className,
   buttons = [],
   buttonContainerStyle = {},
+  maxWidth = '600px',
 }: Props) => {
   const { handleMouseDown, handleMouseUp } = useModals(
     closeOnClickOutside,
     hide,
   );
+
+  const modalStyle = {
+    ...(top ? { top } : {}),
+    maxWidth,
+  };
 
   return (
     isModalShowing &&
@@ -52,7 +59,7 @@ const Modal = ({
         />
         <div
           className={classNames(styles.modal, className)}
-          style={top ? { top } : undefined}
+          style={modalStyle}
           onClick={(e) => e.stopPropagation()}
         >
           <ModalHeader
