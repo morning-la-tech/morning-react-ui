@@ -115,6 +115,11 @@
     color: var(--black);
 }
 
+.danger {
+    background-color: var(--cherry);
+    color: var(--white);
+}
+
 .secondary::before {
     content: '';
     position: absolute;
@@ -125,18 +130,19 @@
     border-radius: 6px;
 }
 
-.secondary.hover,
 .secondary:hover {
     background-color: var(--cloud);
 }
 
-.secondary.active,
+.danger:hover {
+    background-color: var(--brick);
+}
+
 .secondary:active {
     background-color: var(--silver);
 }
 
-.primary:disabled,
-.secondary:disabled {
+.button:disabled {
     cursor: not-allowed;
     opacity: 0.5;
 }
