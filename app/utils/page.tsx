@@ -10,6 +10,7 @@ import ModalForm from 'morning-react-ui/components/modals/ModalForm';
 import useModal from 'morning-react-ui/components/modals/useModal';
 import EmptyState from 'morning-react-ui/components/utils/EmptyState';
 import Separator from 'morning-react-ui/components/utils/Separator';
+import Tooltip from 'morning-react-ui/components/utils/Tooltip';
 
 export default function Page() {
   const { addToast } = useToast();
@@ -66,9 +67,15 @@ export default function Page() {
           </Column>
           <Column>
             <h1>Toaster</h1>
-            <Button onClick={handleClickSuccess}>Success</Button>
-            <Button onClick={handleClickError}>Error</Button>
-            <Button onClick={handleClickWarning}>Warning</Button>
+            <Tooltip content='Click to see success message' maxWidth='150px'>
+              <Button onClick={handleClickSuccess}>Success</Button>
+            </Tooltip>
+            <Tooltip content='Click to see error message' maxWidth='150px'>
+              <Button onClick={handleClickError}>Error</Button>
+            </Tooltip>
+            <Tooltip content='Click to see warning message' maxWidth='150px'>
+              <Button onClick={handleClickWarning}>Warning</Button>
+            </Tooltip>
           </Column>
           <Column>
             <h1>Modal</h1>
