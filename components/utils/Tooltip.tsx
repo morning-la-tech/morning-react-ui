@@ -4,9 +4,16 @@ import styles from './tooltip.module.css';
 type TooltipProps = {
   content: string;
   children: React.ReactNode;
+  maxWidth?: string;
+  maxLines?: number;
 };
 
-const Tooltip = ({ content, children }: TooltipProps) => {
+const Tooltip = ({
+  content,
+  children,
+  maxWidth = '200px',
+  maxLines = 3,
+}: TooltipProps) => {
   const [isVisible, setIsVisible] = useState(false);
   const childrenRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
@@ -16,6 +23,7 @@ const Tooltip = ({ content, children }: TooltipProps) => {
       const childRect = childrenRef.current.getBoundingClientRect();
       tooltipRef.current.style.left = `${childRect.left + childRect.width / 2}px`;
       tooltipRef.current.style.top = `${childRect.top - tooltipRef.current.offsetHeight - 10}px`;
+      tooltipRef.current.style.maxWidth = maxWidth;
     }
   };
 
@@ -29,6 +37,11 @@ const Tooltip = ({ content, children }: TooltipProps) => {
     }
   }, [isVisible]);
 
+  const tooltipStyle: React.CSSProperties = {
+    maxWidth,
+    WebkitLineClamp: maxLines,
+  };
+
   return (
     <div ref={childrenRef} className={styles.tooltipContainer}>
       <div
@@ -40,6 +53,7 @@ const Tooltip = ({ content, children }: TooltipProps) => {
       <div
         ref={tooltipRef}
         className={`${styles.tooltipBox} ${isVisible ? styles.tooltipVisible : ''}`}
+        style={tooltipStyle}
       >
         {content}
       </div>
