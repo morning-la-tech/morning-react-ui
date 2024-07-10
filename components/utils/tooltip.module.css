@@ -5,12 +5,14 @@
 
 .tooltipBox {
     position: fixed;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
     z-index: 1000;
     background-color: var(--black);
     color: var(--white);
     padding: 5px 10px;
     border-radius: 4px;
-    white-space: nowrap;
     font-size: 14px;
     transform: translateX(-50%);
     visibility: hidden;
