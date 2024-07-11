@@ -172,6 +172,18 @@ const selectionStateToArray = (selectionState: SelectionState): string[] => {
     .map(([key]) => key);
 };
 
+const selectionStateToString = (
+  selectionState: SelectionState | undefined,
+): string | undefined => {
+  if (!selectionState) {
+    return undefined;
+  }
+  const trueKeys = Object.entries(selectionState)
+    .filter(([, value]) => value === true)
+    .map(([key]) => key);
+  return trueKeys.length === 1 ? trueKeys[0] : undefined;
+};
+
 export {
   atLeastOneTrue,
   isAllTrue,
@@ -187,4 +199,5 @@ export {
   toggleSelectionStateAtIndex,
   setAtTrueAndOthersAtFalse,
   selectionStateToArray,
+  selectionStateToString,
 };
