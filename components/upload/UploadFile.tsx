@@ -109,7 +109,7 @@ const UploadFile = ({
         aria-label='preview'
         className={classNames(styles.uploadArea, {
           [styles.pending]: isPending,
-          ['error']: hasError,
+          ['error']: hasError || isError,
         })}
       >
         {file ? (
