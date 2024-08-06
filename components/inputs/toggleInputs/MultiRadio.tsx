@@ -12,6 +12,7 @@ type MultiRadioProps = BasicInputProps & {
   options: SelectionState;
   onChange: (options: SelectionState) => void;
   inline?: boolean;
+  isError?: boolean;
 };
 
 const MultiRadio = ({
@@ -23,6 +24,7 @@ const MultiRadio = ({
   isLabelBold,
   disabled = false,
   inline = true,
+  isError = false,
 }: MultiRadioProps) => {
   const radios = (
     <>
@@ -41,6 +43,7 @@ const MultiRadio = ({
             onChange={handleChange}
             disabled={disabled}
             size={size}
+            isError={isError}
           />
         );
       })}

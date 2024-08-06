@@ -10,6 +10,7 @@ type RadioProps = {
   disabled?: boolean;
   value: boolean;
   style?: CSSProperties;
+  isError?: boolean;
 };
 
 type RadioHTMLProps = Omit<React.HTMLProps<HTMLLabelElement>, keyof RadioProps>;
@@ -22,6 +23,7 @@ const Radio = forwardRef<HTMLDivElement, RadioProps & RadioHTMLProps>(
       size = Size.m,
       value,
       disabled = false,
+      isError = false,
       className,
       ...props
     },
@@ -55,6 +57,7 @@ const Radio = forwardRef<HTMLDivElement, RadioProps & RadioHTMLProps>(
       >
         <span
           className={classNames(radioClass, {
+            [styles.error]: isError,
             ['cursorPointer']: !disabled,
             ['disabled']: disabled,
           })}
@@ -66,6 +69,7 @@ const Radio = forwardRef<HTMLDivElement, RadioProps & RadioHTMLProps>(
         ></span>
         <label
           className={classNames(labelClass, {
+            [styles.error]: isError,
             ['cursorPointer']: !disabled,
             ['disabled']: disabled,
           })}
