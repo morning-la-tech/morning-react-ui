@@ -20,8 +20,17 @@
     mask-image: url('#{$cdn-url}icons/radio-empty.svg');
     background-color: var(--ash);
   }
+
+  &.error {
+    mask-image: url('#{$cdn-url}icons/radio-empty.svg');
+    background-color: var(--ash);
+  }
 }
 
 .label {
   color: var(--coal);
+
+  &.error {
+    color: var(--cherry);
+  }
 }

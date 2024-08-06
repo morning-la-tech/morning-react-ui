@@ -50,6 +50,7 @@ const RadioGroup = () => {
     onChange: (options: SelectionState) => void;
     disabled?: boolean;
     inline?: boolean;
+    isError?: boolean;
   }) => {
     return (
       <>
@@ -122,6 +123,48 @@ const RadioGroup = () => {
               onChange: handleOptionsChange,
               disabled: true,
               inline: true,
+            })}
+          </Column>
+        </Columns>
+        <Columns>
+          <Column>
+            {renderMultiRadio({
+              label: 'Label',
+              options: options,
+              onChange: handleOptionsChange,
+              disabled: false,
+              inline: false,
+              isError: true,
+            })}
+          </Column>
+          <Column>
+            {renderMultiRadio({
+              label: 'Label',
+              options: options,
+              onChange: handleOptionsChange,
+              disabled: true,
+              inline: false,
+              isError: true,
+            })}
+          </Column>
+          <Column>
+            {renderMultiRadio({
+              label: 'Label',
+              options: options,
+              onChange: handleOptionsChange,
+              disabled: false,
+              inline: true,
+              isError: true,
+            })}
+          </Column>
+          <Column>
+            {renderMultiRadio({
+              label: 'Label',
+              options: options,
+              onChange: handleOptionsChange,
+              disabled: true,
+              inline: true,
+              isError: true,
             })}
           </Column>
         </Columns>
