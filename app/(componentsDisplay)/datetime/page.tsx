@@ -73,6 +73,7 @@ export default function Page() {
       </Navigation>
       <div style={{ display: 'flex', flexDirection: 'row' }}>
         <Container>
+          Selected time {timeValue && timeValue.toTimeString()}
           <Columns>
             <Column>
               <h1>DateInput</h1>
