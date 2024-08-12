@@ -68,6 +68,12 @@ export default function Home() {
       >
         Pagination
       </Button>
+      <Button
+        variant={ButtonVariant.Secondary}
+        onClick={() => router.push('/modal')}
+      >
+        Modal
+      </Button>
     </Container>
   );
 }
