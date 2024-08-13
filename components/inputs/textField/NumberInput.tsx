@@ -1,5 +1,6 @@
 import React, {
   ChangeEvent,
+  Dispatch,
   forwardRef,
   useEffect,
   useImperativeHandle,
@@ -15,9 +16,7 @@ import useInput from './useInput';
 
 type NumberInputProps = InputProps & {
   value?: number | null;
-  onChange: (value: number) => void;
-  min?: number;
-  max?: number;
+  onChange: Dispatch<number | null | undefined>;
 };
 
 const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
@@ -29,8 +28,6 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       size = Size.m,
       value,
       onChange,
-      min = 0,
-      max,
       isError,
       disabled,
       placeholder,
@@ -50,37 +47,27 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       return isNaN(val) ? NaN : val;
     };
 
-    const validateAndSet = (val: number) => {
-      if (
-        (min !== undefined && val < min) ||
-        (max !== undefined && val > max)
-      ) {
-        return;
-      }
-      setInputValue(val);
-    };
-
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
       const newValue = event.target.value;
+      if (newValue === '' && event.target.validity.valid) {
+        onChange(undefined);
+        setInputValue(undefined);
+        return;
+      }
       if (newValue === '') {
         onChange(NaN);
         setInputValue(undefined);
         return;
       }
       const parsedValue = parseInt(newValue, 10);
-      if (
-        !isNaN(parsedValue) &&
-        parsedValue >= min &&
-        (max === undefined || parsedValue <= max)
-      ) {
+      if (!isNaN(parsedValue)) {
         setInputValue(parsedValue);
         onChange(parsedValue);
       }
     };
 
     const handleBlur = () => {
-      const validValue = getValidValue(inputValue);
-      onChange(validValue);
+      onChange(inputValue);
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -94,7 +81,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         const testedValue = getValidValue(inputValue);
         let newValue = isNaN(testedValue) ? 0 : testedValue;
         event.key === 'ArrowUp' ? newValue++ : newValue--;
-        validateAndSet(newValue);
+        setInputValue(newValue);
       }
     };
 
@@ -135,9 +122,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
             onChange={handleChange}
             onKeyDown={handleKeyDown}
             onBlur={handleBlur}
-            value={isNaN(getValidValue(inputValue)) ? '' : inputValue ?? ''}
-            min={min}
-            max={max}
+            value={isNaN(getValidValue(inputValue)) ? '' : (inputValue ?? '')}
             disabled={disabled}
             placeholder={placeholder}
           />
