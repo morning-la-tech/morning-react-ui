@@ -7,10 +7,16 @@
     "plugin:import/errors",
     "plugin:import/warnings",
     "plugin:import/typescript",
-    "prettier"
+    "prettier",
+    "plugin:storybook/recommended"
   ],
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint", "react", "import", "prettier"],
+  "plugins": [
+    "@typescript-eslint",
+    "react",
+    "import",
+    "prettier"
+  ],
   "rules": {
     "prettier/prettier": [
       "error",
@@ -22,7 +28,10 @@
       }
     ],
     "no-shadow": "off",
-    "curly": [2, "all"],
+    "curly": [
+      2,
+      "all"
+    ],
     "@typescript-eslint/no-shadow": "error",
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": "error",
@@ -30,10 +39,15 @@
     "react/jsx-filename-extension": [
       "warn",
       {
-        "extensions": [".tsx"]
+        "extensions": [
+          ".tsx"
+        ]
       }
     ],
-    "complexity": ["error", 10],
+    "complexity": [
+      "error",
+      10
+    ],
     "no-await-in-loop": "warn",
     "no-eval": "error",
     "no-implied-eval": "error",
@@ -76,7 +90,10 @@
             "position": "after"
           }
         ],
-        "pathGroupsExcludedImportTypes": ["react", "next/*"],
+        "pathGroupsExcludedImportTypes": [
+          "react",
+          "next/*"
+        ],
         "newlines-between": "never",
         "alphabetize": {
           "order": "asc",
@@ -94,12 +111,27 @@
         "allowTemplateLiterals": true
       }
     ],
-    "template-curly-spacing": ["error", "never"],
+    "template-curly-spacing": [
+      "error",
+      "never"
+    ],
     "padding-line-between-statements": [
       "error",
-      { "blankLine": "always", "prev": "*", "next": "export" },
-      { "blankLine": "always", "prev": "import", "next": "*" },
-      { "blankLine": "never", "prev": "import", "next": "import" }
+      {
+        "blankLine": "always",
+        "prev": "*",
+        "next": "export"
+      },
+      {
+        "blankLine": "always",
+        "prev": "import",
+        "next": "*"
+      },
+      {
+        "blankLine": "never",
+        "prev": "import",
+        "next": "import"
+      }
     ],
     "@typescript-eslint/no-unused-vars": [
       "error",
