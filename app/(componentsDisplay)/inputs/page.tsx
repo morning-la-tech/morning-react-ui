@@ -1,6 +1,6 @@
 'use client';
 
-import { ChangeEvent, ChangeEventHandler, useState } from 'react';
+import { ChangeEvent, ChangeEventHandler, Dispatch, useState } from 'react';
 import NumberInput from 'morning-react-ui/components/inputs/textField/NumberInput';
 import TextInput from 'morning-react-ui/components/inputs/textField/TextInput';
 import Column from 'morning-react-ui/components/layout/Column';
@@ -11,7 +11,9 @@ import { Size } from 'morning-react-ui/utils/Enum';
 
 export default function Page() {
   const [textValue, setTextValue] = useState<string>('');
-  const [numberValue, setNumberValue] = useState<number | undefined>(undefined);
+  const [numberValue, setNumberValue] = useState<number | null | undefined>(
+    undefined,
+  );
 
   const handleTextChange: ChangeEventHandler<HTMLInputElement> = (
     e: ChangeEvent<HTMLInputElement>,
@@ -20,7 +22,7 @@ export default function Page() {
     setTextValue(newValue);
   };
 
-  const handleNumberChange = (newNumberValue: number) => {
+  const handleNumberChange = (newNumberValue: number | null | undefined) => {
     setNumberValue(newNumberValue);
   };
 
@@ -53,10 +55,8 @@ export default function Page() {
     isLabelBold?: boolean;
     sublabel?: string;
     size?: Size;
-    value: number | undefined;
-    onChange: (value: number) => void;
-    min?: number;
-    max?: number;
+    value: number | null | undefined;
+    onChange: Dispatch<number | null | undefined>;
     isError?: boolean;
     disabled?: boolean;
     placeholder?: string;
