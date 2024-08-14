@@ -59,7 +59,9 @@ export default function Selects() {
     Toudic: false,
     Victoires: false,
   };
-  const [optionsToDisplay, setOptionsToDisplay] = useState(8);
+  const [optionsToDisplay, setOptionsToDisplay] = useState<
+    number | null | undefined
+  >(8);
   const [options, setOptions] = useState<SelectionState>(initialOptions);
   const [selectValue, setSelectValue] = useState<string>('');
 
@@ -99,14 +101,16 @@ export default function Selects() {
     disabled?: boolean;
     isError?: boolean;
     onChange: (value: SelectionState) => void;
-    rowToDisplay?: number;
+    rowToDisplay?: number | null | undefined;
   }) => {
+    // eslint-disable-next-line react/prop-types
+    const sentProps = { ...props, rowToDisplay: props?.rowToDisplay || 1 };
     return (
       <>
-        <MultiSelect {...props} size={Size.xs} />
-        <MultiSelect {...props} size={Size.s} />
-        <MultiSelect {...props} size={Size.m} />
-        <MultiSelect {...props} size={Size.l} />
+        <MultiSelect {...sentProps} size={Size.xs} />
+        <MultiSelect {...sentProps} size={Size.s} />
+        <MultiSelect {...sentProps} size={Size.m} />
+        <MultiSelect {...sentProps} size={Size.l} />
       </>
     );
   };
@@ -121,7 +125,6 @@ export default function Selects() {
           label='Elements displayed in the dropdown'
           value={optionsToDisplay}
           onChange={setOptionsToDisplay}
-          min={1}
         />
         <Columns>
           <Column>
