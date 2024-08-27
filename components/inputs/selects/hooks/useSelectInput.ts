@@ -7,14 +7,15 @@ import {
   useRef,
   createRef,
 } from 'react';
+import { SelectOption } from 'morning-react-ui/types';
 import { Size } from 'morning-react-ui/utils/Enum';
 import { normalizeString } from 'morning-react-ui/utils/stringUtils';
 
 type UseSelectInputProps = {
-  options: string[];
-  selectedOption: string;
+  options: SelectOption[];
+  selectedOption: SelectOption | null;
   size: Size;
-  onChange: (value: string) => void;
+  onChange: (value: SelectOption) => void;
   rowToDisplay: number;
 };
 
@@ -47,7 +48,7 @@ const useSelectInput = ({
   }, [filteredOptions]);
 
   const handleBlur = () => {
-    setInputValue(selectedOption);
+    setInputValue(selectedOption ? selectedOption.label : '');
     setHighlightedIndex(0);
     setIsDropdownDisplayed(false);
   };
@@ -62,10 +63,10 @@ const useSelectInput = ({
   useEffect(() => {
     const normalizedSearchText = normalizeString(inputValue);
     const newFilteredOptions = options.filter((option) =>
-      normalizeString(option).includes(normalizedSearchText),
+      normalizeString(option.label).includes(normalizedSearchText),
     );
     setFilteredOptions(newFilteredOptions);
-  }, [inputValue]);
+  }, [inputValue, options]);
 
   const handleArrowDown = (
     e: KeyboardEvent<HTMLInputElement | HTMLDivElement>,
@@ -128,7 +129,7 @@ const useSelectInput = ({
   };
 
   useEffect(() => {
-    setInputValue(selectedOption);
+    setInputValue(selectedOption ? selectedOption.label : '');
     setIsDropdownDisplayed(false);
   }, [selectedOption]);
 
@@ -150,7 +151,6 @@ const useSelectInput = ({
   }, [highlightedIndex, optionRefs]);
 
   useEffect(() => {
-    optionRefs;
     if (optionRefs.length < rowToDisplay) {
       return;
     }

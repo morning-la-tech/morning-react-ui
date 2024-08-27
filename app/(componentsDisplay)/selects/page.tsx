@@ -7,65 +7,72 @@ import Column from 'morning-react-ui/components/layout/Column';
 import Columns from 'morning-react-ui/components/layout/Columns';
 import Container from 'morning-react-ui/components/layout/Container';
 import Navigation from 'morning-react-ui/components/layout/Navigation';
-import { SelectionState } from 'morning-react-ui/types';
+import { SelectionState, SelectOption } from 'morning-react-ui/types';
 import { Size } from 'morning-react-ui/utils/Enum';
 
 export default function Selects() {
-  const initialOptions = {
-    Amsterdam: false,
-    Argentine: false,
-    Auber: false,
-    Balard: false,
-    Bayard: false,
-    Beaurepaire: false,
-    Boissière: false,
-    Bourse: false,
-    Caire: false,
-    Cambacérès: false,
-    Cléry: false,
-    Concorde: false,
-    'Faubourg Saint-Honoré': false,
-    Gallieni: false,
-    Iéna: false,
-    'La Défense': false,
-    Laffitte: false,
-    Miromesnil: false,
-    Mogador: false,
-    Monceau: false,
-    Montparnasse: false,
-    Montsouris: false,
-    'Neuilly Charles de Gaulle': false,
-    'Neuilly Hôtel de Ville': false,
-    Penthièvre: false,
-    Pereire: false,
-    "Pont de l'Alma": false,
-    'Pont de Neuilly': false,
-    'République-Boulanger': false,
-    'Saint Ouen': false,
-    'Saint-Augustin': false,
-    Stalingrad: false,
-    Trévise: false,
-    Trocadéro: false,
-    Vivienne: false,
-    '54 Petites Écuries / RATP': false,
-    Cadet: false,
-    Clichy: false,
-    Duhesme: false,
-    Dulong: false,
-    Dussoubs: false,
-    'Ledru-Rollin': false,
-    'Petites Écuries': false,
-    Sentier: false,
-    Toudic: false,
-    Victoires: false,
-  };
+  const initialOptions: SelectOption[] = [
+    { id: 'amsterdam', label: 'Amsterdam' },
+    { id: 'argentine', label: 'Argentine' },
+    { id: 'auber', label: 'Auber' },
+    { id: 'balard', label: 'Balard' },
+    { id: 'bayard', label: 'Bayard' },
+    { id: 'beaurepaire', label: 'Beaurepaire' },
+    { id: 'boissiere', label: 'Boissière' },
+    { id: 'bourse', label: 'Bourse' },
+    { id: 'caire', label: 'Caire' },
+    { id: 'cambaceres', label: 'Cambacérès' },
+    { id: 'clery', label: 'Cléry' },
+    { id: 'concorde', label: 'Concorde' },
+    { id: 'faubourg_saint_honore', label: 'Faubourg Saint-Honoré' },
+    { id: 'gallieni', label: 'Gallieni' },
+    { id: 'iena', label: 'Iéna' },
+    { id: 'la_defense', label: 'La Défense' },
+    { id: 'laffitte', label: 'Laffitte' },
+    { id: 'miromesnil', label: 'Miromesnil' },
+    { id: 'mogador', label: 'Mogador' },
+    { id: 'monceau', label: 'Monceau' },
+    { id: 'montparnasse', label: 'Montparnasse' },
+    { id: 'montsouris', label: 'Montsouris' },
+    { id: 'neuilly_charles_de_gaulle', label: 'Neuilly Charles de Gaulle' },
+    { id: 'neuilly_hotel_de_ville', label: 'Neuilly Hôtel de Ville' },
+    { id: 'penthievre', label: 'Penthièvre' },
+    { id: 'pereire', label: 'Pereire' },
+    { id: 'pont_de_lalma', label: "Pont de l'Alma" },
+    { id: 'pont_de_neuilly', label: 'Pont de Neuilly' },
+    { id: 'republique_boulanger', label: 'République-Boulanger' },
+    { id: 'saint_ouen', label: 'Saint Ouen' },
+    { id: 'saint_augustin', label: 'Saint-Augustin' },
+    { id: 'stalingrad', label: 'Stalingrad' },
+    { id: 'trevise', label: 'Trévise' },
+    { id: 'trocadero', label: 'Trocadéro' },
+    { id: 'vivienne', label: 'Vivienne' },
+    { id: '54_petites_ecuries_ratp', label: '54 Petites Écuries / RATP' },
+    { id: 'cadet', label: 'Cadet' },
+    { id: 'clichy', label: 'Clichy' },
+    { id: 'duhesme', label: 'Duhesme' },
+    { id: 'dulong', label: 'Dulong' },
+    { id: 'dussoubs', label: 'Dussoubs' },
+    { id: 'ledru_rollin', label: 'Ledru-Rollin' },
+    { id: 'petites_ecuries', label: 'Petites Écuries' },
+    { id: 'sentier', label: 'Sentier' },
+    { id: 'toudic', label: 'Toudic' },
+    { id: 'victoires', label: 'Victoires' },
+  ];
+
+  const [options, setOptions] = useState<SelectionState>(
+    initialOptions.reduce(
+      (acc, option) => ({ ...acc, [option.label]: false }),
+      {},
+    ),
+  );
+
   const [optionsToDisplay, setOptionsToDisplay] = useState<
     number | null | undefined
   >(8);
-  const [options, setOptions] = useState<SelectionState>(initialOptions);
-  const [selectValue, setSelectValue] = useState<string>('');
+  const [selectValue, setSelectValue] = useState<SelectOption | null>(null);
 
-  const handleSelectChange = (newSelectValue: string) => {
+  const handleSelectChange = (newSelectValue: SelectOption) => {
     setSelectValue(newSelectValue);
   };
 
@@ -74,12 +81,12 @@ export default function Selects() {
     sublabel?: string;
     isLabelBold?: boolean;
     size?: Size;
-    options: string[];
+    options: SelectOption[];
     placeholder?: string;
     disabled?: boolean;
     isError?: boolean;
-    selectedOption: string;
-    onChange: (value: string) => void;
+    selectedOption: SelectOption | null;
+    onChange: (value: SelectOption) => void;
   }) => {
     return (
       <>
@@ -162,7 +169,7 @@ export default function Selects() {
               label: 'Simple',
               sublabel: 'Sublabel',
               placeholder: 'Placeholder',
-              options: ['one', 'two', 'three', 'four', 'five'],
+              options: initialOptions,
               selectedOption: selectValue,
               onChange: handleSelectChange,
             })}
@@ -170,16 +177,16 @@ export default function Selects() {
               label: 'Disabled',
               sublabel: 'Sublabel',
               placeholder: 'Placeholder',
-              options: ['one', 'two', 'three', 'four', 'five'],
+              options: initialOptions,
               disabled: true,
               selectedOption: selectValue,
               onChange: handleSelectChange,
             })}
             {renderSelectInputs({
-              label: 'Disabled',
+              label: 'Error',
               sublabel: 'Sublabel',
               placeholder: 'Placeholder',
-              options: ['one', 'two', 'three', 'four', 'five'],
+              options: initialOptions,
               isError: true,
               selectedOption: selectValue,
               onChange: handleSelectChange,
