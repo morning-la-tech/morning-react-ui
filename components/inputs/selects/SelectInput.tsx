@@ -2,14 +2,15 @@ import { useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import { SelectsProps } from 'morning-react-ui/components/inputs/propsTypes';
 import TextInput from 'morning-react-ui/components/inputs/textField/TextInput';
+import { SelectOption } from 'morning-react-ui/types';
 import { Size, sizeToNumber } from 'morning-react-ui/utils/Enum';
 import useSelectInput from './hooks/useSelectInput';
 import styles from './selects.module.css';
 
 type SelectInputProps = SelectsProps & {
-  options: string[];
-  selectedOption: string;
-  onChange: (value: string) => void;
+  options: SelectOption[];
+  selectedOption: SelectOption | null;
+  onChange: (value: SelectOption) => void;
 };
 
 const SelectInput = ({
@@ -51,7 +52,7 @@ const SelectInput = ({
   return (
     <div className={styles.wrapper} tabIndex={-1}>
       <TextInput
-        placeholder={selectedOption || placeholder}
+        placeholder={selectedOption ? selectedOption.label : placeholder}
         size={size}
         value={inputValue}
         label={label}
@@ -100,7 +101,7 @@ const SelectInput = ({
                   [styles.highlightedOption]: index === highlightedIndex,
                 },
               )}
-              key={index}
+              key={option.id}
               onClick={() => {
                 onChange(option);
                 if (inputRef.current) {
@@ -112,9 +113,9 @@ const SelectInput = ({
               ref={optionRefs[index]}
             >
               <span className={classNames(`height-${size}`, styles.option)}>
-                {option}
+                {option.label}
               </span>
-              {selectedOption === option && (
+              {selectedOption && selectedOption.id === option.id && (
                 <span
                   className={styles.selectedOptionIcon}
                   style={{
