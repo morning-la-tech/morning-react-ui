@@ -7,3 +7,8 @@ export const enum TriState {
 export type SelectionState = {
   [key: string]: boolean;
 };
+
+export type SelectOption = {
+  id: string;
+  label: string;
+};
