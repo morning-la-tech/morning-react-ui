@@ -16,6 +16,7 @@
 
 .button .image {
     display: flex;
+    justify-content: center;
     flex-shrink: 0;
 }
 
@@ -148,10 +149,10 @@
 }
 
 .coloredLinkButtonImage {
-    background-color: var(--emerald)!important;
+    background-color: var(--emerald) !important;
 }
 
 .rotatedImage {
     transform: rotate(180deg);
-    background-color: var(--cinnamon)!important;
+    background-color: var(--cinnamon) !important;
 }
