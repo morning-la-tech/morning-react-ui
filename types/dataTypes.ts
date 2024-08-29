@@ -4,6 +4,11 @@ export const enum TriState {
   indeterminate = 'indeterminate',
 }
 
+export const enum Orientation {
+  Horizontal = 'horizontal',
+  Vertical = 'vertical',
+}
+
 export type SelectionState = {
   [key: string]: boolean;
 };

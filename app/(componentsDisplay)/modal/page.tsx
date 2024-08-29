@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Button, ButtonVariant } from 'morning-react-ui/components';
 import Container from 'morning-react-ui/components/layout/Container';
 import Navigation from 'morning-react-ui/components/layout/Navigation';
-import { FormModal, Modal } from 'morning-react-ui/components/modals';
+import { Modal, ModalForm } from 'morning-react-ui/components/modals';
 
 const ModalPage = () => {
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
@@ -26,9 +26,9 @@ const ModalPage = () => {
         hide={() => setIsOpenModal(false)}
         title='Titre de la modal'
       >
-        Voici un exemple de modal simple sans interction
+        Voici un exemple de modal simple sans interaction
       </Modal>
-      <FormModal
+      <ModalForm
         isModalShowing={isOpenFormModal}
         hide={() => setIsOpenFormModal(false)}
         title='Titre de la modal'
@@ -49,7 +49,7 @@ const ModalPage = () => {
         ]}
       >
         Voici un exemple de modal contenant un formulaire avec des actions
-      </FormModal>
+      </ModalForm>
     </>
   );
 };
