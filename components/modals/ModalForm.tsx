@@ -9,7 +9,7 @@ import ModalHeader from './utils/ModalHeader';
 import useModals from './utils/useModals';
 
 type Props = {
-  children: ReactNode;
+  children?: ReactNode;
   isModalShowing: boolean;
   hide: () => void;
   top?: string | false;
@@ -24,7 +24,7 @@ type Props = {
   maxWidth?: string;
 };
 
-const Modal = ({
+const ModalForm = ({
   children,
   isModalShowing,
   hide,
@@ -81,4 +81,4 @@ const Modal = ({
   );
 };
 
-export default Modal;
+export default ModalForm;

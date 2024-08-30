@@ -1,4 +1,4 @@
-import React, { ButtonHTMLAttributes, ReactElement, ReactNode } from 'react';
+import { ButtonHTMLAttributes, ReactElement, ReactNode } from 'react';
 import classNames from 'classnames';
 import Loading from 'morning-react-ui/components/utils/Loading';
 import { Size, sizeToNumber } from 'morning-react-ui/utils/Enum';
@@ -11,7 +11,7 @@ export enum ButtonVariant {
 }
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  children: ReactNode;
+  children?: ReactNode;
   startImage?: ReactElement;
   endImage?: ReactElement;
   isLoading?: boolean;

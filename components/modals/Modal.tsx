@@ -7,7 +7,7 @@ import ModalHeader from './utils/ModalHeader';
 import useModals from './utils/useModals';
 
 type Props = {
-  children: ReactNode;
+  children?: ReactNode;
   isModalShowing: boolean;
   hide: () => void;
   top?: string | false;
