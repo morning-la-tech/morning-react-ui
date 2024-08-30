@@ -15,7 +15,7 @@ type Props = {
   top?: string | false;
   title?: string;
   onSubmit?: (e: FormEvent<HTMLFormElement>) => void;
-  hasCloseButton?: boolean;
+  noCloseButton?: boolean;
   closeOnClickOutside?: boolean;
   size?: Size;
   className?: string;
@@ -31,7 +31,7 @@ const ModalForm = ({
   top = '200px',
   title,
   onSubmit,
-  hasCloseButton = true,
+  noCloseButton = false,
   closeOnClickOutside = true,
   className,
   buttons = [],
@@ -65,7 +65,7 @@ const ModalForm = ({
           <ModalHeader
             hide={hide}
             title={title}
-            hasCloseButton={hasCloseButton}
+            hasCloseButton={!noCloseButton}
           />
           <Form
             onSubmit={onSubmit}
