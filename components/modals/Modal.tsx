@@ -12,7 +12,7 @@ type Props = {
   hide: () => void;
   top?: string | false;
   title?: string;
-  hasCloseButton?: boolean;
+  noCloseButton?: boolean;
   closeOnClickOutside?: boolean;
   size?: Size;
   className?: string;
@@ -24,7 +24,7 @@ const Modal = ({
   hide,
   top = '200px',
   title,
-  hasCloseButton = true,
+  noCloseButton = false,
   closeOnClickOutside = true,
   className,
 }: Props) => {
@@ -49,7 +49,7 @@ const Modal = ({
           <ModalHeader
             hide={hide}
             title={title}
-            hasCloseButton={hasCloseButton}
+            hasCloseButton={!noCloseButton}
           />
           {children}
         </div>
