@@ -1,7 +1,7 @@
 import NextAuth from 'next-auth';
 import Google from 'next-auth/providers/google';
 
-const useSecureCookies = `${process.env.NEXTAUTH_URL}`.startsWith('https://');
+const useSecureCookies = `${process.env.AUTH_URL}`.startsWith('https://');
 const cookiePrefix = useSecureCookies ? '__Secure-' : '';
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
