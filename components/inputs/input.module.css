@@ -5,6 +5,7 @@
     box-sizing: border-box;
     gap: 4px;
     width: 100%;
+    background-color: var(--white);
 }
 
 .flex {
@@ -23,7 +24,7 @@
 
 .input {
     border: none;
-    background-color: var(--white);
+    background-color: inherit;
     user-select: none;
     flex-grow: 1;
     width: 100%;
