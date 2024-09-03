@@ -11,6 +11,7 @@ import classNames from 'classnames';
 import { format, setMinutes, setHours, setSeconds } from 'date-fns';
 import { UTCDate } from '@date-fns/utc';
 import ParentInput from 'morning-react-ui/components/inputs/ParentInput';
+import { Datez } from 'morning-react-ui/types';
 import {
   isStringValidAsTime,
   isTimeWithinEdges,
@@ -20,8 +21,6 @@ import { Size, sizeToHeight } from 'morning-react-ui/utils/Enum';
 import styles from '../input.module.css';
 import { BasicInputProps, InputProps } from '../propsTypes';
 import useInput from '../textField/useInput';
-
-type Datez = UTCDate | null | undefined;
 
 type TimeInputProps = BasicInputProps &
   InputProps & {
