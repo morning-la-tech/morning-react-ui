@@ -2,6 +2,8 @@ export { default as ParentInput } from 'morning-react-ui/components/inputs/Paren
 
 export { default as TextInput } from 'morning-react-ui/components/inputs/textField/TextInput';
 
+export { default as TextAreaInput } from 'morning-react-ui/components/inputs/textField/TextAreaInput';
+
 export { default as NumberInput } from 'morning-react-ui/components/inputs/textField/NumberInput';
 
 export { default as TimeInput } from 'morning-react-ui/components/inputs/datetimeField/TimeInput';
