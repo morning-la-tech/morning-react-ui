@@ -30,7 +30,23 @@
     width: 100%;
 }
 
-.input:focus {
+.textArea {
+    width: 100%;
+    height: auto;
+    min-height: 100px;
+    padding: 8px;
+    border: none;
+    background-color: inherit;
+    font-size: inherit;
+    line-height: 1.5;
+    resize: none;
+    overflow: hidden;
+    box-sizing: border-box;
+    border-radius: 6px;
+}
+
+.input:focus,
+.textArea:focus {
     outline: none;
 }
 

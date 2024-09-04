@@ -1,7 +1,7 @@
 'use client';
-
 import { ChangeEvent, ChangeEventHandler, Dispatch, useState } from 'react';
 import NumberInput from 'morning-react-ui/components/inputs/textField/NumberInput';
+import TextAreaInput from 'morning-react-ui/components/inputs/textField/TextAreaInput';
 import TextInput from 'morning-react-ui/components/inputs/textField/TextInput';
 import Column from 'morning-react-ui/components/layout/Column';
 import Columns from 'morning-react-ui/components/layout/Columns';
@@ -14,6 +14,7 @@ export default function Page() {
   const [numberValue, setNumberValue] = useState<number | null | undefined>(
     undefined,
   );
+  const [textAreaValue, setTextAreaValue] = useState<string>('');
 
   const handleTextChange: ChangeEventHandler<HTMLInputElement> = (
     e: ChangeEvent<HTMLInputElement>,
@@ -24,6 +25,10 @@ export default function Page() {
 
   const handleNumberChange = (newNumberValue: number | null | undefined) => {
     setNumberValue(newNumberValue);
+  };
+
+  const handleTextAreaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setTextAreaValue(e.target.value);
   };
 
   const renderTextInputs = (props: {
@@ -159,6 +164,16 @@ export default function Page() {
             </Column>
           </Columns>
         </Container>
+      </div>
+      <div style={{ padding: '40px' }}>
+        <h1 style={{ margin: '10px 0' }}>TextArea Input</h1>
+        <TextAreaInput
+          label='Description'
+          placeholder='Enter your description'
+          value={textAreaValue}
+          onChange={handleTextAreaChange}
+          sublabel='Optional'
+        />
       </div>
     </>
   );
