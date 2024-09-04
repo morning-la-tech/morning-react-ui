@@ -1,12 +1,12 @@
-import { forwardRef, CSSProperties } from 'react';
+import { forwardRef, CSSProperties, RefObject, ReactNode } from 'react';
 import classNames from 'classnames';
 import { BasicInputProps } from 'morning-react-ui/components/inputs/propsTypes';
 import { Size } from 'morning-react-ui/utils/Enum';
 import styles from './parentInput.module.css';
 
 type ParentInputProps = BasicInputProps & {
-  children: React.ReactNode;
-  inputRef?: React.RefObject<HTMLInputElement>;
+  children: ReactNode;
+  inputRef?: RefObject<HTMLInputElement | HTMLTextAreaElement>;
   style?: CSSProperties;
   onClick?: () => void;
 };
