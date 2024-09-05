@@ -10,7 +10,6 @@
 
 .flex {
     display: flex;
-    align-items: center;
 }
 
 .wrapper:focus-within {
@@ -32,8 +31,7 @@
 
 .textArea {
     width: 100%;
-    height: auto;
-    min-height: 100px;
+    height: 100%;
     padding: 8px;
     border: none;
     background-color: inherit;
