@@ -13,7 +13,7 @@ import { normalizeString } from 'morning-react-ui/utils/stringUtils';
 
 type UseSelectInputProps = {
   options: SelectOption[];
-  selectedOption: SelectOption | null;
+  selectedOption?: SelectOption | null;
   size: Size;
   onChange: (value: SelectOption) => void;
   rowToDisplay: number;

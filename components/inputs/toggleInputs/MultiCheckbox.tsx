@@ -1,4 +1,12 @@
-import { createRef, CSSProperties, useEffect, useState } from 'react';
+import {
+  createRef,
+  CSSProperties,
+  Dispatch,
+  RefObject,
+  SetStateAction,
+  useEffect,
+  useState,
+} from 'react';
 import classNames from 'classnames';
 import ParentInput from 'morning-react-ui/components/inputs/ParentInput';
 import { SelectionState, TriState } from 'morning-react-ui/types/dataTypes';
@@ -16,10 +24,8 @@ import Checkbox from './single/Checkbox';
 type MultiCheckboxProps = BasicInputProps & {
   options: SelectionState;
   onChange: (options: SelectionState) => void;
-  checkboxRefs?: React.RefObject<HTMLInputElement>[];
-  setCheckboxRefs?: React.Dispatch<
-    React.SetStateAction<React.RefObject<HTMLInputElement>[]>
-  >;
+  checkboxRefs?: RefObject<HTMLInputElement>[];
+  setCheckboxRefs?: Dispatch<SetStateAction<RefObject<HTMLInputElement>[]>>;
   inline?: boolean;
   styleCheckbox?: CSSProperties;
   styleMultiCheckbox?: CSSProperties;

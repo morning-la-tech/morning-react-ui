@@ -9,7 +9,7 @@ import styles from './selects.module.css';
 
 type SelectInputProps = SelectsProps & {
   options: SelectOption[];
-  selectedOption: SelectOption | null;
+  selectedOption?: SelectOption | null;
   onChange: (value: SelectOption) => void;
 };
 
