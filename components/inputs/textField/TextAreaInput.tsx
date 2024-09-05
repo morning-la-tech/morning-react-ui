@@ -3,7 +3,6 @@ import {
   useRef,
   useImperativeHandle,
   ChangeEvent,
-  useEffect,
   TextareaHTMLAttributes,
 } from 'react';
 import classNames from 'classnames';
@@ -43,13 +42,6 @@ const TextAreaInput = forwardRef<HTMLTextAreaElement, TextAreaInputProps>(
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
     useImperativeHandle(ref, () => textAreaRef.current as HTMLTextAreaElement);
-
-    useEffect(() => {
-      if (textAreaRef.current) {
-        textAreaRef.current.style.height = 'auto';
-        textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`;
-      }
-    }, [value]);
 
     const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
       if (maxLength && event.target.value.length > maxLength) {
