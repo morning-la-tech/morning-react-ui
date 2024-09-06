@@ -8,6 +8,10 @@
     background-color: var(--white);
 }
 
+.wrapperTextArea {
+    height: 100%;
+}
+
 .flex {
     display: flex;
 }

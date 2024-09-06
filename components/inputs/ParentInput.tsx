@@ -9,6 +9,7 @@ type ParentInputProps = BasicInputProps & {
   inputRef?: RefObject<HTMLInputElement | HTMLTextAreaElement>;
   style?: CSSProperties;
   onClick?: () => void;
+  fullHeight?: boolean;
 };
 
 const ParentInput = forwardRef<HTMLDivElement, ParentInputProps>(
@@ -22,6 +23,7 @@ const ParentInput = forwardRef<HTMLDivElement, ParentInputProps>(
       inputRef,
       disabled,
       onClick,
+      fullHeight,
     },
     ref,
   ) => {
@@ -41,8 +43,12 @@ const ParentInput = forwardRef<HTMLDivElement, ParentInputProps>(
           styles.parentInput,
           styles[size],
           `font-size-${size}`,
-          { ['disabled']: disabled },
+          {
+            ['disabled']: disabled,
+            [styles.fullHeight]: fullHeight,
+          },
         )}
+        style={{ height: fullHeight ? '100%' : undefined }}
       >
         {(label || sublabel) && (
           <div className={styles.labelsContainer}>
