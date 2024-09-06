@@ -57,10 +57,13 @@ const TextAreaInput = forwardRef<HTMLTextAreaElement, TextAreaInputProps>(
         size={size}
         disabled={disabled}
         inputRef={textAreaRef}
+        style={{ height: '100%' }}
+        fullHeight
       >
         <div
           className={classNames(
             styles.wrapper,
+            styles.wrapperTextArea,
             styles.flex,
             { [styles.error]: isError },
             { [`font-size-${size}`]: size },
