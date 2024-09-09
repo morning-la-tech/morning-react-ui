@@ -66,11 +66,13 @@ const SessionInformer = ({ session, size, signOut }: SessionInformerProps) => {
     };
   }, [isDropdownDisplayed]);
 
-  if (session?.user?.image) {
+  if (session?.user) {
     return (
       <div className={styles.sessionInformer}>
         <div onClick={toggleDropdown} className={styles.wrapper}>
-          <Avatar imageUrl={session.user?.image} size={size} />
+          {session?.user?.image && (
+            <Avatar imageUrl={session.user.image} size={size} />
+          )}
           <p className='font-size-m font-weight-medium'>
             {session?.user?.email}
           </p>
