@@ -8,18 +8,18 @@ import Column from 'morning-react-ui/components/layout/Column';
 import Columns from 'morning-react-ui/components/layout/Columns';
 import Container from 'morning-react-ui/components/layout/Container';
 import Navigation from 'morning-react-ui/components/layout/Navigation';
-import { Datez } from 'morning-react-ui/types';
+import { OptionalDate } from 'morning-react-ui/types';
 import { Size } from 'morning-react-ui/utils/Enum';
 
 export default function Page() {
-  const [timeValue, setTimeValue] = useState<Datez>(null);
-  const [dateValue, setDateValue] = useState<Date | null | undefined>(null);
+  const [timeValue, setTimeValue] = useState<OptionalDate>(null);
+  const [dateValue, setDateValue] = useState<OptionalDate>(null);
 
-  const handleTimeChange = (newTimeValue: Datez) => {
+  const handleTimeChange = (newTimeValue: OptionalDate) => {
     setTimeValue(newTimeValue);
   };
 
-  const handleDateChange = (newDateValue: Date | null | undefined) => {
+  const handleDateChange = (newDateValue: OptionalDate) => {
     setDateValue(newDateValue);
   };
 
@@ -28,12 +28,12 @@ export default function Page() {
     sublabel?: string;
     isLabelBold?: boolean;
     size?: Size;
-    value?: Datez;
+    value?: OptionalDate;
     disabled?: boolean;
     isError?: boolean;
     min?: string;
     max?: string;
-    onChange: (event: Datez) => void;
+    onChange: (event: OptionalDate) => void;
   }) => {
     return (
       <>
@@ -55,7 +55,7 @@ export default function Page() {
     isError?: boolean;
     from?: string;
     to?: string;
-    onChange: (event: Date | null | undefined) => void;
+    onChange: (event: OptionalDate) => void;
   }) => {
     return (
       <>

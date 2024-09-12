@@ -11,7 +11,6 @@ import classNames from 'classnames';
 import { format, setMinutes, setHours, setSeconds } from 'date-fns';
 import { UTCDate } from '@date-fns/utc';
 import ParentInput from 'morning-react-ui/components/inputs/ParentInput';
-import { Datez } from 'morning-react-ui/types';
 import {
   isStringValidAsTime,
   isTimeWithinEdges,
@@ -24,10 +23,10 @@ import useInput from '../textField/useInput';
 
 type TimeInputProps = BasicInputProps &
   InputProps & {
-    value?: Datez;
+    value?: Date | null;
     min?: string;
     max?: string;
-    onChange: Dispatch<Datez>;
+    onChange: Dispatch<Date | null>;
   };
 
 const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
