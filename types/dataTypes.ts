@@ -1,5 +1,3 @@
-import { UTCDate } from '@date-fns/utc';
-
 export const enum TriState {
   true = 'true',
   false = 'false',
@@ -20,4 +18,4 @@ export type SelectOption = {
   label: string;
 };
 
-export type Datez = UTCDate | null | undefined;
+export type OptionalDate = Date | null | undefined;
