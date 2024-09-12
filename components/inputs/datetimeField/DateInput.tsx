@@ -9,6 +9,7 @@ import {
 import classNames from 'classnames';
 import { format } from 'date-fns/format';
 import ParentInput from 'morning-react-ui/components/inputs/ParentInput';
+import { OptionalDate } from 'morning-react-ui/types';
 import {
   isStringValidAsDate,
   isDateWithinEdges,
@@ -27,7 +28,7 @@ type DateInputProps = BasicInputProps &
     value?: Date | null;
     from?: string;
     to?: string;
-    onChange: (time: Date | null | undefined) => void;
+    onChange: (time: OptionalDate) => void;
   };
 
 const DateInput = forwardRef<HTMLInputElement, DateInputProps>(
