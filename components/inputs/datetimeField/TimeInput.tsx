@@ -9,7 +9,6 @@ import React, {
 } from 'react';
 import classNames from 'classnames';
 import { format, setMinutes, setHours, setSeconds } from 'date-fns';
-import { UTCDate } from '@date-fns/utc';
 import ParentInput from 'morning-react-ui/components/inputs/ParentInput';
 import {
   isStringValidAsTime,
@@ -132,7 +131,7 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       const [hours, minutes] = stringToTime(inputValue);
       onChange(
         isTimeWithinEdges(inputValue, min, max)
-          ? setSeconds(setMinutes(setHours(new UTCDate(), hours), minutes), 0)
+          ? setSeconds(setMinutes(setHours(new Date(), hours), minutes), 0)
           : null,
       );
     };
