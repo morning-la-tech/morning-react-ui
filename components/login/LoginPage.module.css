@@ -75,15 +75,11 @@
         overflow: hidden;
     }
 
-    .loginBody {
-        flex: 0;
-    }
-
     .backgroundImageContainer {
         position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(2);
+        top: 0;
+        left: 0;
+        transform: none;
     }
 
     .logoContainer {
@@ -96,15 +92,30 @@
 
     .loginForm {
         background-color: var(--snow);
-        padding: 40px;
+        padding: 20px;
         border-radius: 12px 12px 0 0;
         z-index: 1;
         margin-top: -20px;
-        flex-direction: row;
+        flex-direction: column;
+        width: 100%;
+        box-sizing: border-box;
     }
 
-    .title,
+    .loginBody {
+        flex: 0;
+        padding-top: 100px;
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .title {
+        text-align: center;
+        white-space: normal;
+    }
+
     .body {
-        text-align: left;
+        text-align: center;
+        white-space: normal;
     }
 }
