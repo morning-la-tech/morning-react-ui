@@ -9,6 +9,8 @@
 .checkbox {
     display: inline-block;
     mask-size: contain;
+    mask-repeat: no-repeat;
+    flex-shrink: 0;
 
     &.active {
         mask-image: url('#{$cdn-url}icons/checkbox-active.svg');
@@ -29,6 +31,9 @@
 .label {
     color: var(--coal);
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
 }
 
 .error {
