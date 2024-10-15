@@ -55,7 +55,6 @@
     .children {
         right: 10px;
     }
-<<<<<<< HEAD
 
     .title {
         line-height: 16px;
@@ -65,6 +64,4 @@
     .logo {
         margin-right: 3px;
     }
-=======
->>>>>>> d232bd8 (navbar usable on mobile)
 }
