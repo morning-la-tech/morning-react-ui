@@ -12,11 +12,13 @@
     height: 50px;
     padding: 14px 100px;
     justify-content: space-between;
+    align-items: center;
     flex: 1;
 }
 
 .imageAndTitle {
     display: flex;
+    align-items: center;
 }
 
 .children {
@@ -24,4 +26,42 @@
     align-items: center;
     position: absolute;
     right: 100px;
+}
+
+.title {
+    font-family: var(--geomanist-font);
+    line-height: 19px;
+    font-weight: 700;
+    font-size: 18px;
+    padding-top: 2px;
+}
+
+.logo {
+    margin-top: 3px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+@media (width <= 750px) {
+    .bar {
+        font-size: 14px;
+        font-weight: 800;
+    }
+
+    .container {
+        padding: 0 10px;
+    }
+
+    .children {
+        right: 10px;
+    }
+
+    .title {
+        line-height: 16px;
+        font-size: 16px;
+    }
+
+    .logo {
+        margin-right: 3px;
+    }
 }

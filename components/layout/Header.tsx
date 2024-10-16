@@ -2,6 +2,7 @@
 import { ReactNode, CSSProperties } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import useIsMobile from 'morning-react-ui/components/hooks/useIsMobile';
 import styles from './header.module.css';
 
 type HeaderProps = {
@@ -12,6 +13,8 @@ type HeaderProps = {
 
 const Header = ({ title, children, style }: HeaderProps) => {
   const router = useRouter();
+  const isMobile = useIsMobile();
+
   return (
     <header className={styles.bar} style={style}>
       <div className={styles.container}>
@@ -19,12 +22,12 @@ const Header = ({ title, children, style }: HeaderProps) => {
           <Image
             src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}logos/logo_morning_black.png`}
             alt='logo'
-            width={90}
-            height={22}
-            style={{ marginTop: '3px', marginRight: '5px', cursor: 'pointer' }}
+            width={isMobile ? 68 : 81}
+            height={isMobile ? 16 : 19}
+            className={styles.logo}
             onClick={() => router.push('/')}
           />
-          <p>{title}</p>
+          <p className={styles.title}>{title}</p>
         </div>
         <div className={styles.children}>{children}</div>
       </div>
