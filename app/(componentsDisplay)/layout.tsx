@@ -14,7 +14,7 @@ export default async function RootLayout({
 
   return (
     <>
-      <Header title='librairie de composants'>
+      <Header title='librairie react'>
         {session && (
           <SessionInformer session={session} signOut={handleLogout} size={20} />
         )}
