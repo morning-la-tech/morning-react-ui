@@ -27,5 +27,5 @@
 }
 
 .parentInput input::placeholder {
-    color: var(--iron);
+    color: var(--stone);
 }
