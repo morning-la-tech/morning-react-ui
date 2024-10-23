@@ -46,6 +46,7 @@ const MultiSelect = ({
     handleDropdownMouseDown,
     maxHeight,
     handleFocus,
+    handleBlur,
   } = useMultiSelect({ options, onChange, size, rowToDisplay });
 
   return (
@@ -66,6 +67,7 @@ const MultiSelect = ({
         value={inputValue}
         onChange={handleTextChange}
         onFocus={() => handleFocus()}
+        onBlur={() => handleBlur()}
         onKeyDown={(e) => keyboardNavigation(e)}
         showClearButton={atLeastOneTrue(options)}
         showDropdownIcon
