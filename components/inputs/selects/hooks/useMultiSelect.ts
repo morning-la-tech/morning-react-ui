@@ -207,6 +207,10 @@ const useMultiSelect = ({
     }, 0);
   };
 
+  const handleBlur = () => {
+    setIsDropdownDisplayed(false);
+  };
+
   const handleTabOrArrowDown = () => {
     if (highlightedIndex === null) {
       setHighlightedIndex(0);
@@ -477,6 +481,7 @@ const useMultiSelect = ({
     makeHighlightedIndexSelected,
     handleDropdownMouseDown,
     handleFocus,
+    handleBlur,
     maxHeight,
   };
 };
