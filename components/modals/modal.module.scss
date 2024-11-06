@@ -10,7 +10,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: var(--coal);
+    background-color: var(--graphite);
     opacity: 0.5;
 }
 
@@ -45,7 +45,7 @@
     right: 0;
     mask-image: url('#{$cdn-url}icons/cross.svg');
     mask-size: contain;
-    background-color: var(--coal);
+    background-color: var(--graphite);
     width: 24px;
     height: 24px;
 }
