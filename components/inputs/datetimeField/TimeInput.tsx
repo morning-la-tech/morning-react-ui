@@ -8,7 +8,13 @@ import React, {
   KeyboardEventHandler,
 } from 'react';
 import classNames from 'classnames';
-import { format, setMinutes, setHours, setSeconds } from 'date-fns';
+import {
+  format,
+  setMinutes,
+  setHours,
+  setSeconds,
+  setMilliseconds,
+} from 'date-fns';
 import ParentInput from 'morning-react-ui/components/inputs/ParentInput';
 import {
   isStringValidAsTime,
@@ -131,7 +137,10 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       const [hours, minutes] = stringToTime(inputValue);
       onChange(
         isTimeWithinEdges(inputValue, min, max)
-          ? setSeconds(setMinutes(setHours(new Date(), hours), minutes), 0)
+          ? setMilliseconds(
+              setSeconds(setMinutes(setHours(new Date(), hours), minutes), 0),
+              0,
+            )
           : null,
       );
     };

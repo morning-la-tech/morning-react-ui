@@ -7,6 +7,7 @@ import {
   useImperativeHandle,
 } from 'react';
 import classNames from 'classnames';
+import { setMilliseconds, setSeconds } from 'date-fns';
 import { format } from 'date-fns/format';
 import ParentInput from 'morning-react-ui/components/inputs/ParentInput';
 import { OptionalDate } from 'morning-react-ui/types';
@@ -212,11 +213,11 @@ const DateInput = forwardRef<HTMLInputElement, DateInputProps>(
 
       setError(!isDateWithinEdges(inputValue, from, to));
       const [day, month, year] = stringToDate(inputValue);
-      onChange(
-        isDateWithinEdges(inputValue, from, to)
-          ? new Date(roundUpYear(year), month - 1, day)
-          : null,
+      const sanitizedDate = setMilliseconds(
+        setSeconds(new Date(roundUpYear(year), month - 1, day), 0),
+        0,
       );
+      onChange(isDateWithinEdges(inputValue, from, to) ? sanitizedDate : null);
     };
 
     useEffect(() => {
