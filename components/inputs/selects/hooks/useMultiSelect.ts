@@ -1,11 +1,11 @@
 import {
-  useEffect,
-  useState,
-  useCallback,
-  useRef,
   ChangeEvent,
   ChangeEventHandler,
   KeyboardEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
 } from 'react';
 import { SelectionState } from 'morning-react-ui/types/dataTypes';
 import { Size } from 'morning-react-ui/utils/Enum';

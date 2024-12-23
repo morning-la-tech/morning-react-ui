@@ -1,7 +1,7 @@
-import { NextResponse } from 'next/server';
-import { auth } from 'morning-react-ui/app/auth';
+import { NextRequest, NextResponse } from 'next/server';
+import { auth } from './app/auth';
 
-export default auth((req) => {
+export default auth((req: NextRequest) => {
   const isDev = process.env.NODE_ENV === 'development';
   const { pathname } = req.nextUrl;
 

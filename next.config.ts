@@ -1,5 +1,6 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+import { NextConfig } from 'next';
+
+const nextConfig: NextConfig = {
   output: 'standalone',
   experimental: {
     serverMinification: false,
@@ -12,12 +13,10 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'cdn.morning.fr',
-        port: '',
       },
       {
         protocol: 'https',
         hostname: 'lh3.googleusercontent.com',
-        port: '',
       },
     ],
   },
@@ -26,4 +25,4 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+export default nextConfig;

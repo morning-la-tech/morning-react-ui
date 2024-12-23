@@ -24,7 +24,6 @@ export default function Page() {
     />
   );
 
-  // eslint-disable-next-line complexity
   const renderButtons = (
     props: {
       isLoading?: boolean;
@@ -86,7 +85,6 @@ export default function Page() {
     );
   };
 
-  // eslint-disable-next-line complexity
   const renderLinkButtons = (
     props: {
       isLoading?: boolean;

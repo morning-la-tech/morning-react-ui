@@ -1,9 +1,9 @@
 import {
-  forwardRef,
-  useRef,
-  useImperativeHandle,
   ChangeEvent,
+  forwardRef,
   TextareaHTMLAttributes,
+  useImperativeHandle,
+  useRef,
 } from 'react';
 import classNames from 'classnames';
 import { Size } from 'morning-react-ui/utils/Enum';

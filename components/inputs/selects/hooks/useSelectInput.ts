@@ -1,11 +1,11 @@
 import {
   ChangeEvent,
   ChangeEventHandler,
-  useState,
-  useEffect,
-  KeyboardEvent,
-  useRef,
   createRef,
+  KeyboardEvent,
+  useEffect,
+  useRef,
+  useState,
 } from 'react';
 import { SelectOption } from 'morning-react-ui/types';
 import { Size } from 'morning-react-ui/utils/Enum';
@@ -29,7 +29,7 @@ const useSelectInput = ({
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [maxHeight, setMaxHeight] = useState<number | null>(0);
   const [optionRefs, setOptionRefs] = useState<
-    React.RefObject<HTMLDivElement>[]
+    React.RefObject<HTMLDivElement | null>[]
   >([]);
 
   const [inputValue, setInputValue] = useState<string>('');
