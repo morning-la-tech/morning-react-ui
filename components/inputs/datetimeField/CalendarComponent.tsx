@@ -2,17 +2,17 @@ import React, { RefObject, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
 import {
+  addDays,
   addMonths,
+  addWeeks,
+  endOfMonth,
+  getDayOfYear,
   isBefore,
   isSameDay,
   isSameMonth,
   isToday,
   startOfMonth,
   startOfWeek,
-  addDays,
-  endOfMonth,
-  addWeeks,
-  getDayOfYear,
 } from 'date-fns';
 import { format } from 'date-fns/format';
 import { fr } from 'date-fns/locale/fr';
@@ -30,7 +30,7 @@ type CalendarComponentProps = {
   from?: string;
   to?: string;
   display: boolean;
-  parentRef: RefObject<HTMLInputElement>;
+  parentRef: RefObject<HTMLInputElement | null>;
   setDisplay: (value: boolean) => void;
   onSelect: (date: Date) => void;
 };

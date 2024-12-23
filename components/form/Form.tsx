@@ -1,4 +1,4 @@
-import { ReactNode, HTMLProps, FormEvent } from 'react';
+import { FormEvent, HTMLProps, ReactNode } from 'react';
 import Button, {
   ButtonProps,
 } from 'morning-react-ui/components/buttons/Button';

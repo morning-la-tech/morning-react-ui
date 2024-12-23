@@ -1,5 +1,5 @@
 'use client';
-import { ReactNode, CSSProperties } from 'react';
+import { CSSProperties, ReactNode } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import useIsMobile from 'morning-react-ui/components/hooks/useIsMobile';

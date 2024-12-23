@@ -2,9 +2,9 @@ import {
   ChangeEvent,
   forwardRef,
   useEffect,
-  useState,
-  useRef,
   useImperativeHandle,
+  useRef,
+  useState,
 } from 'react';
 import classNames from 'classnames';
 import { setMilliseconds, setSeconds } from 'date-fns';
@@ -12,8 +12,8 @@ import { format } from 'date-fns/format';
 import ParentInput from 'morning-react-ui/components/inputs/ParentInput';
 import { OptionalDate } from 'morning-react-ui/types';
 import {
-  isStringValidAsDate,
   isDateWithinEdges,
+  isStringValidAsDate,
   roundUpYear,
   stringToDate,
 } from 'morning-react-ui/utils/datetimeUtils';
