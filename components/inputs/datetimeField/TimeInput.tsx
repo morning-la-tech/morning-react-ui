@@ -1,19 +1,19 @@
 import React, {
   ChangeEvent,
+  Dispatch,
   forwardRef,
-  useState,
+  KeyboardEventHandler,
   useImperativeHandle,
   useRef,
-  Dispatch,
-  KeyboardEventHandler,
+  useState,
 } from 'react';
 import classNames from 'classnames';
 import {
   format,
-  setMinutes,
   setHours,
-  setSeconds,
   setMilliseconds,
+  setMinutes,
+  setSeconds,
 } from 'date-fns';
 import ParentInput from 'morning-react-ui/components/inputs/ParentInput';
 import {

@@ -1,7 +1,7 @@
 import { RefObject } from 'react';
 
 type UseInputProps = {
-  inputRef: RefObject<HTMLInputElement>;
+  inputRef: RefObject<HTMLInputElement | null>;
 };
 
 const useInput = ({ inputRef }: UseInputProps) => {

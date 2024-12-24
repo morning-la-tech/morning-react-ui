@@ -108,9 +108,8 @@ export default function Selects() {
     disabled?: boolean;
     isError?: boolean;
     onChange: (value: SelectionState) => void;
-    rowToDisplay?: number | null | undefined;
+    rowToDisplay?: number | null;
   }) => {
-    // eslint-disable-next-line react/prop-types
     const sentProps = { ...props, rowToDisplay: props?.rowToDisplay || 1 };
     return (
       <>

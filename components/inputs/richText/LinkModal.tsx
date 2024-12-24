@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useEffect, useRef, FormEvent } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
 import { Editor } from '@tiptap/react';
 import { ButtonVariant } from 'morning-react-ui/components/buttons';
 import TextInput from 'morning-react-ui/components/inputs/textField/TextInput';

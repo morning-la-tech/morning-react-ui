@@ -1,11 +1,10 @@
-import { Dispatch, JSX } from 'react';
+import { Dispatch, useMemo } from 'react';
 import classNames from 'classnames';
 import { PaginationItem } from 'morning-react-ui/components/pagination';
 import usePagination from 'morning-react-ui/components/pagination/hooks/usePagination';
 import type { Pagination } from 'morning-react-ui/components/pagination/types';
 import { Size } from 'morning-react-ui/utils/Enum';
 import styles from './pagination.module.css';
-import Element = JSX.Element;
 
 type Props = {
   pagination: Pagination;
@@ -31,19 +30,20 @@ const PaginationComponent = ({
     displayLastItem,
   } = usePagination({ pagination });
 
-  const pages: Element[] = [];
-
-  for (let page = start; page <= end; page++) {
-    pages.push(
-      <PaginationItem
-        key={page}
-        page={page}
-        size={size}
-        setCurrentPage={setCurrentPage}
-        isSelected={page === pagination.currentPage}
-      />,
-    );
-  }
+  const pages = useMemo(() => {
+    return Array.from({ length: end - start + 1 }, (_, i) => {
+      const page = start + i;
+      return (
+        <PaginationItem
+          key={page}
+          page={page}
+          size={size}
+          setCurrentPage={setCurrentPage}
+          isSelected={page === pagination.currentPage}
+        />
+      );
+    });
+  }, [start, end, pagination.currentPage, setCurrentPage, size]);
 
   return (
     <div
@@ -59,27 +59,28 @@ const PaginationComponent = ({
       />
       {displayPreviousDots && (
         <PaginationItem
-          key={pagination.currentPage - 2}
+          key={`previous-dots-${start}`}
           page={getPrevious()}
           size={size}
           setCurrentPage={setCurrentPage}
-          isPrevious={true}
+          isPrevious
           isSelected={false}
         />
       )}
-      {pages.map((pageSelector) => pageSelector)}
+      {pages}
       {displayNextDots && (
         <PaginationItem
-          key={pagination.currentPage + 2}
+          key={`next-dots-${end}`}
           page={getNext()}
           size={size}
           setCurrentPage={setCurrentPage}
-          isNext={true}
+          isNext
           isSelected={false}
         />
       )}
       {displayLastItem && (
         <PaginationItem
+          key={`last-page`}
           page={totalPages}
           size={size}
           setCurrentPage={setCurrentPage}

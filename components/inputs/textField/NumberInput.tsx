@@ -1,7 +1,8 @@
-import React, {
+import {
   ChangeEvent,
   Dispatch,
   forwardRef,
+  KeyboardEvent,
   useEffect,
   useImperativeHandle,
   useRef,
@@ -70,7 +71,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       onChange(inputValue);
     };
 
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
       const blockedKeys = ['e', 'E', '+', '-'];
       if (blockedKeys.includes(event.key)) {
         event.preventDefault();
@@ -80,7 +81,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         event.preventDefault();
         const testedValue = getValidValue(inputValue);
         let newValue = isNaN(testedValue) ? 0 : testedValue;
-        event.key === 'ArrowUp' ? newValue++ : newValue--;
+        newValue = event.key === 'ArrowUp' ? newValue++ : newValue--;
         setInputValue(newValue);
       }
     };
