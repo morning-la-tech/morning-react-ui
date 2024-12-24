@@ -4,9 +4,7 @@
     --titling-font: 'Titling Gothic FB Nrm Bd', sans-serif;
     --titling-extended-font: 'Titling gothic extended', sans-serif;
     --titling-comp-font: 'Titling Gothic FB Comp', sans-serif;
-
-    --geomanist-font: 'Geomanist';
-
+    --geomanist-font: geomanist;
     --white: #fff;
     --black: #000;
 
@@ -102,7 +100,7 @@ select {
 }
 
 @font-face {
-    font-family: 'Geomanist';
+    font-family: geomanist;
     src: url('#{$cdn-url}fonts/Geomanist-Regular.otf') format('opentype');
     font-weight: 400;
     font-style: normal;
@@ -110,7 +108,7 @@ select {
 }
 
 @font-face {
-    font-family: 'Geomanist';
+    font-family: geomanist;
     src: url('#{$cdn-url}fonts/Geomanist-Medium.otf') format('opentype');
     font-weight: 500;
     font-style: normal;
@@ -118,7 +116,7 @@ select {
 }
 
 @font-face {
-    font-family: 'Geomanist';
+    font-family: geomanist;
     src: url('#{$cdn-url}fonts/Geomanist-Bold.otf') format('opentype');
     font-weight: 700;
     font-style: normal;
@@ -126,7 +124,7 @@ select {
 }
 
 @font-face {
-    font-family: 'Geomanist';
+    font-family: geomanist;
     src: url('#{$cdn-url}fonts/Geomanist-Black.otf') format('opentype');
     font-weight: 800;
     font-style: normal;
@@ -134,7 +132,7 @@ select {
 }
 
 @font-face {
-    font-family: 'Geomanist';
+    font-family: geomanist;
     src: url('#{$cdn-url}fonts/Geomanist-Ultra.otf') format('opentype');
     font-weight: 900;
     font-style: normal;
@@ -320,7 +318,7 @@ canvas {
 }
 
 .hideOnMobile {
-    @media (max-width: 768px) {
+    @media (width <= 768px) {
         display: none !important;
     }
 }

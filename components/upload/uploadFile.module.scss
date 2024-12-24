@@ -1,46 +1,46 @@
 .upload {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
 }
 
 .wrapper {
-  background-color: var(--cloud);
-  padding: 8px;
+    background-color: var(--cloud);
+    padding: 8px;
 }
 
 .uploadArea {
-  background-color: var(--silver);
-  width: 100%;
-  height: 100%;
-  border-radius: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-
-  .imageIcon {
-    background-color: var(--iron);
-    mask-size: 33px 29px;
-    mask-image: url('#{$cdn-url}icons/image.svg');
-    background-position: center;
-    background-repeat: no-repeat;
-    width: 33px;
-    height: 29px;
-  }
-
-  .selectedImage {
+    background-color: var(--silver);
+    width: 100%;
+    height: 100%;
     border-radius: 5px;
-    object-fit: cover;
-  }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
 
-  &.pending .selectedImage {
-    opacity: 0.5;
-  }
+    .imageIcon {
+        background-color: var(--iron);
+        mask-size: 33px 29px;
+        mask-image: url('#{$cdn-url}icons/image.svg');
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 33px;
+        height: 29px;
+    }
+
+    .selectedImage {
+        border-radius: 5px;
+        object-fit: cover;
+    }
+
+    &.pending .selectedImage {
+        opacity: 0.5;
+    }
 }
 
 .uploadIcon {
-  position: static !important;
-  padding: 4px;
+    position: static !important;
+    padding: 4px;
 }

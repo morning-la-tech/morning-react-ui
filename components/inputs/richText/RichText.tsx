@@ -1,16 +1,16 @@
 import {
   ChangeEvent,
   forwardRef,
+  useEffect,
   useImperativeHandle,
   useRef,
-  useEffect,
 } from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
 import { HardBreak } from '@tiptap/extension-hard-break';
 import { Placeholder } from '@tiptap/extension-placeholder';
 import { Underline } from '@tiptap/extension-underline';
-import { useEditor, EditorContent } from '@tiptap/react';
+import { EditorContent, useEditor } from '@tiptap/react';
 import { StarterKit } from '@tiptap/starter-kit';
 import inputStyle from 'morning-react-ui/components/inputs/input.module.css';
 import { useModal } from 'morning-react-ui/components/modals';

@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 const useModal = (onClose?: () => void, closeOnEscape: boolean = true) => {
   const [isModalShowing, setIsModalShowing] = useState<boolean>(false);
