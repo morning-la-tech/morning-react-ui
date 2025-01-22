@@ -35,3 +35,15 @@ export function sizeToHeight(size: Size) {
       return 18;
   }
 }
+
+export const enum Color {
+  blue = 'blue',
+  pink = 'pink',
+  yellow = 'yellow',
+  green = 'green',
+  gray = 'gray',
+  orange = 'orange',
+  red = 'red',
+  teal = 'teal',
+  purple = 'purple',
+}
