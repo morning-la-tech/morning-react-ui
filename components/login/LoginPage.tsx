@@ -8,14 +8,20 @@ type Props = {
   onClick: () => void;
   title: string;
   body: string;
+  imageBackgroundSrc?: string;
 };
 
-const LoginPage = ({ onClick, title, body }: Props) => (
+const LoginPage = ({
+  onClick,
+  title,
+  body,
+  imageBackgroundSrc = `${process.env.NEXT_PUBLIC_MORNING_CDN_URL}images/login_background.jpeg`,
+}: Props) => (
   <div className={styles.loginContainer}>
     <div className={styles.banner}>
       <div className={styles.backgroundImageContainer}>
         <Image
-          src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}images/login_background.jpeg`}
+          src={`${imageBackgroundSrc}`}
           alt='Fond de connexion'
           fill
           priority
