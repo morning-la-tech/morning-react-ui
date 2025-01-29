@@ -73,6 +73,18 @@ export default function Home() {
       >
         Modal
       </Button>
+      <Button
+        variant={ButtonVariant.Secondary}
+        onClick={() => router.push('/table')}
+      >
+        Table
+      </Button>
+      <Button
+        variant={ButtonVariant.Secondary}
+        onClick={() => router.push('/tag')}
+      >
+        Tag
+      </Button>
     </Container>
   );
 }
