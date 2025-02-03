@@ -8,6 +8,7 @@ type Props = {
   onClick: () => void;
   title: string;
   body: string;
+  googleLoginButtonLabel?: string;
   imageBackgroundSrc?: string;
 };
 
@@ -15,6 +16,7 @@ const LoginPage = ({
   onClick,
   title,
   body,
+  googleLoginButtonLabel,
   imageBackgroundSrc = `${process.env.NEXT_PUBLIC_MORNING_CDN_URL}images/login_background.jpeg`,
 }: Props) => (
   <div className={styles.loginContainer}>
@@ -45,7 +47,7 @@ const LoginPage = ({
         <div className={classNames(styles.body, space_grotesk.variable)}>
           {body}
         </div>
-        <GoogleLoginButton onClick={onClick} />
+        <GoogleLoginButton label={googleLoginButtonLabel} onClick={onClick} />
       </div>
     </div>
   </div>

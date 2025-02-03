@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { auth } from './app/auth';
 
-export default auth((req: NextRequest) => {
+export default auth((req) => {
   const isDev = process.env.NODE_ENV === 'development';
   const { pathname } = req.nextUrl;
 
