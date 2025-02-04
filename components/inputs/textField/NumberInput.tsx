@@ -25,7 +25,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     {
       label,
       sublabel,
-      isLabelBold,
+      bold,
       size = Size.m,
       value,
       onChange,
@@ -96,7 +96,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       <ParentInput
         label={label}
         sublabel={sublabel}
-        isLabelBold={isLabelBold}
+        bold={bold}
         size={size}
         inputRef={inputRef}
         disabled={disabled}

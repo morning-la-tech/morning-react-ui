@@ -46,7 +46,7 @@ const MultiCheckbox = ({
   inline = false,
   label,
   sublabel,
-  isLabelBold,
+  bold,
   styleCheckbox: styleCheckboxProps,
   styleMultiCheckbox,
   hoveredIndex,
@@ -140,7 +140,7 @@ const MultiCheckbox = ({
       label={label}
       sublabel={sublabel}
       size={size}
-      isLabelBold={isLabelBold}
+      bold={bold}
       disabled={disabled}
     >
       <div
