@@ -21,7 +21,7 @@ const MultiRadio = ({
   size = Size.m,
   label,
   sublabel,
-  isLabelBold,
+  bold,
   disabled = false,
   inline = true,
   isError = false,
@@ -55,7 +55,7 @@ const MultiRadio = ({
       label={label}
       sublabel={sublabel}
       size={size}
-      isLabelBold={isLabelBold}
+      bold={bold}
       disabled={disabled}
     >
       <div

@@ -26,7 +26,7 @@ export default function Page() {
   const renderTimeInputs = (props: {
     label?: string;
     sublabel?: string;
-    isLabelBold?: boolean;
+    bold?: boolean;
     size?: Size;
     value?: OptionalDate;
     disabled?: boolean;
@@ -48,7 +48,7 @@ export default function Page() {
   const renderDateInputs = (props: {
     label?: string;
     sublabel?: string;
-    isLabelBold?: boolean;
+    bold?: boolean;
     size?: Size;
     value?: Date | null;
     disabled?: boolean;

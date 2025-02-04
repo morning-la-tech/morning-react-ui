@@ -83,7 +83,7 @@ The `MultiCheckbox` component allows rendering multiple checkboxes with a shared
 | `size`               | `Size` (optional)                      | Adjusts the size of all child checkboxes. Default is `Size.m`.         |
 | `inline`             | `boolean` (optional)                   | If `true`, displays the checkboxes in a row. Default is `false`.       |
 | `label`, `sublabel`  | `string`                               | Group label and sublabel for the set of checkboxes.                    |
-| `isLabelBold`        | `boolean` (optional)                   | If `true`, renders the label in bold.                                  |
+| `bold`               | `boolean` (optional)                   | If `true`, renders the label in bold.                                  |
 | `styleCheckbox`      | `CSSProperties` (optional)             | Custom styles applied to each child checkbox.                          |
 | `styleMultiCheckbox` | `CSSProperties` (optional)             | Custom styles for the multi-checkbox container.                        |
 | `hoveredIndex`       | `number` (optional)                    | Index of the currently hovered checkbox.                               |

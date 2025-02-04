@@ -4,7 +4,7 @@ export type BasicInputProps = {
   label?: string;
   sublabel?: string;
   size?: Size;
-  isLabelBold?: boolean;
+  bold?: boolean;
   disabled?: boolean;
 };
 

@@ -16,7 +16,7 @@ const ParentInput = forwardRef<HTMLDivElement, ParentInputProps>(
   (
     {
       label,
-      isLabelBold,
+      bold,
       sublabel,
       size = Size.m,
       children,
@@ -54,9 +54,10 @@ const ParentInput = forwardRef<HTMLDivElement, ParentInputProps>(
           <div className={styles.labelsContainer}>
             {label && (
               <label
-                className={classNames(styles.label, {
-                  ['bold']: isLabelBold,
-                })}
+                className={classNames(
+                  styles.label,
+                  bold ? styles.bold : undefined,
+                )}
                 onClick={focusInput}
               >
                 {label}

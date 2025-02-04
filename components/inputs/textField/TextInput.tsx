@@ -38,7 +38,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputHtmlProps>(
     {
       label,
       sublabel,
-      isLabelBold,
+      bold,
       size = Size.m,
       value,
       onChange,
@@ -98,7 +98,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputHtmlProps>(
       <ParentInput
         label={label}
         sublabel={sublabel}
-        isLabelBold={isLabelBold}
+        bold={bold}
         size={size}
         inputRef={inputRef}
         disabled={disabled}
