@@ -17,7 +17,7 @@ type MultiSelectProps = SelectsProps & {
 const MultiSelect = ({
   label,
   sublabel,
-  isLabelBold,
+  bold,
   size = Size.m,
   disabled = false,
   options,
@@ -62,7 +62,7 @@ const MultiSelect = ({
         placeholder={placeholder}
         label={label}
         sublabel={sublabel}
-        isLabelBold={isLabelBold}
+        bold={bold}
         size={size}
         value={inputValue}
         onChange={handleTextChange}

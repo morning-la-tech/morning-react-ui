@@ -37,7 +37,7 @@ const DateInput = forwardRef<HTMLInputElement, DateInputProps>(
     {
       label,
       sublabel,
-      isLabelBold,
+      bold,
       size = Size.m,
       value,
       disabled,
@@ -234,7 +234,7 @@ const DateInput = forwardRef<HTMLInputElement, DateInputProps>(
       <ParentInput
         label={label}
         sublabel={sublabel}
-        isLabelBold={isLabelBold}
+        bold={bold}
         size={size}
         inputRef={inputRef}
       >
