@@ -16,7 +16,7 @@ type SelectInputProps = SelectsProps & {
 const SelectInput = ({
   label,
   sublabel,
-  isLabelBold,
+  bold,
   size = Size.m,
   options,
   placeholder,
@@ -57,7 +57,7 @@ const SelectInput = ({
         value={inputValue}
         label={label}
         sublabel={sublabel}
-        isLabelBold={isLabelBold}
+        bold={bold}
         onChange={handleTextChange}
         onFocus={handleFocus}
         onBlur={handleBlur}

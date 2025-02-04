@@ -33,7 +33,7 @@ export default function Page() {
 
   const renderTextInputs = (props: {
     label?: string;
-    isLabelBold?: boolean;
+    bold?: boolean;
     sublabel?: string;
     size?: Size;
     value: string;
@@ -57,7 +57,7 @@ export default function Page() {
 
   const renderNumberInputs = (props: {
     label?: string;
-    isLabelBold?: boolean;
+    bold?: boolean;
     sublabel?: string;
     size?: Size;
     value: number | null | undefined;
@@ -95,7 +95,6 @@ export default function Page() {
               })}
               {renderTextInputs({
                 label: 'Label',
-                isLabelBold: true,
                 placeholder: 'With bold label',
                 value: textValue,
                 onChange: handleTextChange,

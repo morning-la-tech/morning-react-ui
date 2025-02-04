@@ -37,7 +37,7 @@ const RichText = forwardRef<HTMLInputElement, RichTextProps>(
       label,
       sublabel,
       size,
-      isLabelBold,
+      bold,
       disabled,
       placeholder,
       className,
@@ -110,7 +110,7 @@ const RichText = forwardRef<HTMLInputElement, RichTextProps>(
       <ParentInput
         label={label}
         sublabel={sublabel}
-        isLabelBold={isLabelBold}
+        bold={bold}
         size={size}
         inputRef={editorContentRef}
         disabled={disabled}

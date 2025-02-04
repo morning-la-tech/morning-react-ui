@@ -79,7 +79,7 @@ export default function Selects() {
   const renderSelectInputs = (props: {
     label?: string;
     sublabel?: string;
-    isLabelBold?: boolean;
+    bold?: boolean;
     size?: Size;
     options: SelectOption[];
     placeholder?: string;
@@ -101,7 +101,7 @@ export default function Selects() {
   const renderMultiSelectInputs = (props: {
     label?: string;
     sublabel?: string;
-    isLabelBold?: boolean;
+    bold?: boolean;
     size?: Size;
     options: SelectionState;
     placeholder?: string;
