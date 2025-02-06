@@ -147,6 +147,7 @@ const UploadFile = ({
                 alt={'file upload'}
                 width={20}
                 height={20}
+                className={styles.uploadImage}
               />
             }
           >
