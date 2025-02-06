@@ -34,6 +34,7 @@ export default function Page() {
     min?: string;
     max?: string;
     onChange: (event: OptionalDate) => void;
+    placeholder?: string;
   }) => {
     return (
       <>
@@ -124,6 +125,7 @@ export default function Page() {
                 label: 'Normal',
                 value: timeValue,
                 onChange: handleTimeChange,
+                placeholder: 'HH:mm',
               })}
               {renderTimeInputs({
                 label: 'Error',

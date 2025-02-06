@@ -43,12 +43,12 @@ const removeLastElement = (
   selectionStateToRemove: SelectionState,
 ): SelectionState => {
   const keys = Object.keys(selectionStateToRemove);
+  if (keys.length === 0) return selectionStateToRemove;
+
   const lastKey = keys[keys.length - 1];
-  if (lastKey) {
-    const { [lastKey]: _, ...remainingSelectionState } = selectionStateToRemove;
-    return remainingSelectionState;
-  }
-  return selectionStateToRemove;
+  const { [lastKey]: _, ...remainingSelectionState } = selectionStateToRemove;
+
+  return remainingSelectionState;
 };
 
 const toggleSelectionStateAtIndex = (

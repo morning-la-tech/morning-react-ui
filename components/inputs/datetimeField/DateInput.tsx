@@ -45,6 +45,7 @@ const DateInput = forwardRef<HTMLInputElement, DateInputProps>(
       from,
       to,
       onChange,
+      placeholder = 'JJ/MM/AAAA',
     },
     ref,
   ) => {
@@ -253,7 +254,7 @@ const DateInput = forwardRef<HTMLInputElement, DateInputProps>(
           <input
             className={classNames(styles.input, `font-size-${size}`)}
             ref={inputRef}
-            placeholder={'JJ/MM/AAAA'}
+            placeholder={placeholder}
             disabled={disabled}
             type='text'
             value={inputValue ?? ''}
