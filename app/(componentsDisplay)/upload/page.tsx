@@ -69,6 +69,7 @@ const UploadPage = () => {
               fileUrl={thirdFile && `/resize/500/300/${thirdFile}`}
               fileType={'image/*'}
               className={styles.surrounded}
+              noBackground
             ></UploadFile>
           </Column>
         </Columns>
