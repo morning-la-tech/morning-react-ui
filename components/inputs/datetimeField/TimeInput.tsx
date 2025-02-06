@@ -1,4 +1,4 @@
-import React, {
+import {
   ChangeEvent,
   Dispatch,
   forwardRef,
@@ -39,6 +39,7 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     {
       label,
       sublabel,
+      placeholder = 'HH:mm',
       bold,
       size = Size.m,
       value,
@@ -179,7 +180,7 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
           <input
             className={classNames(styles.input, `font-size-${size}`)}
             ref={inputRef}
-            placeholder={'HH:MM'}
+            placeholder={placeholder}
             disabled={disabled}
             type='text'
             value={inputValue ?? ''}
