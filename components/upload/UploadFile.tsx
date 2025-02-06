@@ -46,7 +46,8 @@ const UploadFile = ({
   errorMessage = 'Upload Error',
   maxFileSize = 10,
   maxSizeErrorMessage = 'Uploaded file is too large',
-}: UploadFileProps) => {
+  noBackground = false,
+}: UploadFileProps & { noBackground?: boolean }) => {
   const { addToast } = useToast();
   const [hasError, setHasError] = useState<boolean>(isError);
   const [file, setFile] = useState<string>(fileUrl);
@@ -107,7 +108,7 @@ const UploadFile = ({
 
   return (
     <ParentInput label={label} sublabel={sublabel}>
-      <div className={styles.wrapper}>
+      <div className={classNames({ [styles.wrapper]: !noBackground })}>
         <div className={classNames([styles.upload, className])}>
           <input
             type='file'
@@ -142,11 +143,10 @@ const UploadFile = ({
             variant={ButtonVariant.Secondary}
             startImage={
               <Image
-                src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/file-upload.svg`}
+                src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/${file ? 'pen-to-square' : 'file-upload'}.svg`}
                 alt={'file upload'}
-                className={styles.uploadIcon}
-                fill
-                sizes={'true'}
+                width={20}
+                height={20}
               />
             }
           >
