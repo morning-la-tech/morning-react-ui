@@ -8,6 +8,7 @@
 .wrapper {
     background-color: var(--cloud);
     padding: 8px;
+    border-radius: 6px;
 }
 
 .uploadArea {
@@ -38,9 +39,4 @@
     &.pending .selectedImage {
         opacity: 0.5;
     }
-}
-
-.uploadIcon {
-    position: static !important;
-    padding: 4px;
 }
