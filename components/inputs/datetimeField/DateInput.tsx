@@ -17,7 +17,7 @@ import {
   roundUpYear,
   stringToDate,
 } from 'morning-react-ui/utils/datetimeUtils';
-import { Size, sizeToHeight } from 'morning-react-ui/utils/Enum';
+import { Size } from 'morning-react-ui/utils/Enum';
 import { newCharInString } from 'morning-react-ui/utils/stringUtils';
 import styles from '../input.module.css';
 import { BasicInputProps, InputProps } from '../propsTypes';
@@ -242,13 +242,13 @@ const DateInput = forwardRef<HTMLInputElement, DateInputProps>(
         <div
           className={classNames(
             styles.wrapper,
+            styles.flex,
             `padding-${size}`,
             { ['cursorText']: !disabled },
             {
               [styles.error]: isError || error,
             },
           )}
-          style={{ height: `${sizeToHeight(size)}px` }}
           onClick={handleWrapperClick}
         >
           <input
