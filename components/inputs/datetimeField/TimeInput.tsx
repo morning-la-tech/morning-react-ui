@@ -21,7 +21,7 @@ import {
   isTimeWithinEdges,
   stringToTime,
 } from 'morning-react-ui/utils/datetimeUtils';
-import { Size, sizeToHeight } from 'morning-react-ui/utils/Enum';
+import { Size } from 'morning-react-ui/utils/Enum';
 import styles from '../input.module.css';
 import { BasicInputProps, InputProps } from '../propsTypes';
 import useInput from '../textField/useInput';
@@ -168,13 +168,13 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
         <div
           className={classNames(
             styles.wrapper,
+            styles.flex,
             `padding-${size}`,
             { ['cursorText']: !disabled },
             {
               [styles.error]: isError || error,
             },
           )}
-          style={{ height: `${sizeToHeight(size)}px` }}
           onClick={handleWrapperClick}
         >
           <input
