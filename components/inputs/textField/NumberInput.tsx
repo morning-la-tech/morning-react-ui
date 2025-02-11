@@ -3,10 +3,8 @@ import {
   Dispatch,
   forwardRef,
   KeyboardEvent,
-  useEffect,
   useImperativeHandle,
   useRef,
-  useState,
 } from 'react';
 import classNames from 'classnames';
 import ParentInput from 'morning-react-ui/components/inputs/ParentInput';
@@ -17,7 +15,9 @@ import useInput from './useInput';
 
 type NumberInputProps = InputProps & {
   value?: number | null;
-  onChange: Dispatch<number | null | undefined>;
+  onChange: Dispatch<number | null>;
+  allowFloat?: boolean;
+  step?: number;
 };
 
 const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
@@ -32,63 +32,52 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       isError,
       disabled,
       placeholder,
+      allowFloat = false,
+      step = allowFloat ? 0.1 : 1,
     },
     ref,
   ) => {
     const inputRef = useRef<HTMLInputElement>(null);
-    const [inputValue, setInputValue] = useState<number | undefined | null>(
-      value,
-    );
     useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
 
-    const getValidValue = (val: number | undefined | null): number => {
-      if (val === undefined || val === null) {
-        return NaN;
-      }
-      return isNaN(val) ? NaN : val;
-    };
-
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-      const newValue = event.target.value;
-      if (newValue === '' && event.target.validity.valid) {
-        onChange(undefined);
-        setInputValue(undefined);
-        return;
-      }
+      const newValue = event.target.value.trim();
+
       if (newValue === '') {
-        onChange(NaN);
-        setInputValue(undefined);
+        onChange(null);
         return;
       }
-      const parsedValue = parseInt(newValue, 10);
+
+      const parsedValue = allowFloat
+        ? parseFloat(newValue)
+        : parseInt(newValue, 10);
+
       if (!isNaN(parsedValue)) {
-        setInputValue(parsedValue);
         onChange(parsedValue);
+      } else {
+        onChange(null);
       }
     };
 
     const handleBlur = () => {
-      onChange(inputValue);
+      onChange(value ?? null);
     };
 
     const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-      const blockedKeys = ['e', 'E', '+', '-'];
+      const blockedKeys = ['e', 'E'];
+      if (!allowFloat) blockedKeys.push('.');
       if (blockedKeys.includes(event.key)) {
         event.preventDefault();
         return;
       }
+
       if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
         event.preventDefault();
-        const testedValue = getValidValue(inputValue);
-        let newValue = isNaN(testedValue) ? 0 : testedValue;
-        newValue = event.key === 'ArrowUp' ? newValue++ : newValue--;
-        setInputValue(newValue);
+        const newValue =
+          (value ?? 0) + (event.key === 'ArrowUp' ? step : -step);
+        onChange(parseFloat(newValue.toFixed(10)));
       }
     };
-
-    useEffect(() => {
-      setInputValue(value);
-    }, [value]);
 
     const { handleWrapperClick } = useInput({ inputRef });
 
@@ -114,6 +103,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         >
           <input
             type='number'
+            step={step}
             className={classNames(
               styles.input,
               `font-size-${size}`,
@@ -123,7 +113,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
             onChange={handleChange}
             onKeyDown={handleKeyDown}
             onBlur={handleBlur}
-            value={isNaN(getValidValue(inputValue)) ? '' : (inputValue ?? '')}
+            value={value ?? ''}
             disabled={disabled}
             placeholder={placeholder}
           />
