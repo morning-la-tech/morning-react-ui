@@ -7,6 +7,7 @@ import {
   useRef,
 } from 'react';
 import classNames from 'classnames';
+import useIsMobile from 'morning-react-ui/components/hooks/useIsMobile';
 import ParentInput from 'morning-react-ui/components/inputs/ParentInput';
 import { InputProps } from 'morning-react-ui/components/inputs/propsTypes';
 import { Size } from 'morning-react-ui/utils/Enum';
@@ -26,7 +27,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       label,
       sublabel,
       bold,
-      size = Size.m,
+      size,
       value,
       onChange,
       isError,
@@ -38,6 +39,8 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     ref,
   ) => {
     const inputRef = useRef<HTMLInputElement>(null);
+    const isMobile = useIsMobile();
+    const finalSize = size ?? (isMobile ? Size.l : Size.m);
     useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -86,14 +89,14 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         label={label}
         sublabel={sublabel}
         bold={bold}
-        size={size}
+        size={finalSize}
         inputRef={inputRef}
         disabled={disabled}
       >
         <div
           className={classNames(
             styles.wrapper,
-            `padding-${size}`,
+            `padding-${finalSize}`,
             { ['cursorText']: !disabled },
             {
               [styles.error]: isError,
@@ -106,8 +109,8 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
             step={step}
             className={classNames(
               styles.input,
-              `font-size-${size}`,
-              `height-${size}`,
+              `font-size-${finalSize}`,
+              `height-${finalSize}`,
             )}
             ref={inputRef}
             onChange={handleChange}

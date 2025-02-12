@@ -11,6 +11,7 @@ import {
 } from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
+import useIsMobile from 'morning-react-ui/components/hooks/useIsMobile';
 import ParentInput from 'morning-react-ui/components/inputs/ParentInput';
 import { InputProps } from 'morning-react-ui/components/inputs/propsTypes';
 import { Size, sizeToNumber } from 'morning-react-ui/utils/Enum';
@@ -39,7 +40,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputHtmlProps>(
       label,
       sublabel,
       bold,
-      size = Size.m,
+      size,
       value,
       onChange,
       onCursorPositionChange,
@@ -60,6 +61,8 @@ const TextInput = forwardRef<HTMLInputElement, TextInputHtmlProps>(
     ref,
   ) => {
     const inputRef = useRef<HTMLInputElement>(null);
+    const isMobile = useIsMobile();
+    const finalSize = size ?? (isMobile ? Size.l : Size.m);
     const [lastCursorPosition, setLastCursorPosition] = useState<number | null>(
       null,
     );
@@ -99,7 +102,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputHtmlProps>(
         label={label}
         sublabel={sublabel}
         bold={bold}
-        size={size}
+        size={finalSize}
         inputRef={inputRef}
         disabled={disabled}
       >
@@ -107,7 +110,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputHtmlProps>(
           className={classNames(
             styles.wrapper,
             styles.flex,
-            `padding-${size}`,
+            `padding-${finalSize}`,
             { ['cursorText']: !disabled },
             {
               [styles.error]: isError,
@@ -119,8 +122,8 @@ const TextInput = forwardRef<HTMLInputElement, TextInputHtmlProps>(
             <Image
               src={imageSrc}
               alt={imageAlt || 'input icon'}
-              width={sizeToNumber(size)}
-              height={sizeToNumber(size)}
+              width={sizeToNumber(finalSize)}
+              height={sizeToNumber(finalSize)}
             />
           )}
           <input
@@ -128,8 +131,8 @@ const TextInput = forwardRef<HTMLInputElement, TextInputHtmlProps>(
             {...props}
             className={classNames(
               styles.input,
-              `font-size-${size}`,
-              `height-${size}`,
+              `font-size-${finalSize}`,
+              `height-${finalSize}`,
               className,
             )}
             ref={inputRef}
@@ -144,8 +147,8 @@ const TextInput = forwardRef<HTMLInputElement, TextInputHtmlProps>(
               src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/clear-button.svg`}
               alt='Clear'
               onClick={onClear}
-              width={sizeToNumber(size)}
-              height={sizeToNumber(size)}
+              width={sizeToNumber(finalSize)}
+              height={sizeToNumber(finalSize)}
               className='cursorPointer'
             />
           )}
@@ -153,8 +156,8 @@ const TextInput = forwardRef<HTMLInputElement, TextInputHtmlProps>(
             <Image
               src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/arrow.svg`}
               alt='Dropdown'
-              width={sizeToNumber(size)}
-              height={sizeToNumber(size)}
+              width={sizeToNumber(finalSize)}
+              height={sizeToNumber(finalSize)}
               className={classNames(styles.dropdownIcon, {
                 [styles.dropdownIconActive]: isDropdownActive,
               })}
