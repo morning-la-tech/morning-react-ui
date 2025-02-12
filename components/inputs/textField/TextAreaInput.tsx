@@ -6,6 +6,7 @@ import {
   useRef,
 } from 'react';
 import classNames from 'classnames';
+import useIsMobile from 'morning-react-ui/components/hooks/useIsMobile';
 import { Size } from 'morning-react-ui/utils/Enum';
 import styles from '../input.module.css';
 import ParentInput from '../ParentInput';
@@ -39,6 +40,8 @@ const TextAreaInput = forwardRef<HTMLTextAreaElement, TextAreaInputProps>(
     },
     ref,
   ) => {
+    const isMobile = useIsMobile();
+    const finalSize = size ?? (isMobile ? Size.l : Size.m);
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
     useImperativeHandle(ref, () => textAreaRef.current as HTMLTextAreaElement);
@@ -54,7 +57,7 @@ const TextAreaInput = forwardRef<HTMLTextAreaElement, TextAreaInputProps>(
       <ParentInput
         label={label}
         sublabel={sublabel}
-        size={size}
+        size={finalSize}
         disabled={disabled}
         inputRef={textAreaRef}
         style={{ height: '100%' }}
@@ -65,8 +68,8 @@ const TextAreaInput = forwardRef<HTMLTextAreaElement, TextAreaInputProps>(
             styles.wrapper,
             styles.wrapperTextArea,
             styles.flex,
+            `font-size-${finalSize}`,
             { [styles.error]: isError },
-            { [`font-size-${size}`]: size },
             { ['disabled']: disabled },
             className,
           )}
@@ -79,7 +82,7 @@ const TextAreaInput = forwardRef<HTMLTextAreaElement, TextAreaInputProps>(
             className={classNames(
               styles.textArea,
               { [styles.error]: isError },
-              `font-size-${size}`,
+              `font-size-${finalSize}`,
             )}
             disabled={disabled}
             maxLength={maxLength}
