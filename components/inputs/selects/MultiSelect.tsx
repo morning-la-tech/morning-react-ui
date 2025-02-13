@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import useIsMobile from 'morning-react-ui/components/hooks/useIsMobile';
 import TextInput from 'morning-react-ui/components/inputs/textField/TextInput';
 import MultiCheckbox from 'morning-react-ui/components/inputs/toggleInputs/MultiCheckbox';
 import { SelectionState } from 'morning-react-ui/types/dataTypes';
@@ -18,7 +19,7 @@ const MultiSelect = ({
   label,
   sublabel,
   bold,
-  size = Size.m,
+  size,
   disabled = false,
   options,
   onChange,
@@ -27,6 +28,8 @@ const MultiSelect = ({
   rowToDisplay = 8,
   emptyStateText = 'Aucun résultat dans la liste',
 }: MultiSelectProps) => {
+  const isMobile = useIsMobile();
+  const finalSize = size ?? (isMobile ? Size.l : Size.m);
   const {
     keyboardNavigation,
     wrapperRef,
@@ -47,7 +50,7 @@ const MultiSelect = ({
     maxHeight,
     handleFocus,
     handleBlur,
-  } = useMultiSelect({ options, onChange, size, rowToDisplay });
+  } = useMultiSelect({ options, onChange, size: finalSize, rowToDisplay });
 
   return (
     <div ref={wrapperRef} className={styles.wrapper}>
@@ -63,7 +66,7 @@ const MultiSelect = ({
         label={label}
         sublabel={sublabel}
         bold={bold}
-        size={size}
+        size={finalSize}
         value={inputValue}
         onChange={handleTextChange}
         onFocus={() => handleFocus()}
@@ -94,7 +97,7 @@ const MultiSelect = ({
           {Object.keys(filteredOptions).length > 0 ? (
             <MultiCheckbox
               options={filteredOptions}
-              size={size}
+              size={finalSize}
               onChange={(optionsToChange) => {
                 onChange({ ...options, ...optionsToChange });
               }}
@@ -109,8 +112,8 @@ const MultiSelect = ({
             <span
               className={classNames(
                 styles.option,
-                `font-size-${size}`,
-                `padding-${size}`,
+                `font-size-${finalSize}`,
+                `padding-${finalSize}`,
                 styles.emptyState,
               )}
             >

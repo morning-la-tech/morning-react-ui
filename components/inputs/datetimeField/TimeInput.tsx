@@ -15,6 +15,7 @@ import {
   setMinutes,
   setSeconds,
 } from 'date-fns';
+import useIsMobile from 'morning-react-ui/components/hooks/useIsMobile';
 import ParentInput from 'morning-react-ui/components/inputs/ParentInput';
 import {
   isStringValidAsTime,
@@ -41,7 +42,7 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       sublabel,
       placeholder = 'HH:mm',
       bold,
-      size = Size.m,
+      size,
       value,
       disabled,
       isError,
@@ -51,6 +52,8 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     },
     ref,
   ) => {
+    const isMobile = useIsMobile();
+    const finalSize = size ?? (isMobile ? Size.l : Size.m);
     const [inputValue, setInputValue] = useState<string | null>(
       value ? format(value, 'HH:mm') : null,
     );
@@ -161,7 +164,7 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
         label={label}
         sublabel={sublabel}
         bold={bold}
-        size={size}
+        size={finalSize}
         inputRef={inputRef}
         disabled={disabled}
       >
@@ -169,7 +172,7 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
           className={classNames(
             styles.wrapper,
             styles.flex,
-            `padding-${size}`,
+            `padding-${finalSize}`,
             { ['cursorText']: !disabled },
             {
               [styles.error]: isError || error,
@@ -178,7 +181,7 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
           onClick={handleWrapperClick}
         >
           <input
-            className={classNames(styles.input, `font-size-${size}`)}
+            className={classNames(styles.input, `font-size-${finalSize}`)}
             ref={inputRef}
             placeholder={placeholder}
             disabled={disabled}
