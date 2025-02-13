@@ -9,6 +9,7 @@ import {
 import classNames from 'classnames';
 import { setMilliseconds, setSeconds } from 'date-fns';
 import { format } from 'date-fns/format';
+import useIsMobile from 'morning-react-ui/components/hooks/useIsMobile';
 import ParentInput from 'morning-react-ui/components/inputs/ParentInput';
 import { OptionalDate } from 'morning-react-ui/types';
 import {
@@ -49,6 +50,8 @@ const DateInput = forwardRef<HTMLInputElement, DateInputProps>(
     },
     ref,
   ) => {
+    const isMobile = useIsMobile();
+    const finalSize = size ?? (isMobile ? Size.l : Size.m);
     const [inputValue, setInputValue] = useState<string | null>(
       value ? format(value, 'dd/MM/yyyy') : null,
     );
@@ -236,14 +239,14 @@ const DateInput = forwardRef<HTMLInputElement, DateInputProps>(
         label={label}
         sublabel={sublabel}
         bold={bold}
-        size={size}
+        size={finalSize}
         inputRef={inputRef}
       >
         <div
           className={classNames(
             styles.wrapper,
             styles.flex,
-            `padding-${size}`,
+            `padding-${finalSize}`,
             { ['cursorText']: !disabled },
             {
               [styles.error]: isError || error,
@@ -252,7 +255,7 @@ const DateInput = forwardRef<HTMLInputElement, DateInputProps>(
           onClick={handleWrapperClick}
         >
           <input
-            className={classNames(styles.input, `font-size-${size}`)}
+            className={classNames(styles.input, `font-size-${finalSize}`)}
             ref={inputRef}
             placeholder={placeholder}
             disabled={disabled}

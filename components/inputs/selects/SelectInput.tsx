@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import classNames from 'classnames';
+import useIsMobile from 'morning-react-ui/components/hooks/useIsMobile';
 import { SelectsProps } from 'morning-react-ui/components/inputs/propsTypes';
 import TextInput from 'morning-react-ui/components/inputs/textField/TextInput';
 import { SelectOption } from 'morning-react-ui/types';
@@ -17,7 +18,7 @@ const SelectInput = ({
   label,
   sublabel,
   bold,
-  size = Size.m,
+  size,
   options,
   placeholder,
   disabled,
@@ -27,6 +28,8 @@ const SelectInput = ({
   isError = false,
   emptyStateText = 'Aucun résultat dans la liste',
 }: SelectInputProps) => {
+  const isMobile = useIsMobile();
+  const finalSize = size ?? (isMobile ? Size.l : Size.m);
   const {
     isDropdownDisplayed,
     inputValue,
@@ -40,7 +43,13 @@ const SelectInput = ({
     highlightedIndex,
     maxHeight,
     optionRefs,
-  } = useSelectInput({ options, selectedOption, size, onChange, rowToDisplay });
+  } = useSelectInput({
+    options,
+    selectedOption,
+    size: finalSize,
+    onChange,
+    rowToDisplay,
+  });
 
   const optionsRef = useRef(options);
   useEffect(() => {
@@ -53,7 +62,7 @@ const SelectInput = ({
     <div className={styles.wrapper} tabIndex={-1}>
       <TextInput
         placeholder={selectedOption ? selectedOption.label : placeholder}
-        size={size}
+        size={finalSize}
         value={inputValue}
         label={label}
         sublabel={sublabel}
@@ -82,8 +91,8 @@ const SelectInput = ({
             <span
               className={classNames(
                 styles.option,
-                `font-size-${size}`,
-                `padding-${size}`,
+                `font-size-${finalSize}`,
+                `padding-${finalSize}`,
                 styles.emptyState,
               )}
             >
@@ -94,9 +103,9 @@ const SelectInput = ({
             <div
               className={classNames(
                 styles.option,
-                `font-size-${size}`,
-                `padding-${size}`,
-                styles[`padding-${size}`],
+                `font-size-${finalSize}`,
+                `padding-${finalSize}`,
+                styles[`padding-${finalSize}`],
                 {
                   [styles.highlightedOption]: index === highlightedIndex,
                 },
@@ -112,15 +121,17 @@ const SelectInput = ({
               onMouseLeave={() => setHighlightedIndex(null)}
               ref={optionRefs[index]}
             >
-              <span className={classNames(`height-${size}`, styles.option)}>
+              <span
+                className={classNames(`height-${finalSize}`, styles.option)}
+              >
                 {option.label}
               </span>
               {selectedOption && selectedOption.id === option.id && (
                 <span
                   className={styles.selectedOptionIcon}
                   style={{
-                    width: `${sizeToNumber(size)}px`,
-                    height: `${sizeToNumber(size)}px`,
+                    width: `${sizeToNumber(finalSize)}px`,
+                    height: `${sizeToNumber(finalSize)}px`,
                   }}
                 ></span>
               )}
