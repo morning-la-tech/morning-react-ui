@@ -2,6 +2,7 @@ import {
   ChangeEvent,
   Dispatch,
   forwardRef,
+  InputHTMLAttributes,
   KeyboardEventHandler,
   useImperativeHandle,
   useRef,
@@ -27,15 +28,21 @@ import styles from '../input.module.css';
 import { BasicInputProps, InputProps } from '../propsTypes';
 import useInput from '../textField/useInput';
 
-type TimeInputProps = BasicInputProps &
-  InputProps & {
-    value?: Date | null;
-    min?: string;
-    max?: string;
-    onChange: Dispatch<Date | null>;
-  };
+type TimeInputProps = {
+  value?: Date | null;
+  min?: string;
+  max?: string;
+  onChange: Dispatch<Date | null>;
+} & BasicInputProps &
+  InputProps;
 
-const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
+type TimeInputHtmlProps = Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  keyof TimeInputProps
+> &
+  TimeInputProps;
+
+const TimeInput = forwardRef<HTMLInputElement, TimeInputHtmlProps>(
   (
     {
       label,
@@ -49,6 +56,7 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       min,
       max,
       onChange,
+      ...props
     },
     ref,
   ) => {
@@ -191,6 +199,7 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
             onBlur={handleBlur}
             onKeyUp={handleBlur}
             onKeyDown={handlePress}
+            {...props}
           />
         </div>
       </ParentInput>
