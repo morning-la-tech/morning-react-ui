@@ -1,6 +1,7 @@
 import {
   ChangeEvent,
   forwardRef,
+  InputHTMLAttributes,
   useEffect,
   useImperativeHandle,
   useRef,
@@ -25,15 +26,21 @@ import { BasicInputProps, InputProps } from '../propsTypes';
 import useInput from '../textField/useInput';
 import CalendarComponent from './CalendarComponent';
 
-type DateInputProps = BasicInputProps &
-  InputProps & {
-    value?: Date | null;
-    from?: string;
-    to?: string;
-    onChange: (time: OptionalDate) => void;
-  };
+type DateInputProps = {
+  value?: Date | null;
+  from?: string;
+  to?: string;
+  onChange: (time: OptionalDate) => void;
+} & BasicInputProps &
+  InputProps;
 
-const DateInput = forwardRef<HTMLInputElement, DateInputProps>(
+type DateInputHtmlProps = Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  keyof DateInputProps
+> &
+  DateInputProps;
+
+const DateInput = forwardRef<HTMLInputElement, DateInputHtmlProps>(
   (
     {
       label,
@@ -47,6 +54,7 @@ const DateInput = forwardRef<HTMLInputElement, DateInputProps>(
       to,
       onChange,
       placeholder = 'JJ/MM/AAAA',
+      ...props
     },
     ref,
   ) => {
@@ -264,6 +272,7 @@ const DateInput = forwardRef<HTMLInputElement, DateInputProps>(
             onFocus={handleFocus}
             onChange={handleChange}
             onBlur={handleBlur}
+            {...props}
           />
         </div>
         <div>

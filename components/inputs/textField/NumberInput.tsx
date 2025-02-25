@@ -2,6 +2,7 @@ import {
   ChangeEvent,
   Dispatch,
   forwardRef,
+  InputHTMLAttributes,
   KeyboardEvent,
   useImperativeHandle,
   useRef,
@@ -21,7 +22,10 @@ type NumberInputProps = InputProps & {
   step?: number;
 };
 
-const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
+type NumberInputHtmlProps = NumberInputProps &
+  Omit<InputHTMLAttributes<HTMLInputElement>, keyof NumberInputProps>;
+
+const NumberInput = forwardRef<HTMLInputElement, NumberInputHtmlProps>(
   (
     {
       label,
@@ -35,6 +39,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       placeholder,
       allowFloat = false,
       step = allowFloat ? 0.1 : 1,
+      ...props
     },
     ref,
   ) => {
@@ -119,6 +124,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
             value={value ?? ''}
             disabled={disabled}
             placeholder={placeholder}
+            {...props}
           />
         </div>
       </ParentInput>
