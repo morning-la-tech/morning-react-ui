@@ -139,6 +139,7 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputHtmlProps>(
     };
 
     const handleBlur = () => {
+      console.log('toto');
       if (!inputValue) {
         onChange(null);
         setError(false);
@@ -197,7 +198,6 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputHtmlProps>(
             value={inputValue ?? ''}
             onChange={handleChange}
             onBlur={handleBlur}
-            onKeyUp={handleBlur}
             onKeyDown={handlePress}
             {...props}
           />
