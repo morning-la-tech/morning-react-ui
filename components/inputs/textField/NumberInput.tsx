@@ -39,6 +39,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputHtmlProps>(
       placeholder,
       allowFloat = false,
       step = allowFloat ? 0.1 : 1,
+      errorText,
       ...props
     },
     ref,
@@ -97,6 +98,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputHtmlProps>(
         size={finalSize}
         inputRef={inputRef}
         disabled={disabled}
+        errorText={errorText}
       >
         <div
           className={classNames(

@@ -10,22 +10,24 @@ import useIsMobile from 'morning-react-ui/components/hooks/useIsMobile';
 import { Size } from 'morning-react-ui/utils/Enum';
 import styles from '../input.module.css';
 import ParentInput from '../ParentInput';
+import { InputProps } from '../propsTypes';
 
-type TextAreaInputProps = {
-  placeholder: string;
+type TextAreaInputProps = InputProps & {
   label?: string;
   sublabel?: string;
   onChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
   value: string;
-  isError?: boolean;
   size?: Size;
   disabled?: boolean;
   maxLength?: number;
 } & Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, 'onChange' | 'value'>;
 
-const TextAreaInput = forwardRef<HTMLTextAreaElement, TextAreaInputProps>(
-  (props, ref) => {
-    const {
+type TextAreaInputHtmlProps = TextAreaInputProps &
+  Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, keyof TextAreaInputProps>;
+
+const TextAreaInput = forwardRef<HTMLTextAreaElement, TextAreaInputHtmlProps>(
+  (
+    {
       placeholder,
       label,
       sublabel,
@@ -36,9 +38,11 @@ const TextAreaInput = forwardRef<HTMLTextAreaElement, TextAreaInputProps>(
       disabled = false,
       maxLength,
       className,
+      errorText,
       ...restProps
-    } = props;
-
+    },
+    ref,
+  ) => {
     const isMobile = useIsMobile();
     const finalSize = size ?? (isMobile ? Size.l : Size.m);
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -59,6 +63,7 @@ const TextAreaInput = forwardRef<HTMLTextAreaElement, TextAreaInputProps>(
         inputRef={textAreaRef}
         style={{ height: '100%' }}
         fullHeight
+        errorText={errorText}
       >
         <div
           className={classNames(

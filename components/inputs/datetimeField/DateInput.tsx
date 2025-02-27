@@ -54,6 +54,7 @@ const DateInput = forwardRef<HTMLInputElement, DateInputHtmlProps>(
       to,
       onChange,
       placeholder = 'JJ/MM/AAAA',
+      errorText,
       ...props
     },
     ref,
@@ -249,6 +250,7 @@ const DateInput = forwardRef<HTMLInputElement, DateInputHtmlProps>(
         bold={bold}
         size={finalSize}
         inputRef={inputRef}
+        errorText={errorText}
       >
         <div
           className={classNames(

@@ -6,6 +6,7 @@ export type BasicInputProps = {
   size?: Size;
   bold?: boolean;
   disabled?: boolean;
+  errorText?: string;
 };
 
 export type InputProps = BasicInputProps & {
