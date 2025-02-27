@@ -56,6 +56,7 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputHtmlProps>(
       min,
       max,
       onChange,
+      errorText,
       ...props
     },
     ref,
@@ -175,6 +176,7 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputHtmlProps>(
         size={finalSize}
         inputRef={inputRef}
         disabled={disabled}
+        errorText={errorText}
       >
         <div
           className={classNames(
