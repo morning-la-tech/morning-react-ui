@@ -27,6 +27,7 @@ const MultiSelect = ({
   placeholder = 'MultiSelect',
   rowToDisplay = 8,
   emptyStateText = 'Aucun résultat dans la liste',
+  errorText,
 }: MultiSelectProps) => {
   const isMobile = useIsMobile();
   const finalSize = size ?? (isMobile ? Size.l : Size.m);
@@ -82,6 +83,7 @@ const MultiSelect = ({
         setCursorPosition={adjustCursorPosition}
         isError={isError}
         disabled={disabled}
+        errorText={errorText}
       />
       {isDropdownDisplayed && (
         <div

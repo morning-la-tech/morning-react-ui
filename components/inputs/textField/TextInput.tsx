@@ -56,6 +56,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputHtmlProps>(
         onChange({ target: { value: '' } } as ChangeEvent<HTMLInputElement>),
       isDropdownActive,
       className,
+      errorText,
       ...props
     },
     ref,
@@ -105,6 +106,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputHtmlProps>(
         size={finalSize}
         inputRef={inputRef}
         disabled={disabled}
+        errorText={errorText}
       >
         <div
           className={classNames(
