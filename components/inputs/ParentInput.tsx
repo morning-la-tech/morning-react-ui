@@ -24,6 +24,7 @@ const ParentInput = forwardRef<HTMLDivElement, ParentInputProps>(
       disabled,
       onClick,
       fullHeight,
+      errorText,
     },
     ref,
   ) => {
@@ -74,6 +75,11 @@ const ParentInput = forwardRef<HTMLDivElement, ParentInputProps>(
           </div>
         )}
         {children}
+        {errorText && (
+          <label className={styles.error} onClick={focusInput}>
+            {errorText}
+          </label>
+        )}
       </div>
     );
   },

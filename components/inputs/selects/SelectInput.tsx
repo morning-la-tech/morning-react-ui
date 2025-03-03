@@ -26,6 +26,7 @@ const SelectInput = ({
   selectedOption,
   rowToDisplay = 8,
   isError = false,
+  errorText,
   emptyStateText = 'Aucun résultat dans la liste',
 }: SelectInputProps) => {
   const isMobile = useIsMobile();
@@ -77,6 +78,7 @@ const SelectInput = ({
         onMouseDown={(e) => e.preventDefault()}
         ref={inputRef}
         isError={isError}
+        errorText={errorText}
       />
       {isDropdownDisplayed && (
         <div
