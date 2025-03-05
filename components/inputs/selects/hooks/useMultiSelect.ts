@@ -9,6 +9,7 @@ import {
 } from 'react';
 import { SelectionState } from 'morning-react-ui/types/dataTypes';
 import { Size } from 'morning-react-ui/utils/Enum';
+import { InputError } from 'morning-react-ui/utils/error';
 import { selectionStateTrueToString } from 'morning-react-ui/utils/selectionState/selectionStateConverters';
 import {
   atLeastOneTrue,
@@ -29,6 +30,8 @@ type UseMultiSelectProps = {
   onChange: (newSelection: SelectionState) => void;
   size: Size;
   rowToDisplay: number;
+  required?: boolean;
+  setMultiSelectError?: (error: InputError) => void;
 };
 
 const useMultiSelect = ({
@@ -36,6 +39,8 @@ const useMultiSelect = ({
   onChange,
   size,
   rowToDisplay,
+  required,
+  setMultiSelectError,
 }: UseMultiSelectProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -209,6 +214,11 @@ const useMultiSelect = ({
 
   const handleBlur = () => {
     setIsDropdownDisplayed(false);
+    if (setMultiSelectError) {
+      if (required && !validatedOptionsString) {
+        setMultiSelectError(InputError.required);
+      }
+    }
   };
 
   const handleTabOrArrowDown = () => {

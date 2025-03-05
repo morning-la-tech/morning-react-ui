@@ -14,7 +14,7 @@ export enum DateError {
 }
 
 export enum EmailError {
-  required = 'required',
+  required = InputError.required,
   formatEmail = 'formatEmail',
 }
 
