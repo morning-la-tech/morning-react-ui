@@ -141,7 +141,9 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputHtmlProps>(
       if (!inputValue) {
         onChange(null);
         setError(false);
-        if (setTimeError) setTimeError(null);
+        if (setTimeError) {
+          setTimeError(null);
+        }
         return;
       }
 
