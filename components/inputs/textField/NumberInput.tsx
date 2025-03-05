@@ -1,5 +1,6 @@
 import {
   ChangeEvent,
+  ClipboardEvent,
   Dispatch,
   forwardRef,
   InputHTMLAttributes,
@@ -19,6 +20,7 @@ type NumberInputProps = InputProps & {
   value?: number | null;
   onChange: Dispatch<number | null>;
   allowFloat?: boolean;
+  allowNegative?: boolean;
   step?: number;
 };
 
@@ -38,6 +40,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputHtmlProps>(
       disabled,
       placeholder,
       allowFloat = false,
+      allowNegative = true,
       step = allowFloat ? 0.1 : 1,
       errorText,
       ...props
@@ -49,42 +52,47 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputHtmlProps>(
     const finalSize = size ?? (isMobile ? Size.l : Size.m);
     useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
 
+    const inputMode = allowFloat ? 'decimal' : 'numeric';
+
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
       const newValue = event.target.value.trim();
-
       if (newValue === '') {
         onChange(null);
         return;
       }
 
       const parsedValue = allowFloat
-        ? parseFloat(newValue)
+        ? parseFloat(newValue.replace(',', '.'))
         : parseInt(newValue, 10);
 
-      if (!isNaN(parsedValue)) {
+      if (!isNaN(parsedValue) && (allowNegative || parsedValue >= 0)) {
         onChange(parsedValue);
-      } else {
-        onChange(null);
       }
-    };
-
-    const handleBlur = () => {
-      onChange(value ?? null);
     };
 
     const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
       const blockedKeys = ['e', 'E'];
       if (!allowFloat) blockedKeys.push('.');
+      if (!allowNegative) blockedKeys.push('-');
+
       if (blockedKeys.includes(event.key)) {
         event.preventDefault();
-        return;
       }
 
       if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
         event.preventDefault();
         const newValue =
           (value ?? 0) + (event.key === 'ArrowUp' ? step : -step);
+        if (!allowNegative && newValue < 0) return;
         onChange(parseFloat(newValue.toFixed(10)));
+      }
+    };
+
+    const handlePaste = (event: ClipboardEvent<HTMLInputElement>) => {
+      const paste = event.clipboardData.getData('text');
+      const regex = allowFloat ? /^[-]?\d*([,.]?\d*)?$/ : /^[-]?\d*$/;
+      if (!regex.test(paste)) {
+        event.preventDefault();
       }
     };
 
@@ -113,6 +121,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputHtmlProps>(
         >
           <input
             type='number'
+            inputMode={inputMode}
             step={step}
             className={classNames(
               styles.input,
@@ -120,12 +129,12 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputHtmlProps>(
               `height-${finalSize}`,
             )}
             ref={inputRef}
-            onChange={handleChange}
-            onKeyDown={handleKeyDown}
-            onBlur={handleBlur}
             value={value ?? ''}
             disabled={disabled}
             placeholder={placeholder}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+            onPaste={handlePaste}
             {...props}
           />
         </div>
