@@ -7,6 +7,7 @@ import {
   setHours,
   setMinutes,
 } from 'date-fns';
+import { TimeError } from './error';
 
 /**
  * Given a string in format XX/XX/XXXX
@@ -114,7 +115,7 @@ export const isTimeWithinEdges = (
   time: string,
   minEdge?: string,
   maxEdge?: string,
-): boolean => {
+): TimeError | null => {
   const [hour, minute] = stringToTime(time);
   const reference = setMinutes(setHours(new Date(), hour), minute);
   let isRefAfterMin = true;
@@ -132,5 +133,12 @@ export const isTimeWithinEdges = (
     isRefBeforeMax = isEqual(reference, maxTime) || isAfter(maxTime, reference);
   }
 
-  return isRefBeforeMax && isRefAfterMin;
+  if (minEdge && maxEdge && (!isRefBeforeMax || !isRefAfterMin)) {
+    return TimeError.timeWithinEdges;
+  } else if (!isRefBeforeMax) {
+    return TimeError.timeAfterMax;
+  } else if (!isRefAfterMin) {
+    return TimeError.timeBeforeMin;
+  }
+  return null;
 };
