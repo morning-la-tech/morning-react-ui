@@ -1,5 +1,6 @@
 import {
   ChangeEvent,
+  FocusEvent,
   forwardRef,
   InputHTMLAttributes,
   KeyboardEvent,
@@ -15,6 +16,7 @@ import useIsMobile from 'morning-react-ui/components/hooks/useIsMobile';
 import ParentInput from 'morning-react-ui/components/inputs/ParentInput';
 import { InputProps } from 'morning-react-ui/components/inputs/propsTypes';
 import { Size, sizeToNumber } from 'morning-react-ui/utils/Enum';
+import { InputError } from 'morning-react-ui/utils/error';
 import styles from '../input.module.css';
 import useInput from './useInput';
 
@@ -23,6 +25,8 @@ type TextInputProps = InputProps & {
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onCursorPositionChange?: (position: number | null) => void;
   setCursorPosition?: (input: HTMLInputElement) => void;
+  setTextError?: (error: InputError) => void;
+  required?: boolean;
   imageSrc?: string;
   imageAlt?: string;
   showClearButton?: boolean;
@@ -45,7 +49,9 @@ const TextInput = forwardRef<HTMLInputElement, TextInputHtmlProps>(
       onChange,
       onCursorPositionChange,
       setCursorPosition,
+      setTextError,
       placeholder,
+      required,
       isError,
       disabled,
       imageSrc,
@@ -88,6 +94,16 @@ const TextInput = forwardRef<HTMLInputElement, TextInputHtmlProps>(
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
       onChange(event);
       handleCursorChange(event.target.selectionStart);
+    };
+
+    const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
+      if (setTextError && required && !event.target.value.trim()) {
+        setTextError(InputError.required);
+      }
+
+      if (props.onBlur) {
+        props.onBlur(event);
+      }
     };
 
     const handleKeyUpOrClick = (
@@ -142,6 +158,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputHtmlProps>(
             placeholder={placeholder}
             disabled={disabled}
             onChange={handleChange}
+            onBlur={handleBlur}
             onClick={handleKeyUpOrClick}
           />
           {showClearButton && (

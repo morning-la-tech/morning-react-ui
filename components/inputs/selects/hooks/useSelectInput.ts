@@ -9,6 +9,7 @@ import {
 } from 'react';
 import { SelectOption } from 'morning-react-ui/types';
 import { Size } from 'morning-react-ui/utils/Enum';
+import { InputError } from 'morning-react-ui/utils/error';
 import { normalizeString } from 'morning-react-ui/utils/stringUtils';
 
 type UseSelectInputProps = {
@@ -17,6 +18,8 @@ type UseSelectInputProps = {
   size: Size;
   onChange: (value: SelectOption) => void;
   rowToDisplay: number;
+  required?: boolean;
+  setSelectError?: (error: InputError) => void;
 };
 
 const useSelectInput = ({
@@ -25,6 +28,8 @@ const useSelectInput = ({
   onChange,
   rowToDisplay,
   size,
+  required,
+  setSelectError,
 }: UseSelectInputProps) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [maxHeight, setMaxHeight] = useState<number | null>(0);
@@ -51,6 +56,12 @@ const useSelectInput = ({
     setInputValue(selectedOption ? selectedOption.label : '');
     setHighlightedIndex(0);
     setIsDropdownDisplayed(false);
+
+    if (setSelectError) {
+      if (required && !selectedOption) {
+        setSelectError(InputError.required);
+      }
+    }
   };
 
   const handleTextChange: ChangeEventHandler<HTMLInputElement> = (

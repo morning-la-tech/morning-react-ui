@@ -1,5 +1,6 @@
 import {
   ChangeEvent,
+  FocusEvent,
   forwardRef,
   TextareaHTMLAttributes,
   useImperativeHandle,
@@ -8,6 +9,7 @@ import {
 import classNames from 'classnames';
 import useIsMobile from 'morning-react-ui/components/hooks/useIsMobile';
 import { Size } from 'morning-react-ui/utils/Enum';
+import { InputError } from 'morning-react-ui/utils/error';
 import styles from '../input.module.css';
 import ParentInput from '../ParentInput';
 import { InputProps } from '../propsTypes';
@@ -16,6 +18,8 @@ type TextAreaInputProps = InputProps & {
   label?: string;
   sublabel?: string;
   onChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+  setTextAreaError?: (error: InputError) => void;
+  required?: boolean;
   value: string;
   size?: Size;
   disabled?: boolean;
@@ -32,6 +36,8 @@ const TextAreaInput = forwardRef<HTMLTextAreaElement, TextAreaInputHtmlProps>(
       label,
       sublabel,
       onChange,
+      setTextAreaError,
+      required,
       value,
       isError = false,
       size,
@@ -51,6 +57,12 @@ const TextAreaInput = forwardRef<HTMLTextAreaElement, TextAreaInputHtmlProps>(
     const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
       if (!maxLength || event.target.value.length <= maxLength) {
         onChange(event);
+      }
+    };
+
+    const handleBlur = (event: FocusEvent<HTMLTextAreaElement>) => {
+      if (setTextAreaError && required && !event.target.value.trim()) {
+        setTextAreaError(InputError.required);
       }
     };
 
@@ -81,6 +93,7 @@ const TextAreaInput = forwardRef<HTMLTextAreaElement, TextAreaInputHtmlProps>(
             placeholder={placeholder}
             value={value}
             onChange={handleChange}
+            onBlur={handleBlur}
             className={classNames(styles.textArea, `font-size-${finalSize}`, {
               [styles.error]: isError,
             })}

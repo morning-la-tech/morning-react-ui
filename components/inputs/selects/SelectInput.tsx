@@ -5,6 +5,7 @@ import { SelectsProps } from 'morning-react-ui/components/inputs/propsTypes';
 import TextInput from 'morning-react-ui/components/inputs/textField/TextInput';
 import { SelectOption } from 'morning-react-ui/types';
 import { Size, sizeToNumber } from 'morning-react-ui/utils/Enum';
+import { InputError } from 'morning-react-ui/utils/error';
 import useSelectInput from './hooks/useSelectInput';
 import styles from './selects.module.css';
 
@@ -12,6 +13,8 @@ type SelectInputProps = SelectsProps & {
   options: SelectOption[];
   selectedOption?: SelectOption | null;
   onChange: (value: SelectOption) => void;
+  required?: boolean;
+  setSelectError?: (error: InputError) => void;
 };
 
 const SelectInput = ({
@@ -28,6 +31,8 @@ const SelectInput = ({
   isError = false,
   errorText,
   emptyStateText = 'Aucun résultat dans la liste',
+  required,
+  setSelectError,
 }: SelectInputProps) => {
   const isMobile = useIsMobile();
   const finalSize = size ?? (isMobile ? Size.l : Size.m);
@@ -50,6 +55,8 @@ const SelectInput = ({
     size: finalSize,
     onChange,
     rowToDisplay,
+    required,
+    setSelectError,
   });
 
   const optionsRef = useRef(options);
