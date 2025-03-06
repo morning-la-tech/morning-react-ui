@@ -3,7 +3,6 @@ import {
   Dispatch,
   forwardRef,
   InputHTMLAttributes,
-  KeyboardEventHandler,
   useImperativeHandle,
   useRef,
   useState,
@@ -24,6 +23,7 @@ import {
   stringToTime,
 } from 'morning-react-ui/utils/datetimeUtils';
 import { Size } from 'morning-react-ui/utils/Enum';
+import { TimeError } from 'morning-react-ui/utils/error';
 import styles from '../input.module.css';
 import { BasicInputProps, InputProps } from '../propsTypes';
 import useInput from '../textField/useInput';
@@ -32,6 +32,7 @@ type TimeInputProps = {
   value?: Date | null;
   min?: string;
   max?: string;
+  setTimeError?: (error: TimeError | null) => void;
   onChange: Dispatch<Date | null>;
 } & BasicInputProps &
   InputProps;
@@ -53,10 +54,12 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputHtmlProps>(
       value,
       disabled,
       isError,
+      setTimeError,
       min,
       max,
       onChange,
       errorText,
+      required,
       ...props
     },
     ref,
@@ -130,41 +133,52 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputHtmlProps>(
         return;
       }
 
-      const validAsTime = isStringValidAsTime(reformatedNewValue);
-      setError(!validAsTime);
-
-      if (validAsTime) {
-        setError(!isTimeWithinEdges(reformatedNewValue, min, max));
+      if (isStringValidAsTime(reformatedNewValue)) {
         setInputValue(reformatedNewValue);
       }
     };
 
     const handleBlur = () => {
-      console.log('toto');
       if (!inputValue) {
         onChange(null);
-        setError(false);
+        setError(!!required);
+        if (setTimeError) {
+          setTimeError(required ? TimeError.required : null);
+        }
         return;
       }
 
-      setError(!isTimeWithinEdges(inputValue, min, max));
+      const edgesError = isTimeWithinEdges(inputValue, min, max);
+      if (setTimeError) {
+        if (edgesError) {
+          setTimeError(edgesError);
+        }
+        if (
+          !isStringValidAsTime(inputValue) ||
+          inputValue.split(':').some((part) => part.length !== 2)
+        ) {
+          setTimeError(TimeError.formatTime);
+        }
+      }
+
+      const hasError =
+        // First we check if the input is valid as time
+        !isStringValidAsTime(inputValue) ||
+        // Second we check if the input has 2 digits in the hour and minute part
+        inputValue.split(':').some((part) => part.length !== 2) ||
+        // Then we check if the input is within the min and max values
+        !!isTimeWithinEdges(inputValue, min, max);
+
+      setError(hasError);
       const [hours, minutes] = stringToTime(inputValue);
       onChange(
-        isTimeWithinEdges(inputValue, min, max)
+        !hasError
           ? setMilliseconds(
               setSeconds(setMinutes(setHours(new Date(), hours), minutes), 0),
               0,
             )
           : null,
       );
-    };
-
-    const handlePress: KeyboardEventHandler<HTMLInputElement> = (
-      event: React.KeyboardEvent<HTMLInputElement>,
-    ) => {
-      if (event.key === 'Tab') {
-        setInputValue(value ? format(value, 'HH:mm') : null);
-      }
     };
 
     const { handleWrapperClick } = useInput({ inputRef });
@@ -200,7 +214,6 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputHtmlProps>(
             value={inputValue ?? ''}
             onChange={handleChange}
             onBlur={handleBlur}
-            onKeyDown={handlePress}
             {...props}
           />
         </div>
