@@ -1,9 +1,8 @@
 import {
-  ChangeEvent,
-  ChangeEventHandler,
   createRef,
   KeyboardEvent,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -26,92 +25,49 @@ const useSelectInput = ({
   options,
   selectedOption,
   onChange,
-  rowToDisplay,
-  size,
   required,
   setSelectError,
 }: UseSelectInputProps) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const [maxHeight, setMaxHeight] = useState<number | null>(0);
-  const [optionRefs, setOptionRefs] = useState<
-    React.RefObject<HTMLDivElement | null>[]
-  >([]);
-
-  const [inputValue, setInputValue] = useState<string>('');
-  const [filteredOptions, setFilteredOptions] = useState(options);
-  const [isDropdownDisplayed, setIsDropdownDisplayed] =
-    useState<boolean>(false);
+  const [isDropdownDisplayed, setIsDropdownDisplayed] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState<number | null>(0);
+  const [inputValue, setInputValue] = useState<string>(
+    selectedOption?.label || '',
+  );
+
+  useEffect(() => {
+    setInputValue(selectedOption?.label || '');
+  }, [selectedOption]);
+
+  const filteredOptions = useMemo(
+    () =>
+      options.filter((option) =>
+        normalizeString(option.label).includes(normalizeString(inputValue)),
+      ),
+    [inputValue, options],
+  );
+
+  const optionRefs = useMemo(
+    () => filteredOptions.map(() => createRef<HTMLDivElement>()),
+    [filteredOptions],
+  );
+
+  const handleTextChange = (value: string) => {
+    setInputValue(value);
+    setHighlightedIndex(0);
+  };
 
   const handleFocus = () => {
-    setInputValue('');
+    handleTextChange('');
     setIsDropdownDisplayed(true);
   };
 
-  useEffect(() => {
-    setHighlightedIndex(0);
-  }, [filteredOptions]);
-
-  const handleBlur = () => {
-    setInputValue(selectedOption ? selectedOption.label : '');
-    setHighlightedIndex(0);
+  const handleBlur = (nextSelectedOption?: SelectOption | null) => {
     setIsDropdownDisplayed(false);
-
+    handleTextChange(nextSelectedOption?.label || '');
     if (setSelectError) {
-      if (required && !selectedOption) {
+      if (required && !nextSelectedOption) {
         setSelectError(InputError.required);
-      }
-    }
-  };
-
-  const handleTextChange: ChangeEventHandler<HTMLInputElement> = (
-    e: ChangeEvent<HTMLInputElement>,
-  ): void => {
-    const newValue: string = e.target.value;
-    setInputValue(newValue);
-  };
-
-  useEffect(() => {
-    const normalizedSearchText = normalizeString(inputValue);
-    const newFilteredOptions = options.filter((option) =>
-      normalizeString(option.label).includes(normalizedSearchText),
-    );
-    setFilteredOptions(newFilteredOptions);
-  }, [inputValue, options]);
-
-  const handleArrowDown = (
-    e: KeyboardEvent<HTMLInputElement | HTMLDivElement>,
-  ) => {
-    e.preventDefault();
-    if (highlightedIndex === null) {
-      setHighlightedIndex(0);
-      return;
-    }
-    setHighlightedIndex((highlightedIndex + 1) % filteredOptions.length);
-  };
-
-  const handleArrowUp = (
-    e: KeyboardEvent<HTMLInputElement | HTMLDivElement>,
-  ) => {
-    e.preventDefault();
-    if (highlightedIndex === null) {
-      setHighlightedIndex(0);
-      return;
-    }
-    setHighlightedIndex(
-      (highlightedIndex - 1 + filteredOptions.length) % filteredOptions.length,
-    );
-  };
-
-  const handleEnter = (e: KeyboardEvent<HTMLInputElement | HTMLDivElement>) => {
-    e.preventDefault();
-    if (highlightedIndex === null) {
-      return;
-    }
-    if (filteredOptions.length > 0) {
-      onChange(filteredOptions[highlightedIndex]);
-      if (inputRef.current) {
-        inputRef.current.blur();
       }
     }
   };
@@ -119,60 +75,48 @@ const useSelectInput = ({
   const handleKeyDown = (
     event: KeyboardEvent<HTMLInputElement | HTMLDivElement>,
   ) => {
+    let newHighlightedIndex = highlightedIndex;
+
     switch (event.key) {
-      case 'Tab':
       case 'ArrowDown':
-        handleArrowDown(event);
+        event.preventDefault();
+        newHighlightedIndex =
+          ((highlightedIndex ?? -1) + 1) % filteredOptions.length;
         break;
       case 'ArrowUp':
-        handleArrowUp(event);
+        event.preventDefault();
+        newHighlightedIndex = (highlightedIndex ?? filteredOptions.length) - 1;
+        if (newHighlightedIndex < 0)
+          newHighlightedIndex = filteredOptions.length - 1;
         break;
       case 'Enter':
-        handleEnter(event);
-        break;
+        event.preventDefault();
+        if (highlightedIndex !== null && filteredOptions[highlightedIndex]) {
+          handleSelect();
+        }
+        return;
       case 'Escape':
         setIsDropdownDisplayed(false);
-        if (inputRef.current) {
-          inputRef.current.blur();
-        }
-        break;
+        handleBlur();
+        return;
     }
+
+    console.log('toto');
+    setHighlightedIndex(newHighlightedIndex);
+    if (newHighlightedIndex)
+      optionRefs[newHighlightedIndex]?.current?.scrollIntoView({
+        behavior: 'auto',
+        block: 'nearest',
+      });
   };
 
-  useEffect(() => {
-    setInputValue(selectedOption ? selectedOption.label : '');
+  const handleSelect = () => {
+    if (highlightedIndex === null) return;
+    inputRef.current?.blur();
+    onChange(filteredOptions[highlightedIndex]);
+    handleTextChange(filteredOptions[highlightedIndex].label);
     setIsDropdownDisplayed(false);
-  }, [selectedOption]);
-
-  useEffect(() => {
-    setOptionRefs(filteredOptions.map(() => createRef<HTMLDivElement>()));
-  }, [filteredOptions.length]);
-
-  // Make the highlighted index scroll into view
-  useEffect(() => {
-    if (highlightedIndex != null && highlightedIndex < optionRefs.length) {
-      const ref = optionRefs[highlightedIndex];
-      if (ref && ref.current) {
-        ref.current.scrollIntoView({
-          behavior: 'auto',
-          block: 'nearest',
-        });
-      }
-    }
-  }, [highlightedIndex, optionRefs]);
-
-  useEffect(() => {
-    if (optionRefs.length < rowToDisplay) {
-      return;
-    }
-    if (optionRefs[rowToDisplay + 1]?.current) {
-      const last = optionRefs[rowToDisplay + 1].current?.offsetTop;
-      const first = optionRefs[0]?.current?.offsetTop;
-      if (last && first) {
-        setMaxHeight(last - first);
-      }
-    }
-  }, [size, rowToDisplay, optionRefs, isDropdownDisplayed]);
+  };
 
   return {
     isDropdownDisplayed,
@@ -185,8 +129,9 @@ const useSelectInput = ({
     inputRef,
     setHighlightedIndex,
     highlightedIndex,
-    maxHeight,
+    handleSelect,
     optionRefs,
+    setIsDropdownDisplayed,
   };
 };
 
