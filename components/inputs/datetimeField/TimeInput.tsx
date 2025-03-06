@@ -139,8 +139,6 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputHtmlProps>(
     };
 
     const handleBlur = () => {
-      console.log(inputValue);
-
       if (!inputValue) {
         onChange(null);
         setError(!!required);
