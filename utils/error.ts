@@ -6,6 +6,13 @@ export enum TimeError {
   timeWithinEdges = 'timeWithinEdges',
 }
 
+export enum DateError {
+  required = 'required',
+  dateBeforeMin = 'dateBeforeMin',
+  dateAfterMax = 'dateAfterMax',
+  dateWithinEdges = 'dateWithinEdges',
+}
+
 export enum EmailError {
   required = 'required',
   formatEmail = 'formatEmail',
