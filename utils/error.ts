@@ -1,5 +1,9 @@
-export enum TimeError {
+export enum InputError {
   required = 'required',
+}
+
+export enum TimeError {
+  required = InputError.required,
   formatTime = 'formatTime',
   timeBeforeMin = 'timeBeforeMin',
   timeAfterMax = 'timeAfterMax',
@@ -7,7 +11,7 @@ export enum TimeError {
 }
 
 export enum DateError {
-  required = 'required',
+  required = InputError.required,
   dateBeforeMin = 'dateBeforeMin',
   dateAfterMax = 'dateAfterMax',
   dateWithinEdges = 'dateWithinEdges',
@@ -19,6 +23,6 @@ export enum EmailError {
 }
 
 export const enum PostalCodeError {
-  required = 'required',
+  required = InputError.required,
   formatPostalCode = 'formatPostalCode',
 }
