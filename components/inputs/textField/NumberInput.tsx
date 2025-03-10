@@ -2,9 +2,11 @@ import {
   ChangeEvent,
   ClipboardEvent,
   Dispatch,
+  FocusEvent,
   forwardRef,
   InputHTMLAttributes,
   KeyboardEvent,
+  useEffect,
   useImperativeHandle,
   useRef,
 } from 'react';
@@ -13,12 +15,14 @@ import useIsMobile from 'morning-react-ui/components/hooks/useIsMobile';
 import ParentInput from 'morning-react-ui/components/inputs/ParentInput';
 import { InputProps } from 'morning-react-ui/components/inputs/propsTypes';
 import { Size } from 'morning-react-ui/utils/Enum';
+import { InputError } from 'morning-react-ui/utils/error';
 import styles from '../input.module.css';
 import useInput from './useInput';
 
 type NumberInputProps = InputProps & {
   value?: number | null;
   onChange: Dispatch<number | null>;
+  setNumberError?: (error: InputError) => void;
   allowFloat?: boolean;
   allowNegative?: boolean;
   step?: number;
@@ -36,6 +40,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputHtmlProps>(
       size,
       value,
       onChange,
+      setNumberError,
       isError,
       disabled,
       placeholder,
@@ -43,6 +48,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputHtmlProps>(
       allowNegative = true,
       step = allowFloat ? 0.1 : 1,
       errorText,
+      required,
       ...props
     },
     ref,
@@ -67,6 +73,16 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputHtmlProps>(
 
       if (!isNaN(parsedValue) && (allowNegative || parsedValue >= 0)) {
         onChange(parsedValue);
+      }
+    };
+
+    const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
+      if (setNumberError && required && !event.target.value.trim()) {
+        setNumberError(InputError.required);
+      }
+
+      if (props.onBlur) {
+        props.onBlur(event);
       }
     };
 
@@ -97,6 +113,20 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputHtmlProps>(
     };
 
     const { handleWrapperClick } = useInput({ inputRef });
+
+    useEffect(() => {
+      const input = inputRef.current;
+      if (!input) return;
+
+      const handleInvalid = () => {
+        if (setNumberError) {
+          setNumberError(InputError.required);
+        }
+      };
+
+      input.addEventListener('invalid', handleInvalid);
+      return () => input.removeEventListener('invalid', handleInvalid);
+    }, [setNumberError]);
 
     return (
       <ParentInput
@@ -133,8 +163,10 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputHtmlProps>(
             disabled={disabled}
             placeholder={placeholder}
             onChange={handleChange}
+            onBlur={handleBlur}
             onKeyDown={handleKeyDown}
             onPaste={handlePaste}
+            required={required}
             {...props}
           />
         </div>

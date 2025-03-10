@@ -3,6 +3,7 @@ import {
   FocusEvent,
   forwardRef,
   TextareaHTMLAttributes,
+  useEffect,
   useImperativeHandle,
   useRef,
 } from 'react';
@@ -66,6 +67,21 @@ const TextAreaInput = forwardRef<HTMLTextAreaElement, TextAreaInputHtmlProps>(
       }
     };
 
+    useEffect(() => {
+      const textarea = textAreaRef.current;
+      if (!textarea) return;
+
+      const handleInvalid = (event: Event) => {
+        event.preventDefault();
+        if (setTextAreaError) {
+          setTextAreaError(InputError.required);
+        }
+      };
+
+      textarea.addEventListener('invalid', handleInvalid);
+      return () => textarea.removeEventListener('invalid', handleInvalid);
+    }, [setTextAreaError]);
+
     return (
       <ParentInput
         label={label}
@@ -99,6 +115,7 @@ const TextAreaInput = forwardRef<HTMLTextAreaElement, TextAreaInputHtmlProps>(
             })}
             disabled={disabled}
             maxLength={maxLength}
+            required={required}
             {...restProps}
           />
         </div>

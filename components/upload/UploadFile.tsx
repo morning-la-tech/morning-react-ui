@@ -13,6 +13,7 @@ import { ParentInput } from 'morning-react-ui/components';
 import { Button, ButtonVariant } from 'morning-react-ui/components/buttons';
 import { useToast } from 'morning-react-ui/components/Context/ToastContext';
 import { uploadFile } from 'morning-react-ui/services/googleCloudStorage';
+import { InputError } from 'morning-react-ui/utils/error';
 import { generateFileName } from 'morning-react-ui/utils/file';
 import styles from './uploadFile.module.scss';
 
@@ -26,10 +27,13 @@ interface UploadFileProps {
   destinationPath: string;
   onChange: Dispatch<string>;
   isError?: boolean;
+  setFileError?: (error: InputError) => void;
+  errorText?: string;
   fileType?: string;
   errorMessage?: string;
   maxFileSize?: number;
   maxSizeErrorMessage?: string;
+  required?: boolean;
 }
 
 const UploadFile = ({
@@ -41,12 +45,15 @@ const UploadFile = ({
   destinationBucket,
   destinationPath,
   onChange,
+  setFileError,
   isError = false,
   fileType,
   errorMessage = 'Upload Error',
   maxFileSize = 10,
   maxSizeErrorMessage = 'Uploaded file is too large',
   noBackground = false,
+  errorText,
+  required = false,
 }: UploadFileProps & { noBackground?: boolean }) => {
   const { addToast } = useToast();
   const [hasError, setHasError] = useState<boolean>(isError);
@@ -84,17 +91,47 @@ const UploadFile = ({
     onChange(`${destinationBucket}/${generatedFileName}`);
   };
 
+  useEffect(() => {
+    const input = fileInputRef.current;
+    if (!input) return;
+
+    const handleInvalid = (event: Event) => {
+      event.preventDefault();
+      if (setFileError) {
+        setFileError(InputError.required);
+      }
+      input.setCustomValidity(errorText || '');
+    };
+
+    const handleChange = () => {
+      input.setCustomValidity('');
+    };
+
+    input.addEventListener('invalid', handleInvalid);
+    input.addEventListener('change', handleChange);
+
+    return () => {
+      input.removeEventListener('invalid', handleInvalid);
+      input.removeEventListener('change', handleChange);
+    };
+  }, [setFileError]);
+
   const onUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (!files || files.length === 0) {
+      fileInputRef.current?.setCustomValidity(errorText || '');
       return;
     }
     const selectedFile = files[0];
-    // check size in megabytes, abort if too large
+
     if (selectedFile.size > maxFileSize * 1024 * 1024) {
       addToast('error', maxSizeErrorMessage);
+      setFileError?.(InputError.required);
+      fileInputRef.current?.setCustomValidity(errorText || maxSizeErrorMessage);
       return;
     }
+
+    fileInputRef.current?.setCustomValidity('');
     const reader = new FileReader();
     reader.onload = () => {
       const content = reader.result?.toString() || '';
@@ -107,7 +144,7 @@ const UploadFile = ({
   };
 
   return (
-    <ParentInput label={label} sublabel={sublabel}>
+    <ParentInput label={label} sublabel={sublabel} errorText={errorText}>
       <div className={classNames({ [styles.wrapper]: !noBackground })}>
         <div className={classNames([styles.upload, className])}>
           <input
@@ -116,6 +153,7 @@ const UploadFile = ({
             ref={fileInputRef}
             onChange={onUpload}
             accept={fileType}
+            required={required}
           />
           <div
             aria-label='preview'
