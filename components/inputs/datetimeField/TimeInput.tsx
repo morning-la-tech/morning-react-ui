@@ -33,7 +33,7 @@ type TimeInputProps = {
   value?: Date | null;
   min?: string;
   max?: string;
-  setTimeError?: (error: TimeError | null) => void;
+  setTimeError?: (error: TimeError) => void;
   onChange: Dispatch<Date | null>;
 } & BasicInputProps &
   InputProps;
@@ -147,8 +147,8 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputHtmlProps>(
       if (!inputValue) {
         onChange(null);
         setError(!!required);
-        if (setTimeError) {
-          setTimeError(required ? TimeError.required : null);
+        if (setTimeError && required) {
+          setTimeError(TimeError.required);
         }
         return;
       }

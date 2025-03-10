@@ -82,6 +82,22 @@ const TextInput = forwardRef<HTMLInputElement, TextInputHtmlProps>(
       }
     }, [setCursorPosition]);
 
+    useEffect(() => {
+      console.log('ici');
+      const input = inputRef.current;
+      if (!input) return;
+
+      const handleInvalid = () => {
+        if (setTextError) {
+          setTextError(InputError.required);
+          console.log('toto');
+        }
+      };
+
+      input.addEventListener('invalid', handleInvalid);
+      return () => input.removeEventListener('invalid', handleInvalid);
+    }, [setTextError]);
+
     const handleCursorChange = (position: number | null) => {
       if (position !== lastCursorPosition) {
         setLastCursorPosition(position);
@@ -160,6 +176,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputHtmlProps>(
             onChange={handleChange}
             onBlur={handleBlur}
             onClick={handleKeyUpOrClick}
+            required={required}
           />
           {showClearButton && (
             <Image

@@ -2,7 +2,7 @@ import { ChangeEvent, FocusEvent, forwardRef } from 'react';
 import { TextInput } from 'morning-react-ui/components';
 import { InputProps } from 'morning-react-ui/components/inputs/propsTypes';
 import { isValidFrenchPostalCode } from 'morning-react-ui/utils';
-import { PostalCodeError } from 'morning-react-ui/utils/error';
+import { InputError, PostalCodeError } from 'morning-react-ui/utils/error';
 
 type PostalCodeInputProps = Omit<InputProps, 'type'> & {
   value: string;
@@ -24,6 +24,12 @@ const PostalCodeInput = forwardRef<HTMLInputElement, PostalCodeInputProps>(
       }
     };
 
+    const handleTextError = (error: InputError) => {
+      if (setPostalCodeError) {
+        setPostalCodeError(error as unknown as PostalCodeError);
+      }
+    };
+
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
       const inputValue = event.target.value.replace(/\D/g, '');
 
@@ -36,12 +42,13 @@ const PostalCodeInput = forwardRef<HTMLInputElement, PostalCodeInputProps>(
       <TextInput
         ref={ref}
         {...props}
-        type='text'
         inputMode='numeric'
         maxLength={5}
         value={value}
         onChange={handleChange}
         onBlur={handleBlur}
+        required={required}
+        setTextError={handleTextError}
       />
     );
   },
