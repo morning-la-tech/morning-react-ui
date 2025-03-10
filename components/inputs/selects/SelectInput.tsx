@@ -49,6 +49,7 @@ const SelectInput = ({
     setHighlightedIndex,
     highlightedIndex,
     optionRefs,
+    maxHeight,
   } = useSelectInput({
     options,
     selectedOption,
@@ -83,9 +84,7 @@ const SelectInput = ({
         <div
           className={classNames(styles.dropdown, styles.selectList)}
           onMouseDown={(e) => e.preventDefault()}
-          style={{
-            maxHeight: `${6 + rowToDisplay * (sizeToNumber(finalSize) + 8) + (rowToDisplay - 1)}px`,
-          }}
+          style={{ maxHeight: maxHeight ? `${maxHeight}px` : 'auto' }}
         >
           {filteredOptions.length === 0 && (
             <span

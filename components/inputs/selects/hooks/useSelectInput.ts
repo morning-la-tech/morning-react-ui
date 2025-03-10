@@ -27,13 +27,38 @@ const useSelectInput = ({
   onChange,
   required,
   setSelectError,
+  rowToDisplay,
 }: UseSelectInputProps) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [isDropdownDisplayed, setIsDropdownDisplayed] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState<number | null>(0);
+  const [maxHeight, setMaxHeight] = useState(0);
   const [inputValue, setInputValue] = useState<string>(
     selectedOption?.label || '',
   );
+
+  // Calculate the height to display the right number of elements before scrolling
+  useEffect(() => {
+    if (!isDropdownDisplayed || optionRefs.length === 0) {
+      setMaxHeight(0);
+      return;
+    }
+    requestAnimationFrame(() => {
+      const refs = optionRefs
+        .map((ref) => ref.current)
+        .filter((el): el is HTMLDivElement => el !== null);
+
+      if (refs.length === 0) {
+        setMaxHeight(0);
+        return;
+      }
+      const rowCount = Math.min(rowToDisplay, refs.length);
+      const totalHeight = refs
+        .slice(0, rowCount)
+        .reduce((acc, el) => acc + el.clientHeight, 10);
+      setMaxHeight(totalHeight);
+    });
+  }, [isDropdownDisplayed]);
 
   useEffect(() => {
     setInputValue(selectedOption?.label || '');
@@ -132,6 +157,7 @@ const useSelectInput = ({
     handleSelect,
     optionRefs,
     setIsDropdownDisplayed,
+    maxHeight,
   };
 };
 
