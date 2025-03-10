@@ -40,7 +40,6 @@ const MultiSelect = ({
     keyboardNavigation,
     wrapperRef,
     checkboxRefs,
-    setCheckboxRefs,
     inputRef,
     inputValue,
     handleTextChange,
@@ -120,7 +119,6 @@ const MultiSelect = ({
               setHoveredIndex={setHighlightedIndex}
               isSelectAll={displaySelectAll}
               checkboxRefs={checkboxRefs}
-              setCheckboxRefs={setCheckboxRefs}
             />
           ) : (
             <span
