@@ -7,7 +7,7 @@ import {
   setHours,
   setMinutes,
 } from 'date-fns';
-import { TimeError } from './error';
+import { DateError, TimeError } from './error';
 
 /**
  * Given a string in format XX/XX/XXXX
@@ -77,6 +77,43 @@ export const isDateWithinEdges = (
   }
 
   return isRefBeforeMax && isRefAfterMin;
+};
+
+/**
+ * Given 3 dates
+ * Will check if first date is between the two others
+ * and return a DateError if not
+ */
+export const dateWithinEdgesError = (
+  date: string,
+  minEdge?: string,
+  maxEdge?: string,
+): DateError | null => {
+  const [day, month, year] = stringToDate(date);
+  const reference = new Date(roundUpYear(year), month - 1, day);
+  let isRefAfterMin = true;
+  let isRefBeforeMax = true;
+
+  if (minEdge && isStringValidAsDate(minEdge)) {
+    const [minDay, minMonth, minYear] = stringToDate(minEdge);
+    const minTime = new Date(roundUpYear(minYear), minMonth - 1, minDay);
+    isRefAfterMin = isEqual(reference, minTime) || isAfter(reference, minTime);
+  }
+
+  if (maxEdge && isStringValidAsDate(maxEdge)) {
+    const [maxDay, maxMonth, maxYear] = stringToDate(maxEdge);
+    const maxTime = new Date(roundUpYear(maxYear), maxMonth - 1, maxDay);
+    isRefBeforeMax = isEqual(reference, maxTime) || isAfter(maxTime, reference);
+  }
+
+  if (minEdge && maxEdge && (!isRefBeforeMax || !isRefAfterMin)) {
+    return DateError.dateWithinEdges;
+  } else if (!isRefBeforeMax) {
+    return DateError.dateAfterMax;
+  } else if (!isRefAfterMin) {
+    return DateError.dateBeforeMin;
+  }
+  return null;
 };
 
 /**

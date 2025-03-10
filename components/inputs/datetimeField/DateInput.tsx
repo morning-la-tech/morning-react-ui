@@ -14,12 +14,13 @@ import useIsMobile from 'morning-react-ui/components/hooks/useIsMobile';
 import ParentInput from 'morning-react-ui/components/inputs/ParentInput';
 import { OptionalDate } from 'morning-react-ui/types';
 import {
-  isDateWithinEdges,
+  dateWithinEdgesError,
   isStringValidAsDate,
   roundUpYear,
   stringToDate,
 } from 'morning-react-ui/utils/datetimeUtils';
 import { Size } from 'morning-react-ui/utils/Enum';
+import { DateError } from 'morning-react-ui/utils/error';
 import { newCharInString } from 'morning-react-ui/utils/stringUtils';
 import styles from '../input.module.css';
 import { BasicInputProps, InputProps } from '../propsTypes';
@@ -30,6 +31,7 @@ type DateInputProps = {
   value?: Date | null;
   from?: string;
   to?: string;
+  setDateError?: (error: DateError | null) => void;
   onChange: (time: OptionalDate) => void;
 } & BasicInputProps &
   InputProps;
@@ -54,7 +56,9 @@ const DateInput = forwardRef<HTMLInputElement, DateInputHtmlProps>(
       to,
       onChange,
       placeholder = 'JJ/MM/AAAA',
+      setDateError,
       errorText,
+      required,
       ...props
     },
     ref,
@@ -201,18 +205,7 @@ const DateInput = forwardRef<HTMLInputElement, DateInputHtmlProps>(
       const newValue = event.target.value;
       const reformatedNewValue = reformatDate(newValue, event);
 
-      if (reformatedNewValue == null) {
-        setInputValue(reformatedNewValue);
-        setError(false);
-        return;
-      }
-
-      const validAsDate = isStringValidAsDate(reformatedNewValue);
-
-      setError(!validAsDate);
-
-      if (validAsDate) {
-        setError(!isDateWithinEdges(reformatedNewValue, from, to));
+      if (isStringValidAsDate(reformatedNewValue)) {
         setInputValue(reformatedNewValue);
       }
     };
@@ -220,21 +213,40 @@ const DateInput = forwardRef<HTMLInputElement, DateInputHtmlProps>(
     const handleBlur = () => {
       if (!inputValue) {
         onChange(null);
-        setError(false);
-        return;
+      } else {
+        const [day, month, year] = stringToDate(inputValue);
+        const sanitizedDate = setMilliseconds(
+          setSeconds(new Date(roundUpYear(year), month - 1, day), 0),
+          0,
+        );
+        onChange(sanitizedDate);
       }
+    };
 
-      setError(!isDateWithinEdges(inputValue, from, to));
-      const [day, month, year] = stringToDate(inputValue);
-      const sanitizedDate = setMilliseconds(
-        setSeconds(new Date(roundUpYear(year), month - 1, day), 0),
-        0,
-      );
-      onChange(isDateWithinEdges(inputValue, from, to) ? sanitizedDate : null);
+    const validation = () => {
+      setError(false);
+      if (!value) {
+        setError(!!required);
+        if (setDateError) {
+          setDateError(required ? DateError.required : null);
+        }
+      } else {
+        const currentValue = format(value, 'dd/MM/yyyy');
+
+        const edgesError = dateWithinEdgesError(currentValue, from, to);
+        if (setDateError && edgesError) {
+          setDateError(edgesError);
+        }
+        const hasError = !!edgesError || !isStringValidAsDate(currentValue);
+        setError(hasError);
+      }
     };
 
     useEffect(() => {
-      setInputValue(value ? format(value, 'dd/MM/yyyy') : null);
+      if (inputValue !== null) {
+        validation();
+      }
+      setInputValue(value ? format(value, 'dd/MM/yyyy') : '');
     }, [value]);
 
     const handleFocus = () => {

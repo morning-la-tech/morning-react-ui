@@ -3,6 +3,7 @@ import {
   Dispatch,
   forwardRef,
   InputHTMLAttributes,
+  useEffect,
   useImperativeHandle,
   useRef,
   useState,
@@ -73,6 +74,10 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputHtmlProps>(
     useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
 
     const [error, setError] = useState<boolean>(false);
+
+    useEffect(() => {
+      setInputValue(value ? format(value, 'HH:mm') : null);
+    }, [value]);
 
     /**
      * Function used to reformat the input value to a readable time value

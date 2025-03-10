@@ -40,7 +40,7 @@ export default function Page() {
       <>
         <TimeInput {...props} size={Size.xs} />
         <TimeInput {...props} size={Size.s} />
-        <TimeInput required {...props} size={Size.m} />
+        <TimeInput {...props} size={Size.m} />
         <TimeInput {...props} size={Size.l} />
       </>
     );
