@@ -95,6 +95,7 @@ const MultiSelect = ({
         isError={isError}
         disabled={disabled}
         errorText={errorText}
+        required={required}
       />
       {isDropdownDisplayed && (
         <div

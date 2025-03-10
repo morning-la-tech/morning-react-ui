@@ -37,12 +37,17 @@ const useSelectInput = ({
     selectedOption?.label || '',
   );
 
+  const [optionRefs, setOptionRefs] = useState<
+    React.RefObject<HTMLDivElement | null>[]
+  >([]);
+
   // Calculate the height to display the right number of elements before scrolling
   useEffect(() => {
     if (!isDropdownDisplayed || optionRefs.length === 0) {
       setMaxHeight(0);
       return;
     }
+
     requestAnimationFrame(() => {
       const refs = optionRefs
         .map((ref) => ref.current)
@@ -52,13 +57,22 @@ const useSelectInput = ({
         setMaxHeight(0);
         return;
       }
+
       const rowCount = Math.min(rowToDisplay, refs.length);
-      const totalHeight = refs
-        .slice(0, rowCount)
-        .reduce((acc, el) => acc + el.clientHeight, 10);
-      setMaxHeight(totalHeight);
+      const paddingBottom = 15;
+      const lastRef = refs[rowCount - 1];
+      const firstRef = refs[0];
+
+      if (lastRef && firstRef) {
+        setMaxHeight(
+          lastRef.offsetTop -
+            firstRef.offsetTop +
+            lastRef.offsetHeight +
+            paddingBottom,
+        );
+      }
     });
-  }, [isDropdownDisplayed]);
+  }, [isDropdownDisplayed, optionRefs, rowToDisplay]);
 
   useEffect(() => {
     setInputValue(selectedOption?.label || '');
@@ -72,10 +86,9 @@ const useSelectInput = ({
     [inputValue, options],
   );
 
-  const optionRefs = useMemo(
-    () => filteredOptions.map(() => createRef<HTMLDivElement>()),
-    [filteredOptions],
-  );
+  useEffect(() => {
+    setOptionRefs(filteredOptions.map(() => createRef<HTMLDivElement>()));
+  }, [filteredOptions]);
 
   const handleTextChange = (value: string) => {
     setInputValue(value);
@@ -126,7 +139,6 @@ const useSelectInput = ({
         return;
     }
 
-    console.log('toto');
     setHighlightedIndex(newHighlightedIndex);
     if (newHighlightedIndex)
       optionRefs[newHighlightedIndex]?.current?.scrollIntoView({

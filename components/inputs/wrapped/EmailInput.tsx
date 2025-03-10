@@ -1,6 +1,6 @@
 import { FocusEvent, forwardRef } from 'react';
 import { InputProps } from 'morning-react-ui/components/inputs/propsTypes';
-import { EmailError } from 'morning-react-ui/utils/error';
+import { EmailError, InputError } from 'morning-react-ui/utils/error';
 import { isValidEmail } from 'morning-react-ui/utils/stringUtils';
 import TextInput from '../textField/TextInput';
 
@@ -23,16 +23,23 @@ const EmailInput = forwardRef<HTMLInputElement, EmailInputProps>(
       }
     };
 
+    const handleTextError = (error: InputError) => {
+      if (setEmailError) {
+        setEmailError(error as unknown as EmailError);
+      }
+    };
+
     return (
       <TextInput
         ref={ref}
         {...props}
-        type='text'
         inputMode='email'
         autoComplete='email'
         value={value}
         onChange={onChange}
         onBlur={handleBlur}
+        required={required}
+        setTextError={handleTextError}
       />
     );
   },
