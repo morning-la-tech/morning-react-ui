@@ -81,6 +81,27 @@ const useMultiSelect = ({
     );
   };
 
+  useEffect(() => {
+    if (setMultiSelectError && required && !validatedOptionsString) {
+      setMultiSelectError(InputError.required);
+    }
+  }, [required]);
+
+  useEffect(() => {
+    const input = inputRef.current;
+    if (!input) return;
+
+    const handleInvalid = (event: Event) => {
+      event.preventDefault();
+      if (setMultiSelectError) {
+        setMultiSelectError(InputError.required);
+      }
+    };
+
+    input.addEventListener('invalid', handleInvalid);
+    return () => input.removeEventListener('invalid', handleInvalid);
+  }, [setMultiSelectError]);
+
   // Filter options with a string
   const filterSelectionStateByKey = (value: string): SelectionState => {
     const inputValueLower = normalizeString(value);
@@ -394,6 +415,11 @@ const useMultiSelect = ({
     setInputValue(newValidatedOptionsString);
     setCursorPosition(newValidatedOptionsString.length);
     setDisplaySelectAll(true);
+    setCheckboxRefs(
+      Array.from({ length: Object.keys(options).length + 1 }, () =>
+        createRef(),
+      ),
+    );
   }, [options]);
 
   // Avoid click and dropdown to make the inputText blur
