@@ -126,7 +126,6 @@ const useSelectInput = ({
         return;
     }
 
-    console.log('toto');
     setHighlightedIndex(newHighlightedIndex);
     if (newHighlightedIndex)
       optionRefs[newHighlightedIndex]?.current?.scrollIntoView({
