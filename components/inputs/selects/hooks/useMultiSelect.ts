@@ -151,37 +151,65 @@ const useMultiSelect = ({
 
   // Calculate the height to display the right number of elements before scrolling
   useEffect(() => {
-    if (checkboxRefs.length === 0 || !isDropdownDisplayed) {
+    console.log('===== [DEBUG] Calcul de maxHeight lancé =====');
+    console.log('isDropdownDisplayed :', isDropdownDisplayed);
+    console.log('Nombre de checkboxRefs :', checkboxRefs.length);
+    console.log('rowToDisplay :', rowToDisplay);
+
+    if (!isDropdownDisplayed || checkboxRefs.length === 0) {
+      console.log(
+        '🚨 Pas de refs disponibles ou dropdown fermé. maxHeight = 0',
+      );
       setMaxHeight(0);
       return;
     }
 
     const rafId = requestAnimationFrame(() => {
       const refs = checkboxRefs
-        .map((ref) => ref.current)
-        .filter(Boolean) as HTMLInputElement[];
+        .map((ref, index) => {
+          console.log(`🔎 Vérification de ref ${index} :`, ref.current);
+          return ref.current;
+        })
+        .filter((el): el is HTMLInputElement => el !== null);
 
-      if (refs.length === 0) {
-        setMaxHeight(0);
+      console.log('✅ Nombre total de refs valides trouvées :', refs.length);
+
+      if (refs.length < rowToDisplay) {
+        console.log(
+          "⚠️ Nombre de refs insuffisant, attendons qu'ils soient attachés.",
+        );
+        return;
+      }
+
+      const firstRef = refs[0];
+      const lastRef = refs[Math.min(rowToDisplay, refs.length) - 1];
+
+      console.log('🔍 Première ref :', firstRef);
+      console.log('🔍 Dernière ref :', lastRef);
+
+      if (!firstRef || !lastRef || lastRef.offsetTop === 0) {
+        console.log(
+          '🚨 Problème : les refs ne sont pas encore bien attachées !',
+        );
         return;
       }
 
       const paddingBottom = 15;
-      const lastRef = refs[Math.min(rowToDisplay, refs.length) - 1];
-      const firstRef = refs[0];
+      const calculatedHeight =
+        lastRef.offsetTop -
+        firstRef.offsetTop +
+        lastRef.offsetHeight +
+        paddingBottom;
 
-      if (lastRef && firstRef) {
-        setMaxHeight(
-          lastRef.offsetTop -
-            firstRef.offsetTop +
-            lastRef.offsetHeight +
-            paddingBottom,
-        );
-      }
+      console.log('📏 Hauteur calculée :', calculatedHeight);
+      setMaxHeight(calculatedHeight);
     });
 
-    return () => cancelAnimationFrame(rafId);
-  }, [checkboxRefs, isDropdownDisplayed, rowToDisplay]);
+    return () => {
+      console.log('🧹 Annulation du calcul de maxHeight (cleanup)');
+      cancelAnimationFrame(rafId);
+    };
+  }, [checkboxRefs.length, isDropdownDisplayed, rowToDisplay, options]);
 
   const handleFocus = () => {
     setIsDropdownDisplayed(true);
@@ -394,6 +422,11 @@ const useMultiSelect = ({
     setInputValue(newValidatedOptionsString);
     setCursorPosition(newValidatedOptionsString.length);
     setDisplaySelectAll(true);
+    setCheckboxRefs(
+      Array.from({ length: Object.keys(options).length + 1 }, () =>
+        createRef(),
+      ),
+    );
   }, [options]);
 
   // Avoid click and dropdown to make the inputText blur
