@@ -1,12 +1,4 @@
-import {
-  createRef,
-  CSSProperties,
-  Dispatch,
-  RefObject,
-  SetStateAction,
-  useEffect,
-  useState,
-} from 'react';
+import { CSSProperties, RefObject, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import useIsMobile from 'morning-react-ui/components/hooks/useIsMobile';
 import ParentInput from 'morning-react-ui/components/inputs/ParentInput';
@@ -25,8 +17,7 @@ import Checkbox from './single/Checkbox';
 type MultiCheckboxProps = BasicInputProps & {
   options: SelectionState;
   onChange: (options: SelectionState) => void;
-  checkboxRefs?: RefObject<HTMLInputElement>[];
-  setCheckboxRefs?: Dispatch<SetStateAction<RefObject<HTMLInputElement>[]>>;
+  checkboxRefs?: RefObject<HTMLInputElement | null>[];
   inline?: boolean;
   styleCheckbox?: CSSProperties;
   styleMultiCheckbox?: CSSProperties;
@@ -42,7 +33,6 @@ const MultiCheckbox = ({
   options,
   onChange,
   checkboxRefs,
-  setCheckboxRefs,
   size,
   inline = false,
   label,
@@ -59,16 +49,15 @@ const MultiCheckbox = ({
 }: MultiCheckboxProps) => {
   const isMobile = useIsMobile();
   const finalSize = size ?? (isMobile ? Size.l : Size.m);
+
   const [selectAllCheckbox, setSelectAllCheckbox] = useState<TriState>(
     TriState.false,
   );
 
   const handleSelectAllChange = (value: TriState) => {
-    if (value === TriState.true) {
-      onChange(setAllTrue(options));
-    } else if (value === TriState.false) {
-      onChange(setAllFalse(options));
-    }
+    onChange(
+      value === TriState.true ? setAllTrue(options) : setAllFalse(options),
+    );
   };
 
   useEffect(() => {
@@ -80,19 +69,6 @@ const MultiCheckbox = ({
     ...(hoveredIndex === 0 && { backgroundColor: 'var(--cloud)' }),
   };
 
-  useEffect(() => {
-    if (!setCheckboxRefs) return;
-    const requiredRefsCount =
-      Object.keys(options).length + (isSelectAll ? 1 : 0);
-
-    setCheckboxRefs((prevRefs) => {
-      const newRefs = Array(requiredRefsCount)
-        .fill(null)
-        .map((_, index) => prevRefs[index] || createRef<HTMLInputElement>());
-      return newRefs;
-    });
-  }, [options, isSelectAll, setCheckboxRefs]);
-
   const checkboxes = (
     <>
       {Object.entries(options).map(([key, value], index) => {
@@ -101,11 +77,9 @@ const MultiCheckbox = ({
         const checkboxState = value ? TriState.true : TriState.false;
 
         const handleChange = (changedValue: TriState) => {
-          if (changedValue === TriState.true) {
-            onChange(updateSelectionState(options, key, true));
-          } else {
-            onChange(updateSelectionState(options, key, false));
-          }
+          onChange(
+            updateSelectionState(options, key, changedValue === TriState.true),
+          );
         };
 
         return (
@@ -119,17 +93,9 @@ const MultiCheckbox = ({
             style={styleCheckboxProps}
             disabled={disabled}
             isError={isError}
-            onMouseMove={() => {
-              if (setHoveredIndex) {
-                setHoveredIndex(adjustedIndex);
-              }
-            }}
-            onMouseLeave={() => {
-              if (setHoveredIndex) {
-                setHoveredIndex(null);
-              }
-            }}
-            ref={checkboxRefs ? checkboxRefs[index + +isSelectAll] : undefined}
+            onMouseMove={() => setHoveredIndex?.(adjustedIndex)}
+            onMouseLeave={() => setHoveredIndex?.(null)}
+            ref={checkboxRefs?.[adjustedIndex] ?? null}
           />
         );
       })}
@@ -160,17 +126,9 @@ const MultiCheckbox = ({
             size={size}
             disabled={disabled}
             isError={isError}
-            onMouseMove={() => {
-              if (setHoveredIndex) {
-                setHoveredIndex(0);
-              }
-            }}
-            ref={checkboxRefs ? checkboxRefs[0] : undefined}
-            onMouseLeave={() => {
-              if (setHoveredIndex) {
-                setHoveredIndex(null);
-              }
-            }}
+            onMouseMove={() => setHoveredIndex?.(0)}
+            ref={checkboxRefs?.[0] ?? null}
+            onMouseLeave={() => setHoveredIndex?.(null)}
             className={'font-weight-medium'}
           />
         )}

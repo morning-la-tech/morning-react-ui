@@ -20,7 +20,6 @@ import useIsMobile from 'morning-react-ui/components/hooks/useIsMobile';
 import ParentInput from 'morning-react-ui/components/inputs/ParentInput';
 import {
   isStringValidAsTime,
-  isTimeWithinEdges,
   stringToTime,
 } from 'morning-react-ui/utils/datetimeUtils';
 import { Size } from 'morning-react-ui/utils/Enum';
@@ -31,9 +30,9 @@ import useInput from '../textField/useInput';
 
 type TimeInputProps = {
   value?: Date | null;
-  min?: string;
-  max?: string;
-  setTimeError?: (error: TimeError | null) => void;
+  min?: Date | null;
+  max?: Date | null;
+  setTimeError?: (error: TimeError) => void;
   onChange: Dispatch<Date | null>;
 } & BasicInputProps &
   InputProps;
@@ -71,6 +70,22 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputHtmlProps>(
       value ? format(value, 'HH:mm') : null,
     );
     const inputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+      const input = inputRef.current;
+      if (!input) return;
+
+      const handleInvalid = (event: Event) => {
+        event.preventDefault();
+        if (setTimeError) {
+          setTimeError(TimeError.required);
+        }
+      };
+
+      input.addEventListener('invalid', handleInvalid);
+      return () => input.removeEventListener('invalid', handleInvalid);
+    }, [setTimeError]);
+
     useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
 
     const [error, setError] = useState<boolean>(false);
@@ -147,43 +162,38 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputHtmlProps>(
       if (!inputValue) {
         onChange(null);
         setError(!!required);
-        if (setTimeError) {
-          setTimeError(required ? TimeError.required : null);
+        if (setTimeError && required) {
+          setTimeError(TimeError.required);
         }
         return;
       }
 
-      const edgesError = isTimeWithinEdges(inputValue, min, max);
-      if (setTimeError) {
-        if (edgesError) {
-          setTimeError(edgesError);
-        }
-        if (
-          !isStringValidAsTime(inputValue) ||
-          inputValue.split(':').some((part) => part.length !== 2)
-        ) {
-          setTimeError(TimeError.formatTime);
-        }
+      const timeValue = stringToTime(inputValue);
+      if (!timeValue) {
+        setError(true);
+        setTimeError?.(TimeError.formatTime);
+        return;
       }
 
-      const hasError =
-        // First we check if the input is valid as time
-        !isStringValidAsTime(inputValue) ||
-        // Second we check if the input has 2 digits in the hour and minute part
-        inputValue.split(':').some((part) => part.length !== 2) ||
-        // Then we check if the input is within the min and max values
-        !!isTimeWithinEdges(inputValue, min, max);
-
-      setError(hasError);
-      const [hours, minutes] = stringToTime(inputValue);
-      onChange(
-        !hasError
-          ? setMilliseconds(
-              setSeconds(setMinutes(setHours(new Date(), hours), minutes), 0),
-              0,
-            )
-          : null,
+      const [hours, minutes] = timeValue;
+      const selectedTime = setMilliseconds(
+        setSeconds(setMinutes(setHours(new Date(), hours), minutes), 0),
+        0,
       );
+
+      if ((min && selectedTime < min) || (max && selectedTime > max)) {
+        setError(true);
+        setTimeError?.(
+          min && selectedTime < min
+            ? TimeError.timeBeforeMin
+            : TimeError.timeAfterMax,
+        );
+        return;
+      }
+
+      setError(false);
+      setTimeError?.(TimeError.valid);
+      onChange(selectedTime);
     };
 
     const { handleWrapperClick } = useInput({ inputRef });
@@ -219,6 +229,9 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputHtmlProps>(
             value={inputValue ?? ''}
             onChange={handleChange}
             onBlur={handleBlur}
+            required={required}
+            min={min ? format(min, 'HH:mm') : undefined}
+            max={max ? format(max, 'HH:mm') : undefined}
             {...props}
           />
         </div>

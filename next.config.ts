@@ -3,7 +3,6 @@ import { NextConfig } from 'next';
 const nextConfig: NextConfig = {
   output: 'standalone',
   experimental: {
-    serverMinification: false,
     serverActions: {
       bodySizeLimit: '20mb',
     },
