@@ -1,7 +1,9 @@
 import {
   ChangeEvent,
   ChangeEventHandler,
+  createRef,
   KeyboardEvent,
+  RefObject,
   useCallback,
   useEffect,
   useRef,
@@ -9,6 +11,7 @@ import {
 } from 'react';
 import { SelectionState } from 'morning-react-ui/types/dataTypes';
 import { Size } from 'morning-react-ui/utils/Enum';
+import { InputError } from 'morning-react-ui/utils/error';
 import { selectionStateTrueToString } from 'morning-react-ui/utils/selectionState/selectionStateConverters';
 import {
   atLeastOneTrue,
@@ -29,31 +32,32 @@ type UseMultiSelectProps = {
   onChange: (newSelection: SelectionState) => void;
   size: Size;
   rowToDisplay: number;
+  required?: boolean;
+  setMultiSelectError?: (error: InputError) => void;
 };
 
 const useMultiSelect = ({
   options,
   onChange,
-  size,
   rowToDisplay,
+  required,
+  setMultiSelectError,
 }: UseMultiSelectProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState<string>('');
   const [filteredOptions, setFilteredOptions] =
     useState<SelectionState>(options);
-  const [validatedOptions, setValidatedOptions] = useState<
-    SelectionState | undefined
-  >();
-  const [validatedOptionsString, setValidatedOptionsString] = useState('');
+  const validatedOptions = mergeAndValidateStates(options, options);
+  const validatedOptionsString = selectionStateTrueToString(validatedOptions);
   const [isDropdownDisplayed, setIsDropdownDisplayed] =
     useState<boolean>(false);
   const [highlightedIndex, setHighlightedIndex] = useState<number | null>(null);
   const [cursorPosition, setCursorPosition] = useState<number | null>(null);
   const [displaySelectAll, setDisplaySelectAll] = useState(true);
   const [checkboxRefs, setCheckboxRefs] = useState<
-    React.RefObject<HTMLInputElement>[]
-  >([]);
+    RefObject<HTMLInputElement | null>[]
+  >(Array.from({ length: Object.keys(options).length + 1 }, () => createRef()));
   const [savedCursorPosition, setSavedCursorPosition] = useState<number | null>(
     null,
   );
@@ -64,7 +68,39 @@ const useMultiSelect = ({
   ): void => {
     const newValue: string = e.target.value;
     setInputValue(newValue);
+    setCursorPosition(savedCursorPosition ?? newValue.length);
+    setSavedCursorPosition(null);
+
+    const newFilteredOptions = filterSelectionStateByKey(
+      newValue.replace(validatedOptionsString, ''),
+    );
+    setFilteredOptions(newFilteredOptions);
+
+    setDisplaySelectAll(
+      JSON.stringify(options) === JSON.stringify(newFilteredOptions),
+    );
   };
+
+  useEffect(() => {
+    if (setMultiSelectError && required && !validatedOptionsString) {
+      setMultiSelectError(InputError.required);
+    }
+  }, [required]);
+
+  useEffect(() => {
+    const input = inputRef.current;
+    if (!input) return;
+
+    const handleInvalid = (event: Event) => {
+      event.preventDefault();
+      if (setMultiSelectError) {
+        setMultiSelectError(InputError.required);
+      }
+    };
+
+    input.addEventListener('invalid', handleInvalid);
+    return () => input.removeEventListener('invalid', handleInvalid);
+  }, [setMultiSelectError]);
 
   // Filter options with a string
   const filterSelectionStateByKey = (value: string): SelectionState => {
@@ -77,7 +113,6 @@ const useMultiSelect = ({
       }, {});
   };
 
-  // Click outside of the component close the dropdown
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -88,36 +123,11 @@ const useMultiSelect = ({
       }
     };
 
-    // Only add the event listener if the dropdown is displayed
-    if (isDropdownDisplayed) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-
-    // Cleanup function to remove the event listener
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      if (isDropdownDisplayed) {
-        document.removeEventListener('mousedown', handleClickOutside);
-      }
+      document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [isDropdownDisplayed, wrapperRef]);
-
-  useEffect(() => {
-    if (savedCursorPosition !== null) {
-      setCursorPosition(savedCursorPosition);
-      setSavedCursorPosition(null);
-    }
-    setFilteredOptions(
-      filterSelectionStateByKey(inputValue.replace(validatedOptionsString, '')),
-    );
-    if (inputValue.replace(validatedOptionsString, '') !== '') {
-      setHighlightedIndex(0);
-    }
-  }, [inputValue]);
-
-  // Reset highlighted index on dropdown close
-  useEffect(() => {
-    setHighlightedIndex(!isDropdownDisplayed ? null : 0);
-  }, [isDropdownDisplayed]);
+  }, []);
 
   // Move cursor & camera
   const adjustCursorPosition = useCallback(() => {
@@ -149,55 +159,54 @@ const useMultiSelect = ({
     }
   }, [cursorPosition, inputValue.length, isDropdownDisplayed]);
 
-  // Make the highlighted index scroll into view
-  useEffect(() => {
-    if (highlightedIndex != null && highlightedIndex < checkboxRefs.length) {
-      const ref = checkboxRefs[highlightedIndex];
-      if (ref && ref.current) {
-        ref.current.scrollIntoView({
-          behavior: 'auto',
-          block: 'nearest',
-        });
-      }
+  const updateHighlightedIndex = (index: number | null) => {
+    setHighlightedIndex(index);
+
+    if (index != null && checkboxRefs[index]?.current) {
+      checkboxRefs[index].current.scrollIntoView({
+        behavior: 'auto',
+        block: 'nearest',
+      });
     }
-  }, [highlightedIndex, checkboxRefs]);
+  };
 
   // Calculate the height to display the right number of elements before scrolling
   useEffect(() => {
-    if (checkboxRefs.length === 0) {
+    if (checkboxRefs.length === 0 || !isDropdownDisplayed) {
       setMaxHeight(0);
       return;
     }
 
-    const paddingBottom = 15;
-    if (checkboxRefs.length < rowToDisplay) {
-      const lastRef = checkboxRefs[checkboxRefs.length - 1]?.current;
-      const firstRef = checkboxRefs[0]?.current;
+    const rafId = requestAnimationFrame(() => {
+      const refs = checkboxRefs
+        .map((ref) => ref.current)
+        .filter(Boolean) as HTMLInputElement[];
+
+      if (refs.length === 0) {
+        setMaxHeight(0);
+        return;
+      }
+
+      const paddingBottom = 15;
+      const lastRef = refs[Math.min(rowToDisplay, refs.length) - 1];
+      const firstRef = refs[0];
+
       if (lastRef && firstRef) {
         setMaxHeight(
           lastRef.offsetTop -
             firstRef.offsetTop +
-            firstRef.offsetHeight +
+            lastRef.offsetHeight +
             paddingBottom,
         );
       }
-    } else {
-      const lastRef = checkboxRefs[rowToDisplay - 1]?.current;
-      const firstRef = checkboxRefs[0]?.current;
-      if (lastRef && firstRef) {
-        setMaxHeight(
-          lastRef.offsetTop -
-            firstRef.offsetTop +
-            firstRef.offsetHeight +
-            paddingBottom,
-        );
-      }
-    }
-  }, [size, rowToDisplay, checkboxRefs]);
+    });
+
+    return () => cancelAnimationFrame(rafId);
+  }, [checkboxRefs, isDropdownDisplayed, rowToDisplay]);
 
   const handleFocus = () => {
     setIsDropdownDisplayed(true);
-    // Slow cursor movement to make sure it's applied after everything else
+    setHighlightedIndex(0);
     setTimeout(() => {
       const input = inputRef.current;
       if (input) {
@@ -209,27 +218,31 @@ const useMultiSelect = ({
 
   const handleBlur = () => {
     setIsDropdownDisplayed(false);
+    setHighlightedIndex(null);
+    if (setMultiSelectError) {
+      if (required && !validatedOptionsString) {
+        setMultiSelectError(InputError.required);
+      }
+    }
   };
 
   const handleTabOrArrowDown = () => {
     if (highlightedIndex === null) {
-      setHighlightedIndex(0);
+      updateHighlightedIndex(0);
     } else {
       const newIndex =
         (highlightedIndex + 1) %
         (Object.keys(filteredOptions).length + +displaySelectAll);
-      setHighlightedIndex(newIndex);
+      updateHighlightedIndex(newIndex);
     }
   };
 
   const handleArrowUp = () => {
-    if (highlightedIndex === null) {
-      return;
-    }
+    if (highlightedIndex === null) return;
     const optionsLength =
       Object.keys(filteredOptions).length + (displaySelectAll ? 1 : 0);
     const newIndex = (highlightedIndex + optionsLength - 1) % optionsLength;
-    setHighlightedIndex(newIndex);
+    updateHighlightedIndex(newIndex);
   };
 
   const makeHighlightedIndexSelected = () => {
@@ -394,30 +407,20 @@ const useMultiSelect = ({
     }
   };
 
-  // if options is modified => update filteredOptions and validatedOptions
   useEffect(() => {
-    setFilteredOptions({ ...filteredOptions, ...options });
-    setValidatedOptions(mergeAndValidateStates(validatedOptions, options));
-  }, [options]);
-
-  // if filteredOptions is modified =>
-  // check if it's the same as options and if it is it will display the select all checkbox
-  useEffect(() => {
-    setDisplaySelectAll(
-      JSON.stringify(options) === JSON.stringify(filteredOptions),
+    const newValidatedOptions = mergeAndValidateStates(options, options);
+    const newValidatedOptionsString =
+      selectionStateTrueToString(newValidatedOptions);
+    setFilteredOptions(options);
+    setInputValue(newValidatedOptionsString);
+    setCursorPosition(newValidatedOptionsString.length);
+    setDisplaySelectAll(true);
+    setCheckboxRefs(
+      Array.from({ length: Object.keys(options).length + 1 }, () =>
+        createRef(),
+      ),
     );
-  }, [filteredOptions]);
-
-  //If validatedOptions is modified => transform it into a string
-  useEffect(() => {
-    setValidatedOptionsString(selectionStateTrueToString(validatedOptions));
-  }, [validatedOptions]);
-
-  // if validatedOptionsString is updated => update input value and the cursorPosition
-  useEffect(() => {
-    setInputValue(validatedOptionsString);
-    setCursorPosition(validatedOptionsString.length);
-  }, [validatedOptionsString]);
+  }, [options]);
 
   // Avoid click and dropdown to make the inputText blur
   const handleDropdownMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {

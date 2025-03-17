@@ -4,6 +4,7 @@ import TextInput from 'morning-react-ui/components/inputs/textField/TextInput';
 import MultiCheckbox from 'morning-react-ui/components/inputs/toggleInputs/MultiCheckbox';
 import { SelectionState } from 'morning-react-ui/types/dataTypes';
 import { Size } from 'morning-react-ui/utils/Enum';
+import { InputError } from 'morning-react-ui/utils/error';
 import { atLeastOneTrue } from 'morning-react-ui/utils/selectionState/selectionStateInfo';
 import { setAllFalse } from 'morning-react-ui/utils/selectionState/selectionStateModifiers';
 import { SelectsProps } from '../propsTypes';
@@ -13,6 +14,8 @@ import styles from './selects.module.css';
 type MultiSelectProps = SelectsProps & {
   options: SelectionState;
   onChange: (newSelection: SelectionState) => void;
+  required?: boolean;
+  setMultiSelectError?: (error: InputError) => void;
 };
 
 const MultiSelect = ({
@@ -28,6 +31,8 @@ const MultiSelect = ({
   rowToDisplay = 8,
   emptyStateText = 'Aucun résultat dans la liste',
   errorText,
+  required,
+  setMultiSelectError,
 }: MultiSelectProps) => {
   const isMobile = useIsMobile();
   const finalSize = size ?? (isMobile ? Size.l : Size.m);
@@ -35,7 +40,6 @@ const MultiSelect = ({
     keyboardNavigation,
     wrapperRef,
     checkboxRefs,
-    setCheckboxRefs,
     inputRef,
     inputValue,
     handleTextChange,
@@ -51,7 +55,14 @@ const MultiSelect = ({
     maxHeight,
     handleFocus,
     handleBlur,
-  } = useMultiSelect({ options, onChange, size: finalSize, rowToDisplay });
+  } = useMultiSelect({
+    options,
+    onChange,
+    size: finalSize,
+    rowToDisplay,
+    required,
+    setMultiSelectError,
+  });
 
   return (
     <div ref={wrapperRef} className={styles.wrapper}>
@@ -84,6 +95,7 @@ const MultiSelect = ({
         isError={isError}
         disabled={disabled}
         errorText={errorText}
+        required={required}
       />
       {isDropdownDisplayed && (
         <div
@@ -108,7 +120,6 @@ const MultiSelect = ({
               setHoveredIndex={setHighlightedIndex}
               isSelectAll={displaySelectAll}
               checkboxRefs={checkboxRefs}
-              setCheckboxRefs={setCheckboxRefs}
             />
           ) : (
             <span
