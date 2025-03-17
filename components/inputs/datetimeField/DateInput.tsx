@@ -14,7 +14,6 @@ import useIsMobile from 'morning-react-ui/components/hooks/useIsMobile';
 import ParentInput from 'morning-react-ui/components/inputs/ParentInput';
 import { OptionalDate } from 'morning-react-ui/types';
 import {
-  dateWithinEdgesError,
   isStringValidAsDate,
   roundUpYear,
   stringToDate,
@@ -29,9 +28,9 @@ import CalendarComponent from './CalendarComponent';
 
 type DateInputProps = {
   value?: Date | null;
-  from?: string;
-  to?: string;
-  setDateError?: (error: DateError | null) => void;
+  min?: Date | null;
+  max?: Date | null;
+  setDateError?: (error: DateError) => void;
   onChange: (time: OptionalDate) => void;
 } & BasicInputProps &
   InputProps;
@@ -52,8 +51,8 @@ const DateInput = forwardRef<HTMLInputElement, DateInputHtmlProps>(
       value,
       disabled,
       isError,
-      from,
-      to,
+      min,
+      max,
       onChange,
       placeholder = 'JJ/MM/AAAA',
       setDateError,
@@ -73,6 +72,21 @@ const DateInput = forwardRef<HTMLInputElement, DateInputHtmlProps>(
     const [selected, setSelected] = useState<boolean>(false);
 
     const inputRef = useRef<HTMLInputElement>(null);
+    useEffect(() => {
+      const input = inputRef.current;
+      if (!input) return;
+
+      const handleInvalid = (event: Event) => {
+        event.preventDefault();
+        if (setDateError) {
+          setDateError(DateError.required);
+        }
+      };
+
+      input.addEventListener('invalid', handleInvalid);
+      return () => input.removeEventListener('invalid', handleInvalid);
+    }, [setDateError]);
+    const { handleWrapperClick } = useInput({ inputRef });
     useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
 
     const moveSelector = (
@@ -221,25 +235,42 @@ const DateInput = forwardRef<HTMLInputElement, DateInputHtmlProps>(
         );
         onChange(sanitizedDate);
       }
+      validation();
+    };
+
+    useEffect(() => {
+      edgesValidation();
+    }, [min, max]);
+
+    const edgesValidation = () => {
+      if (setDateError && value) {
+        if (min && max && (value < min || value > max)) {
+          setDateError(DateError.dateWithinEdges);
+        } else if (min && value < min) {
+          setDateError(DateError.dateBeforeMin);
+        } else if (max && value > max) {
+          setDateError(DateError.dateAfterMax);
+        } else {
+          setDateError(DateError.valid);
+        }
+      }
     };
 
     const validation = () => {
       setError(false);
-      if (!value) {
-        setError(!!required);
-        if (setDateError) {
-          setDateError(required ? DateError.required : null);
-        }
-      } else {
-        const currentValue = format(value, 'dd/MM/yyyy');
 
-        const edgesError = dateWithinEdgesError(currentValue, from, to);
-        if (setDateError && edgesError) {
-          setDateError(edgesError);
+      if (!value && required) {
+        setError(true);
+        if (setDateError) {
+          setDateError(DateError.required);
         }
-        const hasError = !!edgesError || !isStringValidAsDate(currentValue);
-        setError(hasError);
+        return;
       }
+
+      if (!value) {
+        return;
+      }
+      edgesValidation();
     };
 
     useEffect(() => {
@@ -252,8 +283,6 @@ const DateInput = forwardRef<HTMLInputElement, DateInputHtmlProps>(
     const handleFocus = () => {
       setSelected(true);
     };
-
-    const { handleWrapperClick } = useInput({ inputRef });
 
     return (
       <ParentInput
@@ -286,14 +315,13 @@ const DateInput = forwardRef<HTMLInputElement, DateInputHtmlProps>(
             onFocus={handleFocus}
             onChange={handleChange}
             onBlur={handleBlur}
+            required={required}
             {...props}
           />
         </div>
         <div>
           <CalendarComponent
             inputValue={inputValue}
-            from={from}
-            to={to}
             parentRef={inputRef}
             display={selected}
             setDisplay={setSelected}
