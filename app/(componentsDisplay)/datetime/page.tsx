@@ -31,8 +31,8 @@ export default function Page() {
     value?: OptionalDate;
     disabled?: boolean;
     isError?: boolean;
-    min?: string;
-    max?: string;
+    min?: Date;
+    max?: Date;
     onChange: (event: OptionalDate) => void;
     placeholder?: string;
   }) => {
@@ -141,20 +141,20 @@ export default function Page() {
               })}
               {renderTimeInputs({
                 label: '> 8:00',
-                min: '8:00',
+                min: new Date(0, 0, 0, 8, 0),
                 value: timeValue,
                 onChange: handleTimeChange,
               })}
               {renderTimeInputs({
                 label: '< 22:00',
-                max: '22:00',
+                max: new Date(0, 0, 0, 22, 0),
                 value: timeValue,
                 onChange: handleTimeChange,
               })}
               {renderTimeInputs({
                 label: '8:00 < x < 22:00',
-                min: '8:00',
-                max: '22:00',
+                min: new Date(0, 0, 0, 8, 0),
+                max: new Date(0, 0, 0, 22, 0),
                 value: timeValue,
                 onChange: handleTimeChange,
               })}
