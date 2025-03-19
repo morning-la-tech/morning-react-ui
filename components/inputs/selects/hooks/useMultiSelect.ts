@@ -82,8 +82,12 @@ const useMultiSelect = ({
   };
 
   useEffect(() => {
-    if (setMultiSelectError && required && !validatedOptionsString) {
-      setMultiSelectError(InputError.required);
+    if (setMultiSelectError) {
+      setMultiSelectError(
+        required && !validatedOptionsString
+          ? InputError.required
+          : InputError.valid,
+      );
     }
   }, [required]);
 
