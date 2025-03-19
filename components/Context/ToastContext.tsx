@@ -1,11 +1,5 @@
 'use client';
-import {
-  createContext,
-  PropsWithChildren,
-  useCallback,
-  useContext,
-  useState,
-} from 'react';
+import { createContext, useCallback, useContext, useState } from 'react';
 import Toast from 'morning-react-ui/components/utils/Toast';
 import styles from 'morning-react-ui/components/utils/toast.module.css';
 
@@ -33,7 +27,9 @@ const ToastContext = createContext<ToastContextProps>({} as ToastContextProps);
 
 export const useToast = () => useContext(ToastContext);
 
-export const ToastProvider = ({ children }: PropsWithChildren) => {
+export const ToastProvider: React.FC<{ children?: React.ReactNode }> = ({
+  children,
+}) => {
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
 
   const addToast = useCallback(
