@@ -30,3 +30,13 @@ export const enum PostalCodeError {
   required = InputError.required,
   formatPostalCode = 'formatPostalCode',
 }
+
+export enum LatitudeError {
+  required = InputError.required,
+  latitudeRange = 'latitudeRange',
+}
+
+export enum LongitudeError {
+  required = InputError.required,
+  longitudeRange = 'longitudeRange',
+}
