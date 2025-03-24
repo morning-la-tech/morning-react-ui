@@ -1,5 +1,4 @@
 import {
-  ChangeEvent,
   ChangeEventHandler,
   createRef,
   KeyboardEvent,
@@ -9,88 +8,149 @@ import {
   useRef,
   useState,
 } from 'react';
-import { SelectionState } from 'morning-react-ui/types/dataTypes';
+import { ComplexOption } from 'morning-react-ui/types/dataTypes';
 import { Size } from 'morning-react-ui/utils/Enum';
 import { InputError } from 'morning-react-ui/utils/error';
-import { selectionStateTrueToString } from 'morning-react-ui/utils/selectionState/selectionStateConverters';
-import {
-  atLeastOneTrue,
-  getCurrentElementFromCursorPosition,
-  getElementPositionInSelectionState,
-  mergeAndValidateStates,
-} from 'morning-react-ui/utils/selectionState/selectionStateInfo';
-import {
-  setAllFalse,
-  setAllTrue,
-  toggleSelectionStateAtIndex,
-  updateSelectionState,
-} from 'morning-react-ui/utils/selectionState/selectionStateModifiers';
 import { normalizeString } from 'morning-react-ui/utils/stringUtils';
 
+// Describes the props our useMultiSelect hook expects.
+// 'options': full list of ComplexOption items.
+// 'values': the currently selected values (strings).
+// 'onChange': callback to update the selected values.
+// 'size': the size category for styling (not used in the logic here).
+// 'rowToDisplay': number of options displayed before scrolling.
+// 'required': if true, a validation error is shown if no selection.
+// 'setMultiSelectError': method to set external error state.
 type UseMultiSelectProps = {
-  options: SelectionState;
-  onChange: (newSelection: SelectionState) => void;
+  options: ComplexOption[];
+  values: string[];
+  onChange: (newValues: string[]) => void;
   size: Size;
   rowToDisplay: number;
   required?: boolean;
   setMultiSelectError?: (error: InputError) => void;
 };
 
+// Represents the position of a selected label in the inputValue.
+// 'label': the string label,
+// 'start': start index in inputValue,
+// 'end': end index (exclusive) in inputValue.
+type LabelPosition = {
+  label: string;
+  start: number;
+  end: number;
+};
+
+// Manages multi-select behavior via an input that displays selected labels.
 const useMultiSelect = ({
   options,
+  values,
   onChange,
   rowToDisplay,
   required,
   setMultiSelectError,
 }: UseMultiSelectProps) => {
+  // Reference to the main wrapper, for detecting outside clicks.
   const wrapperRef = useRef<HTMLDivElement>(null);
+
+  // Reference to the input element.
   const inputRef = useRef<HTMLInputElement>(null);
-  const [inputValue, setInputValue] = useState<string>('');
+
+  // The current text state of the input.
+  const [inputValue, setInputValue] = useState('');
+
+  // The filtered list of options based on user-typed text.
   const [filteredOptions, setFilteredOptions] =
-    useState<SelectionState>(options);
-  const validatedOptions = mergeAndValidateStates(options, options);
-  const validatedOptionsString = selectionStateTrueToString(validatedOptions);
-  const [isDropdownDisplayed, setIsDropdownDisplayed] =
-    useState<boolean>(false);
+    useState<ComplexOption[]>(options);
+
+  // Indicates whether the dropdown is open.
+  const [isDropdownDisplayed, setIsDropdownDisplayed] = useState(false);
+
+  // Index for keyboard highlighting in the dropdown.
   const [highlightedIndex, setHighlightedIndex] = useState<number | null>(null);
+
+  // Tracks the cursor position within inputValue.
   const [cursorPosition, setCursorPosition] = useState<number | null>(null);
+
+  // If true, we show a "select all" item at the top of the dropdown.
   const [displaySelectAll, setDisplaySelectAll] = useState(true);
+
+  // An array of refs for each checkbox in the dropdown (one for each option +1 for select all).
   const [checkboxRefs, setCheckboxRefs] = useState<
     RefObject<HTMLInputElement | null>[]
-  >(Array.from({ length: Object.keys(options).length + 1 }, () => createRef()));
+  >(Array.from({ length: options.length + 1 }, () => createRef()));
+
+  // A place to store the cursor position in special cases.
   const [savedCursorPosition, setSavedCursorPosition] = useState<number | null>(
     null,
   );
+
+  // Max height for the dropdown, computed dynamically.
   const [maxHeight, setMaxHeight] = useState(0);
 
-  const handleTextChange: ChangeEventHandler<HTMLInputElement> = (
-    e: ChangeEvent<HTMLInputElement>,
-  ): void => {
-    const newValue: string = e.target.value;
+  // A list of label positions for each selected label in the inputValue.
+  const [labelPositions, setLabelPositions] = useState<LabelPosition[]>([]);
+
+  // Builds a string containing all selected labels plus ", " at the end, if any.
+  function buildSelectedLabelString() {
+    const selectedLabels = options
+      .filter((o) => values.includes(o.value))
+      .map((o) => o.label);
+    return selectedLabels.length ? selectedLabels.join(', ') + ', ' : '';
+  }
+
+  // Builds the labelPositions array by tracking each label's start/end in inputValue.
+  function buildPositions() {
+    const selectedOpts = options.filter((o) => values.includes(o.value));
+    const positions: LabelPosition[] = [];
+    let offset = 0;
+    for (const opt of selectedOpts) {
+      const piece = opt.label + ', ';
+      positions.push({
+        label: opt.label,
+        start: offset,
+        end: offset + piece.length,
+      });
+      offset += piece.length;
+    }
+    return positions;
+  }
+
+  // Extracts the typed part in the input, ignoring the portion that belongs to selected labels.
+  function getTypedPart(inputVal: string) {
+    const selectedLabelString = buildSelectedLabelString();
+    if (inputVal.startsWith(selectedLabelString)) {
+      return inputVal.slice(selectedLabelString.length);
+    }
+    return inputVal;
+  }
+
+  // Handler for text changes in the input.
+  const handleTextChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const newValue = e.target.value;
     setInputValue(newValue);
     setCursorPosition(savedCursorPosition ?? newValue.length);
     setSavedCursorPosition(null);
 
-    const newFilteredOptions = filterSelectionStateByKey(
-      newValue.replace(validatedOptionsString, ''),
-    );
+    // Filter out options based on the newly typed text.
+    const typedPart = getTypedPart(newValue);
+    const newFilteredOptions = filterOptionsByKey(typedPart);
     setFilteredOptions(newFilteredOptions);
-
-    setDisplaySelectAll(
-      JSON.stringify(options) === JSON.stringify(newFilteredOptions),
-    );
+    setDisplaySelectAll(newFilteredOptions.length === options.length);
   };
 
+  // If required = true and no values are selected, set an error.
   useEffect(() => {
     if (setMultiSelectError) {
       setMultiSelectError(
-        required && !validatedOptionsString
+        required && values.length === 0
           ? InputError.required
           : InputError.valid,
       );
     }
-  }, [required]);
+  }, [required, inputValue]);
 
+  // Attach an 'invalid' listener if using HTML validations.
   useEffect(() => {
     const input = inputRef.current;
     if (!input) return;
@@ -103,20 +163,22 @@ const useMultiSelect = ({
     };
 
     input.addEventListener('invalid', handleInvalid);
-    return () => input.removeEventListener('invalid', handleInvalid);
+    return () => {
+      input.removeEventListener('invalid', handleInvalid);
+    };
   }, [setMultiSelectError]);
 
-  // Filter options with a string
-  const filterSelectionStateByKey = (value: string): SelectionState => {
-    const inputValueLower = normalizeString(value);
-    return Object.keys(options)
-      .filter((key) => normalizeString(key).includes(inputValueLower))
-      .reduce((acc: SelectionState, key) => {
-        acc[key] = options[key];
-        return acc;
-      }, {});
+  // Filters options by label or value, using a normalized substring match.
+  const filterOptionsByKey = (search: string): ComplexOption[] => {
+    const inputValueLower = normalizeString(search);
+    return options.filter(
+      (o) =>
+        normalizeString(o.label).includes(inputValueLower) ||
+        normalizeString(o.value).includes(inputValueLower),
+    );
   };
 
+  // Closes the dropdown if the user clicks outside.
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -133,25 +195,18 @@ const useMultiSelect = ({
     };
   }, []);
 
-  // Move cursor & camera
+  // Scroll the input so that the cursor remains visible.
   const adjustCursorPosition = useCallback(() => {
     const input = inputRef.current;
     if (input && cursorPosition !== null && isDropdownDisplayed) {
-      // Assurez-vous que le curseur est défini correctement
       input.setSelectionRange(cursorPosition, cursorPosition);
 
-      // Définition d'un "padding" pour le défilement, ici 20% de la largeur de l'input
       const scrollPadding = input.offsetWidth * 0.05;
-
-      // Calcul du défilement nécessaire pour maintenir le curseur dans le "padding" visuel
-      // La position du curseur en proportion de la longueur totale du texte
-      const cursorProportion = cursorPosition / inputValue.length;
-
-      // Calcul de la position de défilement idéale en fonction de la proportion du curseur
+      const cursorProportion =
+        inputValue.length > 0 ? cursorPosition / inputValue.length : 0;
       const idealScrollPosition =
         input.scrollWidth * cursorProportion - scrollPadding;
 
-      // Ajustement du défilement pour essayer de centrer le curseur dans le "padding" visuel
       if (
         idealScrollPosition < input.scrollLeft + scrollPadding ||
         idealScrollPosition >
@@ -161,11 +216,11 @@ const useMultiSelect = ({
           idealScrollPosition - input.offsetWidth / 2 + scrollPadding;
       }
     }
-  }, [cursorPosition, inputValue.length, isDropdownDisplayed]);
+  }, [cursorPosition, inputValue, isDropdownDisplayed]);
 
+  // Sets the new highlighted index, and scrolls to it.
   const updateHighlightedIndex = (index: number | null) => {
     setHighlightedIndex(index);
-
     if (index != null && checkboxRefs[index]?.current) {
       checkboxRefs[index].current.scrollIntoView({
         behavior: 'auto',
@@ -174,7 +229,7 @@ const useMultiSelect = ({
     }
   };
 
-  // Calculate the height to display the right number of elements before scrolling
+  // Calculates dropdown maxHeight so only 'rowToDisplay' items are shown at once.
   useEffect(() => {
     if (checkboxRefs.length === 0 || !isDropdownDisplayed) {
       setMaxHeight(0);
@@ -183,9 +238,8 @@ const useMultiSelect = ({
 
     const rafId = requestAnimationFrame(() => {
       const refs = checkboxRefs
-        .map((ref) => ref.current)
+        .map((r) => r.current)
         .filter(Boolean) as HTMLInputElement[];
-
       if (refs.length === 0) {
         setMaxHeight(0);
         return;
@@ -205,9 +259,12 @@ const useMultiSelect = ({
       }
     });
 
-    return () => cancelAnimationFrame(rafId);
+    return () => {
+      cancelAnimationFrame(rafId);
+    };
   }, [checkboxRefs, isDropdownDisplayed, rowToDisplay]);
 
+  // On focus, open the dropdown, highlight first item, and move cursor to the end.
   const handleFocus = () => {
     setIsDropdownDisplayed(true);
     setHighlightedIndex(0);
@@ -220,217 +277,187 @@ const useMultiSelect = ({
     }, 0);
   };
 
+  // On blur, close the dropdown and set an error if 'required' is true but nothing selected.
   const handleBlur = () => {
     setIsDropdownDisplayed(false);
     setHighlightedIndex(null);
-    if (setMultiSelectError) {
-      if (required && !validatedOptionsString) {
-        setMultiSelectError(InputError.required);
-      }
+    if (setMultiSelectError && required && values.length === 0) {
+      setMultiSelectError(InputError.required);
     }
   };
 
+  // Moves the highlight one step downward in the dropdown list.
   const handleTabOrArrowDown = () => {
     if (highlightedIndex === null) {
       updateHighlightedIndex(0);
     } else {
-      const newIndex =
-        (highlightedIndex + 1) %
-        (Object.keys(filteredOptions).length + +displaySelectAll);
+      const totalCount = filteredOptions.length + (displaySelectAll ? 1 : 0);
+      const newIndex = (highlightedIndex + 1) % totalCount;
       updateHighlightedIndex(newIndex);
     }
   };
 
+  // Moves the highlight one step upward in the dropdown list.
   const handleArrowUp = () => {
     if (highlightedIndex === null) return;
-    const optionsLength =
-      Object.keys(filteredOptions).length + (displaySelectAll ? 1 : 0);
-    const newIndex = (highlightedIndex + optionsLength - 1) % optionsLength;
+    const totalCount = filteredOptions.length + (displaySelectAll ? 1 : 0);
+    const newIndex = (highlightedIndex + totalCount - 1) % totalCount;
     updateHighlightedIndex(newIndex);
   };
 
+  // Selects the currently highlighted item.
   const makeHighlightedIndexSelected = () => {
-    // Ensure the input field is focused if it's not already the active element
     if (document.activeElement !== inputRef.current) {
       inputRef.current?.focus();
     }
-
-    // Do nothing if no index is highlighted
-    if (highlightedIndex === null || Object.keys(filteredOptions).length < 1) {
+    if (highlightedIndex === null || filteredOptions.length < 1) {
       return;
     }
-
-    // Handle the "select all" functionality, if applicable
+    // If 'select all' is visible and highlighted.
     if (displaySelectAll && highlightedIndex === 0) {
-      // Toggle between selecting all options and deselecting all, based on current state
-      if (atLeastOneTrue(options)) {
-        onChange(setAllFalse(options)); // Deselect all options if at least one is currently selected
+      if (values.length > 0) {
+        onChange([]);
       } else {
-        onChange(setAllTrue(options)); // Select all options if none are currently selected
+        onChange(options.map((o) => o.value));
       }
-      return; // Exit the function after handling "select all"
+      return;
     }
-
-    // Update the selection state for a specific highlighted option, adjusting for "select all" option presence
-    onChange({
-      ...options,
-      ...toggleSelectionStateAtIndex(
-        filteredOptions,
-        highlightedIndex - +displaySelectAll, // Adjust index if "select all" is displayed
-      ),
-    });
+    const indexInFiltered = highlightedIndex - (displaySelectAll ? 1 : 0);
+    if (indexInFiltered < 0 || indexInFiltered >= filteredOptions.length) {
+      return;
+    }
+    const optionValue = filteredOptions[indexInFiltered].value;
+    if (values.includes(optionValue)) {
+      onChange(values.filter((v) => v !== optionValue));
+    } else {
+      onChange([...values, optionValue]);
+    }
   };
 
+  // On Enter, picks the highlighted item.
   const handleEnter = () => {
-    if (highlightedIndex === null || Object.keys(filteredOptions).length < 1) {
+    if (highlightedIndex === null || filteredOptions.length < 1) {
       return;
     }
     makeHighlightedIndexSelected();
   };
 
+  // Closes dropdown on Escape, and removes focus.
+  const handleEscape = () => {
+    setIsDropdownDisplayed(false);
+    inputRef.current?.blur();
+  };
+
+  // Moves cursor left by 1 character.
   const handleArrowLeft = () => {
-    if (!inputRef.current) {
-      return;
-    }
-
-    // Case where validated options exist and the cursor is within or at the start of these options
-    if (
-      validatedOptions &&
-      cursorPosition &&
-      validatedOptionsString.length >= cursorPosition
-    ) {
-      const currentElementKey = getCurrentElementFromCursorPosition(
-        validatedOptions,
-        cursorPosition,
-      );
-      if (currentElementKey) {
-        const newCursorPosition = getElementPositionInSelectionState(
-          validatedOptions,
-          currentElementKey,
-        )?.start;
-        if (newCursorPosition !== undefined) {
-          setCursorPosition(newCursorPosition);
-        }
-      }
-    } else if (cursorPosition) {
-      // Case for simply moving the cursor to the left
-      setCursorPosition(cursorPosition - 1);
-    }
+    if (cursorPosition === null) return;
+    setCursorPosition(Math.max(0, cursorPosition - 1));
   };
 
+  // Moves cursor right by 1 character.
   const handleArrowRight = () => {
-    if (cursorPosition === null || !inputRef.current) {
-      return;
-    }
-
-    // Case where validated options exist and the cursor is not at the end of these options
-    if (validatedOptions && cursorPosition < validatedOptionsString.length) {
-      const currentElementKey = getCurrentElementFromCursorPosition(
-        validatedOptions,
-        cursorPosition + 1,
-      );
-      if (currentElementKey) {
-        const newCursorPosition = getElementPositionInSelectionState(
-          validatedOptions,
-          currentElementKey,
-        )?.end;
-        if (newCursorPosition !== undefined) {
-          setCursorPosition(newCursorPosition);
-          return;
-        }
-      }
-    }
-    // Case for simply moving the cursor to the right
-    if (cursorPosition < inputValue.length) {
-      setCursorPosition(cursorPosition + 1);
-    }
+    if (cursorPosition === null) return;
+    setCursorPosition(Math.min(inputValue.length, cursorPosition + 1));
   };
 
-  const handleKeyAction = (
-    e: KeyboardEvent<HTMLInputElement | HTMLDivElement>, // Event from the keyboard action
-    getPosition: () => string | null, // Function to get the current element's key based on the cursor's position
-  ) => {
-    const currentElementKey = getPosition(); // Attempt to retrieve the current element's key
-    // Exit if no validated options are available or the cursor position is not set
-    if (!validatedOptions || cursorPosition === null) {
-      return;
-    }
-
-    if (currentElementKey) {
-      e.preventDefault(); // Prevent the default key action to manage cursor movement manually
-
-      // Attempt to retrieve the start position of the current element in the selection state
-      const elementStartPosition = getElementPositionInSelectionState(
-        validatedOptions,
-        currentElementKey,
-      )?.start;
-
-      if (elementStartPosition !== undefined) {
-        // Update the saved cursor position to the start of the current element
-        setSavedCursorPosition(elementStartPosition);
-      }
-
-      // Update the selection state based on the current action and adjust the cursor position accordingly
-      onChange(updateSelectionState(options, currentElementKey, false));
-      setCursorPosition(cursorPosition - currentElementKey.length - 2);
-    }
-  };
-
+  // On Backspace, remove an entire label if the cursor is within it, else remove one character.
   const handleBackspace = (
     e: KeyboardEvent<HTMLInputElement | HTMLDivElement>,
   ) => {
-    handleKeyAction(e, () =>
-      getCurrentElementFromCursorPosition(validatedOptions, cursorPosition),
+    if (cursorPosition === null) return;
+    if (cursorPosition === 0) return;
+    e.preventDefault();
+    const found = labelPositions.find(
+      (pos) => cursorPosition > pos.start && cursorPosition <= pos.end,
     );
+    if (found) {
+      const optToRemove = options.find((o) => o.label === found.label);
+      if (optToRemove) {
+        onChange(values.filter((v) => v !== optToRemove.value));
+      }
+      setCursorPosition(found.start);
+    } else {
+      const newVal =
+        inputValue.slice(0, cursorPosition - 1) +
+        inputValue.slice(cursorPosition);
+      setInputValue(newVal);
+      setCursorPosition(cursorPosition - 1);
+
+      // Re-filter the options based on the updated typed part.
+      const typedPartAfter = getTypedPart(newVal);
+      const newFiltered = filterOptionsByKey(typedPartAfter);
+      setFilteredOptions(newFiltered);
+      setDisplaySelectAll(newFiltered.length === options.length);
+    }
   };
 
+  // On Delete, remove an entire label if the cursor is within it, else remove one character.
   const handleDelete = (
     e: KeyboardEvent<HTMLInputElement | HTMLDivElement>,
   ) => {
-    if (!validatedOptions || cursorPosition === null) {
-      return;
-    }
-    handleKeyAction(e, () =>
-      getCurrentElementFromCursorPosition(validatedOptions, cursorPosition + 1),
+    if (cursorPosition === null) return;
+    if (cursorPosition >= inputValue.length) return;
+    e.preventDefault();
+    const found = labelPositions.find(
+      (pos) => cursorPosition >= pos.start && cursorPosition < pos.end,
     );
+    if (found) {
+      const optToRemove = options.find((o) => o.label === found.label);
+      if (optToRemove) {
+        onChange(values.filter((v) => v !== optToRemove.value));
+      }
+      setCursorPosition(found.start);
+    } else {
+      const newVal =
+        inputValue.slice(0, cursorPosition) +
+        inputValue.slice(cursorPosition + 1);
+      setInputValue(newVal);
+
+      // Re-filter the options based on the updated typed part.
+      const typedPartAfter = getTypedPart(newVal);
+      const newFiltered = filterOptionsByKey(typedPartAfter);
+      setFilteredOptions(newFiltered);
+      setDisplaySelectAll(newFiltered.length === options.length);
+    }
   };
 
-  const handleEscape = () => {
-    setIsDropdownDisplayed(false);
-    inputRef?.current?.blur();
-  };
-
+  // Default behavior if user types while the cursor is not at the end.
   const handleDefault = (
     e: KeyboardEvent<HTMLInputElement | HTMLDivElement>,
   ) => {
-    if (cursorPosition === null) {
-      return;
-    }
+    if (cursorPosition === null) return;
     if (cursorPosition < inputValue.length) {
       e.preventDefault();
     }
   };
 
+  // Rebuilds everything when 'options' or 'values' change.
   useEffect(() => {
-    const newValidatedOptions = mergeAndValidateStates(options, options);
-    const newValidatedOptionsString =
-      selectionStateTrueToString(newValidatedOptions);
     setFilteredOptions(options);
-    setInputValue(newValidatedOptionsString);
-    setCursorPosition(newValidatedOptionsString.length);
+
+    const labelList = options
+      .filter((o) => values.includes(o.value))
+      .map((o) => o.label)
+      .join(', ');
+
+    const newInputValue = labelList ? labelList + ', ' : '';
+    setInputValue(newInputValue);
+    setCursorPosition(newInputValue.length);
     setDisplaySelectAll(true);
     setCheckboxRefs(
-      Array.from({ length: Object.keys(options).length + 1 }, () =>
-        createRef(),
-      ),
+      Array.from({ length: options.length + 1 }, () => createRef()),
     );
-  }, [options]);
 
-  // Avoid click and dropdown to make the inputText blur
+    const built = buildPositions();
+    setLabelPositions(built);
+  }, [options, values]);
+
+  // Prevent blur if we click inside the dropdown.
   const handleDropdownMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
   };
 
+  // Main keyboard navigation handler.
   const keyboardNavigation = (
     e: React.KeyboardEvent<HTMLInputElement | HTMLDivElement>,
   ) => {

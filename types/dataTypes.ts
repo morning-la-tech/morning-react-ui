@@ -13,6 +13,12 @@ export type SelectionState = {
   [key: string]: boolean;
 };
 
+export type ComplexOption = {
+  value: string;
+  label: string;
+  img?: string;
+};
+
 export type SelectOption = {
   id: string;
   label: string;
