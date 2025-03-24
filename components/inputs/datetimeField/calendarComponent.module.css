@@ -35,6 +35,11 @@
     font-family: var(--inter);
 }
 
+.calendarHeaderActions {
+    display: flex;
+    flex-direction: row;
+}
+
 .calendarHeaderActions img {
     cursor: pointer;
 }
