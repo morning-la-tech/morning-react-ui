@@ -445,6 +445,7 @@ const useMultiSelect = ({
         handleArrowUp();
         break;
       case 'Enter':
+        e.preventDefault();
         handleEnter();
         break;
       case 'ArrowLeft':

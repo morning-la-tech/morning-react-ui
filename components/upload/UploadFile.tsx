@@ -95,8 +95,7 @@ const UploadFile = ({
     const input = fileInputRef.current;
     if (!input) return;
 
-    const handleInvalid = (event: Event) => {
-      event.preventDefault();
+    const handleInvalid = () => {
       if (setFileError) {
         setFileError(InputError.required);
       }
@@ -149,7 +148,7 @@ const UploadFile = ({
         <div className={classNames([styles.upload, className])}>
           <input
             type='file'
-            style={{ display: 'none' }}
+            style={{ opacity: 0, position: 'absolute', zIndex: -1 }}
             ref={fileInputRef}
             onChange={onUpload}
             accept={fileType}
