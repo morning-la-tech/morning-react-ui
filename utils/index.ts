@@ -1,7 +1,5 @@
-export * from './selectionState/selectionStateConverters';
+export * from './selectOption/selectOptionConverters';
 
-export * from './selectionState/selectionStateInfo';
-
-export * from './selectionState/selectionStateModifiers';
+export * from './selectOption/selectOptionInfo';
 
 export * from './stringUtils';

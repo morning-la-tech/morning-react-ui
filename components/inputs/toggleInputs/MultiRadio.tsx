@@ -1,16 +1,16 @@
 import React from 'react';
 import classNames from 'classnames';
 import ParentInput from 'morning-react-ui/components/inputs/ParentInput';
-import { SelectionState } from 'morning-react-ui/types/dataTypes';
+import { SelectOption } from 'morning-react-ui/types/dataTypes';
 import { Size } from 'morning-react-ui/utils/Enum';
-import { setAtTrueAndOthersAtFalse } from 'morning-react-ui/utils/selectionState/selectionStateModifiers';
 import { BasicInputProps } from '../propsTypes';
 import styles from './multiToggleInputs.module.css';
 import Radio from './single/Radio';
 
 type MultiRadioProps = BasicInputProps & {
-  options: SelectionState;
-  onChange: (options: SelectionState) => void;
+  options: SelectOption[];
+  value: string;
+  onChange: (option: string) => void;
   inline?: boolean;
   isError?: boolean;
 };
@@ -18,6 +18,7 @@ type MultiRadioProps = BasicInputProps & {
 const MultiRadio = ({
   options,
   onChange,
+  value,
   size = Size.m,
   label,
   sublabel,
@@ -26,20 +27,21 @@ const MultiRadio = ({
   inline = true,
   isError = false,
 }: MultiRadioProps) => {
+  console.log(value);
   const radios = (
     <>
-      {Object.entries(options).map(([key, value]) => {
+      {options.map((option) => {
         const handleChange = (changedValue: boolean) => {
           if (!changedValue) {
-            onChange(setAtTrueAndOthersAtFalse(options, key));
+            onChange(option.id);
           }
         };
 
         return (
           <Radio
-            key={key}
-            label={key}
-            value={value}
+            key={option.id}
+            label={option.label}
+            value={value === option.id}
             onChange={handleChange}
             disabled={disabled}
             size={size}

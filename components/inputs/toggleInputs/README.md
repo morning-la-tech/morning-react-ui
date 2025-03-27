@@ -78,8 +78,8 @@ The `MultiCheckbox` component allows rendering multiple checkboxes with a shared
 
 | Prop                 | Type                                   | Description                                                            |
 | -------------------- | -------------------------------------- | ---------------------------------------------------------------------- |
-| `options`            | `SelectionState`                       | Object with key-value pairs representing the options and their states. |
-| `onChange`           | `(options: SelectionState) => void`    | Callback function when the state of any option changes.                |
+| `options`            | `SelectOption[]`                       | Object with key-value pairs representing the options and their states. |
+| `onChange`           | `(options: SelectOption[]) => void`    | Callback function when the state of any option changes.                |
 | `size`               | `Size` (optional)                      | Adjusts the size of all child checkboxes. Default is `Size.m`.         |
 | `inline`             | `boolean` (optional)                   | If `true`, displays the checkboxes in a row. Default is `false`.       |
 | `label`, `sublabel`  | `string`                               | Group label and sublabel for the set of checkboxes.                    |
@@ -98,24 +98,23 @@ The `MultiCheckbox` component allows rendering multiple checkboxes with a shared
 import MultiCheckbox from './path/to/MultiCheckbox';
 import { Size } from './path/to/utils/Enum';
 
-type SelectionState = {
-  [key: string]: boolean;
-};
-
 function App() {
-  const [options, setOptions] = useState<SelectionState>({
-    option1: true,
-    option2: false,
-    option3: false,
-  });
+  const options = [
+    { id: 'option1', label: 'Option 1' },
+    { id: 'option2', label: 'Option 2' },
+    { id: 'option3', label: 'Option 3' },
+  ];
 
-  const handleChange = (newOptions: SelectionState) => {
-    setOptions(newOptions);
+  const [values, setValues] = useState<string[]>([]);
+
+  const handleChange = (newValues: string[]) => {
+    setValues(newValues);
   };
 
   return (
     <MultiCheckbox
       options={options}
+      values={values}
       onChange={handleChange}
       label='Example MultiCheckbox'
       sublabel='Select multiple options'
