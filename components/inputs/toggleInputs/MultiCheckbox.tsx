@@ -2,14 +2,14 @@ import { CSSProperties, RefObject, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import useIsMobile from 'morning-react-ui/components/hooks/useIsMobile';
 import ParentInput from 'morning-react-ui/components/inputs/ParentInput';
-import { ComplexOption, TriState } from 'morning-react-ui/types/dataTypes';
+import { SelectOption, TriState } from 'morning-react-ui/types/dataTypes';
 import { Size } from 'morning-react-ui/utils/Enum';
 import { BasicInputProps } from '../propsTypes';
 import styles from './multiToggleInputs.module.css';
 import Checkbox from './single/Checkbox';
 
 type MultiCheckboxProps = BasicInputProps & {
-  options: ComplexOption[];
+  options: SelectOption[];
   selectedValues: string[];
   onChange: (newValues: string[]) => void;
   checkboxRefs?: RefObject<HTMLInputElement | null>[];
@@ -65,7 +65,7 @@ const MultiCheckbox = ({
 
   const handleSelectAllChange = (value: TriState) => {
     if (value === TriState.true) {
-      onChange(options.map((o) => o.value));
+      onChange(options.map((o) => o.id));
     } else {
       onChange([]);
     }
@@ -111,21 +111,21 @@ const MultiCheckbox = ({
           const adjustedIndex = isSelectAll ? index + 1 : index;
           const isHovered = adjustedIndex === hoveredIndex;
 
-          const checkboxState = selectedValues.includes(opt.value)
+          const checkboxState = selectedValues.includes(opt.id)
             ? TriState.true
             : TriState.false;
 
           const handleChange = (newValue: TriState) => {
             if (newValue === TriState.true) {
-              onChange([...selectedValues, opt.value]);
+              onChange([...selectedValues, opt.id]);
             } else {
-              onChange(selectedValues.filter((val) => val !== opt.value));
+              onChange(selectedValues.filter((val) => val !== opt.id));
             }
           };
 
           return (
             <Checkbox
-              key={opt.value}
+              key={opt.id}
               label={opt.label}
               className={classNames({
                 [styles.checkboxHovered]: isHovered,

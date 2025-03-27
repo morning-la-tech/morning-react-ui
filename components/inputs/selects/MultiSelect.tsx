@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import useIsMobile from 'morning-react-ui/components/hooks/useIsMobile';
 import TextInput from 'morning-react-ui/components/inputs/textField/TextInput';
 import MultiCheckbox from 'morning-react-ui/components/inputs/toggleInputs/MultiCheckbox';
-import { ComplexOption } from 'morning-react-ui/types/dataTypes';
+import { SelectOption } from 'morning-react-ui/types';
 import { Size } from 'morning-react-ui/utils/Enum';
 import { InputError } from 'morning-react-ui/utils/error';
 import { SelectsProps } from '../propsTypes';
@@ -10,7 +10,7 @@ import useMultiSelect from './hooks/useMultiSelect';
 import styles from './selects.module.css';
 
 type MultiSelectProps = SelectsProps & {
-  options: ComplexOption[];
+  options: SelectOption[];
   values: string[];
   onChange: (newSelection: string[]) => void;
   required?: boolean;

@@ -8,10 +8,10 @@ import Column from 'morning-react-ui/components/layout/Column';
 import Columns from 'morning-react-ui/components/layout/Columns';
 import Container from 'morning-react-ui/components/layout/Container';
 import Navigation from 'morning-react-ui/components/layout/Navigation';
-import { SelectOption } from 'morning-react-ui/types'; // { id, label }
+import { SelectOption } from 'morning-react-ui/types';
 import { Size } from 'morning-react-ui/utils/Enum';
 
-const initialOptions: SelectOption[] = [
+const options: SelectOption[] = [
   { id: 'amsterdam', label: 'Amsterdam' },
   { id: 'argentine', label: 'Argentine' },
   { id: 'auber', label: 'Auber' },
@@ -61,11 +61,6 @@ const initialOptions: SelectOption[] = [
 ];
 
 export default function Selects() {
-  const complexOptions = initialOptions.map((option) => ({
-    value: option.id,
-    label: option.label,
-  }));
-
   const [optionsToDisplay, setOptionsToDisplay] = useState<number | null>(8);
 
   const [selectValue, setSelectValue] = useState<SelectOption | null>(null);
@@ -102,7 +97,7 @@ export default function Selects() {
     sublabel?: string;
     bold?: boolean;
     size?: Size;
-    options: { value: string; label: string }[];
+    options: SelectOption[];
     placeholder?: string;
     disabled?: boolean;
     isError?: boolean;
@@ -140,7 +135,7 @@ export default function Selects() {
               label: 'Simple',
               sublabel: 'Sublabel',
               placeholder: 'Placeholder',
-              options: complexOptions,
+              options: options,
               values: multiValues,
               onChange: setMultiValues,
               rowToDisplay: optionsToDisplay,
@@ -149,7 +144,7 @@ export default function Selects() {
               label: 'Simple (disabled)',
               sublabel: 'Sublabel',
               placeholder: 'Placeholder',
-              options: complexOptions,
+              options: options,
               values: multiValues,
               onChange: setMultiValues,
               rowToDisplay: optionsToDisplay,
@@ -159,7 +154,7 @@ export default function Selects() {
               label: 'Simple (error)',
               sublabel: 'Sublabel',
               placeholder: 'Placeholder',
-              options: complexOptions,
+              options: options,
               values: multiValues,
               onChange: setMultiValues,
               rowToDisplay: optionsToDisplay,
@@ -173,7 +168,7 @@ export default function Selects() {
               label: 'Simple',
               sublabel: 'Sublabel',
               placeholder: 'Placeholder',
-              options: initialOptions,
+              options: options,
               selectedOption: selectValue,
               onChange: handleSelectChange,
             })}
@@ -181,7 +176,7 @@ export default function Selects() {
               label: 'Disabled',
               sublabel: 'Sublabel',
               placeholder: 'Placeholder',
-              options: initialOptions,
+              options: options,
               disabled: true,
               selectedOption: selectValue,
               onChange: handleSelectChange,
@@ -190,7 +185,7 @@ export default function Selects() {
               label: 'Error',
               sublabel: 'Sublabel',
               placeholder: 'Placeholder',
-              options: initialOptions,
+              options: options,
               isError: true,
               selectedOption: selectValue,
               onChange: handleSelectChange,

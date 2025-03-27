@@ -8,13 +8,13 @@ import {
   useRef,
   useState,
 } from 'react';
-import { ComplexOption } from 'morning-react-ui/types/dataTypes';
+import { SelectOption } from 'morning-react-ui/types';
 import { Size } from 'morning-react-ui/utils/Enum';
 import { InputError } from 'morning-react-ui/utils/error';
 import { normalizeString } from 'morning-react-ui/utils/stringUtils';
 
 // Describes the props our useMultiSelect hook expects.
-// 'options': full list of ComplexOption items.
+// 'options': full list of SelectOption items.
 // 'values': the currently selected values (strings).
 // 'onChange': callback to update the selected values.
 // 'size': the size category for styling (not used in the logic here).
@@ -22,7 +22,7 @@ import { normalizeString } from 'morning-react-ui/utils/stringUtils';
 // 'required': if true, a validation error is shown if no selection.
 // 'setMultiSelectError': method to set external error state.
 type UseMultiSelectProps = {
-  options: ComplexOption[];
+  options: SelectOption[];
   values: string[];
   onChange: (newValues: string[]) => void;
   size: Size;
@@ -61,7 +61,7 @@ const useMultiSelect = ({
 
   // The filtered list of options based on user-typed text.
   const [filteredOptions, setFilteredOptions] =
-    useState<ComplexOption[]>(options);
+    useState<SelectOption[]>(options);
 
   // Indicates whether the dropdown is open.
   const [isDropdownDisplayed, setIsDropdownDisplayed] = useState(false);
@@ -94,14 +94,14 @@ const useMultiSelect = ({
   // Builds a string containing all selected labels plus ", " at the end, if any.
   function buildSelectedLabelString() {
     const selectedLabels = options
-      .filter((o) => values.includes(o.value))
+      .filter((o) => values.includes(o.id))
       .map((o) => o.label);
     return selectedLabels.length ? selectedLabels.join(', ') + ', ' : '';
   }
 
   // Builds the labelPositions array by tracking each label's start/end in inputValue.
   function buildPositions() {
-    const selectedOpts = options.filter((o) => values.includes(o.value));
+    const selectedOpts = options.filter((o) => values.includes(o.id));
     const positions: LabelPosition[] = [];
     let offset = 0;
     for (const opt of selectedOpts) {
@@ -169,12 +169,12 @@ const useMultiSelect = ({
   }, [setMultiSelectError]);
 
   // Filters options by label or value, using a normalized substring match.
-  const filterOptionsByKey = (search: string): ComplexOption[] => {
+  const filterOptionsByKey = (search: string): SelectOption[] => {
     const inputValueLower = normalizeString(search);
     return options.filter(
       (o) =>
         normalizeString(o.label).includes(inputValueLower) ||
-        normalizeString(o.value).includes(inputValueLower),
+        normalizeString(o.id).includes(inputValueLower),
     );
   };
 
@@ -318,7 +318,7 @@ const useMultiSelect = ({
       if (values.length > 0) {
         onChange([]);
       } else {
-        onChange(options.map((o) => o.value));
+        onChange(options.map((o) => o.id));
       }
       return;
     }
@@ -326,7 +326,7 @@ const useMultiSelect = ({
     if (indexInFiltered < 0 || indexInFiltered >= filteredOptions.length) {
       return;
     }
-    const optionValue = filteredOptions[indexInFiltered].value;
+    const optionValue = filteredOptions[indexInFiltered].id;
     if (values.includes(optionValue)) {
       onChange(values.filter((v) => v !== optionValue));
     } else {
@@ -373,7 +373,7 @@ const useMultiSelect = ({
     if (found) {
       const optToRemove = options.find((o) => o.label === found.label);
       if (optToRemove) {
-        onChange(values.filter((v) => v !== optToRemove.value));
+        onChange(values.filter((v) => v !== optToRemove.id));
       }
       setCursorPosition(found.start);
     } else {
@@ -404,7 +404,7 @@ const useMultiSelect = ({
     if (found) {
       const optToRemove = options.find((o) => o.label === found.label);
       if (optToRemove) {
-        onChange(values.filter((v) => v !== optToRemove.value));
+        onChange(values.filter((v) => v !== optToRemove.id));
       }
       setCursorPosition(found.start);
     } else {
@@ -436,7 +436,7 @@ const useMultiSelect = ({
     setFilteredOptions(options);
 
     const labelList = options
-      .filter((o) => values.includes(o.value))
+      .filter((o) => values.includes(o.id))
       .map((o) => o.label)
       .join(', ');
 
