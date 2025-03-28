@@ -56,6 +56,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputHtmlProps>(
     const inputRef = useRef<HTMLInputElement>(null);
     const isMobile = useIsMobile();
     const finalSize = size ?? (isMobile ? Size.l : Size.m);
+    const { handleWrapperClick } = useInput({ inputRef });
     useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
 
     const inputMode = allowFloat ? 'decimal' : 'numeric';
@@ -112,14 +113,12 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputHtmlProps>(
       }
     };
 
-    const { handleWrapperClick } = useInput({ inputRef });
-
     useEffect(() => {
       const input = inputRef.current;
       if (!input) return;
 
       const handleInvalid = () => {
-        if (setNumberError) {
+        if (setNumberError && input.validity.valueMissing) {
           setNumberError(InputError.required);
         }
       };

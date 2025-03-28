@@ -87,7 +87,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputHtmlProps>(
       if (!input) return;
 
       const handleInvalid = () => {
-        if (setTextError) {
+        if (setTextError && input.validity.valueMissing) {
           setTextError(InputError.required);
         }
       };
@@ -159,7 +159,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputHtmlProps>(
             />
           )}
           <input
-            type='text'
+            type={props.type ?? 'text'}
             {...props}
             className={classNames(
               styles.input,

@@ -32,6 +32,7 @@ const EmailInput = forwardRef<HTMLInputElement, EmailInputProps>(
     return (
       <TextInput
         ref={ref}
+        type='email'
         {...props}
         inputMode='email'
         autoComplete='email'
@@ -40,6 +41,7 @@ const EmailInput = forwardRef<HTMLInputElement, EmailInputProps>(
         onBlur={handleBlur}
         required={required}
         setTextError={handleTextError}
+        pattern='[^@\s]+@[^@\s]+\.[^@\s]+'
       />
     );
   },

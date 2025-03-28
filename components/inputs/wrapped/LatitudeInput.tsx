@@ -8,10 +8,11 @@ type LatitudeInputProps = Omit<InputProps, 'type'> & {
   onChange: (value: number | null) => void;
   setLatitudeError?: (error: LatitudeError) => void;
   required?: boolean;
+  isError?: boolean;
 };
 
 const LatitudeInput = forwardRef<HTMLInputElement, LatitudeInputProps>(
-  ({ value, onChange, setLatitudeError, required, ...props }, ref) => {
+  ({ value, onChange, setLatitudeError, required, isError, ...props }, ref) => {
     const handleBlur = () => {
       if (setLatitudeError) {
         if (required && (value === null || value === undefined)) {
@@ -33,11 +34,17 @@ const LatitudeInput = forwardRef<HTMLInputElement, LatitudeInputProps>(
         value={value}
         onChange={onChange}
         onBlur={handleBlur}
+        setNumberError={(error) => {
+          setLatitudeError?.(error as unknown as LatitudeError);
+        }}
+        isError={isError}
         inputMode='decimal'
         step={0.000001}
         allowFloat
         allowNegative
         required={required}
+        min={-90}
+        max={90}
       />
     );
   },

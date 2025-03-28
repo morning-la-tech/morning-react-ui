@@ -8,10 +8,14 @@ type LongitudeInputProps = Omit<InputProps, 'type'> & {
   onChange: (value: number | null) => void;
   setLongitudeError?: (error: LongitudeError) => void;
   required?: boolean;
+  isError?: boolean;
 };
 
 const LongitudeInput = forwardRef<HTMLInputElement, LongitudeInputProps>(
-  ({ value, onChange, setLongitudeError, required, ...props }, ref) => {
+  (
+    { value, onChange, setLongitudeError, required, isError, ...props },
+    ref,
+  ) => {
     const handleBlur = () => {
       if (setLongitudeError) {
         if (required && (value === null || value === undefined)) {
@@ -33,11 +37,18 @@ const LongitudeInput = forwardRef<HTMLInputElement, LongitudeInputProps>(
         value={value}
         onChange={onChange}
         onBlur={handleBlur}
+        setNumberError={(error) => {
+          setLongitudeError?.(error as unknown as LongitudeError);
+        }}
+        isError={isError}
         inputMode='decimal'
         step={0.000001}
         allowFloat
         allowNegative
         required={required}
+        onInvalid={(e) => e.preventDefault()}
+        min={-180}
+        max={180}
       />
     );
   },

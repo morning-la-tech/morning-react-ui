@@ -72,20 +72,21 @@ const DateInput = forwardRef<HTMLInputElement, DateInputHtmlProps>(
     const [selected, setSelected] = useState<boolean>(false);
 
     const inputRef = useRef<HTMLInputElement>(null);
+
     useEffect(() => {
       const input = inputRef.current;
-      if (!input) return;
+      if (!input || !setDateError) return;
 
-      const handleInvalid = (event: Event) => {
-        event.preventDefault();
-        if (setDateError) {
-          setDateError(DateError.required);
-        }
+      const handleInvalid = () => {
+        setDateError(DateError.required);
       };
 
       input.addEventListener('invalid', handleInvalid);
-      return () => input.removeEventListener('invalid', handleInvalid);
-    }, [setDateError]);
+      return () => {
+        input.removeEventListener('invalid', handleInvalid);
+      };
+    }, [inputRef.current]);
+
     const { handleWrapperClick } = useInput({ inputRef });
     useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
 
@@ -233,7 +234,9 @@ const DateInput = forwardRef<HTMLInputElement, DateInputHtmlProps>(
           setSeconds(new Date(roundUpYear(year), month - 1, day), 0),
           0,
         );
-        onChange(sanitizedDate);
+        if (!value || sanitizedDate.getTime() !== value.getTime()) {
+          onChange(sanitizedDate);
+        }
       }
       validation();
     };
@@ -243,15 +246,21 @@ const DateInput = forwardRef<HTMLInputElement, DateInputHtmlProps>(
     }, [min, max]);
 
     const edgesValidation = () => {
-      if (setDateError && value) {
+      if (value && inputRef.current) {
+        const input = inputRef.current;
+
         if (min && max && (value < min || value > max)) {
-          setDateError(DateError.dateWithinEdges);
+          input.setCustomValidity(errorText || ' ');
+          setDateError?.(DateError.dateWithinEdges);
         } else if (min && value < min) {
-          setDateError(DateError.dateBeforeMin);
+          input.setCustomValidity(errorText || ' ');
+          setDateError?.(DateError.dateBeforeMin);
         } else if (max && value > max) {
-          setDateError(DateError.dateAfterMax);
+          input.setCustomValidity(errorText || ' ');
+          setDateError?.(DateError.dateAfterMax);
         } else {
-          setDateError(DateError.valid);
+          input.setCustomValidity('');
+          setDateError?.(DateError.valid);
         }
       }
     };
@@ -261,10 +270,17 @@ const DateInput = forwardRef<HTMLInputElement, DateInputHtmlProps>(
 
       if (!value && required) {
         setError(true);
+        if (inputRef.current) {
+          inputRef.current.setCustomValidity(errorText || ' ');
+        }
         if (setDateError) {
           setDateError(DateError.required);
         }
         return;
+      } else {
+        if (inputRef.current) {
+          inputRef.current.setCustomValidity('');
+        }
       }
 
       if (!value) {
@@ -274,10 +290,13 @@ const DateInput = forwardRef<HTMLInputElement, DateInputHtmlProps>(
     };
 
     useEffect(() => {
-      if (inputValue !== null) {
+      const formatted = value ? format(value, 'dd/MM/yyyy') : '';
+      if (inputValue !== formatted) {
+        setInputValue(formatted);
+      }
+      if (value) {
         validation();
       }
-      setInputValue(value ? format(value, 'dd/MM/yyyy') : '');
     }, [value]);
 
     const handleFocus = () => {

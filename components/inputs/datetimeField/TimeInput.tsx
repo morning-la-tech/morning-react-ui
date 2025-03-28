@@ -69,15 +69,15 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputHtmlProps>(
     const [inputValue, setInputValue] = useState<string | null>(
       value ? format(value, 'HH:mm') : null,
     );
+    const [error, setError] = useState<boolean>(false);
     const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
       const input = inputRef.current;
-      if (!input) return;
+      if (!input || !setTimeError) return;
 
-      const handleInvalid = (event: Event) => {
-        event.preventDefault();
-        if (setTimeError) {
+      const handleInvalid = () => {
+        if (!inputValue) {
           setTimeError(TimeError.required);
           setError(true);
         }
@@ -85,17 +85,12 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputHtmlProps>(
 
       input.addEventListener('invalid', handleInvalid);
       return () => input.removeEventListener('invalid', handleInvalid);
-    }, [setTimeError]);
+    }, [inputValue, setTimeError]);
 
     useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
 
-    const [error, setError] = useState<boolean>(false);
-
     useEffect(() => {
       setInputValue(value ? format(value, 'HH:mm') : null);
-    }, [value]);
-
-    useEffect(() => {
       if (value) {
         edgesValidation();
       }
@@ -167,6 +162,7 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputHtmlProps>(
     };
 
     const edgesValidation = () => {
+      const input = inputRef.current;
       if (!value || !inputValue) return;
 
       const timeValue = stringToTime(inputValue);
@@ -185,11 +181,13 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputHtmlProps>(
             ? TimeError.timeBeforeMin
             : TimeError.timeAfterMax,
         );
+        input?.setCustomValidity(errorText || ' ');
         return;
       }
 
       setError(false);
       setTimeError?.(TimeError.valid);
+      input?.setCustomValidity('');
     };
 
     const handleBlur = () => {
