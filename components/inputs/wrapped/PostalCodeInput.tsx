@@ -49,6 +49,7 @@ const PostalCodeInput = forwardRef<HTMLInputElement, PostalCodeInputProps>(
         onBlur={handleBlur}
         required={required}
         setTextError={handleTextError}
+        pattern='[0-9]{5}'
       />
     );
   },
