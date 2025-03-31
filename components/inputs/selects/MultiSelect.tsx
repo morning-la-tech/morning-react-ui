@@ -2,20 +2,25 @@ import classNames from 'classnames';
 import useIsMobile from 'morning-react-ui/components/hooks/useIsMobile';
 import TextInput from 'morning-react-ui/components/inputs/textField/TextInput';
 import MultiCheckbox from 'morning-react-ui/components/inputs/toggleInputs/MultiCheckbox';
-import { SelectionState } from 'morning-react-ui/types/dataTypes';
+import { SelectOption } from 'morning-react-ui/types';
 import { Size } from 'morning-react-ui/utils/Enum';
 import { InputError } from 'morning-react-ui/utils/error';
-import { atLeastOneTrue } from 'morning-react-ui/utils/selectionState/selectionStateInfo';
-import { setAllFalse } from 'morning-react-ui/utils/selectionState/selectionStateModifiers';
 import { SelectsProps } from '../propsTypes';
 import useMultiSelect from './hooks/useMultiSelect';
 import styles from './selects.module.css';
 
 type MultiSelectProps = SelectsProps & {
-  options: SelectionState;
-  onChange: (newSelection: SelectionState) => void;
+  options: SelectOption[];
+  values: string[];
+  onChange: (newSelection: string[]) => void;
   required?: boolean;
   setMultiSelectError?: (error: InputError) => void;
+  placeholder?: string;
+  errorText?: string;
+  rowToDisplay?: number;
+  emptyStateText?: string;
+  isError?: boolean;
+  disabled?: boolean;
 };
 
 const MultiSelect = ({
@@ -25,6 +30,7 @@ const MultiSelect = ({
   size,
   disabled = false,
   options,
+  values,
   onChange,
   isError,
   placeholder = 'MultiSelect',
@@ -36,6 +42,7 @@ const MultiSelect = ({
 }: MultiSelectProps) => {
   const isMobile = useIsMobile();
   const finalSize = size ?? (isMobile ? Size.l : Size.m);
+
   const {
     keyboardNavigation,
     wrapperRef,
@@ -57,12 +64,15 @@ const MultiSelect = ({
     handleBlur,
   } = useMultiSelect({
     options,
+    values,
     onChange,
     size: finalSize,
     rowToDisplay,
     required,
     setMultiSelectError,
   });
+
+  const hasAtLeastOneSelected = values.length > 0;
 
   return (
     <div ref={wrapperRef} className={styles.wrapper}>
@@ -71,7 +81,7 @@ const MultiSelect = ({
         className={classNames(styles.textOverflowEllipsis, {
           [styles.focusedColor]: isDropdownDisplayed,
           [styles.oneTrueAndBlur]:
-            atLeastOneTrue(options) && !isDropdownDisplayed,
+            hasAtLeastOneSelected && !isDropdownDisplayed,
           [styles.focus]: isDropdownDisplayed,
         })}
         placeholder={placeholder}
@@ -81,13 +91,13 @@ const MultiSelect = ({
         size={finalSize}
         value={inputValue}
         onChange={handleTextChange}
-        onFocus={() => handleFocus()}
-        onBlur={() => handleBlur()}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
         onKeyDown={(e) => keyboardNavigation(e)}
-        showClearButton={atLeastOneTrue(options)}
+        showClearButton={hasAtLeastOneSelected}
         showDropdownIcon
         isDropdownActive={isDropdownDisplayed}
-        onClear={() => onChange(setAllFalse(options))}
+        onClear={() => onChange([])}
         onCursorPositionChange={(position) => {
           setCursorPosition(position);
         }}
@@ -100,20 +110,19 @@ const MultiSelect = ({
       {isDropdownDisplayed && (
         <div
           className={styles.dropdown}
-          style={{
-            maxHeight: `${maxHeight}px`,
-          }}
+          style={{ maxHeight: `${maxHeight}px` }}
           onKeyDown={(e) => keyboardNavigation(e)}
           onMouseDown={handleDropdownMouseDown}
           onClick={makeHighlightedIndexSelected}
           tabIndex={-1}
         >
-          {Object.keys(filteredOptions).length > 0 ? (
+          {filteredOptions.length > 0 ? (
             <MultiCheckbox
               options={filteredOptions}
+              selectedValues={values}
               size={finalSize}
-              onChange={(optionsToChange) => {
-                onChange({ ...options, ...optionsToChange });
+              onChange={(newSelectedValues) => {
+                onChange(newSelectedValues);
               }}
               styleCheckbox={{ padding: '6px 10px', cursor: 'pointer' }}
               hoveredIndex={highlightedIndex}

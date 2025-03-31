@@ -6,25 +6,26 @@ import Column from 'morning-react-ui/components/layout/Column';
 import Columns from 'morning-react-ui/components/layout/Columns';
 import Container from 'morning-react-ui/components/layout/Container';
 import Navigation from 'morning-react-ui/components/layout/Navigation';
-import { SelectionState } from 'morning-react-ui/types/dataTypes';
+import { SelectOption } from 'morning-react-ui/types/dataTypes';
 import { Size } from 'morning-react-ui/utils/Enum';
 
 const RadioGroup = () => {
-  const initialOptions = {
-    option1: true,
-    option2: false,
-    option3: false,
-  };
+  const options = [
+    { id: 'option1', label: 'Option 1' },
+    { id: 'option2', label: 'Option 2' },
+    { id: 'option3', label: 'Option 3' },
+  ];
 
   const [valueRadio, setValueRadio] = useState<boolean>(true);
+  const [valueMutliRadio, setValueMutliRadio] = useState<string>();
   const handleChange = (value: boolean) => {
     setValueRadio(!value);
   };
 
-  const [options, setOptions] = useState<SelectionState>(initialOptions);
+  const handleOptionsChange = (optionsModified: string) => {
+    console.log(optionsModified);
 
-  const handleOptionsChange = (optionsModified: SelectionState) => {
-    setOptions(optionsModified);
+    setValueMutliRadio(optionsModified);
   };
   const renderRadio = (props: {
     label: string;
@@ -46,8 +47,9 @@ const RadioGroup = () => {
   const renderMultiRadio = (props: {
     label: string;
     size?: Size;
-    options: SelectionState;
-    onChange: (options: SelectionState) => void;
+    options: SelectOption[];
+    onChange: (options: string) => void;
+    value: string;
     disabled?: boolean;
     inline?: boolean;
     isError?: boolean;
@@ -94,6 +96,7 @@ const RadioGroup = () => {
             {renderMultiRadio({
               label: 'Label',
               options: options,
+              value: valueMutliRadio || '',
               onChange: handleOptionsChange,
               inline: false,
             })}
@@ -103,6 +106,7 @@ const RadioGroup = () => {
             {renderMultiRadio({
               label: 'Label',
               options: options,
+              value: valueMutliRadio || '',
               onChange: handleOptionsChange,
               inline: false,
               disabled: true,
@@ -113,6 +117,7 @@ const RadioGroup = () => {
             {renderMultiRadio({
               label: 'Label',
               options: options,
+              value: valueMutliRadio || '',
               onChange: handleOptionsChange,
               inline: true,
             })}
@@ -120,6 +125,7 @@ const RadioGroup = () => {
             {renderMultiRadio({
               label: 'Label',
               options: options,
+              value: valueMutliRadio || '',
               onChange: handleOptionsChange,
               disabled: true,
               inline: true,
@@ -132,6 +138,7 @@ const RadioGroup = () => {
               label: 'Label',
               options: options,
               onChange: handleOptionsChange,
+              value: valueMutliRadio || '',
               disabled: false,
               inline: false,
               isError: true,
@@ -141,6 +148,7 @@ const RadioGroup = () => {
             {renderMultiRadio({
               label: 'Label',
               options: options,
+              value: valueMutliRadio || '',
               onChange: handleOptionsChange,
               disabled: true,
               inline: false,
@@ -151,6 +159,7 @@ const RadioGroup = () => {
             {renderMultiRadio({
               label: 'Label',
               options: options,
+              value: valueMutliRadio || '',
               onChange: handleOptionsChange,
               disabled: false,
               inline: true,
@@ -161,6 +170,7 @@ const RadioGroup = () => {
             {renderMultiRadio({
               label: 'Label',
               options: options,
+              value: valueMutliRadio || '',
               onChange: handleOptionsChange,
               disabled: true,
               inline: true,

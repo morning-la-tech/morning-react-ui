@@ -6,24 +6,26 @@ import Column from 'morning-react-ui/components/layout/Column';
 import Columns from 'morning-react-ui/components/layout/Columns';
 import Container from 'morning-react-ui/components/layout/Container';
 import Navigation from 'morning-react-ui/components/layout/Navigation';
-import { SelectionState, TriState } from 'morning-react-ui/types/dataTypes';
+import { SelectOption, TriState } from 'morning-react-ui/types/dataTypes';
 import { Size } from 'morning-react-ui/utils/Enum';
 
 const CheckboxGroup = () => {
-  const initialOptions = {
-    option1: false,
-    option2: false,
-    option3: true,
-  };
+  const options: SelectOption[] = [
+    { id: 'option1', label: 'Option 1' },
+    { id: 'option2', label: 'Option 2' },
+    { id: 'option3', label: 'Option 3' },
+  ];
   const [valueCheckbox, setValueCheckbox] = useState<TriState>(TriState.false);
   const handleChange = (value: TriState) => {
     setValueCheckbox(value);
   };
 
-  const [options, setOptions] = useState<SelectionState>(initialOptions);
+  const [selectedValueCheckbox, setSelectedValueCheckbox] = useState<string[]>(
+    [],
+  );
 
-  const handleOptionsChange = (optionsModified: SelectionState) => {
-    setOptions(optionsModified);
+  const handleOptionsChange = (optionsModified: string[]) => {
+    setSelectedValueCheckbox(optionsModified);
   };
 
   const renderCheckbox = (props: {
@@ -48,8 +50,9 @@ const CheckboxGroup = () => {
   const renderMultiCheckbox = (props: {
     label: string;
     size?: Size;
-    options: SelectionState;
-    onChange: (options: SelectionState) => void;
+    options: SelectOption[];
+    onChange: (options: string[]) => void;
+    selectedValues: string[];
     isSelectAll?: boolean;
     isError?: boolean;
     disabled?: boolean;
@@ -104,6 +107,7 @@ const CheckboxGroup = () => {
               {renderMultiCheckbox({
                 label: 'Label',
                 options: options,
+                selectedValues: selectedValueCheckbox,
                 onChange: handleOptionsChange,
                 isSelectAll: true,
                 inline: true,
@@ -111,12 +115,14 @@ const CheckboxGroup = () => {
               {renderMultiCheckbox({
                 label: 'Label',
                 options: options,
+                selectedValues: selectedValueCheckbox,
                 onChange: handleOptionsChange,
                 inline: true,
               })}
               {renderMultiCheckbox({
                 label: 'Label',
                 options: options,
+                selectedValues: selectedValueCheckbox,
                 onChange: handleOptionsChange,
                 isError: true,
                 inline: true,
@@ -124,6 +130,7 @@ const CheckboxGroup = () => {
               {renderMultiCheckbox({
                 label: 'Label',
                 options: options,
+                selectedValues: selectedValueCheckbox,
                 onChange: handleOptionsChange,
                 disabled: true,
                 inline: true,
@@ -134,12 +141,14 @@ const CheckboxGroup = () => {
               {renderMultiCheckbox({
                 label: 'Label',
                 options: options,
+                selectedValues: selectedValueCheckbox,
                 onChange: handleOptionsChange,
                 isSelectAll: true,
               })}
               {renderMultiCheckbox({
                 label: 'Label',
                 options: options,
+                selectedValues: selectedValueCheckbox,
                 onChange: handleOptionsChange,
               })}
             </Column>
@@ -147,12 +156,14 @@ const CheckboxGroup = () => {
               {renderMultiCheckbox({
                 label: 'Label',
                 options: options,
+                selectedValues: selectedValueCheckbox,
                 onChange: handleOptionsChange,
                 isError: true,
               })}
               {renderMultiCheckbox({
                 label: 'Label',
                 options: options,
+                selectedValues: selectedValueCheckbox,
                 onChange: handleOptionsChange,
                 disabled: true,
               })}

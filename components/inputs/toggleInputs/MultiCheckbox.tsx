@@ -2,21 +2,16 @@ import { CSSProperties, RefObject, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import useIsMobile from 'morning-react-ui/components/hooks/useIsMobile';
 import ParentInput from 'morning-react-ui/components/inputs/ParentInput';
-import { SelectionState, TriState } from 'morning-react-ui/types/dataTypes';
+import { SelectOption, TriState } from 'morning-react-ui/types/dataTypes';
 import { Size } from 'morning-react-ui/utils/Enum';
-import { getSelectionStatus } from 'morning-react-ui/utils/selectionState/selectionStateInfo';
-import {
-  setAllFalse,
-  setAllTrue,
-  updateSelectionState,
-} from 'morning-react-ui/utils/selectionState/selectionStateModifiers';
 import { BasicInputProps } from '../propsTypes';
 import styles from './multiToggleInputs.module.css';
 import Checkbox from './single/Checkbox';
 
 type MultiCheckboxProps = BasicInputProps & {
-  options: SelectionState;
-  onChange: (options: SelectionState) => void;
+  options: SelectOption[];
+  selectedValues: string[];
+  onChange: (newValues: string[]) => void;
   checkboxRefs?: RefObject<HTMLInputElement | null>[];
   inline?: boolean;
   styleCheckbox?: CSSProperties;
@@ -31,6 +26,7 @@ type MultiCheckboxProps = BasicInputProps & {
 
 const MultiCheckbox = ({
   options,
+  selectedValues,
   onChange,
   checkboxRefs,
   size,
@@ -54,53 +50,31 @@ const MultiCheckbox = ({
     TriState.false,
   );
 
-  const handleSelectAllChange = (value: TriState) => {
-    onChange(
-      value === TriState.true ? setAllTrue(options) : setAllFalse(options),
-    );
-  };
-
   useEffect(() => {
-    setSelectAllCheckbox(getSelectionStatus(options));
-  }, [options]);
+    if (!isSelectAll) {
+      return;
+    }
+    if (selectedValues.length === 0) {
+      setSelectAllCheckbox(TriState.false);
+    } else if (selectedValues.length === options.length) {
+      setSelectAllCheckbox(TriState.true);
+    } else {
+      setSelectAllCheckbox(TriState.indeterminate);
+    }
+  }, [options, selectedValues, isSelectAll]);
+
+  const handleSelectAllChange = (value: TriState) => {
+    if (value === TriState.true) {
+      onChange(options.map((o) => o.id));
+    } else {
+      onChange([]);
+    }
+  };
 
   const styleSelectAll = {
     ...styleCheckboxProps,
     ...(hoveredIndex === 0 && { backgroundColor: 'var(--cloud)' }),
   };
-
-  const checkboxes = (
-    <>
-      {Object.entries(options).map(([key, value], index) => {
-        const adjustedIndex = isSelectAll ? index + 1 : index;
-        const isHovered = adjustedIndex === hoveredIndex;
-        const checkboxState = value ? TriState.true : TriState.false;
-
-        const handleChange = (changedValue: TriState) => {
-          onChange(
-            updateSelectionState(options, key, changedValue === TriState.true),
-          );
-        };
-
-        return (
-          <Checkbox
-            key={key}
-            label={key}
-            className={classNames({ [styles.checkboxHovered]: isHovered })}
-            value={checkboxState}
-            onChange={handleChange}
-            size={size}
-            style={styleCheckboxProps}
-            disabled={disabled}
-            isError={isError}
-            onMouseMove={() => setHoveredIndex?.(adjustedIndex)}
-            onMouseLeave={() => setHoveredIndex?.(null)}
-            ref={checkboxRefs?.[adjustedIndex] ?? null}
-          />
-        );
-      })}
-    </>
-  );
 
   return (
     <ParentInput
@@ -123,16 +97,51 @@ const MultiCheckbox = ({
             value={selectAllCheckbox}
             onChange={handleSelectAllChange}
             style={styleSelectAll}
-            size={size}
+            size={finalSize}
             disabled={disabled}
             isError={isError}
             onMouseMove={() => setHoveredIndex?.(0)}
             ref={checkboxRefs?.[0] ?? null}
             onMouseLeave={() => setHoveredIndex?.(null)}
-            className={'font-weight-medium'}
+            className='font-weight-medium'
           />
         )}
-        {checkboxes}
+
+        {options.map((opt, index) => {
+          const adjustedIndex = isSelectAll ? index + 1 : index;
+          const isHovered = adjustedIndex === hoveredIndex;
+
+          const checkboxState = selectedValues.includes(opt.id)
+            ? TriState.true
+            : TriState.false;
+
+          const handleChange = (newValue: TriState) => {
+            if (newValue === TriState.true) {
+              onChange([...selectedValues, opt.id]);
+            } else {
+              onChange(selectedValues.filter((val) => val !== opt.id));
+            }
+          };
+
+          return (
+            <Checkbox
+              key={opt.id}
+              label={opt.label}
+              className={classNames({
+                [styles.checkboxHovered]: isHovered,
+              })}
+              value={checkboxState}
+              onChange={handleChange}
+              size={finalSize}
+              style={styleCheckboxProps}
+              disabled={disabled}
+              isError={isError}
+              onMouseMove={() => setHoveredIndex?.(adjustedIndex)}
+              onMouseLeave={() => setHoveredIndex?.(null)}
+              ref={checkboxRefs?.[adjustedIndex] ?? null}
+            />
+          );
+        })}
       </div>
     </ParentInput>
   );
