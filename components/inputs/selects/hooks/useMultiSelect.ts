@@ -139,17 +139,6 @@ const useMultiSelect = ({
     setDisplaySelectAll(newFilteredOptions.length === options.length);
   };
 
-  // If required = true and no values are selected, set an error.
-  useEffect(() => {
-    if (setMultiSelectError) {
-      setMultiSelectError(
-        required && values.length === 0
-          ? InputError.required
-          : InputError.valid,
-      );
-    }
-  }, [required, inputValue]);
-
   // Attach an 'invalid' listener if using HTML validations.
   useEffect(() => {
     const input = inputRef.current;
