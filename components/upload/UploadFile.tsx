@@ -115,6 +115,10 @@ const UploadFile = ({
     };
   }, [setFileError]);
 
+  useEffect(() => {
+    setFile(fileUrl);
+  }, [fileUrl]);
+
   const onUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (!files || files.length === 0) {
