@@ -156,7 +156,7 @@ const UploadFile = ({
             ref={fileInputRef}
             onChange={onUpload}
             accept={fileType}
-            required={required}
+            required={required && !file}
           />
           <div
             aria-label='preview'
