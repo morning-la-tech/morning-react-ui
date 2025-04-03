@@ -68,6 +68,10 @@ const UploadFile = ({
     }
   }, [file, hasError]);
 
+  useEffect(() => {
+    setFile(fileUrl);
+  }, [fileUrl]);
+
   const handleFileUpload = async (
     fileContent: string,
     selectedFileName: string,
@@ -88,7 +92,7 @@ const UploadFile = ({
       setFile(fileUrl);
       return;
     }
-    onChange(`${destinationBucket}/${generatedFileName}`);
+    onChange(generatedFileName);
   };
 
   useEffect(() => {
@@ -114,10 +118,6 @@ const UploadFile = ({
       input.removeEventListener('change', handleChange);
     };
   }, [setFileError]);
-
-  useEffect(() => {
-    setFile(fileUrl);
-  }, [fileUrl]);
 
   const onUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
