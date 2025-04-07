@@ -17,15 +17,13 @@ const RadioGroup = () => {
   ];
 
   const [valueRadio, setValueRadio] = useState<boolean>(true);
-  const [valueMutliRadio, setValueMutliRadio] = useState<string>();
+  const [valueMultiRadio, setValueMultiRadio] = useState<string>();
   const handleChange = (value: boolean) => {
     setValueRadio(!value);
   };
 
   const handleOptionsChange = (optionsModified: string) => {
-    console.log(optionsModified);
-
-    setValueMutliRadio(optionsModified);
+    setValueMultiRadio(optionsModified);
   };
   const renderRadio = (props: {
     label: string;
@@ -96,7 +94,7 @@ const RadioGroup = () => {
             {renderMultiRadio({
               label: 'Label',
               options: options,
-              value: valueMutliRadio || '',
+              value: valueMultiRadio || '',
               onChange: handleOptionsChange,
               inline: false,
             })}
@@ -106,7 +104,7 @@ const RadioGroup = () => {
             {renderMultiRadio({
               label: 'Label',
               options: options,
-              value: valueMutliRadio || '',
+              value: valueMultiRadio || '',
               onChange: handleOptionsChange,
               inline: false,
               disabled: true,
@@ -117,7 +115,7 @@ const RadioGroup = () => {
             {renderMultiRadio({
               label: 'Label',
               options: options,
-              value: valueMutliRadio || '',
+              value: valueMultiRadio || '',
               onChange: handleOptionsChange,
               inline: true,
             })}
@@ -125,7 +123,7 @@ const RadioGroup = () => {
             {renderMultiRadio({
               label: 'Label',
               options: options,
-              value: valueMutliRadio || '',
+              value: valueMultiRadio || '',
               onChange: handleOptionsChange,
               disabled: true,
               inline: true,
@@ -138,7 +136,7 @@ const RadioGroup = () => {
               label: 'Label',
               options: options,
               onChange: handleOptionsChange,
-              value: valueMutliRadio || '',
+              value: valueMultiRadio || '',
               disabled: false,
               inline: false,
               isError: true,
@@ -148,7 +146,7 @@ const RadioGroup = () => {
             {renderMultiRadio({
               label: 'Label',
               options: options,
-              value: valueMutliRadio || '',
+              value: valueMultiRadio || '',
               onChange: handleOptionsChange,
               disabled: true,
               inline: false,
@@ -159,7 +157,7 @@ const RadioGroup = () => {
             {renderMultiRadio({
               label: 'Label',
               options: options,
-              value: valueMutliRadio || '',
+              value: valueMultiRadio || '',
               onChange: handleOptionsChange,
               disabled: false,
               inline: true,
@@ -170,7 +168,7 @@ const RadioGroup = () => {
             {renderMultiRadio({
               label: 'Label',
               options: options,
-              value: valueMutliRadio || '',
+              value: valueMultiRadio || '',
               onChange: handleOptionsChange,
               disabled: true,
               inline: true,

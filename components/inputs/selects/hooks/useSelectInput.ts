@@ -104,7 +104,7 @@ const useSelectInput = ({
     setIsDropdownDisplayed(false);
     handleTextChange(nextSelectedOption?.label || '');
     if (setSelectError) {
-      if (required && !nextSelectedOption) {
+      if (required && !(selectedOption || nextSelectedOption)) {
         setSelectError(InputError.required);
       }
     }
