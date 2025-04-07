@@ -62,7 +62,6 @@ export const ToastProvider: React.FC<{ children?: React.ReactNode }> = ({
     [],
   );
 
-  // Enregistrez le handler de toast global lors du montage
   useEffect(() => {
     registerToastHandler(addToast);
   }, [addToast]);
