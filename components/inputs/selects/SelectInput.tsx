@@ -60,12 +60,6 @@ const SelectInput = ({
     setSelectError,
   });
 
-  const handleTextError = (error: InputError) => {
-    if (setSelectError) {
-      setSelectError(error);
-    }
-  };
-
   return (
     <div className={styles.wrapper} tabIndex={-1}>
       <TextInput
@@ -86,7 +80,6 @@ const SelectInput = ({
         isError={isError}
         errorText={errorText}
         required={required}
-        setTextError={handleTextError}
       />
       {isDropdownDisplayed && (
         <div

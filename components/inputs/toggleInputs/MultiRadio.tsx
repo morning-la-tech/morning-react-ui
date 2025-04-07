@@ -27,7 +27,6 @@ const MultiRadio = ({
   inline = true,
   isError = false,
 }: MultiRadioProps) => {
-  console.log(value);
   const radios = (
     <>
       {options.map((option) => {

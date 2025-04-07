@@ -137,6 +137,12 @@ const useMultiSelect = ({
     const newFilteredOptions = filterOptionsByKey(typedPart);
     setFilteredOptions(newFilteredOptions);
     setDisplaySelectAll(newFilteredOptions.length === options.length);
+
+    if (newFilteredOptions.length > 0) {
+      setHighlightedIndex(0);
+    } else {
+      setHighlightedIndex(null);
+    }
   };
 
   // Attach an 'invalid' listener if using HTML validations.
