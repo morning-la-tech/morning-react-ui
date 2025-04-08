@@ -75,6 +75,23 @@ const useSelectInput = ({
   }, [isDropdownDisplayed, optionRefs, rowToDisplay]);
 
   useEffect(() => {
+    const input = inputRef.current;
+    if (!input) return;
+
+    const handleInvalid = (event: Event) => {
+      event.preventDefault();
+      if (setSelectError) {
+        setSelectError(InputError.required);
+      }
+    };
+
+    input.addEventListener('invalid', handleInvalid);
+    return () => {
+      input.removeEventListener('invalid', handleInvalid);
+    };
+  }, [setSelectError]);
+
+  useEffect(() => {
     setInputValue(selectedOption?.label || '');
   }, [selectedOption]);
 
