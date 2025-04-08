@@ -1,9 +1,17 @@
 'use client';
-import { createContext, useCallback, useContext, useState } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import Toast from 'morning-react-ui/components/utils/Toast';
 import styles from 'morning-react-ui/components/utils/toast.module.css';
-
-export type ToastMessageType = 'success' | 'error' | 'warning';
+import {
+  registerToastHandler,
+  ToastMessageType,
+} from 'morning-react-ui/services/toast.service';
 
 export interface ToastMessage {
   id: string;
@@ -41,7 +49,6 @@ export const ToastProvider: React.FC<{ children?: React.ReactNode }> = ({
     ) => {
       const id =
         Date.now().toString() + Math.random().toString(36).substr(2, 9);
-
       const onClose = () => {
         setToasts((currentToasts) =>
           currentToasts.filter((toast) => toast.id !== id),
@@ -54,6 +61,10 @@ export const ToastProvider: React.FC<{ children?: React.ReactNode }> = ({
     },
     [],
   );
+
+  useEffect(() => {
+    registerToastHandler(addToast);
+  }, [addToast]);
 
   return (
     <ToastContext.Provider value={{ addToast }}>
