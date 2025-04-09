@@ -39,7 +39,6 @@ const LatitudeInput = forwardRef<HTMLInputElement, LatitudeInputProps>(
         }}
         isError={isError}
         inputMode='decimal'
-        step={0.000001}
         allowFloat
         allowNegative
         required={required}
