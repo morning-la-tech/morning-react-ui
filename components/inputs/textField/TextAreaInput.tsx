@@ -71,8 +71,7 @@ const TextAreaInput = forwardRef<HTMLTextAreaElement, TextAreaInputHtmlProps>(
       const textarea = textAreaRef.current;
       if (!textarea) return;
 
-      const handleInvalid = (event: Event) => {
-        event.preventDefault();
+      const handleInvalid = () => {
         if (setTextAreaError) {
           setTextAreaError(InputError.required);
         }

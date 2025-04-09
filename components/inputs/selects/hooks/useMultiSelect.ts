@@ -150,8 +150,7 @@ const useMultiSelect = ({
     const input = inputRef.current;
     if (!input) return;
 
-    const handleInvalid = (event: Event) => {
-      event.preventDefault();
+    const handleInvalid = () => {
       if (setMultiSelectError) {
         setMultiSelectError(InputError.required);
       }
