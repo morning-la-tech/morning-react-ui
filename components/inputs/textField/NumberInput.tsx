@@ -46,7 +46,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputHtmlProps>(
       placeholder,
       allowFloat = false,
       allowNegative = true,
-      step = allowFloat ? 0.1 : 1,
+      step = 1,
       errorText,
       required,
       ...props
@@ -94,6 +94,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputHtmlProps>(
 
       if (blockedKeys.includes(event.key)) {
         event.preventDefault();
+        return;
       }
 
       if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
@@ -101,7 +102,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputHtmlProps>(
         const newValue =
           (value ?? 0) + (event.key === 'ArrowUp' ? step : -step);
         if (!allowNegative && newValue < 0) return;
-        onChange(parseFloat(newValue.toFixed(10)));
+        onChange(newValue);
       }
     };
 
@@ -151,7 +152,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputHtmlProps>(
           <input
             type='number'
             inputMode={inputMode}
-            step={step}
+            step={allowFloat ? 'any' : step}
             className={classNames(
               styles.input,
               `font-size-${finalSize}`,
