@@ -42,7 +42,6 @@ const LongitudeInput = forwardRef<HTMLInputElement, LongitudeInputProps>(
         }}
         isError={isError}
         inputMode='decimal'
-        step={0.000001}
         allowFloat
         allowNegative
         required={required}
