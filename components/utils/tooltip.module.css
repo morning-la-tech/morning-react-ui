@@ -5,24 +5,30 @@
 
 .tooltipBox {
     position: fixed;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
     overflow: hidden;
     z-index: 1000;
-    background-color: var(--black);
+    background-color: var(--coal);
     color: var(--white);
     padding: 5px 10px;
     border-radius: 4px;
     font-size: 14px;
-    transform: translateX(-50%);
+    transform: scale(0.95);
     visibility: hidden;
     opacity: 0;
+    pointer-events: none;
     transition:
-        opacity 0.3s,
+        opacity 0.2s ease,
+        transform 0.2s ease,
         visibility 0.3s;
 }
 
 .tooltipVisible {
     visibility: visible;
     opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+}
+
+.tooltipDefaultWidth {
+    width: 320px;
 }
