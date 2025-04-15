@@ -116,9 +116,12 @@
     color: var(--black);
 }
 
-.danger {
-    background-color: var(--cherry);
-    color: var(--white);
+.secondary:hover {
+    background-color: var(--cloud);
+}
+
+.secondary:active {
+    background-color: var(--silver);
 }
 
 .secondary::before {
@@ -131,16 +134,32 @@
     border-radius: 6px;
 }
 
-.secondary:hover {
-    background-color: var(--cloud);
+.danger {
+    background-color: var(--cherry);
+    color: var(--white);
 }
 
 .danger:hover {
     background-color: var(--brick);
 }
 
-.secondary:active {
-    background-color: var(--silver);
+.caution {
+    background-color: var(--white);
+    color: var(--brick);
+}
+
+.caution::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid var(--cherry);
+    box-sizing: border-box;
+    pointer-events: none;
+    border-radius: 6px;
+}
+
+.caution:hover {
+    background-color: var(--petal);
 }
 
 .button:disabled {

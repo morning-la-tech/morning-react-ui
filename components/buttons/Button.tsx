@@ -8,6 +8,7 @@ export enum ButtonVariant {
   Primary = 'primary',
   Secondary = 'secondary',
   Danger = 'danger',
+  Caution = 'caution',
 }
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -51,7 +52,11 @@ const Button = ({
         <div className={styles.loadingOverlay}>
           <Loading
             radius={sizeToNumber(size)}
-            color={variant == ButtonVariant.Primary ? 'white' : 'black'}
+            color={
+              [ButtonVariant.Primary, ButtonVariant.Danger].includes(variant)
+                ? 'white'
+                : 'black'
+            }
           />
         </div>
       )}
