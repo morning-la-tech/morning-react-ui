@@ -4,7 +4,7 @@
 }
 
 .overlay {
-    z-index: 2;
+    z-index: 100;
     position: fixed;
     top: 0;
     left: 0;
@@ -15,7 +15,7 @@
 }
 
 .modal {
-    z-index: 3;
+    z-index: 101;
     background-color: var(--white);
     position: fixed;
     border-radius: 10px;

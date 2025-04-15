@@ -240,6 +240,21 @@ export default function Page() {
               })}
             </Column>
             <Column>
+              {renderButtons({ variant: ButtonVariant.Caution })}
+              {renderButtons({ variant: ButtonVariant.Caution }, true)}
+              {renderButtons({ variant: ButtonVariant.Caution }, true, true)}
+              {renderButtons(
+                { variant: ButtonVariant.Caution },
+                true,
+                undefined,
+                <></>,
+              )}
+              {renderButtons({
+                variant: ButtonVariant.Caution,
+                isLoading: true,
+              })}
+            </Column>
+            <Column>
               {renderLinkButtons({})}
               {renderLinkButtons({}, true)}
               {renderLinkButtons({}, true, true)}
