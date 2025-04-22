@@ -1,8 +1,8 @@
 .table {
     width: 100%;
-    border-collapse:collapse;
-    table-layout:fixed;
-    transition: all .2s linear;
+    border-collapse: collapse;
+    table-layout: fixed;
+    transition: all 0.2s linear;
 }
 
 .tableHeader {
@@ -14,7 +14,7 @@
 
 .tableHead {
     font-weight: normal;
-    transition: all .2s linear;
+    transition: all 0.2s linear;
 }
 
 .tableHead.sortable {
@@ -22,17 +22,15 @@
 }
 
 .tableHead img {
-    transition: all .2s linear;
+    transition: all 0.2s linear;
     width: 20px;
     height: 20px;
     margin-left: 6px;
 }
 
-
 .rotate180 {
     transform: rotate(-180deg);
 }
-
 
 .tableBody {
     color: var(--coal);
@@ -57,16 +55,39 @@
     padding: 8px;
 }
 
-.table th, .table td {
+.table th,
+.table td {
     padding: 6px;
 }
 
-.table td:first-child, .table th:first-child {
+.table td:first-child,
+.table th:first-child {
     padding-left: 16px;
     padding-right: 6px;
 }
 
-.table td:not(:first-child), .table th:not(:first-child) {
+.table td:not(:first-child),
+.table th:not(:first-child) {
     padding-left: 6px;
     padding-right: 16px;
+}
+
+@keyframes pulse {
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.skeletonBlock {
+    display: block;
+    width: 40%;
+    height: 16px;
+    background-color: var(--ash);
+    border-radius: 3px;
+    animation: pulse 1.5s infinite ease-in-out;
 }
