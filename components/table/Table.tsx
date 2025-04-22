@@ -1,4 +1,4 @@
-import { HTMLProps } from 'react';
+import { HTMLProps, useState } from 'react';
 import * as React from 'react';
 import Image from 'next/image';
 import styles from './table.module.css';
@@ -40,7 +40,32 @@ const TableFooter = ({
 };
 
 const TableRow = ({ className, ...props }: HTMLProps<HTMLTableRowElement>) => {
-  return <tr {...props} className={`${styles.tableRow} ${className || ''}`} />;
+  const [collapsed, setCollapsed] = useState(true);
+
+  return (
+    <tr
+      {...props}
+      className={`${styles.tableRow} ${className || ''} ${
+        collapsed ? styles.collapsed : styles.expended
+      }`}
+    >
+      {React.Children.map(props.children, (child, index) => {
+        if (React.isValidElement(child) && child.type === TableCell) {
+          return React.cloneElement(
+            child as React.ReactElement<TableCellProps>,
+            {
+              key: index,
+              collapsed,
+              setCollapsed: (child.props as TableCellProps)?.showChevron
+                ? setCollapsed
+                : undefined,
+            },
+          );
+        }
+        return child;
+      })}
+    </tr>
+  );
 };
 
 interface TableHeadProps extends HTMLProps<HTMLTableCellElement> {
@@ -77,10 +102,57 @@ const TableHead = ({
   );
 };
 
+interface TableCellProps extends HTMLProps<HTMLTableCellElement> {
+  setCollapsed?: (collapsed: boolean) => void;
+  collapsed?: boolean;
+  showChevron?: boolean;
+}
+
 const TableCell = ({
   className,
+  collapsed,
+  setCollapsed,
+  showChevron,
   ...props
-}: HTMLProps<HTMLTableCellElement>) => {
+}: TableCellProps) => {
+  if (Array.isArray(props.children)) {
+    return (
+      <td {...props} className={`${styles.tableCell} ${className || ''}`}>
+        <div className={`${styles.tableCellArrayWrapper}`}>
+          {showChevron && setCollapsed && (
+            <button
+              className={styles.tableCellButton}
+              onClick={() => {
+                if (setCollapsed) {
+                  setCollapsed(!collapsed);
+                }
+              }}
+            >
+              <Image
+                className={`${collapsed ? styles.rotate180 : ''}`}
+                src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/pilote-chevron-down.svg`}
+                alt='url'
+                width={15}
+                height={15}
+              />
+            </button>
+          )}
+          <div
+            className={`${styles.tableCellArray}`}
+            style={{
+              maxHeight: `${collapsed ? 24 : props.children.length * 26}px`,
+            }}
+          >
+            {props.children.map((child, index) => (
+              <div key={index} className={styles.tableCellArrayItem}>
+                {child}
+              </div>
+            ))}
+          </div>
+        </div>
+      </td>
+    );
+  }
   return <td {...props} className={`${styles.tableCell} ${className || ''}`} />;
 };
 
