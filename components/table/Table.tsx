@@ -21,12 +21,41 @@ const TableHeader = ({
   );
 };
 
+interface TableBodySkeletonProps extends HTMLProps<HTMLTableSectionElement> {
+  isLoading?: boolean;
+  skeletonRows?: number;
+  skeletonCols?: number;
+}
+
 const TableBody = ({
   className,
+  isLoading = false,
+  skeletonRows = 4,
+  skeletonCols = 5,
+  children,
   ...props
-}: HTMLProps<HTMLTableSectionElement>) => {
+}: TableBodySkeletonProps) => {
+  if (isLoading) {
+    const rows = Array.from({ length: skeletonRows });
+    const cols = Array.from({ length: skeletonCols });
+    return (
+      <tbody {...props} className={`${styles.tableBody} ${className || ''}`}>
+        {rows.map((_, rowIndex) => (
+          <TableRow key={rowIndex} className={styles.skeletonRow}>
+            {cols.map((_, colIndex) => (
+              <TableCell key={colIndex}>
+                <div className={styles.skeletonBlock} />
+              </TableCell>
+            ))}
+          </TableRow>
+        ))}
+      </tbody>
+    );
+  }
   return (
-    <tbody {...props} className={`${styles.tableBody} ${className || ''}`} />
+    <tbody {...props} className={`${styles.tableBody} ${className || ''}`}>
+      {children}
+    </tbody>
   );
 };
 

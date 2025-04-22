@@ -71,3 +71,23 @@
     padding-left: 6px;
     padding-right: 16px;
 }
+
+@keyframes pulse {
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.skeletonBlock {
+    display: block;
+    width: 40%;
+    height: 16px;
+    background-color: var(--ash);
+    border-radius: 3px;
+    animation: pulse 1.5s infinite ease-in-out;
+}

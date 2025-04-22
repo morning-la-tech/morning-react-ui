@@ -132,6 +132,55 @@ export default function Page() {
           </TableFooter>
         </Table>
       </div>
+      <div>
+        <Table>
+          <TableCaption>A list of your recent invoices.</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Invoice</TableHead>
+              <TableHead>Place</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead
+                order={paymentMethodOrder}
+                sortCallback={(order: 'asc' | 'desc') => {
+                  setInvoices((prevInvoices) => {
+                    const sortedInvoices = [...prevInvoices];
+                    sortedInvoices.sort((a, b) => {
+                      if (order === 'asc') {
+                        return a.paymentMethod.localeCompare(b.paymentMethod);
+                      } else {
+                        return b.paymentMethod.localeCompare(a.paymentMethod);
+                      }
+                    });
+                    return sortedInvoices;
+                  });
+                  setPaymentMethodOrder(order);
+                }}
+              >
+                Method
+              </TableHead>
+              <TableHead>Amount</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody isLoading>
+            {invoices.map((invoice) => (
+              <TableRow key={invoice.invoice}>
+                <TableCell>{invoice.invoice}</TableCell>
+                <TableCell>{invoice.place}</TableCell>
+                <TableCell>{invoice.paymentStatus}</TableCell>
+                <TableCell>{invoice.paymentMethod}</TableCell>
+                <TableCell>{invoice.totalAmount}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TableCell colSpan={4}>Total</TableCell>
+              <TableCell>$2,500.00</TableCell>
+            </TableRow>
+          </TableFooter>
+        </Table>
+      </div>
     </>
   );
 }
