@@ -66,16 +66,55 @@ export default function Page() {
     {
       invoice: 'INV006',
       place: <Tag label='⚜️ Saint-Ho' color={Color.gray} />,
-      paymentStatus: <Tag label='Unpaid' color={Color.red} />,
-      totalAmount: '$200.00',
-      paymentMethod: 'Bank Transfer',
+      paymentStatus: [
+        <Tag key={1} label='Paid' color={Color.green} />,
+        <Tag key={2} label='Unpaid' color={Color.red} />,
+      ],
+      totalAmount: ['$300.00', '$400.00'],
+      paymentMethod: ['Credit Card', 'PayPal'],
     },
     {
       invoice: 'INV007',
       place: <Tag label='⛲️ Trévise' color={Color.gray} />,
-      paymentStatus: <Tag label='Paid' color={Color.green} />,
-      totalAmount: '$300.00',
-      paymentMethod: 'Credit Card',
+      paymentStatus: [
+        <Tag key={1} label='Paid' color={Color.green} />,
+        <Tag key={2} label='Unpaid' color={Color.red} />,
+        <Tag key={3} label='Unpaid' color={Color.red} />,
+        <Tag key={4} label='Paid' color={Color.green} />,
+        <Tag key={5} label='Paid' color={Color.green} />,
+        <Tag key={6} label='Paid' color={Color.green} />,
+        <Tag key={7} label='Unpaid' color={Color.red} />,
+        <Tag key={8} label='Unpaid' color={Color.red} />,
+        <Tag key={9} label='Paid' color={Color.green} />,
+        <Tag key={10} label='Unpaid' color={Color.red} />,
+        <Tag key={11} label='Paid' color={Color.green} />,
+      ],
+      totalAmount: [
+        '$300.00',
+        '$500.00',
+        '$600.00',
+        '$700.00',
+        '$800.00',
+        '$400.00',
+        '$300.00',
+        '$400.00',
+        '$500.00',
+        '$300.00',
+        '$400.00',
+      ],
+      paymentMethod: [
+        'Credit Card',
+        'PayPal',
+        'Bank Transfer',
+        'Credit Card',
+        'PayPal',
+        'Bank Transfer',
+        'Credit Card',
+        'PayPal',
+        'Bank Transfer',
+        'Credit Card',
+        'PayPal',
+      ],
     },
   ]);
   return (
@@ -98,9 +137,13 @@ export default function Page() {
                     const sortedInvoices = [...prevInvoices];
                     sortedInvoices.sort((a, b) => {
                       if (order === 'asc') {
-                        return a.paymentMethod.localeCompare(b.paymentMethod);
+                        return a.paymentMethod[0].localeCompare(
+                          b.paymentMethod[0],
+                        );
                       } else {
-                        return b.paymentMethod.localeCompare(a.paymentMethod);
+                        return b.paymentMethod[0].localeCompare(
+                          a.paymentMethod[0],
+                        );
                       }
                     });
                     return sortedInvoices;
@@ -114,15 +157,19 @@ export default function Page() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {invoices.map((invoice) => (
-              <TableRow key={invoice.invoice}>
-                <TableCell>{invoice.invoice}</TableCell>
-                <TableCell>{invoice.place}</TableCell>
-                <TableCell>{invoice.paymentStatus}</TableCell>
-                <TableCell>{invoice.paymentMethod}</TableCell>
-                <TableCell>{invoice.totalAmount}</TableCell>
-              </TableRow>
-            ))}
+            {invoices.map((invoice) => {
+              return (
+                <TableRow key={invoice.invoice}>
+                  <TableCell>{invoice.invoice}</TableCell>
+                  <TableCell>{invoice.place}</TableCell>
+                  <TableCell showChevron={true}>
+                    {invoice.paymentStatus}
+                  </TableCell>
+                  <TableCell>{invoice.paymentMethod}</TableCell>
+                  <TableCell>{invoice.totalAmount}</TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
           <TableFooter>
             <TableRow>
@@ -140,25 +187,7 @@ export default function Page() {
               <TableHead>Invoice</TableHead>
               <TableHead>Place</TableHead>
               <TableHead>Status</TableHead>
-              <TableHead
-                order={paymentMethodOrder}
-                sortCallback={(order: 'asc' | 'desc') => {
-                  setInvoices((prevInvoices) => {
-                    const sortedInvoices = [...prevInvoices];
-                    sortedInvoices.sort((a, b) => {
-                      if (order === 'asc') {
-                        return a.paymentMethod.localeCompare(b.paymentMethod);
-                      } else {
-                        return b.paymentMethod.localeCompare(a.paymentMethod);
-                      }
-                    });
-                    return sortedInvoices;
-                  });
-                  setPaymentMethodOrder(order);
-                }}
-              >
-                Method
-              </TableHead>
+              <TableHead>Method</TableHead>
               <TableHead>Amount</TableHead>
             </TableRow>
           </TableHeader>

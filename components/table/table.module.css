@@ -43,8 +43,52 @@
 .tableCell {
     height: 36px;
     overflow: hidden;
-    text-overflow: ellipsis;
     white-space: nowrap;
+    padding-top: 8px;
+}
+
+.tableCell button {
+    border: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    display: flex;
+}
+
+.tableCell img {
+    transition: all .2s linear;
+    width: 20px;
+    height: 20px;
+}
+
+.tableRow.collapsed .tableCellArray {
+    overflow: hidden;
+}
+
+.tableRow.expended .tableCell {
+    padding-bottom: 8px;
+}
+
+
+.tableCell,
+.tableCellArray{
+    transition: all .25s ease;
+    vertical-align: top;
+}
+
+.tableCellArrayWrapper {
+    display: flex;
+}
+
+.tableCellArray {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.tableCellArrayItem {
+    height: 17px;
 }
 
 .tableFooter {
@@ -55,8 +99,7 @@
     padding: 8px;
 }
 
-.table th,
-.table td {
+.table th {
     padding: 6px;
 }
 
