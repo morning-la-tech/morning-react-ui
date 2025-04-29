@@ -32,7 +32,7 @@ jobs:
           docker_layer_caching: true
       - run:
           name: Build docker image
-          command: docker build -t ${IMAGE}:${CIRCLE_SHA1} .
+          command: docker build --build-arg NEXT_PUBLIC_MORNING_CDN_URL=${NEXT_PUBLIC_MORNING_CDN_URL} -t ${IMAGE}:${CIRCLE_SHA1} .
       - *gcloud_login
       - run:
           name: Push image to europe-docker.pkg.dev/bap-link/eu.gcr.io
