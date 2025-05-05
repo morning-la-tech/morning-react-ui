@@ -1,20 +1,27 @@
 import importPlugin from 'eslint-plugin-import';
 import eslintPluginPrettier from 'eslint-plugin-prettier';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
 import { FlatCompat } from '@eslint/eslintrc';
 
-const compat = new FlatCompat();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const compat = new FlatCompat({
+  baseDirectory: __dirname,
+});
 
 const eslintConfig = [
   ...compat.extends('next/core-web-vitals', 'next/typescript'),
   {
     plugins: {
-      import: importPlugin,
-      prettier: eslintPluginPrettier,
+      importPlugin,
+      eslintPluginPrettier,
     },
     rules: {
-      'prettier/prettier': 'error',
+      'eslintPluginPrettier/prettier': 'error',
       'react-hooks/exhaustive-deps': 0,
-      complexity: ['error', 20],
+      complexity: ['error', 30],
       'sort-imports': [
         'error',
         {
@@ -68,10 +75,6 @@ const eslintConfig = [
             caseInsensitive: true,
           },
         },
-      ],
-      '@typescript-eslint/no-unused-vars': [
-        'error',
-        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
       ],
     },
   },

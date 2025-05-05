@@ -4,23 +4,23 @@
 }
 
 .tag-red {
-    background-color: #FFCDD2;
-    color: #D32F2F;
+    background-color: #ffcdd2;
+    color: #d32f2f;
 }
 
 .tag-blue {
-    background-color: #EBF7FF;
+    background-color: #ebf7ff;
     color: var(--sapphire);
 }
 
 .tag-green {
-    background-color: #EBFFF1;
-    color: #119C2B;
+    background-color: #ebfff1;
+    color: #119c2b;
 }
 
 .tag-orange {
-    background-color: #FAEADA;
-    color: #AE4220;
+    background-color: #faeada;
+    color: #ae4220;
 }
 
 .tag-gray {
@@ -29,39 +29,42 @@
 }
 
 .tag-pink {
-    background-color: #FBE8F5;
-    color: #D32F87;
+    background-color: #fbe8f5;
+    color: #d32f87;
 }
 
 .tag-yellow {
-    background-color: #FFFCC2;
-    color: #D29404;
+    background-color: #fffcc2;
+    color: #d29404;
 }
 
 .tag-teal {
-    background-color: #E4FCFC;
-    color: #0D9676;
+    background-color: #e4fcfc;
+    color: #0d9676;
 }
 
 .tag-purple {
-    background-color: #FCF0FF;
-    color: #A23FEE;
+    background-color: #fcf0ff;
+    color: #a23fee;
 }
 
 .tag-s {
     padding: 2px 6px;
     font-size: 12px;
+    line-height: 16px;
     border-radius: 4px;
 }
 
 .tag-m {
     padding: 2px 8px;
     font-size: 14px;
+    line-height: 18px;
     border-radius: 5px;
 }
 
 .tag-l {
     padding: 3px 10px;
     font-size: 16px;
+    line-height: 18px;
     border-radius: 6px;
 }
