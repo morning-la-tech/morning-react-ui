@@ -1,18 +1,21 @@
-import { ButtonHTMLAttributes, ReactElement } from 'react';
+import { ButtonHTMLAttributes } from 'react';
+import Image from 'next/image';
 import classNames from 'classnames';
-import { Size } from 'morning-react-ui/utils/Enum';
+import { Size, sizeToNumber } from 'morning-react-ui/utils/Enum';
 import { ButtonVariant } from './Button';
 import styles from './button.module.css';
 
 export type SquareButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  Image?: ReactElement;
+  imageURL: string;
+  imageAlt?: string;
   variant?: ButtonVariant;
   className?: string;
   size?: Size;
 };
 
 const SquareButton = ({
-  Image,
+  imageURL,
+  imageAlt = 'icon',
   size = Size.m,
   variant = ButtonVariant.Primary,
   className,
@@ -28,7 +31,13 @@ const SquareButton = ({
   );
   return (
     <button className={buttonClass} type={type} {...props}>
-      {Image && <span className={styles.image}>{Image}</span>}
+      <Image
+        className={styles.image}
+        src={imageURL}
+        alt={imageAlt}
+        width={sizeToNumber(size)}
+        height={sizeToNumber(size)}
+      />
     </button>
   );
 };

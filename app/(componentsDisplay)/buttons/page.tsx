@@ -25,16 +25,6 @@ export default function Page() {
     />
   );
 
-  const getPlusImage = (size: Size) => (
-    <Image
-      className={buttonStyles.image}
-      src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/add.svg`}
-      alt='Add'
-      width={sizeToNumber(size)}
-      height={sizeToNumber(size)}
-    />
-  );
-
   const renderButtons = (
     props: {
       isLoading?: boolean;
@@ -181,61 +171,71 @@ export default function Page() {
         <SquareButton
           onClick={handleClick}
           {...props}
-          Image={getPlusImage(Size.m)}
+          imageURL={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/add.svg`}
+          imageAlt={'add'}
           size={Size.m}
         />
         <SquareButton
           onClick={handleClick}
           {...props}
-          Image={getPlusImage(Size.l)}
+          imageURL={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/add.svg`}
+          imageAlt={'add'}
           size={Size.l}
         />
         <SquareButton
           onClick={handleClick}
           {...props}
-          Image={getPlusImage(Size.m)}
+          imageURL={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/add.svg`}
+          imageAlt={'add'}
           size={Size.m}
         />
         <SquareButton
           onClick={handleClick}
           {...props}
-          Image={getPlusImage(Size.s)}
+          imageURL={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/add.svg`}
+          imageAlt={'add'}
           size={Size.s}
         />
         <SquareButton
           onClick={handleClick}
           {...props}
-          Image={getPlusImage(Size.xs)}
+          imageURL={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/add.svg`}
+          imageAlt={'add'}
           size={Size.xs}
         />
         <SquareButton
           onClick={handleClick}
           {...props}
-          Image={getImage(Size.m)}
+          imageURL={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}logos/logo_google.png`}
+          imageAlt={'Google logo'}
           size={Size.m}
         />
         <SquareButton
           onClick={handleClick}
           {...props}
-          Image={getImage(Size.l)}
+          imageURL={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}logos/logo_google.png`}
+          imageAlt={'Google logo'}
           size={Size.l}
         />
         <SquareButton
           onClick={handleClick}
           {...props}
-          Image={getImage(Size.m)}
+          imageURL={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}logos/logo_google.png`}
+          imageAlt={'Google logo'}
           size={Size.m}
         />
         <SquareButton
           onClick={handleClick}
           {...props}
-          Image={getImage(Size.s)}
+          imageURL={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}logos/logo_google.png`}
+          imageAlt={'Google logo'}
           size={Size.s}
         />
         <SquareButton
           onClick={handleClick}
           {...props}
-          Image={getImage(Size.xs)}
+          imageURL={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}logos/logo_google.png`}
+          imageAlt={'Google logo'}
           size={Size.xs}
         />
       </>
