@@ -1,11 +1,6 @@
-.button {
+.button, .squareButton {
     border: none;
     border-radius: 6px;
-    padding: 5px 8px;
-    font-family: var(--inter);
-    font-size: var(--font-size-m);
-    font-weight: 600;
-    line-height: 20px;
     align-items: center;
     justify-content: center;
     position: relative;
@@ -14,20 +9,26 @@
     display: inline-flex;
 }
 
-.button .image {
+.button .image,
+.squareButton .image {
     display: flex;
     justify-content: center;
+    align-items: center;
     flex-shrink: 0;
 }
 
 .button.xxl .image,
 .button.xl .image,
-.button.l .image {
+.button.l .image,
+.squareButton.xxl .image,
+.squareButton.xl .image,
+.squareButton.l .image {
     width: 24px;
     height: 24px;
 }
 
-.button.m .image {
+.button.m .image,
+.squareButton.m .image {
     width: 20px;
     height: 20px;
 }
@@ -36,6 +37,19 @@
 .button.xs .image {
     width: 16px;
     height: 16px;
+}
+
+.squareButton.xs .image {
+    width: 12px;
+    height: 12px;
+}
+
+.button {
+    padding: 5px 8px;
+    font-family: var(--inter);
+    font-size: var(--font-size-m);
+    font-weight: 600;
+    line-height: 20px;
 }
 
 .button.xxl,
@@ -86,6 +100,37 @@
     align-items: center;
     gap: 4px;
     white-space: nowrap;
+}
+
+.squareButton {
+    padding: 0;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.squareButton.l {
+    width: 36px;
+    height: 36px;
+    padding: 6px;
+}
+
+.squareButton.m {
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+}
+
+.squareButton.s {
+    width: 24px;
+    height: 24px;
+    padding: 4px;
+}
+
+.squareButton.xs {
+    width: 16px;
+    height: 16px;
+    padding: 2px;
 }
 
 .loadingOverlay {
@@ -162,7 +207,7 @@
     background-color: var(--petal);
 }
 
-.button:disabled {
+.button:disabled, .squareButton:disabled {
     cursor: not-allowed;
     opacity: 0.5;
 }

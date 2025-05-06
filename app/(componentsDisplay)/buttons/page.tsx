@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { Button, ButtonVariant } from 'morning-react-ui/components/buttons';
 import buttonStyles from 'morning-react-ui/components/buttons/button.module.css';
 import LinkButton from 'morning-react-ui/components/buttons/LinkButton';
+import SquareButton from 'morning-react-ui/components/buttons/SquareButton';
 import Column from 'morning-react-ui/components/layout/Column';
 import Columns from 'morning-react-ui/components/layout/Columns';
 import Container from 'morning-react-ui/components/layout/Container';
@@ -19,6 +20,16 @@ export default function Page() {
       className={buttonStyles.image}
       src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}logos/logo_google.png`}
       alt='Google logo'
+      width={sizeToNumber(size)}
+      height={sizeToNumber(size)}
+    />
+  );
+
+  const getPlusImage = (size: Size) => (
+    <Image
+      className={buttonStyles.image}
+      src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/add.svg`}
+      alt='Add'
       width={sizeToNumber(size)}
       height={sizeToNumber(size)}
     />
@@ -160,6 +171,77 @@ export default function Page() {
     );
   };
 
+  const renderSquareButtons = (props: {
+    className?: string;
+    variant?: ButtonVariant;
+    disabled?: boolean;
+  }) => {
+    return (
+      <>
+        <SquareButton
+          onClick={handleClick}
+          {...props}
+          Image={getPlusImage(Size.m)}
+          size={Size.m}
+        />
+        <SquareButton
+          onClick={handleClick}
+          {...props}
+          Image={getPlusImage(Size.l)}
+          size={Size.l}
+        />
+        <SquareButton
+          onClick={handleClick}
+          {...props}
+          Image={getPlusImage(Size.m)}
+          size={Size.m}
+        />
+        <SquareButton
+          onClick={handleClick}
+          {...props}
+          Image={getPlusImage(Size.s)}
+          size={Size.s}
+        />
+        <SquareButton
+          onClick={handleClick}
+          {...props}
+          Image={getPlusImage(Size.xs)}
+          size={Size.xs}
+        />
+        <SquareButton
+          onClick={handleClick}
+          {...props}
+          Image={getImage(Size.m)}
+          size={Size.m}
+        />
+        <SquareButton
+          onClick={handleClick}
+          {...props}
+          Image={getImage(Size.l)}
+          size={Size.l}
+        />
+        <SquareButton
+          onClick={handleClick}
+          {...props}
+          Image={getImage(Size.m)}
+          size={Size.m}
+        />
+        <SquareButton
+          onClick={handleClick}
+          {...props}
+          Image={getImage(Size.s)}
+          size={Size.s}
+        />
+        <SquareButton
+          onClick={handleClick}
+          {...props}
+          Image={getImage(Size.xs)}
+          size={Size.xs}
+        />
+      </>
+    );
+  };
+
   return (
     <>
       <Navigation>
@@ -253,6 +335,21 @@ export default function Page() {
                 variant: ButtonVariant.Caution,
                 isLoading: true,
               })}
+            </Column>
+            <Column>
+              {renderSquareButtons({})}
+              {renderSquareButtons({ disabled: true })}
+            </Column>
+            <Column>
+              {renderSquareButtons({ variant: ButtonVariant.Secondary })}
+              {renderSquareButtons({
+                variant: ButtonVariant.Secondary,
+                disabled: true,
+              })}
+            </Column>
+            <Column>
+              {renderSquareButtons({ variant: ButtonVariant.Danger })}
+              {renderSquareButtons({ variant: ButtonVariant.Caution })}
             </Column>
             <Column>
               {renderLinkButtons({})}
