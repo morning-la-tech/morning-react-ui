@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { Button, ButtonVariant } from 'morning-react-ui/components/buttons';
 import buttonStyles from 'morning-react-ui/components/buttons/button.module.css';
 import LinkButton from 'morning-react-ui/components/buttons/LinkButton';
+import SquareButton from 'morning-react-ui/components/buttons/SquareButton';
 import Column from 'morning-react-ui/components/layout/Column';
 import Columns from 'morning-react-ui/components/layout/Columns';
 import Container from 'morning-react-ui/components/layout/Container';
@@ -160,6 +161,87 @@ export default function Page() {
     );
   };
 
+  const renderSquareButtons = (props: {
+    className?: string;
+    variant?: ButtonVariant;
+    disabled?: boolean;
+  }) => {
+    return (
+      <>
+        <SquareButton
+          onClick={handleClick}
+          {...props}
+          imageURL={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/add.svg`}
+          imageAlt={'add'}
+          size={Size.m}
+        />
+        <SquareButton
+          onClick={handleClick}
+          {...props}
+          imageURL={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/add.svg`}
+          imageAlt={'add'}
+          size={Size.l}
+        />
+        <SquareButton
+          onClick={handleClick}
+          {...props}
+          imageURL={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/add.svg`}
+          imageAlt={'add'}
+          size={Size.m}
+        />
+        <SquareButton
+          onClick={handleClick}
+          {...props}
+          imageURL={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/add.svg`}
+          imageAlt={'add'}
+          size={Size.s}
+        />
+        <SquareButton
+          onClick={handleClick}
+          {...props}
+          imageURL={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/add.svg`}
+          imageAlt={'add'}
+          size={Size.xs}
+        />
+        <SquareButton
+          onClick={handleClick}
+          {...props}
+          imageURL={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}logos/logo_google.png`}
+          imageAlt={'Google logo'}
+          size={Size.m}
+        />
+        <SquareButton
+          onClick={handleClick}
+          {...props}
+          imageURL={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}logos/logo_google.png`}
+          imageAlt={'Google logo'}
+          size={Size.l}
+        />
+        <SquareButton
+          onClick={handleClick}
+          {...props}
+          imageURL={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}logos/logo_google.png`}
+          imageAlt={'Google logo'}
+          size={Size.m}
+        />
+        <SquareButton
+          onClick={handleClick}
+          {...props}
+          imageURL={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}logos/logo_google.png`}
+          imageAlt={'Google logo'}
+          size={Size.s}
+        />
+        <SquareButton
+          onClick={handleClick}
+          {...props}
+          imageURL={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}logos/logo_google.png`}
+          imageAlt={'Google logo'}
+          size={Size.xs}
+        />
+      </>
+    );
+  };
+
   return (
     <>
       <Navigation>
@@ -253,6 +335,21 @@ export default function Page() {
                 variant: ButtonVariant.Caution,
                 isLoading: true,
               })}
+            </Column>
+            <Column>
+              {renderSquareButtons({})}
+              {renderSquareButtons({ disabled: true })}
+            </Column>
+            <Column>
+              {renderSquareButtons({ variant: ButtonVariant.Secondary })}
+              {renderSquareButtons({
+                variant: ButtonVariant.Secondary,
+                disabled: true,
+              })}
+            </Column>
+            <Column>
+              {renderSquareButtons({ variant: ButtonVariant.Danger })}
+              {renderSquareButtons({ variant: ButtonVariant.Caution })}
             </Column>
             <Column>
               {renderLinkButtons({})}
