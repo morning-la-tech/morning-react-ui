@@ -1,188 +1,65 @@
-import { HTMLProps, useState } from 'react';
-import * as React from 'react';
-import Image from 'next/image';
-import styles from './table.module.css';
+import {
+  createContext,
+  HTMLProps,
+  ReactNode,
+  useContext,
+  useState,
+} from 'react';
+import classNames from 'classnames';
+import styles from './Table.module.css';
 
-const Table = ({ className, ...props }: HTMLProps<HTMLTableElement>) => {
-  return (
-    <table
-      {...props}
-      className={`font-size-m ${styles.table} ${className || ''}`}
-    />
-  );
-};
-
-const TableHeader = ({
-  className,
-  ...props
-}: HTMLProps<HTMLTableSectionElement>) => {
-  return (
-    <thead {...props} className={`${styles.tableHeader} ${className || ''}`} />
-  );
-};
-
-interface TableBodySkeletonProps extends HTMLProps<HTMLTableSectionElement> {
+type TableContextProps = {
+  dropdownFields: Record<string, boolean> | undefined;
+  registerDropdownField: (field: string, hasDropdown: boolean) => void;
   isLoading?: boolean;
-  skeletonRows?: number;
-  skeletonCols?: number;
-}
+  skeletonRowNumber?: number;
+};
 
-const TableBody = ({
+const TableContext = createContext<TableContextProps | undefined>(undefined);
+
+const useTableContext = () => {
+  const ctx = useContext(TableContext);
+  if (!ctx) throw new Error('useTableContext must be used within a <Table>');
+  return ctx;
+};
+
+type TableProps = HTMLProps<HTMLTableElement> & {
+  isLoading?: boolean;
+  skeletonRowNumber?: number;
+  children: ReactNode;
+};
+
+const Table = ({
   className,
-  isLoading = false,
-  skeletonRows = 4,
-  skeletonCols = 5,
+  isLoading,
   children,
+  skeletonRowNumber,
   ...props
-}: TableBodySkeletonProps) => {
-  if (isLoading) {
-    const rows = Array.from({ length: skeletonRows });
-    const cols = Array.from({ length: skeletonCols });
-    return (
-      <tbody {...props} className={`${styles.tableBody} ${className || ''}`}>
-        {rows.map((_, rowIndex) => (
-          <TableRow key={rowIndex} className={styles.skeletonRow}>
-            {cols.map((_, colIndex) => (
-              <TableCell key={colIndex}>
-                <div className={styles.skeletonBlock} />
-              </TableCell>
-            ))}
-          </TableRow>
-        ))}
-      </tbody>
-    );
-  }
-  return (
-    <tbody {...props} className={`${styles.tableBody} ${className || ''}`}>
-      {children}
-    </tbody>
-  );
-};
-
-const TableFooter = ({
-  className,
-  ...props
-}: HTMLProps<HTMLTableSectionElement>) => {
-  return (
-    <tfoot {...props} className={`${styles.tableFooter} ${className || ''}`} />
-  );
-};
-
-const TableRow = ({ className, ...props }: HTMLProps<HTMLTableRowElement>) => {
-  const [collapsed, setCollapsed] = useState(true);
+}: TableProps) => {
+  const [dropdownFields, setDropdownFields] =
+    useState<Record<string, boolean>>();
+  const registerDropdownField = (field: string, hasDropdown: boolean) => {
+    setDropdownFields((prev) => {
+      const next = { ...(prev || {}) };
+      next[field] = hasDropdown;
+      return next;
+    });
+  };
 
   return (
-    <tr
-      {...props}
-      className={`${styles.tableRow} ${className || ''} ${
-        collapsed ? styles.collapsed : styles.expended
-      }`}
+    <TableContext.Provider
+      value={{
+        dropdownFields,
+        registerDropdownField,
+        isLoading,
+        skeletonRowNumber,
+      }}
     >
-      {React.Children.map(props.children, (child, index) => {
-        if (React.isValidElement(child) && child.type === TableCell) {
-          return React.cloneElement(
-            child as React.ReactElement<TableCellProps>,
-            {
-              key: index,
-              collapsed,
-              setCollapsed: (child.props as TableCellProps)?.showChevron
-                ? setCollapsed
-                : undefined,
-            },
-          );
-        }
-        return child;
-      })}
-    </tr>
+      <table {...props} className={classNames(styles.table, className)}>
+        {children}
+      </table>
+    </TableContext.Provider>
   );
-};
-
-interface TableHeadProps extends HTMLProps<HTMLTableCellElement> {
-  sortCallback?: (order: 'asc' | 'desc') => void;
-  order?: 'asc' | 'desc';
-}
-
-const TableHead = ({
-  className,
-  children,
-  order = 'asc',
-  sortCallback,
-  ...props
-}: TableHeadProps) => {
-  return (
-    <th
-      {...props}
-      className={`${styles.tableHead} ${className || ''} ${sortCallback ? styles.sortable : ''}`}
-      onClick={() =>
-        sortCallback && sortCallback(order === 'asc' ? 'desc' : 'asc')
-      }
-    >
-      {children}
-      {sortCallback && (
-        <Image
-          className={`${order === 'desc' ? styles.rotate180 : ''}`}
-          src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/pilote-chevron-down.svg`}
-          alt='url'
-          width={15}
-          height={15}
-        />
-      )}
-    </th>
-  );
-};
-
-interface TableCellProps extends HTMLProps<HTMLTableCellElement> {
-  setCollapsed?: (collapsed: boolean) => void;
-  collapsed?: boolean;
-  showChevron?: boolean;
-}
-
-const TableCell = ({
-  className,
-  collapsed,
-  setCollapsed,
-  showChevron,
-  ...props
-}: TableCellProps) => {
-  if (Array.isArray(props.children)) {
-    return (
-      <td {...props} className={`${styles.tableCell} ${className || ''}`}>
-        <div className={`${styles.tableCellArrayWrapper}`}>
-          {showChevron && setCollapsed && (
-            <button
-              className={styles.tableCellButton}
-              onClick={() => {
-                if (setCollapsed) {
-                  setCollapsed(!collapsed);
-                }
-              }}
-            >
-              <Image
-                className={`${collapsed ? styles.rotate180 : ''}`}
-                src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/pilote-chevron-down.svg`}
-                alt='url'
-                width={15}
-                height={15}
-              />
-            </button>
-          )}
-          <div
-            className={`${styles.tableCellArray}`}
-            style={{
-              maxHeight: `${collapsed ? 24 : props.children.length * 26}px`,
-            }}
-          >
-            {props.children.map((child, index) => (
-              <div key={index} className={styles.tableCellArrayItem}>
-                {child}
-              </div>
-            ))}
-          </div>
-        </div>
-      </td>
-    );
-  }
-  return <td {...props} className={`${styles.tableCell} ${className || ''}`} />;
 };
 
 const TableCaption = ({
@@ -190,20 +67,8 @@ const TableCaption = ({
   ...props
 }: HTMLProps<HTMLTableCaptionElement>) => {
   return (
-    <caption
-      {...props}
-      className={`${styles.tableCaption} ${className || ''}`}
-    />
+    <caption {...props} className={classNames(styles.caption, className)} />
   );
 };
 
-export {
-  Table,
-  TableHeader,
-  TableBody,
-  TableFooter,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableCaption,
-};
+export { Table, TableCaption, useTableContext };

@@ -2,135 +2,14 @@
     width: 100%;
     border-collapse: collapse;
     table-layout: fixed;
-    transition: all 0.2s linear;
+    transition: all 200ms linear;
 }
 
-.tableHeader {
-    height: 36px;
-    background-color: var(--cloud);
-    border-bottom: 1px solid var(--ash);
-    text-align: left;
+.invisible {
+    opacity: 0;
+    visibility: hidden;
 }
 
-.tableHead {
-    font-weight: normal;
-    transition: all 0.2s linear;
-}
-
-.tableHead.sortable {
-    cursor: pointer;
-}
-
-.tableHead img {
-    transition: all 0.2s linear;
-    width: 20px;
-    height: 20px;
-    margin-left: 6px;
-}
-
-.rotate180 {
-    transform: rotate(-180deg);
-}
-
-.tableBody {
-    color: var(--coal);
-}
-
-.tableRow {
-    border-bottom: 1px solid var(--ash);
-}
-
-.tableCell {
-    height: 36px;
-    overflow: hidden;
-    white-space: nowrap;
-    padding-top: 8px;
-}
-
-.tableCell button {
-    border: none;
-    background: none;
-    padding: 0;
-    margin: 0;
-    cursor: pointer;
-    display: flex;
-}
-
-.tableCell img {
-    transition: all .2s linear;
-    width: 20px;
-    height: 20px;
-}
-
-.tableRow.collapsed .tableCellArray {
-    overflow: hidden;
-}
-
-.tableRow.expended .tableCell {
-    padding-bottom: 8px;
-}
-
-
-.tableCell,
-.tableCellArray{
-    transition: all .25s ease;
-    vertical-align: top;
-}
-
-.tableCellArrayWrapper {
-    display: flex;
-}
-
-.tableCellArray {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.tableCellArrayItem {
-    height: 17px;
-}
-
-.tableFooter {
-    background-color: var(--snow);
-}
-
-.tableCaption {
+.caption {
     padding: 8px;
-}
-
-.table th {
-    padding: 6px;
-}
-
-.table td:first-child,
-.table th:first-child {
-    padding-left: 16px;
-    padding-right: 6px;
-}
-
-.table td:not(:first-child),
-.table th:not(:first-child) {
-    padding-left: 6px;
-    padding-right: 16px;
-}
-
-@keyframes pulse {
-    0%,
-    100% {
-        opacity: 1;
-    }
-
-    50% {
-        opacity: 0.5;
-    }
-}
-
-.skeletonBlock {
-    display: block;
-    width: 40%;
-    height: 16px;
-    background-color: var(--ash);
-    border-radius: 3px;
-    animation: pulse 1.5s infinite ease-in-out;
 }
