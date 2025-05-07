@@ -11,11 +11,11 @@ const TableHeader = ({
   return <thead {...props} className={classNames(styles.thead, className)} />;
 };
 
-interface TableHeadProps extends HTMLProps<HTMLTableCellElement> {
+type TableHeadProps = HTMLProps<HTMLTableCellElement> & {
   sortCallback?: (order: 'asc' | 'desc') => void;
   order?: 'asc' | 'desc';
   field?: string;
-}
+};
 
 const TableHead = ({
   field,

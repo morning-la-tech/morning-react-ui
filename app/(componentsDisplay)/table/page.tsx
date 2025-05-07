@@ -1,9 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
-import classNames from 'classnames';
 import Navigation from 'morning-react-ui/components/layout/Navigation';
 import {
-  SkeletonCell,
   Table,
   TableBody,
   TableCaption,
@@ -143,6 +141,12 @@ export default function Page() {
     }, 4000);
     return () => clearTimeout(timeout);
   }, []);
+
+  const displayRows: (Invoice | null)[] =
+    invoices && invoices.length > 0
+      ? invoices
+      : Array.from({ length: 7 }, () => null);
+
   return (
     <>
       <Navigation>
@@ -189,54 +193,44 @@ export default function Page() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {isLoading
-            ? Array.from({ length: 7 }).map((_, rowIndex) => (
-                <TableRow key={`skeleton-${rowIndex}`}>
-                  <SkeletonCell />
-                  <SkeletonCell
-                    field='invoice'
-                    className={styles.paddingChevron}
-                    shimmerClassName={classNames(styles.skeleton)}
-                  />
-                  <SkeletonCell
-                    field='place'
-                    shimmerClassName={styles.skeleton}
-                  />
-                  <SkeletonCell
-                    field='paymentStatus'
-                    style={{ paddingLeft: '20px' }}
-                    shimmerClassName={styles.skeleton}
-                  />
-                  <SkeletonCell
-                    field='paymentMethod'
-                    shimmerClassName={styles.skeleton}
-                  />
-                  <SkeletonCell
-                    field='totalAmount'
-                    shimmerClassName={styles.skeleton}
-                  />
-                  <SkeletonCell />
-                </TableRow>
-              ))
-            : invoices.map((invoice) => (
-                <TableRow key={invoice.invoice} rowValues={invoice}>
-                  <TableCell />
-                  <TableCell field='invoice' showRowExpandChevron>
-                    {invoice.invoice}
-                  </TableCell>
-                  <TableCell field='place'>{invoice.place}</TableCell>
-                  <TableCell showRowExpandChevron field='paymentStatus'>
-                    {invoice.paymentStatus}
-                  </TableCell>
-                  <TableCell field='paymentMethod'>
-                    {invoice.paymentMethod}
-                  </TableCell>
-                  <TableCell field='totalAmount'>
-                    {invoice.totalAmount}
-                  </TableCell>
-                  <TableCell />
-                </TableRow>
-              ))}
+          {displayRows.map((invoice, index) => (
+            <TableRow
+              key={invoice?.invoice ?? `skeleton-${index}`}
+              rowValues={invoice ?? {}}
+            >
+              <TableCell />
+              <TableCell
+                field='invoice'
+                showRowExpandChevron
+                skeletonClassName={styles.skeleton}
+              >
+                {invoice?.invoice}
+              </TableCell>
+              <TableCell field='place' skeletonClassName={styles.skeleton}>
+                {invoice?.place}
+              </TableCell>
+              <TableCell
+                showRowExpandChevron
+                field='paymentStatus'
+                skeletonClassName={styles.skeleton}
+              >
+                {invoice?.paymentStatus}
+              </TableCell>
+              <TableCell
+                field='paymentMethod'
+                skeletonClassName={styles.skeleton}
+              >
+                {invoice?.paymentMethod}
+              </TableCell>
+              <TableCell
+                field='totalAmount'
+                skeletonClassName={styles.skeleton}
+              >
+                {invoice?.totalAmount}
+              </TableCell>
+              <TableCell />
+            </TableRow>
+          ))}
         </TableBody>
         <TableFooter>
           <TableRow>

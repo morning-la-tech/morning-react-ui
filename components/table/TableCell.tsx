@@ -1,20 +1,23 @@
 import { HTMLProps, ReactNode, useEffect } from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
+import { SkeletonCell } from './SkeletonCell';
 import { useTableContext } from './Table';
 import styles from './TableCell.module.css';
 import { useTableRowContext } from './TableRow';
 
-interface TableCellProps extends HTMLProps<HTMLTableCellElement> {
+type TableCellProps = HTMLProps<HTMLTableCellElement> & {
   showRowExpandChevron?: boolean;
   field?: string;
-}
+  skeletonClassName?: string;
+};
 
 const TableCell = ({
   className,
   showRowExpandChevron,
   children,
   field,
+  skeletonClassName,
   ...props
 }: TableCellProps) => {
   const { registerDropdownField } = useTableContext();
@@ -30,6 +33,25 @@ const TableCell = ({
       );
     }
   }, [field, showRowExpandChevron, isMultiple]);
+
+  const isEmpty =
+    children === null ||
+    children === undefined ||
+    (typeof children === 'string' && children.trim() === '') ||
+    (Array.isArray(children) && children.length === 0);
+
+  if (isEmpty) {
+    console.log('Empty cell detected');
+    return (
+      <SkeletonCell
+        {...props}
+        showRowExpandChevron={showRowExpandChevron}
+        className={className}
+        style={{ height: '36px' }}
+        shimmerClassName={skeletonClassName}
+      />
+    );
+  }
 
   let cellValues: ReactNode | ReactNode[];
   if (!isMultiple) {
