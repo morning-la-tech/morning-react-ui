@@ -1,8 +1,8 @@
 import { HTMLProps, ReactNode, useEffect } from 'react';
-import Image from 'next/image';
 import classNames from 'classnames';
+import RotatingButton from 'morning-react-ui/components/buttons/RotatingButton';
+import { useTableContext } from './AdvancedTable';
 import { SkeletonCell } from './SkeletonCell';
-import { useTableContext } from './Table';
 import styles from './TableCell.module.css';
 import { useTableRowContext } from './TableRow';
 
@@ -20,7 +20,7 @@ const TableCell = ({
   skeletonClassName,
   ...props
 }: TableCellProps) => {
-  const { registerDropdownField } = useTableContext();
+  const { registerDropdownField, isLoading } = useTableContext();
   const { collapsed, setCollapsed, maxLength } = useTableRowContext();
   const isOriginalArray = Array.isArray(children);
   const isMultiple = maxLength > 1;
@@ -34,61 +34,48 @@ const TableCell = ({
     }
   }, [field, showRowExpandChevron, isMultiple]);
 
-  const isEmpty =
-    children === null ||
-    children === undefined ||
-    (typeof children === 'string' && children.trim() === '') ||
-    (Array.isArray(children) && children.length === 0);
-
-  if (isEmpty) {
-    console.log('Empty cell detected');
+  // If the cell is empty -> show a skeleton
+  if (isLoading) {
     return (
       <SkeletonCell
         {...props}
         showRowExpandChevron={showRowExpandChevron}
         className={className}
-        style={{ height: '36px' }}
         shimmerClassName={skeletonClassName}
       />
     );
   }
 
-  let cellValues: ReactNode | ReactNode[];
-  if (!isMultiple) {
-    cellValues = children;
-  } else if (isOriginalArray) {
-    cellValues = children as ReactNode[];
-  } else {
-    cellValues = Array(maxLength).fill(children);
-  }
+  // If the cell is a copied one in the dropdown, we need to show the original value
+  const cellValues: ReactNode | ReactNode[] = (() => {
+    if (!isMultiple || Array.isArray(children)) {
+      return children;
+    }
+    return Array(maxLength).fill(children);
+  })();
 
-  const paddingClass = classNames({
-    [styles['pl-0']]: showRowExpandChevron && isMultiple,
-    [styles['pl-5']]: showRowExpandChevron && !isMultiple,
-    [styles['pl-1-5']]: !showRowExpandChevron,
-  });
+  const paddingClass = (() => {
+    if (showRowExpandChevron && isMultiple) {
+      return styles['pl-0']; // no padding -> chevron in the column and in the cell (icon is 20px wide)
+    }
+    if (showRowExpandChevron) {
+      return styles['pl-5']; // 20px padding -> chevron in the column but not in the cell
+    }
+    return styles['pl-1-5']; // 6px padding -> no chevron in the column
+  })();
 
   return (
     <td {...props} className={classNames(styles.cell, paddingClass, className)}>
       <div className={styles.innerWrapper}>
         {showRowExpandChevron && isMultiple && (
-          <button
-            type='button'
-            className={styles.chevronButton}
-            onClick={() => setCollapsed(!collapsed)}
-          >
-            <Image
-              className={classNames(styles.chevronIcon, {
-                [styles.chevronIconExpanded]: !collapsed,
-              })}
-              src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/carret-right.svg`}
-              alt='expand'
-              width={15}
-              height={15}
-            />
-          </button>
+          <RotatingButton
+            collapsed={collapsed}
+            toggle={() => setCollapsed(!collapsed)}
+            rotationDeg={90}
+            src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/caret-right.svg`}
+            alt='caret'
+          />
         )}
-
         {isMultiple ? (
           <div
             className={styles.multipleWrapper}

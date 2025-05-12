@@ -1,0 +1,51 @@
+.cell {
+    padding-top: 8px;
+    padding-bottom: 7px;
+    padding-right: 6px;
+    overflow-x: hidden;
+    vertical-align: top;
+    transition: all 200ms ease-in-out;
+}
+
+.pl-0 {
+    padding-left: 0;
+}
+
+.pl-5 {
+    padding-left: 20px;
+}
+
+.pl-1-5 {
+    padding-left: 6px;
+}
+
+.innerWrapper {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+
+.multipleWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: all 250ms ease-in-out;
+    overflow: hidden;
+}
+
+.multipleItem {
+    height: 20px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    opacity: 0.3;
+}
+
+.multipleItemFirst {
+    opacity: 1;
+}
+
+.singleWrapper {
+    height: 20px;
+    line-height: 20px;
+}

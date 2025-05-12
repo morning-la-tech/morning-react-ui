@@ -1,0 +1,14 @@
+.iconButton {
+    all: unset;
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+    display: flex;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+    transition: transform 200ms linear;
+    flex-shrink: 0;
+}
