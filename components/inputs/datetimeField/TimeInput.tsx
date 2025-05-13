@@ -22,7 +22,7 @@ import {
   isStringValidAsTime,
   stringToTime,
 } from 'morning-react-ui/utils/datetimeUtils';
-import { Size } from 'morning-react-ui/utils/Enum';
+import { Size, sizeToHeight } from 'morning-react-ui/utils/Enum';
 import { TimeError } from 'morning-react-ui/utils/error';
 import styles from '../input.module.css';
 import { BasicInputProps, InputProps } from '../propsTypes';
@@ -71,6 +71,10 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputHtmlProps>(
     );
     const [error, setError] = useState<boolean>(false);
     const inputRef = useRef<HTMLInputElement>(null);
+
+    const inputStyle = {
+      height: `${sizeToHeight(finalSize)}px`,
+    };
 
     useEffect(() => {
       const input = inputRef.current;
@@ -245,6 +249,7 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputHtmlProps>(
               [styles.error]: isError || error,
             },
           )}
+          style={inputStyle}
           onClick={handleWrapperClick}
         >
           <input
