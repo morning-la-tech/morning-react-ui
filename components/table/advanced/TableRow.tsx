@@ -2,16 +2,16 @@ import { createContext, HTMLProps, useContext, useMemo, useState } from 'react';
 import classNames from 'classnames';
 import styles from './TableRow.module.css';
 
-interface TableRowContextProps {
+type TableRowContextProps = {
   collapsed: boolean;
   setCollapsed: (collapsed: boolean) => void;
   rowValues: Record<string, unknown>;
   maxLength: number;
-}
+};
 
-interface TableRowProps extends HTMLProps<HTMLTableRowElement> {
+type TableRowProps = HTMLProps<HTMLTableRowElement> & {
   rowValues?: Record<string, unknown>;
-}
+};
 
 /**
  * TableRow component
@@ -19,6 +19,7 @@ interface TableRowProps extends HTMLProps<HTMLTableRowElement> {
 const TableRow = ({ rowValues = {}, className, ...props }: TableRowProps) => {
   const [collapsed, setCollapsed] = useState(true);
 
+  // Check if rowValues contain any arrays -> set maxLength to the longest array
   const maxLength = useMemo(() => {
     const lengths = Object.values(rowValues).map((v) =>
       Array.isArray(v) ? v.length : 1,

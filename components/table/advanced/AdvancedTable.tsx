@@ -6,13 +6,13 @@ import {
   useState,
 } from 'react';
 import classNames from 'classnames';
-import styles from './Table.module.css';
+import styles from './table.module.css';
 
 type TableContextProps = {
   dropdownFields: Record<string, boolean> | undefined;
   registerDropdownField: (field: string, hasDropdown: boolean) => void;
   isLoading?: boolean;
-  skeletonRowNumber?: number;
+  skeletonRows?: number;
 };
 
 const TableContext = createContext<TableContextProps | undefined>(undefined);
@@ -23,19 +23,19 @@ const useTableContext = () => {
   return ctx;
 };
 
-type TableProps = HTMLProps<HTMLTableElement> & {
+type AdvancedTableProps = HTMLProps<HTMLTableElement> & {
   isLoading?: boolean;
-  skeletonRowNumber?: number;
   children: ReactNode;
+  skeletonRows?: number;
 };
 
-const Table = ({
+const AdvancedTable = ({
   className,
   isLoading,
   children,
-  skeletonRowNumber,
+  skeletonRows,
   ...props
-}: TableProps) => {
+}: AdvancedTableProps) => {
   const [dropdownFields, setDropdownFields] =
     useState<Record<string, boolean>>();
   const registerDropdownField = (field: string, hasDropdown: boolean) => {
@@ -52,7 +52,7 @@ const Table = ({
         dropdownFields,
         registerDropdownField,
         isLoading,
-        skeletonRowNumber,
+        skeletonRows,
       }}
     >
       <table {...props} className={classNames(styles.table, className)}>
@@ -71,4 +71,4 @@ const TableCaption = ({
   );
 };
 
-export { Table, TableCaption, useTableContext };
+export { AdvancedTable, TableCaption, useTableContext };

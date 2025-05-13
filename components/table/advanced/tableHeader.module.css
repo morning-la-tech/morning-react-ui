@@ -1,13 +1,14 @@
 .thead {
     background-color: var(--cloud);
-    border-bottom: 1px solid var(--ash);
     text-align: left;
+    height: 36px;
 }
 
 .th {
-    padding-top: 8px;
-    padding-bottom: 8px;
     font-weight: 400;
+    padding-top: 8px;
+    padding-bottom: 7px;
+    height: 36px;
 }
 
 .px-1-5 {

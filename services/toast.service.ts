@@ -1,11 +1,11 @@
 export type ToastMessageType = 'success' | 'error' | 'warning';
 
-export interface ToastParams {
+export type ToastParams = {
   type: ToastMessageType;
   message: string;
   delay?: number;
   closable?: boolean;
-}
+};
 
 let toastHandler:
   | ((

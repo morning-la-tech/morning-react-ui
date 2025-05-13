@@ -13,14 +13,14 @@ import {
   ToastMessageType,
 } from 'morning-react-ui/services/toast.service';
 
-export interface ToastMessage {
+export type ToastMessage = {
   id: string;
   type: ToastMessageType;
   message: string;
   onClose: () => void;
   delay?: number;
   closable?: boolean;
-}
+};
 
 type ToastContextProps = {
   addToast: (

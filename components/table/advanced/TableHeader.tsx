@@ -1,7 +1,7 @@
 import { HTMLProps } from 'react';
-import Image from 'next/image';
 import classNames from 'classnames';
-import { useTableContext } from './Table';
+import RotatingButton from 'morning-react-ui/components/buttons/RotatingButton';
+import { useTableContext } from './AdvancedTable';
 import styles from './TableHeader.module.css';
 
 const TableHeader = ({
@@ -11,11 +11,11 @@ const TableHeader = ({
   return <thead {...props} className={classNames(styles.thead, className)} />;
 };
 
-interface TableHeadProps extends HTMLProps<HTMLTableCellElement> {
+type TableHeadProps = HTMLProps<HTMLTableCellElement> & {
   sortCallback?: (order: 'asc' | 'desc') => void;
   order?: 'asc' | 'desc';
   field?: string;
-}
+};
 
 const TableHead = ({
   field,
@@ -48,14 +48,15 @@ const TableHead = ({
       <div className={styles.labelWrapper}>
         {children}
         {sortCallback && (
-          <Image
-            className={classNames(styles.icon, {
-              [styles.rotated]: order === 'desc',
-            })}
-            src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/pilote-chevron-down.svg`}
-            alt='sort'
-            width={15}
-            height={15}
+          <RotatingButton
+            collapsed={order === 'asc'}
+            rotationDeg={180}
+            src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}/icons/pilote-chevron-down.svg`}
+            alt={`Sort by ${field}`}
+            style={{
+              opacity: order ? 1 : 0,
+              transition: 'opacity 200ms ease-in-out',
+            }}
           />
         )}
       </div>

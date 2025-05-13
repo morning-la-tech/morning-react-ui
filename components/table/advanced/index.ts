@@ -1,4 +1,4 @@
-export { Table, TableCaption } from './Table';
+export { AdvancedTable, TableCaption } from './AdvancedTable';
 export { TableBody } from './TableBody';
 export { TableFooter } from './TableFooter';
 export { TableHeader, TableHead } from './TableHeader';

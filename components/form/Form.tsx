@@ -4,12 +4,12 @@ import Button, {
 } from 'morning-react-ui/components/buttons/Button';
 import styles from './form.module.css';
 
-interface FormProps extends HTMLProps<HTMLFormElement> {
+type FormProps = HTMLProps<HTMLFormElement> & {
   children: ReactNode;
   buttons: ButtonProps[];
   onSubmit?: (event: FormEvent<HTMLFormElement>) => void;
   buttonContainerStyle?: React.CSSProperties;
-}
+};
 
 const Form = ({
   children,
