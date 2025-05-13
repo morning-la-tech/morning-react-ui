@@ -8,9 +8,9 @@ import PaginationComponent from 'morning-react-ui/components/pagination/Paginati
 import { Pagination } from 'morning-react-ui/components/pagination/types';
 import { Size } from 'morning-react-ui/utils/Enum';
 
-interface TableProps {
+type TableProps = {
   page: number;
-}
+};
 
 const Table = ({ page }: TableProps) => {
   const rows = 10;

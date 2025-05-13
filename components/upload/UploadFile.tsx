@@ -17,7 +17,7 @@ import { InputError } from 'morning-react-ui/utils/error';
 import { generateFileName } from 'morning-react-ui/utils/file';
 import styles from './uploadFile.module.scss';
 
-interface UploadFileProps {
+type UploadFileProps = {
   label?: string;
   sublabel?: string;
   buttonLabel: string;
@@ -34,7 +34,7 @@ interface UploadFileProps {
   maxFileSize?: number;
   maxSizeErrorMessage?: string;
   required?: boolean;
-}
+};
 
 const UploadFile = ({
   label = '',

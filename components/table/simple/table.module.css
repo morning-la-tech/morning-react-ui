@@ -1,0 +1,45 @@
+.table {
+    table-layout: auto;
+    border-collapse: collapse;
+}
+
+.thead {
+    background-color: var(--cloud);
+    border-bottom: 1px solid var(--ash);
+    text-align: left;
+    height: 36px;
+}
+
+.th {
+    padding: 8px 6px 7px;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.thContent {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+}
+
+.th,
+.td {
+    white-space: nowrap;
+}
+
+.tr {
+    height: 36px;
+    border-bottom: 1px solid var(--ash);
+}
+
+.td {
+    height: 36px;
+    padding: 8px 6px 7px;
+    font-size: 14px;
+}
+
+.skeletonSize {
+    width: 70px;
+    height: 19px;
+}

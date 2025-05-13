@@ -1,6 +1,6 @@
 import { HTMLProps } from 'react';
 import classNames from 'classnames';
-import styles from './TableFooter.module.css';
+import styles from './tableFooter.module.css';
 
 const TableFooter = ({
   className,

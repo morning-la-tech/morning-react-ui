@@ -2,11 +2,10 @@ import { HTMLProps } from 'react';
 import classNames from 'classnames';
 import styles from './skeletonCell.module.css';
 
-interface SkeletonCellProps extends HTMLProps<HTMLTableCellElement> {
+type SkeletonCellProps = HTMLProps<HTMLTableCellElement> & {
   showRowExpandChevron?: boolean;
-  field?: string;
   shimmerClassName?: string;
-}
+};
 
 const SkeletonCell = ({
   className,

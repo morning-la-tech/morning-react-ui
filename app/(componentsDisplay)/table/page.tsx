@@ -1,10 +1,8 @@
 'use client';
 import { useEffect, useState } from 'react';
-import classNames from 'classnames';
 import Navigation from 'morning-react-ui/components/layout/Navigation';
 import {
-  SkeletonCell,
-  Table,
+  AdvancedTable,
   TableBody,
   TableCaption,
   TableCell,
@@ -12,7 +10,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from 'morning-react-ui/components/table';
+} from 'morning-react-ui/components/table/advanced';
+import { SimpleTable } from 'morning-react-ui/components/table/simple';
 import Tag from 'morning-react-ui/components/tag/Tag';
 import { Color } from 'morning-react-ui/utils/Enum';
 import styles from './page.module.css';
@@ -36,6 +35,14 @@ export default function Page() {
     paymentStatus: React.ReactNode | React.ReactNode[];
     totalAmount: string | string[];
     paymentMethod: string | string[];
+  };
+
+  type SimpleInvoice = {
+    invoice: string;
+    place: React.ReactNode;
+    paymentStatus: React.ReactNode;
+    totalAmount: string;
+    paymentMethod: string;
   };
 
   const [invoices, setInvoices] = useState<Invoice[]>([]);
@@ -143,110 +150,144 @@ export default function Page() {
     }, 4000);
     return () => clearTimeout(timeout);
   }, []);
+
+  const simpleInvoices: SimpleInvoice[] = [
+    {
+      invoice: 'INV001',
+      place: <Tag label='🍟 Laffitte' color={Color.gray} />,
+      paymentStatus: <Tag label='Paid' color={Color.green} />,
+      totalAmount: '$250.00',
+      paymentMethod: 'Credit Card',
+    },
+    {
+      invoice: 'INV002',
+      place: <Tag label='⚜️ Saint-Ho' color={Color.gray} />,
+      paymentStatus: <Tag label='Unpaid' color={Color.red} />,
+      totalAmount: '$150.00',
+      paymentMethod: 'PayPal',
+    },
+    {
+      invoice: 'INV003',
+      place: <Tag label='⛲️ Trévise' color={Color.gray} />,
+      paymentStatus: <Tag label='Pending' color={Color.orange} />,
+      totalAmount: '$350.00',
+      paymentMethod: 'Bank Transfer',
+    },
+  ];
+
+  const simpleInvoiceColumns = [
+    { key: 'invoice', header: 'Invoice' },
+    { key: 'place', header: 'Place' },
+    { key: 'paymentStatus', header: 'Status' },
+    { key: 'paymentMethod', header: 'Method' },
+    { key: 'totalAmount', header: 'Amount' },
+  ];
+
   return (
     <>
       <Navigation>
         <h1 className={styles.title}>Table</h1>
       </Navigation>
-      <Table isLoading={isLoading}>
-        <TableCaption>A list of your recent invoices.</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead style={{ width: '16px' }} />
-            <TableHead field='invoice' style={{ paddingLeft: '20px' }}>
-              Invoice
-            </TableHead>
-            <TableHead field='place'>Place</TableHead>
-            <TableHead field='paymentStatus' style={{ paddingLeft: '20px' }}>
-              Status
-            </TableHead>
-            <TableHead
-              field='paymentMethod'
-              order={paymentMethodOrder}
-              sortCallback={(order: 'asc' | 'desc') => {
-                setInvoices((prevInvoices) => {
-                  const sortedInvoices = [...prevInvoices];
-                  sortedInvoices.sort((a, b) => {
-                    if (order === 'asc') {
-                      return a.paymentMethod[0].localeCompare(
-                        b.paymentMethod[0],
-                      );
-                    } else {
-                      return b.paymentMethod[0].localeCompare(
-                        a.paymentMethod[0],
-                      );
-                    }
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        <AdvancedTable isLoading={isLoading} skeletonRows={7}>
+          <TableCaption>A list of your recent invoices.</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead style={{ width: '16px' }} />
+              <TableHead field='invoice' style={{ paddingLeft: '20px' }}>
+                Invoice
+              </TableHead>
+              <TableHead field='place'>Place</TableHead>
+              <TableHead field='paymentStatus' style={{ paddingLeft: '20px' }}>
+                Status
+              </TableHead>
+              <TableHead
+                field='paymentMethod'
+                order={paymentMethodOrder}
+                sortCallback={(order: 'asc' | 'desc') => {
+                  setInvoices((prevInvoices) => {
+                    const sortedInvoices = [...prevInvoices];
+                    sortedInvoices.sort((a, b) => {
+                      if (order === 'asc') {
+                        return a.paymentMethod[0].localeCompare(
+                          b.paymentMethod[0],
+                        );
+                      } else {
+                        return b.paymentMethod[0].localeCompare(
+                          a.paymentMethod[0],
+                        );
+                      }
+                    });
+                    return sortedInvoices;
                   });
-                  return sortedInvoices;
-                });
-                setPaymentMethodOrder(order);
-              }}
-            >
-              Method
-            </TableHead>
-            <TableHead>Amount</TableHead>
-            <TableHead style={{ width: '16px' }} />
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {isLoading
-            ? Array.from({ length: 7 }).map((_, rowIndex) => (
-                <TableRow key={`skeleton-${rowIndex}`}>
-                  <SkeletonCell />
-                  <SkeletonCell
-                    field='invoice'
-                    className={styles.paddingChevron}
-                    shimmerClassName={classNames(styles.skeleton)}
-                  />
-                  <SkeletonCell
-                    field='place'
-                    shimmerClassName={styles.skeleton}
-                  />
-                  <SkeletonCell
-                    field='paymentStatus'
-                    style={{ paddingLeft: '20px' }}
-                    shimmerClassName={styles.skeleton}
-                  />
-                  <SkeletonCell
-                    field='paymentMethod'
-                    shimmerClassName={styles.skeleton}
-                  />
-                  <SkeletonCell
-                    field='totalAmount'
-                    shimmerClassName={styles.skeleton}
-                  />
-                  <SkeletonCell />
-                </TableRow>
-              ))
-            : invoices.map((invoice) => (
-                <TableRow key={invoice.invoice} rowValues={invoice}>
-                  <TableCell />
-                  <TableCell field='invoice' showRowExpandChevron>
-                    {invoice.invoice}
-                  </TableCell>
-                  <TableCell field='place'>{invoice.place}</TableCell>
-                  <TableCell showRowExpandChevron field='paymentStatus'>
-                    {invoice.paymentStatus}
-                  </TableCell>
-                  <TableCell field='paymentMethod'>
-                    {invoice.paymentMethod}
-                  </TableCell>
-                  <TableCell field='totalAmount'>
-                    {invoice.totalAmount}
-                  </TableCell>
-                  <TableCell />
-                </TableRow>
-              ))}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TableCell />
-            <TableCell colSpan={4}>Total</TableCell>
-            <TableCell>$2,500.00</TableCell>
-            <TableCell />
-          </TableRow>
-        </TableFooter>
-      </Table>
+                  setPaymentMethodOrder(order);
+                }}
+              >
+                Method
+              </TableHead>
+              <TableHead>Amount</TableHead>
+              <TableHead style={{ width: '16px' }} />
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {(isLoading ? Array.of(null) : invoices).map((invoice, index) => (
+              <TableRow
+                key={invoice?.invoice ?? `skeleton-${index}`}
+                rowValues={invoice ?? {}}
+              >
+                <TableCell />
+                <TableCell
+                  field='invoice'
+                  showRowExpandChevron
+                  skeletonClassName={styles.skeleton}
+                >
+                  {invoice?.invoice}
+                </TableCell>
+                <TableCell field='place' skeletonClassName={styles.skeleton}>
+                  {invoice?.place}
+                </TableCell>
+                <TableCell
+                  showRowExpandChevron
+                  field='paymentStatus'
+                  skeletonClassName={styles.skeleton}
+                >
+                  {invoice?.paymentStatus}
+                </TableCell>
+                <TableCell
+                  field='paymentMethod'
+                  skeletonClassName={styles.skeleton}
+                >
+                  {invoice?.paymentMethod}
+                </TableCell>
+                <TableCell
+                  field='totalAmount'
+                  skeletonClassName={styles.skeleton}
+                >
+                  {invoice?.totalAmount}
+                </TableCell>
+                <TableCell />
+              </TableRow>
+            ))}
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TableCell />
+              <TableCell colSpan={4}>Total</TableCell>
+              <TableCell>$2,500.00</TableCell>
+              <TableCell />
+            </TableRow>
+          </TableFooter>
+        </AdvancedTable>
+        <SimpleTable
+          data={simpleInvoices}
+          columns={simpleInvoiceColumns}
+          onSortChange={(field, order) => {
+            console.log(`Sort by ${field} (${order})`);
+          }}
+          isLoading={isLoading}
+          skeletonRows={5}
+        />
+      </div>
     </>
   );
 }
