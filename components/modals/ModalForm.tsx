@@ -1,12 +1,8 @@
 import { FormEvent, ReactNode } from 'react';
-import classNames from 'classnames';
-import { createPortal } from 'react-dom';
 import { ButtonProps } from 'morning-react-ui/components/buttons/Button';
 import { Size } from 'morning-react-ui/utils/Enum';
 import Form from '../form/Form';
-import styles from './modal.module.scss';
-import ModalHeader from './utils/ModalHeader';
-import useModals from './utils/useModals';
+import Modal from './Modal';
 
 type Props = {
   children?: ReactNode;
@@ -22,6 +18,7 @@ type Props = {
   buttons?: ButtonProps[];
   buttonContainerStyle?: React.CSSProperties;
   maxWidth?: string;
+  autoCenterThreshold?: number;
 };
 
 const ModalForm = ({
@@ -37,47 +34,26 @@ const ModalForm = ({
   buttons = [],
   buttonContainerStyle = {},
   maxWidth = '600px',
+  autoCenterThreshold = 500,
 }: Props) => {
-  const { handleMouseDown, handleMouseUp } = useModals(
-    closeOnClickOutside,
-    hide,
-  );
-
-  const modalStyle = {
-    ...(top ? { top } : {}),
-    maxWidth,
-  };
-
   return (
-    isModalShowing &&
-    createPortal(
-      <div className={styles.wrapper}>
-        <div
-          className={styles.overlay}
-          onMouseDown={handleMouseDown}
-          onMouseUp={handleMouseUp}
-        />
-        <div
-          className={classNames(styles.modal, className)}
-          style={modalStyle}
-          onClick={(e) => e.stopPropagation()}
-        >
-          <ModalHeader
-            hide={hide}
-            title={title}
-            hasCloseButton={!noCloseButton}
-          />
-          <Form
-            onSubmit={onSubmit}
-            buttons={buttons}
-            buttonContainerStyle={buttonContainerStyle}
-          >
-            {children}
-          </Form>
-        </div>
-      </div>,
-      document.body,
-    )
+    <Modal
+      isModalShowing={isModalShowing}
+      hide={hide}
+      top={top}
+      title={title}
+      noCloseButton={noCloseButton}
+      closeOnClickOutside={closeOnClickOutside}
+      className={className}
+      buttons={buttons}
+      buttonContainerStyle={buttonContainerStyle}
+      maxWidth={maxWidth}
+      autoCenterThreshold={autoCenterThreshold}
+    >
+      <Form onSubmit={onSubmit} buttons={[]}>
+        {children}
+      </Form>
+    </Modal>
   );
 };
 

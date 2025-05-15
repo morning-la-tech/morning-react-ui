@@ -15,7 +15,7 @@ import classNames from 'classnames';
 import useIsMobile from 'morning-react-ui/components/hooks/useIsMobile';
 import ParentInput from 'morning-react-ui/components/inputs/ParentInput';
 import { InputProps } from 'morning-react-ui/components/inputs/propsTypes';
-import { Size, sizeToNumber } from 'morning-react-ui/utils/Enum';
+import { Size, sizeToHeight, sizeToNumber } from 'morning-react-ui/utils/Enum';
 import { InputError } from 'morning-react-ui/utils/error';
 import styles from '../input.module.css';
 import useInput from './useInput';
@@ -73,6 +73,10 @@ const TextInput = forwardRef<HTMLInputElement, TextInputHtmlProps>(
     const [lastCursorPosition, setLastCursorPosition] = useState<number | null>(
       null,
     );
+
+    const inputStyle = {
+      height: `${sizeToHeight(finalSize)}px`,
+    };
 
     useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
 
@@ -148,6 +152,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputHtmlProps>(
               [styles.error]: isError,
             },
           )}
+          style={inputStyle}
           onClick={handleWrapperClick}
         >
           {imageSrc && (

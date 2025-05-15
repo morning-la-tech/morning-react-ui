@@ -6,6 +6,7 @@
     gap: 4px;
     width: 100%;
     background-color: var(--white);
+    align-items: center;
 }
 
 .wrapperTextArea {
@@ -45,6 +46,7 @@
     overflow: hidden;
     box-sizing: border-box;
     border-radius: 6px;
+    flex-grow: 1;
 }
 
 .input:focus,

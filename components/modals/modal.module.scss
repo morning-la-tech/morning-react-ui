@@ -1,51 +1,96 @@
 .wrapper {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
 }
 
 .overlay {
-    z-index: 100;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: var(--graphite);
-    opacity: 0.5;
+  z-index: 100;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--graphite);
+  opacity: 0.5;
 }
 
 .modal {
-    z-index: 101;
-    background-color: var(--white);
-    position: fixed;
-    border-radius: 10px;
-    box-shadow: var(--shadow-6);
-    padding: 25px;
-    display: grid;
-    gap: 20px;
-    align-self: center;
-    font-family: var(--inter);
+  z-index: 101;
+  background-color: var(--white);
+  border-radius: 10px;
+  box-shadow: var(--shadow-6);
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-family: var(--inter);
+  max-height: 80vh;
+  max-width: 90vw;
+  width: fit-content;
+  position: relative;
+  margin-top: 200px;
+  overflow: hidden;
+}
+
+.modalCentered {
+  margin-top: 0;
+  margin-bottom: 0;
+  align-self: center;
+}
+
+.modalContent {
+  overflow-y: auto;
+  flex: 1 1 auto;
+  max-height: calc(80vh - 140px);
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ash) transparent;
+}
+
+.modalContent::-webkit-scrollbar {
+  width: 5px;
+}
+
+.modalContent::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modalContent::-webkit-scrollbar-thumb {
+  background-color: var(--ash);
+  border-radius: 10px;
+}
+
+.modalFooter {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 10px;
 }
 
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
 }
 
 .title {
-    font-weight: 600;
-    font-size: 18px;
+  font-weight: 600;
+  font-size: 18px;
 }
 
 .closeButton {
-    cursor: pointer;
-    position: relative;
-    top: 0;
-    right: 0;
-    mask-image: url('#{$cdn-url}icons/cross.svg');
-    mask-size: contain;
-    background-color: var(--graphite);
-    width: 24px;
-    height: 24px;
+  cursor: pointer;
+  position: relative;
+  top: 0;
+  right: 0;
+  mask-image: url('#{$cdn-url}icons/cross.svg');
+  mask-size: contain;
+  background-color: var(--graphite);
+  width: 24px;
+  height: 24px;
 }
