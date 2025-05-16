@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes } from 'react';
+import { ButtonHTMLAttributes, CSSProperties } from 'react';
 import Image from 'next/image';
 import classNames from 'classnames';
 import styles from './rotatingButton.module.css';
@@ -10,6 +10,8 @@ type RotatingIconButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   baseRotationDeg?: number;
   src: string;
   alt?: string;
+  imageClassName?: string;
+  imageStyle?: CSSProperties;
 };
 
 const RotatingButton = ({
@@ -18,7 +20,10 @@ const RotatingButton = ({
   rotationDeg,
   baseRotationDeg = 0,
   src,
+  className,
   alt = 'toggle',
+  imageClassName,
+  imageStyle,
   ...props
 }: RotatingIconButtonProps) => {
   const appliedRotation = collapsed
@@ -28,20 +33,19 @@ const RotatingButton = ({
   return (
     <button
       type='button'
-      className={styles.iconButton}
+      className={classNames(styles.iconButton, className)}
       onClick={toggle}
       {...props}
     >
       <Image
-        className={classNames(styles.icon, {
-          [styles.iconExpanded]: !collapsed,
-        })}
+        className={classNames(styles.icon, imageClassName)}
         src={src}
         alt={alt}
         width={20}
         height={20}
         style={{
           transform: `rotate(${appliedRotation}deg)`,
+          ...imageStyle,
         }}
       />
     </button>
