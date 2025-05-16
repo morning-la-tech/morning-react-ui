@@ -3,6 +3,7 @@
     border-collapse: collapse;
     table-layout: fixed;
     transition: all 200ms linear;
+    font-size: 14px;
 }
 
 .invisible {
