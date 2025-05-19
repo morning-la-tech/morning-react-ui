@@ -1,18 +1,17 @@
-import * as React from 'react';
 import { Color, Size } from 'morning-react-ui/utils/Enum';
 import styles from './tag.module.css';
 
 type TagProps = React.HTMLAttributes<HTMLSpanElement> & {
   className?: string;
   label?: string;
-  color: Color;
+  color?: Color;
   size?: Size;
 };
 
 const Tag = ({
   className,
   label,
-  color,
+  color = Color.gray,
   size = Size.s,
   ...props
 }: TagProps) => {

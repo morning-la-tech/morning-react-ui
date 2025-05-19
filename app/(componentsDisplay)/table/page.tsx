@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import Navigation from 'morning-react-ui/components/layout/Navigation';
 import {
   AdvancedTable,
@@ -11,36 +11,39 @@ import {
   TableHeader,
   TableRow,
 } from 'morning-react-ui/components/table/advanced';
+import { getNextOrders } from 'morning-react-ui/components/table/advanced/utils';
+import { SortOrder } from 'morning-react-ui/components/table/enum';
 import { SimpleTable } from 'morning-react-ui/components/table/simple';
 import Tag from 'morning-react-ui/components/tag/Tag';
 import { Color } from 'morning-react-ui/utils/Enum';
 import styles from './page.module.css';
 
 export default function Page() {
-  const [paymentMethodOrder, setPaymentMethodOrder] = useState<'asc' | 'desc'>(
-    'asc',
-  );
+  const [orders, setOrders] = useState<Record<string, SortOrder | null>>({
+    paymentStatus: null,
+    paymentMethod: null,
+  });
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       setIsLoading(false);
-    }, 4000);
+    }, 1000);
     return () => clearTimeout(timeout);
   }, []);
 
   type Invoice = {
     invoice: string;
-    place: React.ReactNode;
-    paymentStatus: React.ReactNode | React.ReactNode[];
+    place: ReactNode;
+    paymentStatus: ReactNode | ReactNode[];
     totalAmount: string | string[];
     paymentMethod: string | string[];
   };
 
   type SimpleInvoice = {
     invoice: string;
-    place: React.ReactNode;
-    paymentStatus: React.ReactNode;
+    place: ReactNode;
+    paymentStatus: ReactNode;
     totalAmount: string;
     paymentMethod: string;
   };
@@ -147,7 +150,7 @@ export default function Page() {
           ],
         },
       ]);
-    }, 4000);
+    }, 1000);
     return () => clearTimeout(timeout);
   }, []);
 
@@ -198,30 +201,21 @@ export default function Page() {
                 Invoice
               </TableHead>
               <TableHead field='place'>Place</TableHead>
-              <TableHead field='paymentStatus' style={{ paddingLeft: '20px' }}>
+              <TableHead
+                field='paymentStatus'
+                order={orders.paymentStatus}
+                sortCallback={() =>
+                  setOrders((prev) => getNextOrders(prev, 'paymentStatus'))
+                }
+              >
                 Status
               </TableHead>
               <TableHead
                 field='paymentMethod'
-                order={paymentMethodOrder}
-                sortCallback={(order: 'asc' | 'desc') => {
-                  setInvoices((prevInvoices) => {
-                    const sortedInvoices = [...prevInvoices];
-                    sortedInvoices.sort((a, b) => {
-                      if (order === 'asc') {
-                        return a.paymentMethod[0].localeCompare(
-                          b.paymentMethod[0],
-                        );
-                      } else {
-                        return b.paymentMethod[0].localeCompare(
-                          a.paymentMethod[0],
-                        );
-                      }
-                    });
-                    return sortedInvoices;
-                  });
-                  setPaymentMethodOrder(order);
-                }}
+                order={orders.paymentMethod}
+                sortCallback={() =>
+                  setOrders((prev) => getNextOrders(prev, 'paymentMethod'))
+                }
               >
                 Method
               </TableHead>
