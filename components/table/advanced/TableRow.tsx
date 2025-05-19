@@ -1,6 +1,6 @@
 import { createContext, HTMLProps, useContext, useMemo, useState } from 'react';
 import classNames from 'classnames';
-import styles from './TableRow.module.css';
+import styles from './tableRow.module.css';
 
 type TableRowContextProps = {
   collapsed: boolean;

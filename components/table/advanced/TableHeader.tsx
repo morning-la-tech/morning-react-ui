@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import RotatingButton from 'morning-react-ui/components/buttons/RotatingButton';
 import { SortOrder } from '../enum';
 import { useTableContext } from './AdvancedTable';
-import styles from '.tTableHeader.module.css';
+import styles from './tableHeader.module.css';
 
 const TableHeader = ({
   className,
