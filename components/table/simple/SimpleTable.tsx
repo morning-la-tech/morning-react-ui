@@ -1,6 +1,7 @@
 import { ReactNode, useState } from 'react';
 import RotatingButton from 'morning-react-ui/components/buttons/RotatingButton';
 import { SkeletonCell } from '../advanced';
+import { SortOrder } from '../enum';
 import styles from './table.module.css';
 
 export type TableColumn = {
@@ -13,7 +14,7 @@ export type TableRowData = Record<string, string | ReactNode>;
 type Props = {
   data: TableRowData[];
   columns: TableColumn[];
-  onSortChange?: (field: string, order: 'asc' | 'desc') => void;
+  onSortChange?: (field: string, order: SortOrder) => void;
   isLoading?: boolean;
   skeletonRows?: number;
 };
@@ -26,17 +27,18 @@ const SimpleTable = ({
   skeletonRows = 5,
 }: Props) => {
   const [sortKey, setSortKey] = useState<string | null>(null);
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.Asc);
 
   const handleSort = (key: string) => {
     if (sortKey === key) {
-      const newOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+      const newOrder =
+        sortOrder === SortOrder.Asc ? SortOrder.Desc : SortOrder.Asc;
       setSortOrder(newOrder);
       onSortChange?.(key, newOrder);
     } else {
       setSortKey(key);
-      setSortOrder('asc');
-      onSortChange?.(key, 'asc');
+      setSortOrder(SortOrder.Asc);
+      onSortChange?.(key, SortOrder.Asc);
     }
   };
 
@@ -54,14 +56,16 @@ const SimpleTable = ({
               <div className={styles.thContent} onClick={() => handleSort(key)}>
                 {header}
                 <RotatingButton
-                  collapsed={sortOrder === 'asc'}
-                  rotationDeg={180}
+                  collapsed={sortOrder === SortOrder.Asc}
+                  rotationDeg={-180}
                   src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}/icons/pilote-chevron-down.svg`}
                   alt={`Sort by ${header}`}
                   style={{
                     opacity: sortKey === key ? 1 : 0,
-                    transition: 'opacity 200ms ease-in-out',
+                    transition:
+                      sortKey === key ? 'opacity 400ms ease-in-out' : 'none',
                   }}
+                  imageStyle={sortKey !== key ? { transition: 'none' } : {}}
                 />
               </div>
             </th>
