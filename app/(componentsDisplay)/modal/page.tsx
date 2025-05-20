@@ -73,6 +73,7 @@ const ModalPage = () => {
             },
           },
         ]}
+        footerContent={'Ceci est le contenu du footer optionnel'}
       >
         {shortContent}
       </ModalForm>
@@ -96,6 +97,7 @@ const ModalPage = () => {
             },
           },
         ]}
+        footerContent={'Ceci est le contenu du footer optionnel'}
       >
         {longContent}
       </ModalForm>

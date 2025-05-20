@@ -66,9 +66,14 @@
 
 .modalFooter {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 12px;
   justify-content: flex-end;
-  gap: 10px;
 }
 
 .header {

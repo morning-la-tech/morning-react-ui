@@ -50,6 +50,50 @@ function App() {
 export default App;
 ```
 
+Modal with confirmation buttons and error handling :
+
+```tsx
+import React from 'react';
+import Modal from './components/Modal';
+import useModal from './hooks/useModal';
+
+function App() {
+  const { isModalShowing, handleShowModal, hideModal } = useModal();
+
+  return (
+    <div>
+      <button onClick={handleShowModal}>Open Modal</button>
+       <Modal
+         isModalShowing={isModalShowing}
+         hide={hideModal}
+         title="Modal with Buttons"
+         buttons={[
+            {
+               children: "Cancel",
+               variant: ButtonVariant.Secondary,
+               onClick: hideModal
+            },
+            {
+               children: "Confirm",
+               variant: ButtonVariant.Primary,
+               onClick: handleConfirm
+            }
+         ]}
+         footerContent={
+            <div className="text-red-500">
+               Error: Please fill all required fields
+            </div>
+         }
+       >
+          <p>Modal content here</p>
+       </Modal>
+    </div>
+  );
+}
+
+export default App;
+```
+
 For forms, you can use the specialized ModalForm component:
 
 ```tsx
@@ -69,42 +113,77 @@ function FormExample() {
   return (
     <>
       <button onClick={handleShowModal}>Open Form</button>
-      <ModalForm
-        isModalShowing={isModalShowing}
-        hide={hideModal}
-        title="Form Modal"
-        onSubmit={handleSubmit}
-        buttons={[
-          { label: "Cancel", onClick: hideModal },
-          { label: "Submit", type: "submit", variant: "primary" }
-        ]}
-      >
-        {/* Form fields */}
-      </ModalForm>
+       <ModalForm
+         isModalShowing={isModalShowing}
+         hide={hideModal}
+         title="Form Modal"
+         onSubmit={handleSubmit}
+         buttons={[
+            {
+               children: "Cancel",
+               onClick: hideModal,
+               variant: ButtonVariant.Secondary
+            },
+            {
+               children: "Submit",
+               type: "submit",
+               variant: ButtonVariant.Primary
+            }
+         ]}
+         footerContent={errors && <ErrorMessage />}
+       >
+          {/* Form fields */}
+       </ModalForm>
     </>
   );
 }
 ```
+## Button and Footer Management
+
+The Modal component now uses a streamlined approach for footer content:
+
+- **buttons**: Array of button configurations that appear at the top of the footer
+- **footerContent**: Additional content (like error messages) displayed below buttons
+- **buttonContainerStyle**: Styling for the button container (e.g., alignment)
+
+### Button Configuration
+
+Each button in the `buttons` array uses the same props as the standard Button component. The `children` prop contains the button text or content:
+
+```tsx
+buttons={[
+     {
+        children: "Button Text", // The text/content displayed on the button
+        variant: ButtonVariant.Primary,
+        onClick: handleClick,
+        disabled: false,
+        isLoading: false,
+        // ... other Button props
+     }
+  ]}
+```
+
+Tip: The children prop follows React convention and supports both simple text and complex JSX (icons, formatted text, etc.).
 
 ## Props
 
 The Modal component accepts the following props:
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `children` | ReactNode | - | Content to display inside the modal |
-| `isModalShowing` | boolean | - | Controls modal visibility |
-| `hide` | function | - | Function to close the modal |
-| `title` | string | - | Title displayed at the top |
-| `top` | string \| false | '200px' | Vertical position (use false for centering) |
-| `noCloseButton` | boolean | false | Hides the close button when true |
-| `closeOnClickOutside` | boolean | true | Closes modal when clicking outside |
-| `className` | string | - | Additional class names for custom styling |
-| `autoCenterThreshold` | number | 500 | Height threshold for automatic centering |
-| `footer` | ReactNode | - | Custom footer content |
-| `buttons` | ButtonProps[] | [] | Array of button configurations |
+| Prop                   | Type | Default | Description |
+|------------------------|------|---------|-------------|
+| `children`             | ReactNode | - | Content to display inside the modal |
+| `isModalShowing`       | boolean | - | Controls modal visibility |
+| `hide`                 | function | - | Function to close the modal |
+| `title`                | string | - | Title displayed at the top |
+| `top`                  | string \| false | '200px' | Vertical position (use false for centering) |
+| `noCloseButton`        | boolean | false | Hides the close button when true |
+| `closeOnClickOutside`  | boolean | true | Closes modal when clicking outside |
+| `className`            | string | - | Additional class names for custom styling |
+| `autoCenterThreshold`  | number | 500 | Height threshold for automatic centering |
+| `footerContent`        | ReactNode | - | Content to display below buttons |
+| `buttons`              | ButtonProps[] | [] | Array of button configurations |
 | `buttonContainerStyle` | React.CSSProperties | {} | Styles for the button container |
-| `maxWidth` | string | '600px' | Maximum width of the modal |
+| `maxWidth`             | string | '600px' | Maximum width of the modal |
 
 ## Hooks
 
@@ -178,4 +257,7 @@ const { isModalShowing, hideModal, handleShowModal } = useModal(() => {
 - **Accessibility Considerations**: Ensure that modals are accessible, including managing focus states and adding appropriate aria attributes.
 - **Form Validation**: When using ModalForm, implement proper form validation before closing the modal.
 - **Responsive Design**: Although the modal is designed to be responsive, test it on various screen sizes to ensure proper display.
+- **Use `buttons` prop**: Prefer the `buttons` array over custom footer JSX for consistency
+- **Error placement**: Use `footerContent` for error messages or additional context
 - **Button Ordering**: Place the primary action button on the right and the secondary/cancel button on the left in the modal footer.
+- **Consistent styling**: Use `buttonContainerStyle` for custom button alignment.

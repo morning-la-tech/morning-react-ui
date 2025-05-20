@@ -19,9 +19,9 @@ type Props = {
   size?: Size;
   className?: string;
   autoCenterThreshold?: number;
-  footer?: ReactNode;
   buttons?: ButtonProps[];
   buttonContainerStyle?: React.CSSProperties;
+  footerContent?: ReactNode;
   maxWidth?: string;
 };
 
@@ -35,7 +35,7 @@ const Modal = ({
   closeOnClickOutside = true,
   className,
   autoCenterThreshold = 500,
-  footer,
+  footerContent,
   buttons = [],
   buttonContainerStyle = {},
   maxWidth = '600px',
@@ -81,19 +81,25 @@ const Modal = ({
   };
 
   const renderFooter = () => {
-    if (footer) {
-      return <div className={styles.modalFooter}>{footer}</div>;
-    }
-    if (buttons && buttons.length > 0) {
-      return (
-        <div className={styles.modalFooter} style={buttonContainerStyle}>
-          {buttons.map((button, index) => (
-            <Button key={index} {...button} />
-          ))}
-        </div>
-      );
-    }
-    return null;
+    const hasButtons = buttons && buttons.length > 0;
+    const hasFooterContent = footerContent;
+
+    if (!hasButtons && !hasFooterContent) return null;
+
+    return (
+      <div className={styles.modalFooter}>
+        {hasButtons && (
+          <div className={styles.buttonContainer} style={buttonContainerStyle}>
+            {buttons.map((button, index) => (
+              <Button key={index} {...button} />
+            ))}
+          </div>
+        )}
+        {hasFooterContent && (
+          <div className={styles.footerContent}>{footerContent}</div>
+        )}
+      </div>
+    );
   };
 
   return (

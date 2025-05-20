@@ -16,6 +16,7 @@ type Props = {
   size?: Size;
   className?: string;
   buttons?: ButtonProps[];
+  footerContent?: ReactNode;
   buttonContainerStyle?: React.CSSProperties;
   maxWidth?: string;
   autoCenterThreshold?: number;
@@ -32,6 +33,7 @@ const ModalForm = ({
   closeOnClickOutside = true,
   className,
   buttons = [],
+  footerContent,
   buttonContainerStyle = {},
   maxWidth = '600px',
   autoCenterThreshold = 500,
@@ -46,6 +48,7 @@ const ModalForm = ({
       closeOnClickOutside={closeOnClickOutside}
       className={className}
       buttons={buttons}
+      footerContent={footerContent}
       buttonContainerStyle={buttonContainerStyle}
       maxWidth={maxWidth}
       autoCenterThreshold={autoCenterThreshold}
