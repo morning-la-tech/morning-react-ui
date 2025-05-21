@@ -14,7 +14,7 @@ import classNames from 'classnames';
 import useIsMobile from 'morning-react-ui/components/hooks/useIsMobile';
 import ParentInput from 'morning-react-ui/components/inputs/ParentInput';
 import { InputProps } from 'morning-react-ui/components/inputs/propsTypes';
-import { Size } from 'morning-react-ui/utils/Enum';
+import { Size, sizeToHeight } from 'morning-react-ui/utils/Enum';
 import { InputError } from 'morning-react-ui/utils/error';
 import styles from '../input.module.css';
 import useInput from './useInput';
@@ -58,6 +58,10 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputHtmlProps>(
     const finalSize = size ?? (isMobile ? Size.l : Size.m);
     const { handleWrapperClick } = useInput({ inputRef });
     useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
+
+    const inputStyle = {
+      height: `${sizeToHeight(finalSize)}px`,
+    };
 
     const inputMode = allowFloat ? 'decimal' : 'numeric';
 
@@ -141,23 +145,21 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputHtmlProps>(
         <div
           className={classNames(
             styles.wrapper,
+            styles.flex,
             `padding-${finalSize}`,
             { ['cursorText']: !disabled },
             {
               [styles.error]: isError,
             },
           )}
+          style={inputStyle}
           onClick={handleWrapperClick}
         >
           <input
             type='number'
             inputMode={inputMode}
             step={allowFloat ? 'any' : step}
-            className={classNames(
-              styles.input,
-              `font-size-${finalSize}`,
-              `height-${finalSize}`,
-            )}
+            className={classNames(styles.input, `font-size-${finalSize}`)}
             ref={inputRef}
             value={value ?? ''}
             disabled={disabled}

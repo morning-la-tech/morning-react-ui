@@ -1,27 +1,47 @@
 # Modal Component
 
-The Modal component is a versatile, customizable modal/dialog box implementation for React applications. It utilizes React portals to render modals directly into the body of the document outside the DOM hierarchy of the parent component, ensuring proper layering and positioning.
+The Modal component is a versatile, customizable modal/dialog box implementation for React applications in NextJS. It utilizes React portals to render modals directly into the document body outside the DOM hierarchy of the parent component, ensuring proper layering and positioning.
+
+## Components
+
+The modal system consists of several interconnected components:
+
+1. **Modal.tsx**
+    - Main component for displaying a modal window
+    - Features automatic centering based on content height
+    - Supports custom buttons and footer content
+    - Handles click outside interactions
+
+2. **ModalForm.tsx**
+    - Specialized version with an integrated form
+    - Automatically handles form submission
+    - Inherits all features from the base Modal component
+
+3. **ModalHeader.tsx**
+    - Displays the title and an optional close button
+    - Simple and customizable header interface
 
 ## Usage
 
-To use the Modal component, you need to manage its visibility through a state in the parent component that triggers its display. Here's a simple example of how to integrate the Modal into a React component:
+To use the Modal component, you need to manage its visibility through state in the parent component. Here's a simple example:
 
-```jsx
-import React, { useState } from 'react';
+```tsx
+import React from 'react';
 import Modal from './components/Modal';
+import useModal from './hooks/useModal';
 
 function App() {
-  const [isModalOpen, setModalOpen] = useState(false);
+  const { isModalShowing, handleShowModal, hideModal } = useModal();
 
   return (
     <div>
-      <button onClick={() => setModalOpen(true)}>Open Modal</button>
+      <button onClick={handleShowModal}>Open Modal</button>
       <Modal
-        isShowing={isModalOpen}
-        hide={() => setModalOpen(false)}
-        top='20%' // Optional: Adjust the vertical position of the modal
+        isModalShowing={isModalShowing}
+        hide={hideModal}
+        title="Modal Title"
       >
-        <p>This is a modal!</p>
+        <p>This is modal content!</p>
       </Modal>
     </div>
   );
@@ -30,130 +50,214 @@ function App() {
 export default App;
 ```
 
-## Props
-
-The following props are used to control the Modal's behavior:
-
-- children (ReactNode): The content to be displayed inside the modal.
-- isShowing (boolean): Controls the visibility of the modal.
-- hide (() => void): A function to be called to close the modal, typically triggered by an event such as clicking on an overlay.
-- top (string | false, optional): Adjusts the vertical position of the modal. Accepts any valid CSS value for top (e.g., "50%", "100px"). Default is "200px". Set the value to false in order to center the modal vertically.
-- title (string, optional): Text to be displayed as the modal's title.
-- hasCloseButton (boolean, optional): Determines if a close button is shown. Default is true.
-- closeOnClickOutside (boolean, optional): Determines if clicking outside closes the modal. Default is true.
-- size (Size, optional): Size of the modal and the close button, influenced by a predefined enum. Default is Size.m.
-- className (string, optional): Additional class names for custom styling.
-- buttons (ModalButtonProps[], optional): An array of button configurations to display in the modal's footer. Each button can have a label, an optional variant, and an onClick handler.
-
-## Styling
-
-The modal's style can be customized through modal.module.css. Default styles include centering the modal both vertically and horizontally, applying a shadow for depth, and ensuring the content is scrollable if it exceeds the modal's viewport. Adjust modal.module.css as needed to match your application's theme and requirements.
-
-Example
-Here’s an example of how to trigger a modal on a button click, with custom content and footer buttons:
+Modal with confirmation buttons and error handling :
 
 ```tsx
-import Modal, { ModalButtonProps } from './Modal';
+import React from 'react';
+import Modal from './components/Modal';
+import useModal from './hooks/useModal';
 
-function MyComponent() {
-  const [showModal, setShowModal] = useState(false);
-  const buttons: ModalButtonProps[] = [
-    {
-      label: 'Cancel',
-      onClick: () => setShowModal(false),
-      variant: 'secondary',
-    },
-    {
-      label: 'Save',
-      onClick: () => console.log('Save clicked'),
-      variant: 'primary',
-    },
-  ];
+function App() {
+  const { isModalShowing, handleShowModal, hideModal } = useModal();
 
   return (
+    <div>
+      <button onClick={handleShowModal}>Open Modal</button>
+       <Modal
+         isModalShowing={isModalShowing}
+         hide={hideModal}
+         title="Modal with Buttons"
+         buttons={[
+            {
+               children: "Cancel",
+               variant: ButtonVariant.Secondary,
+               onClick: hideModal
+            },
+            {
+               children: "Confirm",
+               variant: ButtonVariant.Primary,
+               onClick: handleConfirm
+            }
+         ]}
+         footerContent={
+            <div className="text-red-500">
+               Error: Please fill all required fields
+            </div>
+         }
+       >
+          <p>Modal content here</p>
+       </Modal>
+    </div>
+  );
+}
+
+export default App;
+```
+
+For forms, you can use the specialized ModalForm component:
+
+```tsx
+import React from 'react';
+import ModalForm from './components/ModalForm';
+import useModal from './hooks/useModal';
+
+function FormExample() {
+  const { isModalShowing, handleShowModal, hideModal } = useModal();
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Form processing logic
+    hideModal();
+  };
+  
+  return (
     <>
-      <button onClick={() => setShowModal(true)}>Show Details</button>
-      <Modal
-        isShowing={showModal}
-        hide={() => setShowModal(false)}
-        title='User Information'
-        hasCloseButton
-        size={Size.s}
-        top='10%'
-        buttons={buttons}
-      >
-        <div style={{ padding: '20px' }}>
-          <h2>Modal Title</h2>
-          <p>Details about the modal content...</p>
-        </div>
-      </Modal>
+      <button onClick={handleShowModal}>Open Form</button>
+       <ModalForm
+         isModalShowing={isModalShowing}
+         hide={hideModal}
+         title="Form Modal"
+         onSubmit={handleSubmit}
+         buttons={[
+            {
+               children: "Cancel",
+               onClick: hideModal,
+               variant: ButtonVariant.Secondary
+            },
+            {
+               children: "Submit",
+               type: "submit",
+               variant: ButtonVariant.Primary
+            }
+         ]}
+         footerContent={errors && <ErrorMessage />}
+       >
+          {/* Form fields */}
+       </ModalForm>
     </>
   );
 }
-
-export default MyComponent;
 ```
+## Button and Footer Management
 
-# useModal Hook
+The Modal component now uses a streamlined approach for footer content:
 
-The useModal hook is a React custom hook designed to handle the visibility of modal components, with built-in functionalities for showing and hiding modals, disabling background scroll, and handling an optional onClose callback.
+- **buttons**: Array of button configurations that appear at the top of the footer
+- **footerContent**: Additional content (like error messages) displayed below buttons
+- **buttonContainerStyle**: Styling for the button container (e.g., alignment)
 
-## Features
+### Button Configuration
 
-- Toggle Visibility: Easily manage modal visibility with handleShowModal and hide functions.
-- No-scroll: Automatically manages the scrolling of the body element when the modal is visible.
-- Escape Key Handling: Listens for the 'Escape' key press to close the modal when it is visible.
-- Customizable On Close Behavior: Execute custom logic when the modal is hidden through the onClose callback.
-
-## Parameters
-
-- onClose (() => void, optional): A callback function that is executed when the modal is closed. This can be used for cleanup or other custom actions when the modal visibility is toggled off.
-- closeOnEscape (boolean): A boolean that determines whether the modal should close when the user presses the "Escape" key. By default, this value is true.
-
-### Return Values
-
-The useModal hook returns an object with the following properties:
-
-- isModalShowing (boolean): The current visibility state of the modal.
-- hide (() => void): A function to hide the modal. If onClose is provided, it will be called before the modal is set to not visible.
-- handleShowModal (() => void): A function to show the modal.
-
-## Usage
-
-Here is a basic example showing how to use the useModal to control the opening and closing of a modal, as well as managing the closure with the "Escape" key:
+Each button in the `buttons` array uses the same props as the standard Button component. The `children` prop contains the button text or content:
 
 ```tsx
-import useModal from './useModal';
-import Modal from './Modal';
-import Button from './Button';
-
-function App() {
-  const { isModalShowing, handleShowModal, hide } = useModal(undefined, false);
-
-  return (
-    <div>
-      <Button onClick={handleShowModal}>Show Modal</Button>
-      <Modal isModalShowing={isModalShowing} hide={hide} title='Modal Title'>
-        <p>This is modal content</p>
-      </Modal>
-    </div>
-  );
-}
-
-export default App;
+buttons={[
+     {
+        children: "Button Text", // The text/content displayed on the button
+        variant: ButtonVariant.Primary,
+        onClick: handleClick,
+        disabled: false,
+        isLoading: false,
+        // ... other Button props
+     }
+  ]}
 ```
 
-### Notes
+Tip: The children prop follows React convention and supports both simple text and complex JSX (icons, formatted text, etc.).
 
-- Accessibility Management: If you disable closeOnEscape, ensure to provide other accessible mechanisms for closing the modal, such as clearly indicated close buttons.
-- Flexibility: closeOnEscape provides flexibility for use cases where modal closure should not be interrupted, such as during critical data entry processes.
+## Props
+
+The Modal component accepts the following props:
+
+| Prop                   | Type | Default | Description |
+|------------------------|------|---------|-------------|
+| `children`             | ReactNode | - | Content to display inside the modal |
+| `isModalShowing`       | boolean | - | Controls modal visibility |
+| `hide`                 | function | - | Function to close the modal |
+| `title`                | string | - | Title displayed at the top |
+| `top`                  | string \| false | '200px' | Vertical position (use false for centering) |
+| `noCloseButton`        | boolean | false | Hides the close button when true |
+| `closeOnClickOutside`  | boolean | true | Closes modal when clicking outside |
+| `className`            | string | - | Additional class names for custom styling |
+| `autoCenterThreshold`  | number | 500 | Height threshold for automatic centering |
+| `footerContent`        | ReactNode | - | Content to display below buttons |
+| `buttons`              | ButtonProps[] | [] | Array of button configurations |
+| `buttonContainerStyle` | React.CSSProperties | {} | Styles for the button container |
+| `maxWidth`             | string | '600px' | Maximum width of the modal |
+
+## Hooks
+
+### useModal Hook
+
+The useModal hook manages modal visibility with built-in functionality:
+
+```tsx
+const { isModalShowing, hideModal, handleShowModal, toggleModal } = useModal(onClose, closeOnEscape);
+```
+
+**Parameters:**
+- `onClose` (optional): Callback function executed when the modal is closed
+- `closeOnEscape` (boolean, default: true): Determines if the Escape key closes the modal
+
+**Returns:**
+- `isModalShowing` (boolean): Current visibility state
+- `hideModal` (function): Hides the modal and calls onClose if provided
+- `handleShowModal` (function): Shows the modal
+- `toggleModal` (function): Toggles modal visibility
+
+### useModals Hook
+
+The useModals hook handles click detection for closing the modal when clicking outside:
+
+```tsx
+const { handleMouseDown, handleMouseUp } = useModals(closeOnClickOutside, hide);
+```
+
+## Styling
+
+The modal is styled using CSS modules with the following key features:
+
+- Fixed overlay with semi-transparent background
+- Flexible modal sizing with maximum constraints (80vh height, 90vw width)
+- Custom scrollbar styling for content overflow
+- Responsive positioning with automatic centering
+- Box shadow and rounded corners for modern appearance
+
+CSS variables are used for colors and shadows to maintain consistent theming.
+
+## Accessibility Features
+
+- Keyboard support (Escape key closing)
+- Scroll locking on body when modal is open
+- Focus management
+- Proper z-indexing for stacking contexts
+
+## Notes
+
+- The modal uses ResizeObserver to detect content height changes and adjust centering accordingly.
+- When the modal is open, a `no-scroll` class is added to the body to prevent background scrolling.
+- The modal is rendered using React's createPortal to ensure proper stacking context.
+- The `autoCenterThreshold` prop lets you configure when the modal should automatically center based on its content height.
 
 ## Handling the onClose Callback
 
 The onClose callback is particularly useful for implementing any cleanup logic or actions that need to run when the modal closes. For example, if the modal is being used to edit data, onClose can be used to reset the edit state or refresh data from a server.
 
+```tsx
+const { isModalShowing, hideModal, handleShowModal } = useModal(() => {
+  // Clean up resources or reset state when modal closes
+  resetForm();
+  fetchLatestData();
+});
+```
+
 ## Best Practices
 
-Conditional Rendering: It is recommended to use conditional rendering ({isModalShowing && <Modal />}) for the modal component to optimize performance and prevent the modal from being mounted when not in use.
-Accessibility Considerations: Ensure that modals are accessible, including managing focus states and adding appropriate aria attributes.
-This hook offers a straightforward and effective way to manage modal dialogs in your React applications, ensuring that modals are both functional and user-friendly.
+- **Conditional Rendering**: It is recommended to use conditional rendering for the modal component to optimize performance, but the Modal component already handles this internally.
+- **Accessibility Considerations**: Ensure that modals are accessible, including managing focus states and adding appropriate aria attributes.
+- **Form Validation**: When using ModalForm, implement proper form validation before closing the modal.
+- **Responsive Design**: Although the modal is designed to be responsive, test it on various screen sizes to ensure proper display.
+- **Use `buttons` prop**: Prefer the `buttons` array over custom footer JSX for consistency
+- **Error placement**: Use `footerContent` for error messages or additional context
+- **Button Ordering**: Place the primary action button on the right and the secondary/cancel button on the left in the modal footer.
+- **Consistent styling**: Use `buttonContainerStyle` for custom button alignment.

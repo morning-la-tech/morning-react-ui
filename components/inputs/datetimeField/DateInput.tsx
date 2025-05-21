@@ -18,7 +18,7 @@ import {
   roundUpYear,
   stringToDate,
 } from 'morning-react-ui/utils/datetimeUtils';
-import { Size } from 'morning-react-ui/utils/Enum';
+import { Size, sizeToHeight } from 'morning-react-ui/utils/Enum';
 import { DateError } from 'morning-react-ui/utils/error';
 import { newCharInString } from 'morning-react-ui/utils/stringUtils';
 import styles from '../input.module.css';
@@ -73,6 +73,10 @@ const DateInput = forwardRef<HTMLInputElement, DateInputHtmlProps>(
 
     const inputRef = useRef<HTMLInputElement>(null);
 
+    const inputStyle = {
+      height: `${sizeToHeight(finalSize)}px`,
+    };
+
     useEffect(() => {
       const input = inputRef.current;
       if (!input || !setDateError) return;
@@ -105,7 +109,7 @@ const DateInput = forwardRef<HTMLInputElement, DateInputHtmlProps>(
      * Function used to reformat the input value to a readable date value
      * Function is called on every change in input value
      */
-    // eslint-disable-next-line complexity
+
     const reformatDate = (
       date: string | null,
       event: ChangeEvent<HTMLInputElement>,
@@ -322,6 +326,7 @@ const DateInput = forwardRef<HTMLInputElement, DateInputHtmlProps>(
               [styles.error]: isError || error,
             },
           )}
+          style={inputStyle}
           onClick={handleWrapperClick}
         >
           <input

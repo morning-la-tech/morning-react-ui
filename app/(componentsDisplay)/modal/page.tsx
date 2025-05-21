@@ -9,6 +9,27 @@ import { Modal, ModalForm } from 'morning-react-ui/components/modals';
 const ModalPage = () => {
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const [isOpenFormModal, setIsOpenFormModal] = useState<boolean>(false);
+  const [isOpenScrollFormModal, setIsOpenScrollFormModal] =
+    useState<boolean>(false);
+
+  const shortContent = Array(5)
+    .fill(0)
+    .map((_, i) => (
+      <p key={i}>
+        Paragraphe {i + 1} - Ceci est un exemple de contenu pour tester le
+        positionnement de la modale.
+      </p>
+    ));
+
+  const longContent = Array(40)
+    .fill(0)
+    .map((_, i) => (
+      <p key={i}>
+        Paragraphe {i + 1} - Ceci est un exemple de contenu long pour tester le
+        défilement et le positionnement centré dans la modale. Ce texte est
+        intentionnellement verbeux pour créer un contenu plus volumineux.
+      </p>
+    ));
 
   return (
     <>
@@ -16,9 +37,14 @@ const ModalPage = () => {
         <h1 className={'font-size-xl'}>Modal page</h1>
       </Navigation>
       <Container>
-        <Button onClick={() => setIsOpenModal(true)}>Ouvrir la modal</Button>
+        <Button onClick={() => setIsOpenModal(true)}>
+          Ouvrir la modal simple
+        </Button>
         <Button onClick={() => setIsOpenFormModal(true)}>
-          Ouvrir la modal interactive
+          Ouvrir la modal form courte
+        </Button>
+        <Button onClick={() => setIsOpenScrollFormModal(true)}>
+          Ouvrir la modal form avec scroll
         </Button>
       </Container>
       <Modal
@@ -31,7 +57,7 @@ const ModalPage = () => {
       <ModalForm
         isModalShowing={isOpenFormModal}
         hide={() => setIsOpenFormModal(false)}
-        title='Titre de la modal'
+        title='Modal form courte'
         buttons={[
           {
             children: 'Annuler',
@@ -47,8 +73,33 @@ const ModalPage = () => {
             },
           },
         ]}
+        footerContent={'Ceci est le contenu du footer optionnel'}
       >
-        Voici un exemple de modal contenant un formulaire avec des actions
+        {shortContent}
+      </ModalForm>
+      <ModalForm
+        isModalShowing={isOpenScrollFormModal}
+        hide={() => setIsOpenScrollFormModal(false)}
+        title='Modal form avec beaucoup de contenu'
+        autoCenterThreshold={400} // seuil à partir duquel on affiche la modale centrée verticalement
+        buttons={[
+          {
+            children: 'Annuler',
+            variant: 'secondary' as ButtonVariant,
+            onClick: () => {
+              setIsOpenScrollFormModal(false);
+            },
+          },
+          {
+            children: 'Valider',
+            onClick: () => {
+              setIsOpenScrollFormModal(false);
+            },
+          },
+        ]}
+        footerContent={'Ceci est le contenu du footer optionnel'}
+      >
+        {longContent}
       </ModalForm>
     </>
   );
