@@ -9,42 +9,84 @@ import {
   useState,
 } from 'react';
 import { SelectOption } from 'morning-react-ui/types';
+import {
+  filterOptionsByKey,
+  sortOptionsWithSelectedFirst,
+} from 'morning-react-ui/utils';
 import { Size } from 'morning-react-ui/utils/Enum';
 import { InputError } from 'morning-react-ui/utils/error';
-import { normalizeString } from 'morning-react-ui/utils/stringUtils';
 
-// Describes the props our useMultiSelect hook expects.
-// 'options': full list of SelectOption items.
-// 'values': the currently selected values (strings).
-// 'onChange': callback to update the selected values.
-// 'size': the size category for styling (not used in the logic here).
-// 'rowToDisplay': number of options displayed before scrolling.
-// 'required': if true, a validation error is shown if no selection.
-// 'setMultiSelectError': method to set external error state.
+/**
+ * Props for the useMultiSelect hook.
+ */
 type UseMultiSelectProps = {
+  /**
+   * Full list of selectable options.
+   */
   options: SelectOption[];
-  values: string[];
+
+  /**
+   * Optional setter to update the list of options.
+   * Useful to reorder the list, for example to move selected items to the top.
+   */
+  setOptions?: (options: SelectOption[]) => void;
+
+  /**
+   * Currently selected option IDs.
+   */
+  selectedIds: string[];
+
+  /**
+   * Callback to update the selected IDs.
+   */
   onChange: (newValues: string[]) => void;
+
+  /**
+   * Size category for styling.
+   */
   size: Size;
+
+  /**
+   * Number of options displayed before enabling scroll.
+   */
   rowToDisplay: number;
+
+  /**
+   * If true, triggers a validation error when no option is selected.
+   */
   required?: boolean;
+
+  /**
+   * Function to externally set the validation error state.
+   */
   setMultiSelectError?: (error: InputError) => void;
 };
 
-// Represents the position of a selected label in the inputValue.
-// 'label': the string label,
-// 'start': start index in inputValue,
-// 'end': end index (exclusive) in inputValue.
+/**
+ * Represents the position of a selected label in the inputValue.
+ */
 type LabelPosition = {
+  /**
+   * The label string.
+   */
   label: string;
+
+  /**
+   * Start index of the label in the full input value.
+   */
   start: number;
+
+  /**
+   * End index (exclusive) of the label in the input value.
+   */
   end: number;
 };
 
 // Manages multi-select behavior via an input that displays selected labels.
 const useMultiSelect = ({
   options,
-  values,
+  setOptions,
+  selectedIds,
   onChange,
   rowToDisplay,
   required,
@@ -94,14 +136,14 @@ const useMultiSelect = ({
   // Builds a string containing all selected labels plus ", " at the end, if any.
   function buildSelectedLabelString() {
     const selectedLabels = options
-      .filter((o) => values.includes(o.id))
+      .filter((o) => selectedIds.includes(o.id))
       .map((o) => o.label);
     return selectedLabels.length ? selectedLabels.join(', ') + ', ' : '';
   }
 
   // Builds the labelPositions array by tracking each label's start/end in inputValue.
   function buildPositions() {
-    const selectedOpts = options.filter((o) => values.includes(o.id));
+    const selectedOpts = options.filter((o) => selectedIds.includes(o.id));
     const positions: LabelPosition[] = [];
     let offset = 0;
     for (const opt of selectedOpts) {
@@ -115,6 +157,12 @@ const useMultiSelect = ({
     }
     return positions;
   }
+
+  useEffect(() => {
+    if (isDropdownDisplayed && setOptions) {
+      setOptions(sortOptionsWithSelectedFirst(options, selectedIds));
+    }
+  }, [isDropdownDisplayed]);
 
   // Extracts the typed part in the input, ignoring the portion that belongs to selected labels.
   function getTypedPart(inputVal: string) {
@@ -134,7 +182,7 @@ const useMultiSelect = ({
 
     // Filter out options based on the newly typed text.
     const typedPart = getTypedPart(newValue);
-    const newFilteredOptions = filterOptionsByKey(typedPart);
+    const newFilteredOptions = filterOptionsByKey(options, typedPart);
     setFilteredOptions(newFilteredOptions);
     setDisplaySelectAll(newFilteredOptions.length === options.length);
 
@@ -161,16 +209,6 @@ const useMultiSelect = ({
       input.removeEventListener('invalid', handleInvalid);
     };
   }, [setMultiSelectError]);
-
-  // Filters options by label or value, using a normalized substring match.
-  const filterOptionsByKey = (search: string): SelectOption[] => {
-    const inputValueLower = normalizeString(search);
-    return options.filter(
-      (o) =>
-        normalizeString(o.label).includes(inputValueLower) ||
-        normalizeString(o.id).includes(inputValueLower),
-    );
-  };
 
   // Closes the dropdown if the user clicks outside.
   useEffect(() => {
@@ -275,7 +313,7 @@ const useMultiSelect = ({
   const handleBlur = () => {
     setIsDropdownDisplayed(false);
     setHighlightedIndex(null);
-    if (setMultiSelectError && required && values.length === 0) {
+    if (setMultiSelectError && required && selectedIds.length === 0) {
       setMultiSelectError(InputError.required);
     }
   };
@@ -309,7 +347,7 @@ const useMultiSelect = ({
     }
     // If 'select all' is visible and highlighted.
     if (displaySelectAll && highlightedIndex === 0) {
-      if (values.length > 0) {
+      if (selectedIds.length > 0) {
         onChange([]);
       } else {
         onChange(options.map((o) => o.id));
@@ -321,10 +359,10 @@ const useMultiSelect = ({
       return;
     }
     const optionValue = filteredOptions[indexInFiltered].id;
-    if (values.includes(optionValue)) {
-      onChange(values.filter((v) => v !== optionValue));
+    if (selectedIds.includes(optionValue)) {
+      onChange(selectedIds.filter((v) => v !== optionValue));
     } else {
-      onChange([...values, optionValue]);
+      onChange([...selectedIds, optionValue]);
     }
   };
 
@@ -367,7 +405,7 @@ const useMultiSelect = ({
     if (found) {
       const optToRemove = options.find((o) => o.label === found.label);
       if (optToRemove) {
-        onChange(values.filter((v) => v !== optToRemove.id));
+        onChange(selectedIds.filter((v) => v !== optToRemove.id));
       }
       setCursorPosition(found.start);
     } else {
@@ -379,7 +417,7 @@ const useMultiSelect = ({
 
       // Re-filter the options based on the updated typed part.
       const typedPartAfter = getTypedPart(newVal);
-      const newFiltered = filterOptionsByKey(typedPartAfter);
+      const newFiltered = filterOptionsByKey(options, typedPartAfter);
       setFilteredOptions(newFiltered);
       setDisplaySelectAll(newFiltered.length === options.length);
     }
@@ -398,7 +436,7 @@ const useMultiSelect = ({
     if (found) {
       const optToRemove = options.find((o) => o.label === found.label);
       if (optToRemove) {
-        onChange(values.filter((v) => v !== optToRemove.id));
+        onChange(selectedIds.filter((v) => v !== optToRemove.id));
       }
       setCursorPosition(found.start);
     } else {
@@ -409,7 +447,7 @@ const useMultiSelect = ({
 
       // Re-filter the options based on the updated typed part.
       const typedPartAfter = getTypedPart(newVal);
-      const newFiltered = filterOptionsByKey(typedPartAfter);
+      const newFiltered = filterOptionsByKey(options, typedPartAfter);
       setFilteredOptions(newFiltered);
       setDisplaySelectAll(newFiltered.length === options.length);
     }
@@ -430,7 +468,7 @@ const useMultiSelect = ({
     setFilteredOptions(options);
 
     const labelList = options
-      .filter((o) => values.includes(o.id))
+      .filter((o) => selectedIds.includes(o.id))
       .map((o) => o.label)
       .join(', ');
 
@@ -444,7 +482,7 @@ const useMultiSelect = ({
 
     const built = buildPositions();
     setLabelPositions(built);
-  }, [options, values]);
+  }, [options, selectedIds]);
 
   // Prevent blur if we click inside the dropdown.
   const handleDropdownMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {

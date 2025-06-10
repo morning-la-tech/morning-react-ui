@@ -11,7 +11,8 @@ import styles from './selects.module.css';
 
 type MultiSelectProps = SelectsProps & {
   options: SelectOption[];
-  values: string[];
+  setOptions?: (options: SelectOption[]) => void;
+  selectedIds: string[];
   onChange: (newSelection: string[]) => void;
   required?: boolean;
   setMultiSelectError?: (error: InputError) => void;
@@ -30,7 +31,8 @@ const MultiSelect = ({
   size,
   disabled = false,
   options,
-  values,
+  setOptions,
+  selectedIds,
   onChange,
   isError,
   placeholder = 'MultiSelect',
@@ -64,7 +66,8 @@ const MultiSelect = ({
     handleBlur,
   } = useMultiSelect({
     options,
-    values,
+    setOptions,
+    selectedIds,
     onChange,
     size: finalSize,
     rowToDisplay,
@@ -72,7 +75,7 @@ const MultiSelect = ({
     setMultiSelectError,
   });
 
-  const hasAtLeastOneSelected = values.length > 0;
+  const hasAtLeastOneSelected = selectedIds.length > 0;
 
   return (
     <div ref={wrapperRef} className={styles.wrapper}>
@@ -119,7 +122,7 @@ const MultiSelect = ({
           {filteredOptions.length > 0 ? (
             <MultiCheckbox
               options={filteredOptions}
-              selectedValues={values}
+              selectedIds={selectedIds}
               size={finalSize}
               onChange={(newSelectedValues) => {
                 onChange(newSelectedValues);
