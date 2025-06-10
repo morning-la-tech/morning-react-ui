@@ -139,6 +139,7 @@ const MultiCheckbox = ({
               onMouseMove={() => setHoveredIndex?.(adjustedIndex)}
               onMouseLeave={() => setHoveredIndex?.(null)}
               ref={checkboxRefs?.[adjustedIndex] ?? null}
+              imgSrc={opt.imgSrc}
             />
           );
         })}

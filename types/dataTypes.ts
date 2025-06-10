@@ -12,6 +12,7 @@ export const enum Orientation {
 export type SelectOption = {
   id: string;
   label: string;
+  imgSrc?: string;
 };
 
 export type OptionalDate = Date | null | undefined;
