@@ -1,0 +1,117 @@
+.callout {
+    font-weight: 400;
+    border-radius: 6px;
+    display: flex;
+    justify-items: start;
+}
+
+.callout-red {
+    background-color: #ffcdd2;
+    color: #d32f2f;
+}
+
+.callout-blue {
+    background-color: #ebf7ff;
+    color: var(--sapphire);
+}
+
+.callout-green {
+    background-color: #ebfff1;
+    color: #119c2b;
+}
+
+.callout-orange {
+    background-color: #faeada;
+    color: #ae4220;
+}
+
+.callout-gray {
+    background-color: var(--cloud);
+    color: var(--iron);
+}
+
+.callout-pink {
+    background-color: #fbe8f5;
+    color: #d32f87;
+}
+
+.callout-yellow {
+    background-color: #fffcc2;
+    color: #d29404;
+}
+
+.callout-teal {
+    background-color: #e4fcfc;
+    color: #0d9676;
+}
+
+.callout-purple {
+    background-color: #fcf0ff;
+    color: #a23fee;
+}
+
+.callout-s {
+    padding: 6px 10px;
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.callout-m {
+    padding: 8px 12px;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.callout-l {
+    padding: 10px 14px;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.filter-red {
+    filter: invert(22%) sepia(75%) saturate(2708%) hue-rotate(345deg) brightness(88%) contrast(92%);
+}
+
+.filter-blue {
+    filter: invert(30%) sepia(82%) saturate(3726%) hue-rotate(208deg) brightness(104%) contrast(93%);
+}
+
+.filter-green {
+    filter: invert(40%) sepia(99%) saturate(393%) hue-rotate(80deg) brightness(95%) contrast(104%);
+}
+
+.filter-yellow {
+    filter: invert(75%) sepia(39%) saturate(7358%) hue-rotate(13deg) brightness(98%) contrast(97%);
+}
+
+.filter-gray {
+    filter: invert(51%) sepia(26%) saturate(236%) hue-rotate(164deg) brightness(88%) contrast(82%);
+}
+
+.filter-pink {
+    filter: invert(28%) sepia(100%) saturate(2484%) hue-rotate(309deg) brightness(87%) contrast(89%);
+}
+
+.filter-orange {
+    filter: invert(26%) sepia(88%) saturate(1187%) hue-rotate(347deg) brightness(94%) contrast(89%);
+}
+
+.filter-purple {
+    filter: invert(33%) sepia(97%) saturate(2545%) hue-rotate(255deg) brightness(92%) contrast(103%);
+}
+
+.filter-teal {
+    filter: invert(56%) sepia(76%) saturate(5859%) hue-rotate(144deg) brightness(90%) contrast(90%);
+}
+
+.icon {
+    vertical-align: middle;
+}
+
+.iconContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: none;
+    margin-right: 10px;
+}
