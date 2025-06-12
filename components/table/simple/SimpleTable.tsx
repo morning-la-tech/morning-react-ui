@@ -17,6 +17,7 @@ type Props = {
   onSortChange?: (field: string, order: SortOrder) => void;
   isLoading?: boolean;
   skeletonRows?: number;
+  onRowClick?: (row: TableRowData | null) => void;
 };
 
 const SimpleTable = ({
@@ -25,6 +26,7 @@ const SimpleTable = ({
   onSortChange,
   isLoading = false,
   skeletonRows = 5,
+  onRowClick,
 }: Props) => {
   const [sortKey, setSortKey] = useState<string | null>(null);
   const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.Asc);
@@ -75,7 +77,11 @@ const SimpleTable = ({
       </thead>
       <tbody>
         {rows.map((row, i) => (
-          <tr key={row ? `row-${i}` : `skeleton-${i}`} className={styles.tr}>
+          <tr
+            key={row ? `row-${i}` : `skeleton-${i}`}
+            className={`${styles.tr} ${onRowClick ? 'cursor-pointer' : ''}`}
+            onClick={() => onRowClick?.(row)}
+          >
             <td />
             {columns.map(({ key }) =>
               row === null ? (
