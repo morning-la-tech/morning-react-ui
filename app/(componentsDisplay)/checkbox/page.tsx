@@ -53,7 +53,7 @@ const CheckboxGroup = () => {
     size?: Size;
     options: SelectOption[];
     onChange: (options: string[]) => void;
-    selectedValues: string[];
+    selectedIds: string[];
     isSelectAll?: boolean;
     isError?: boolean;
     disabled?: boolean;
@@ -108,7 +108,7 @@ const CheckboxGroup = () => {
               {renderMultiCheckbox({
                 label: 'Label',
                 options: options,
-                selectedValues: selectedValueCheckbox,
+                selectedIds: selectedValueCheckbox,
                 onChange: handleOptionsChange,
                 isSelectAll: true,
                 inline: true,
@@ -116,14 +116,14 @@ const CheckboxGroup = () => {
               {renderMultiCheckbox({
                 label: 'Label',
                 options: options,
-                selectedValues: selectedValueCheckbox,
+                selectedIds: selectedValueCheckbox,
                 onChange: handleOptionsChange,
                 inline: true,
               })}
               {renderMultiCheckbox({
                 label: 'Label',
                 options: options,
-                selectedValues: selectedValueCheckbox,
+                selectedIds: selectedValueCheckbox,
                 onChange: handleOptionsChange,
                 isError: true,
                 inline: true,
@@ -131,25 +131,25 @@ const CheckboxGroup = () => {
               {renderMultiCheckbox({
                 label: 'Label',
                 options: options,
-                selectedValues: selectedValueCheckbox,
+                selectedIds: selectedValueCheckbox,
                 onChange: handleOptionsChange,
                 disabled: true,
                 inline: true,
               })}
             </Column>
             <Column>
-              <h1>Multicheckbox</h1>
+              <h1>MultiCheckbox</h1>
               {renderMultiCheckbox({
                 label: 'Label',
                 options: options,
-                selectedValues: selectedValueCheckbox,
+                selectedIds: selectedValueCheckbox,
                 onChange: handleOptionsChange,
                 isSelectAll: true,
               })}
               {renderMultiCheckbox({
                 label: 'Label',
                 options: options,
-                selectedValues: selectedValueCheckbox,
+                selectedIds: selectedValueCheckbox,
                 onChange: handleOptionsChange,
               })}
             </Column>
@@ -157,14 +157,14 @@ const CheckboxGroup = () => {
               {renderMultiCheckbox({
                 label: 'Label',
                 options: options,
-                selectedValues: selectedValueCheckbox,
+                selectedIds: selectedValueCheckbox,
                 onChange: handleOptionsChange,
                 isError: true,
               })}
               {renderMultiCheckbox({
                 label: 'Label',
                 options: options,
-                selectedValues: selectedValueCheckbox,
+                selectedIds: selectedValueCheckbox,
                 onChange: handleOptionsChange,
                 disabled: true,
               })}
