@@ -1,12 +1,14 @@
 import { CSSProperties, forwardRef, HTMLProps } from 'react';
 import classNames from 'classnames';
 import useIsMobile from 'morning-react-ui/components/hooks/useIsMobile';
+import { Avatar } from 'morning-react-ui/components/login';
 import { TriState } from 'morning-react-ui/types/dataTypes';
 import { Size, sizeToNumber } from 'morning-react-ui/utils/Enum';
 import styles from './checkbox.module.scss';
 
 type CheckboxProps = {
   label: string;
+  imgSrc?: string;
   onChange: (value: TriState) => void;
   size?: Size;
   disabled?: boolean;
@@ -21,8 +23,9 @@ const Checkbox = forwardRef<HTMLDivElement, CheckboxProps & CheckboxHTMLProps>(
   (props, ref) => {
     const {
       label,
+      imgSrc,
       onChange,
-      size,
+      size = Size.m,
       value,
       disabled = false,
       isError = false,
@@ -68,14 +71,18 @@ const Checkbox = forwardRef<HTMLDivElement, CheckboxProps & CheckboxHTMLProps>(
           }}
         ></span>
         <label
-          className={classNames({
+          className={classNames(styles.label, {
             [styles.error]: isError,
-            [styles.label]: !isError,
             ['disabled']: disabled,
             ['cursorPointer']: !disabled,
           })}
           onClick={handleClick}
         >
+          {imgSrc && (
+            <div className={styles.avatar}>
+              <Avatar imageUrl={imgSrc} size={sizeToNumber(size)} />
+            </div>
+          )}
           {label}
         </label>
       </div>

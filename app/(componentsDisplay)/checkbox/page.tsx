@@ -36,13 +36,14 @@ const CheckboxGroup = () => {
     isError?: boolean;
     disabled?: boolean;
   }) => {
+    const icon = `${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/building.svg`;
     return (
       <>
-        <Checkbox {...props} size={Size.xs} />
-        <Checkbox {...props} size={Size.s} />
-        <Checkbox {...props} size={Size.m} />
-        <Checkbox {...props} size={Size.l} />
-        <Checkbox {...props} size={Size.xl} />
+        <Checkbox {...props} size={Size.xs} imgSrc={icon} />
+        <Checkbox {...props} size={Size.s} imgSrc={icon} />
+        <Checkbox {...props} size={Size.m} imgSrc={icon} />
+        <Checkbox {...props} size={Size.l} imgSrc={icon} />
+        <Checkbox {...props} size={Size.xl} imgSrc={icon} />
       </>
     );
   };

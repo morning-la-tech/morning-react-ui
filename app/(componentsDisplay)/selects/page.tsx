@@ -1,5 +1,4 @@
 'use client';
-
 import { useState } from 'react';
 import MultiSelect from 'morning-react-ui/components/inputs/selects/MultiSelect';
 import SelectInput from 'morning-react-ui/components/inputs/selects/SelectInput';
@@ -11,7 +10,7 @@ import Navigation from 'morning-react-ui/components/layout/Navigation';
 import { SelectOption } from 'morning-react-ui/types';
 import { Size } from 'morning-react-ui/utils/Enum';
 
-const options: SelectOption[] = [
+const optionsRawData: SelectOption[] = [
   { id: 'amsterdam', label: 'Amsterdam' },
   { id: 'argentine', label: 'Argentine' },
   { id: 'auber', label: 'Auber' },
@@ -64,6 +63,7 @@ export default function Selects() {
   const [optionsToDisplay, setOptionsToDisplay] = useState<number | null>(8);
 
   const [selectValue, setSelectValue] = useState<SelectOption | null>(null);
+  const [options, setOptions] = useState<SelectOption[]>(optionsRawData);
   const [multiValues, setMultiValues] = useState<string[]>([]);
 
   const handleSelectChange = (newSelectValue: SelectOption) => {
@@ -98,14 +98,18 @@ export default function Selects() {
     bold?: boolean;
     size?: Size;
     options: SelectOption[];
+    setOptions?: (options: SelectOption[]) => void;
     placeholder?: string;
     disabled?: boolean;
     isError?: boolean;
     rowToDisplay?: number | null;
     onChange: (values: string[]) => void;
-    values: string[];
+    selectedIds: string[];
   }) => {
-    const sentProps = { ...props, rowToDisplay: props?.rowToDisplay || 1 };
+    const sentProps = {
+      ...props,
+      rowToDisplay: props?.rowToDisplay || 1,
+    };
     return (
       <>
         <MultiSelect {...sentProps} size={Size.xs} />
@@ -136,7 +140,8 @@ export default function Selects() {
               sublabel: 'Sublabel',
               placeholder: 'Placeholder',
               options: options,
-              values: multiValues,
+              setOptions: setOptions,
+              selectedIds: multiValues,
               onChange: setMultiValues,
               rowToDisplay: optionsToDisplay,
             })}
@@ -145,7 +150,8 @@ export default function Selects() {
               sublabel: 'Sublabel',
               placeholder: 'Placeholder',
               options: options,
-              values: multiValues,
+              setOptions: setOptions,
+              selectedIds: multiValues,
               onChange: setMultiValues,
               rowToDisplay: optionsToDisplay,
               disabled: true,
@@ -155,7 +161,7 @@ export default function Selects() {
               sublabel: 'Sublabel',
               placeholder: 'Placeholder',
               options: options,
-              values: multiValues,
+              selectedIds: multiValues,
               onChange: setMultiValues,
               rowToDisplay: optionsToDisplay,
               isError: true,

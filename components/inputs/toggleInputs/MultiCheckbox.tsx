@@ -10,7 +10,7 @@ import Checkbox from './single/Checkbox';
 
 type MultiCheckboxProps = BasicInputProps & {
   options: SelectOption[];
-  selectedValues: string[];
+  selectedIds: string[];
   onChange: (newValues: string[]) => void;
   checkboxRefs?: RefObject<HTMLInputElement | null>[];
   inline?: boolean;
@@ -26,7 +26,7 @@ type MultiCheckboxProps = BasicInputProps & {
 
 const MultiCheckbox = ({
   options,
-  selectedValues,
+  selectedIds,
   onChange,
   checkboxRefs,
   size,
@@ -54,14 +54,14 @@ const MultiCheckbox = ({
     if (!isSelectAll) {
       return;
     }
-    if (selectedValues.length === 0) {
+    if (selectedIds.length === 0) {
       setSelectAllCheckbox(TriState.false);
-    } else if (selectedValues.length === options.length) {
+    } else if (selectedIds.length === options.length) {
       setSelectAllCheckbox(TriState.true);
     } else {
       setSelectAllCheckbox(TriState.indeterminate);
     }
-  }, [options, selectedValues, isSelectAll]);
+  }, [options, selectedIds, isSelectAll]);
 
   const handleSelectAllChange = (value: TriState) => {
     if (value === TriState.true) {
@@ -111,15 +111,15 @@ const MultiCheckbox = ({
           const adjustedIndex = isSelectAll ? index + 1 : index;
           const isHovered = adjustedIndex === hoveredIndex;
 
-          const checkboxState = selectedValues.includes(opt.id)
+          const checkboxState = selectedIds.includes(opt.id)
             ? TriState.true
             : TriState.false;
 
           const handleChange = (newValue: TriState) => {
             if (newValue === TriState.true) {
-              onChange([...selectedValues, opt.id]);
+              onChange([...selectedIds, opt.id]);
             } else {
-              onChange(selectedValues.filter((val) => val !== opt.id));
+              onChange(selectedIds.filter((val) => val !== opt.id));
             }
           };
 
@@ -139,6 +139,7 @@ const MultiCheckbox = ({
               onMouseMove={() => setHoveredIndex?.(adjustedIndex)}
               onMouseLeave={() => setHoveredIndex?.(null)}
               ref={checkboxRefs?.[adjustedIndex] ?? null}
+              imgSrc={opt.imgSrc}
             />
           );
         })}
