@@ -1,4 +1,5 @@
 import { ReactNode, useState } from 'react';
+import classNames from 'classnames';
 import RotatingButton from 'morning-react-ui/components/buttons/RotatingButton';
 import { SkeletonCell } from '../advanced';
 import { SortOrder } from '../enum';
@@ -79,7 +80,9 @@ const SimpleTable = ({
         {rows.map((row, i) => (
           <tr
             key={row ? `row-${i}` : `skeleton-${i}`}
-            className={`${styles.tr} ${onRowClick ? 'cursor-pointer' : ''}`}
+            className={classNames(styles.tr, {
+              [styles.clickable]: !!onRowClick,
+            })}
             onClick={() => onRowClick?.(row)}
           >
             <td />

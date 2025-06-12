@@ -45,3 +45,7 @@
     width: 70px;
     height: 19px;
 }
+
+.clickable {
+    cursor: pointer;
+}
