@@ -85,6 +85,12 @@ export default function Home() {
       >
         Tag
       </Button>
+      <Button
+        variant={ButtonVariant.Secondary}
+        onClick={() => router.push('/callout')}
+      >
+        Callout
+      </Button>
     </Container>
   );
 }

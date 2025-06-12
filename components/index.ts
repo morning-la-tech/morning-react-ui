@@ -14,4 +14,6 @@ export * from 'morning-react-ui/components/tag/index';
 
 export * from 'morning-react-ui/components/table/advanced/index';
 
+export * from 'morning-react-ui/components/callout/index';
+
 export * from 'morning-react-ui/components/table/simple/index';
