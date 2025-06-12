@@ -1,5 +1,9 @@
-import Image from 'next/image';
-import { Color, Size } from 'morning-react-ui/utils/Enum';
+import {
+  Color,
+  Size,
+  sizeToHeight,
+  sizeToNumber,
+} from 'morning-react-ui/utils/Enum';
 import styles from './callout.module.css';
 
 type CalloutProps = React.HTMLAttributes<HTMLSpanElement> & {
@@ -23,17 +27,18 @@ const Callout = ({
       className={`${styles.callout} ${styles[`callout-${color}`]} ${styles[`callout-${size}`]} ${className || ''}`}
       {...props}
     >
-      <div className={styles.iconContainer}>
-        {icon && (
-          <Image
-            className={`${styles.icon} ${styles[`filter-${color}`]}`}
-            src={icon}
-            alt=''
-            width={20}
-            height={20}
+      {icon && (
+        <div className={styles.iconContainer}>
+          <span
+            className={`${styles.icon} ${styles[`mask-${color}`]}`}
+            style={{
+              maskImage: `url(${icon})`,
+              width: sizeToNumber(size) / 1.5,
+              height: sizeToHeight(size) / 1.5,
+            }}
           />
-        )}
-      </div>
+        </div>
+      )}
       <div>{children}</div>
     </div>
   );

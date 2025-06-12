@@ -68,43 +68,44 @@
     line-height: 24px;
 }
 
-.filter-red {
-    filter: invert(22%) sepia(75%) saturate(2708%) hue-rotate(345deg) brightness(88%) contrast(92%);
+.mask-red {
+    background-color: #d32f2f;
 }
 
-.filter-blue {
-    filter: invert(30%) sepia(82%) saturate(3726%) hue-rotate(208deg) brightness(104%) contrast(93%);
+.mask-blue {
+    background-color: var(--sapphire);
 }
 
-.filter-green {
-    filter: invert(40%) sepia(99%) saturate(393%) hue-rotate(80deg) brightness(95%) contrast(104%);
+.mask-green {
+    background-color: #119c2b;
 }
 
-.filter-yellow {
-    filter: invert(75%) sepia(39%) saturate(7358%) hue-rotate(13deg) brightness(98%) contrast(97%);
+.mask-orange {
+    background-color: #ae4220;
 }
 
-.filter-gray {
-    filter: invert(51%) sepia(26%) saturate(236%) hue-rotate(164deg) brightness(88%) contrast(82%);
+.mask-gray {
+    background-color: var(--iron);
 }
 
-.filter-pink {
-    filter: invert(28%) sepia(100%) saturate(2484%) hue-rotate(309deg) brightness(87%) contrast(89%);
+.mask-pink {
+    background-color: #d32f87;
 }
 
-.filter-orange {
-    filter: invert(26%) sepia(88%) saturate(1187%) hue-rotate(347deg) brightness(94%) contrast(89%);
+.mask-yellow {
+    background-color: #d29404;
 }
 
-.filter-purple {
-    filter: invert(33%) sepia(97%) saturate(2545%) hue-rotate(255deg) brightness(92%) contrast(103%);
+.mask-teal {
+    background-color: #0d9676;
 }
 
-.filter-teal {
-    filter: invert(56%) sepia(76%) saturate(5859%) hue-rotate(144deg) brightness(90%) contrast(90%);
+.mask-purple {
+    background-color: #a23fee;
 }
 
 .icon {
+    mask-size: contain;
     vertical-align: middle;
 }
 
