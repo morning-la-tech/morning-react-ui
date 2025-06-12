@@ -107,6 +107,7 @@
 .icon {
     mask-size: contain;
     vertical-align: middle;
+    mask-repeat: no-repeat;
 }
 
 .iconContainer {
