@@ -5,41 +5,33 @@
     align-items: center;
     user-select: none;
 
-    .pageNumber:hover {
-        background-color: var(--cloud);
-    }
+}
 
-    .pageNumber {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 6px;
-        cursor: pointer;
+.pageNumber {
+    display: inline-flex;
+    align-items: center;        
+    justify-content: center;
+    border-radius: 6px;
+    cursor: pointer;
+}
 
-        &.selected {
-            color: var(--white);
-            background-color: var(--azure);
-        }
-    }
+.pageNumber.selected {
+    color: var(--sapphire);
+    font-weight: 700;
+}
 
-    &.hasBorder {
-        .pageNumber {
-            border: 1px solid var(--silver);
-        }
-    }
 
-    .l {
-        width: 40px;
-        height: 40px;
-    }
+.l {
+    width: 40px;
+    height: 40px;
+}
 
-    .m {
-        width: 32px;
-        height: 32px;
-    }
+.m {
+    width: 32px;
+    height: 32px;
+}
 
-    .s {
-        width: 24px;
-        height: 24px;
-    }
+.s {
+    width: 24px;
+    height: 24px;
 }
