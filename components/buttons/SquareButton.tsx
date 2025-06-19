@@ -11,6 +11,7 @@ export type SquareButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: ButtonVariant;
   className?: string;
   size?: Size;
+  imageClassName?: string;
 };
 
 const SquareButton = ({
@@ -19,6 +20,7 @@ const SquareButton = ({
   size = Size.m,
   variant = ButtonVariant.Primary,
   className,
+  imageClassName,
   type = 'button',
   ...props
 }: SquareButtonProps) => {
@@ -32,7 +34,7 @@ const SquareButton = ({
   return (
     <button className={buttonClass} type={type} {...props}>
       <Image
-        className={styles.image}
+        className={classNames(styles.image, imageClassName)}
         src={imageURL}
         alt={imageAlt}
         width={sizeToNumber(size)}
