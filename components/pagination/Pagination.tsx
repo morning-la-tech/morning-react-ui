@@ -9,14 +9,12 @@ import styles from './pagination.module.css';
 type Props = {
   pagination: Pagination;
   setCurrentPage: Dispatch<number>;
-  hasBorder?: boolean;
   size?: Size;
 };
 
 const PaginationComponent = ({
   pagination,
   setCurrentPage,
-  hasBorder = false,
   size = Size.m,
 }: Props) => {
   const {
@@ -46,11 +44,7 @@ const PaginationComponent = ({
   }, [start, end, pagination.currentPage, setCurrentPage, size]);
 
   return (
-    <div
-      className={classNames(styles.pageSelector, {
-        [styles.hasBorder]: hasBorder,
-      })}
-    >
+    <div className={classNames(styles.pageSelector)}>
       <PaginationItem
         page={1}
         size={size}
