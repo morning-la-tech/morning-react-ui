@@ -21,21 +21,6 @@
     align-items: center;
     position: relative;
 
-    .imageIcon {
-        background-color: var(--iron);
-        mask-size: 33px 29px;
-        mask-image: url('#{$cdn-url}icons/image.svg');
-        background-position: center;
-        background-repeat: no-repeat;
-        width: 33px;
-        height: 29px;
-    }
-
-    .selectedImage {
-        border-radius: 5px;
-        object-fit: cover;
-    }
-
     &.pending .selectedImage {
         opacity: 0.5;
     }
@@ -43,4 +28,50 @@
 
 .uploadImage {
     padding: 3px;
+}
+
+.imageIcon {
+    background-color: var(--iron);
+    mask-size: 33px 29px;
+    mask-image: url('#{$cdn-url}icons/image.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 33px;
+    height: 29px;
+}
+
+.imageIconProfile {
+    background-color: var(--iron);
+    mask-size: 48px 48px;
+    mask-image: url('#{$cdn-url}icons/image.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 48px;
+    height: 48px;
+}
+
+.selectedImage {
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+.uploadAreaProfile {
+    background-color: var(--silver);
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin: auto;
+
+    &.pending .selectedImage {
+        opacity: 0.5;
+    }
+}
+
+.selectedImageProfile {
+    border-radius: 50%;
+    object-fit: cover;
 }
