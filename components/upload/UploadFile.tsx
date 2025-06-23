@@ -17,6 +17,11 @@ import { InputError } from 'morning-react-ui/utils/error';
 import { generateFileName } from 'morning-react-ui/utils/file';
 import styles from './uploadFile.module.scss';
 
+export enum UploadType {
+  Image = 'image',
+  Profile = 'profile',
+}
+
 type UploadFileProps = {
   label?: string;
   sublabel?: string;
@@ -34,6 +39,7 @@ type UploadFileProps = {
   maxFileSize?: number;
   maxSizeErrorMessage?: string;
   required?: boolean;
+  uploadType?: UploadType;
 };
 
 const UploadFile = ({
@@ -54,6 +60,7 @@ const UploadFile = ({
   noBackground = false,
   errorText,
   required = false,
+  uploadType = UploadType.Image,
 }: UploadFileProps & { noBackground?: boolean }) => {
   const { addToast } = useToast();
   const [hasError, setHasError] = useState<boolean>(isError);
@@ -160,7 +167,9 @@ const UploadFile = ({
           />
           <div
             aria-label='preview'
-            className={classNames(styles.uploadArea, {
+            className={classNames({
+              [styles.uploadArea]: uploadType === UploadType.Image,
+              [styles.uploadAreaProfile]: uploadType === UploadType.Profile,
               [styles.pending]: isPending,
               ['error']: hasError || isError,
             })}
@@ -171,11 +180,20 @@ const UploadFile = ({
                 alt='Uploaded file'
                 fill
                 sizes='true'
-                className={styles.selectedImage}
+                className={classNames({
+                  [styles.selectedImage]: uploadType === UploadType.Image,
+                  [styles.selectedImageProfile]:
+                    uploadType === UploadType.Profile,
+                })}
                 quality={100}
               />
             ) : (
-              <span className={styles.imageIcon} />
+              <span
+                className={classNames({
+                  [styles.imageIcon]: uploadType === UploadType.Image,
+                  [styles.imageIconProfile]: uploadType === UploadType.Profile,
+                })}
+              />
             )}
           </div>
           <Button
