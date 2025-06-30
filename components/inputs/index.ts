@@ -10,6 +10,8 @@ export { default as TimeInput } from 'morning-react-ui/components/inputs/datetim
 
 export { default as DateInput } from 'morning-react-ui/components/inputs/datetimeField/DateInput';
 
+export { default as RichText } from 'morning-react-ui/components/inputs/richText/RichText';
+
 export { default as SelectInput } from 'morning-react-ui/components/inputs/selects/SelectInput';
 
 export { default as MultiSelect } from 'morning-react-ui/components/inputs/selects/MultiSelect';

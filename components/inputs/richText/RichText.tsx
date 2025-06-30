@@ -27,6 +27,7 @@ type RichTextProps = InputProps & {
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   className?: string;
   maxCharacter?: number;
+  required?: boolean;
 };
 
 const RichText = forwardRef<HTMLInputElement, RichTextProps>(
@@ -43,6 +44,7 @@ const RichText = forwardRef<HTMLInputElement, RichTextProps>(
       className,
       isError,
       maxCharacter,
+      required,
     },
     ref,
   ) => {
@@ -153,6 +155,7 @@ const RichText = forwardRef<HTMLInputElement, RichTextProps>(
             editor={textEditor}
             ref={editorContentRef}
             className={styles.editorContentContainer}
+            required={required}
           />
           <div className={styles.controls}>
             <ActivationButton
