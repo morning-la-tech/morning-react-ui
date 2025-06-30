@@ -66,7 +66,7 @@ const TableCell = ({
 
   return (
     <td {...props} className={classNames(styles.cell, paddingClass, className)}>
-      <div className={styles.innerWrapper}>
+      <div className={classNames(styles.innerWrapper, className)}>
         {showRowExpandChevron && isMultiple && (
           <RotatingButton
             collapsed={collapsed}
@@ -97,7 +97,9 @@ const TableCell = ({
             ))}
           </div>
         ) : (
-          <div className={styles.singleWrapper}>{cellValues}</div>
+          <div className={classNames(styles.singleWrapper, className)}>
+            {cellValues}
+          </div>
         )}
       </div>
     </td>
