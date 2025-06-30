@@ -7,6 +7,7 @@ import Columns from 'morning-react-ui/components/layout/Columns';
 import Container from 'morning-react-ui/components/layout/Container';
 import Navigation from 'morning-react-ui/components/layout/Navigation';
 import { UploadFile } from 'morning-react-ui/components/upload';
+import { UploadType } from 'morning-react-ui/components/upload/UploadFile';
 import styles from './upload.module.css';
 
 const UploadPage = () => {
@@ -37,6 +38,7 @@ const UploadPage = () => {
                 firstFile &&
                 `${process.env.NEXT_PUBLIC_MORNING_CDN_URL}500/300/${firstFile}`
               }
+              uploadType={UploadType.Profile}
             ></UploadFile>
           </Column>
           <Column>
@@ -49,6 +51,7 @@ const UploadPage = () => {
                 `${process.env.NEXT_PUBLIC_MORNING_CDN_URL}resize/500/300/${secondFile}`
               }
               onChange={setSecondFile}
+              uploadType={UploadType.Profile}
               className={styles.size}
             ></UploadFile>
           </Column>
