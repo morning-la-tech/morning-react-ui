@@ -97,7 +97,6 @@ const Page = () => {
               <Column>
                 <PaginationComponent
                   size={Size.l}
-                  hasBorder={true}
                   pagination={pagination}
                   setCurrentPage={setPage}
                 />
@@ -107,7 +106,6 @@ const Page = () => {
               <Column>
                 <PaginationComponent
                   size={Size.m}
-                  hasBorder={true}
                   pagination={pagination}
                   setCurrentPage={setPage}
                 />
@@ -117,7 +115,6 @@ const Page = () => {
               <Column>
                 <PaginationComponent
                   size={Size.s}
-                  hasBorder={true}
                   pagination={pagination}
                   setCurrentPage={setPage}
                 />
