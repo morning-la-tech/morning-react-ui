@@ -33,7 +33,6 @@
   width: fit-content;
   position: relative;
   margin-top: 200px;
-  overflow: hidden;
 }
 
 .modalCentered {
@@ -43,7 +42,7 @@
 }
 
 .modalContent {
-  overflow-y: auto;
+  overflow-y: visible;
   flex: 1 1 auto;
   max-height: calc(80vh - 140px);
   box-sizing: border-box;
