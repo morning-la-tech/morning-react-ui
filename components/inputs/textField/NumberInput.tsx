@@ -26,6 +26,7 @@ type NumberInputProps = InputProps & {
   allowFloat?: boolean;
   allowNegative?: boolean;
   step?: number;
+  legend?: string;
 };
 
 type NumberInputHtmlProps = NumberInputProps &
@@ -49,6 +50,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputHtmlProps>(
       step = 1,
       errorText,
       required,
+      legend,
       ...props
     },
     ref,
@@ -171,6 +173,14 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputHtmlProps>(
             required={required}
             {...props}
           />
+          {legend && (
+            <div
+              style={{ height: `${sizeToHeight(finalSize) - 2}px` }}
+              className={styles.legend}
+            >
+              {legend}
+            </div>
+          )}
         </div>
       </ParentInput>
     );

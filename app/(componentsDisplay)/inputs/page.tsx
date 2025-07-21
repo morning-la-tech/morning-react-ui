@@ -43,6 +43,7 @@ export default function Page() {
     disabled?: boolean;
     imageSrc?: string;
     imageAlt?: string;
+    legend?: string;
   }) => {
     return (
       <>
@@ -65,6 +66,7 @@ export default function Page() {
     isError?: boolean;
     disabled?: boolean;
     placeholder?: string;
+    legend?: string;
   }) => {
     return (
       <>
@@ -138,6 +140,16 @@ export default function Page() {
               })}
             </Column>
             <Column>
+              <h1>TextInput with unit</h1>
+              {renderTextInputs({
+                placeholder: 'Input with unit',
+                legend: 'm²',
+                value: textValue,
+                onChange: handleTextChange,
+              })}
+            </Column>
+
+            <Column>
               <h1>NumberInput</h1>
               {renderNumberInputs({
                 label: 'Simple',
@@ -156,6 +168,13 @@ export default function Page() {
               {renderNumberInputs({
                 label: 'Disabled',
                 disabled: true,
+                value: numberValue,
+                placeholder: 'Number',
+                onChange: handleNumberChange,
+              })}
+              {renderNumberInputs({
+                label: 'With unit',
+                legend: 'm²',
                 value: numberValue,
                 placeholder: 'Number',
                 onChange: handleNumberChange,

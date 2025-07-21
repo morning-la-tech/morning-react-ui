@@ -33,6 +33,7 @@ type TextInputProps = InputProps & {
   showDropdownIcon?: boolean;
   onClear?: () => void;
   isDropdownActive?: boolean;
+  legend?: string;
 };
 
 type TextInputHtmlProps = TextInputProps &
@@ -63,6 +64,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputHtmlProps>(
       isDropdownActive,
       className,
       errorText,
+      legend,
       ...props
     },
     ref,
@@ -181,6 +183,15 @@ const TextInput = forwardRef<HTMLInputElement, TextInputHtmlProps>(
             onClick={handleKeyUpOrClick}
             required={required}
           />
+          {legend && (
+            <div
+              style={{ height: `${sizeToHeight(finalSize) - 2}px` }}
+              className={styles.legend}
+            >
+              {legend}
+            </div>
+          )}
+
           {showClearButton && (
             <Image
               src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/clear-button.svg`}

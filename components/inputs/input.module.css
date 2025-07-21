@@ -61,3 +61,16 @@
 .dropdownIconActive {
     transform: rotate(180deg);
 }
+
+.legend {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: inherit;
+    color: var(--iron);
+    background-color: var(--silver);
+    z-index: 10;
+    border-radius: 0 6px 6px 0;
+    align-content: center;
+    padding: 0 10px;
+}
