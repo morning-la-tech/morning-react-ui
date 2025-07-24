@@ -31,7 +31,7 @@ export default function Page() {
             <Tag label='Yellow Tag' color={Color.yellow} />
           </div>
           <div>
-            <Tag label='🍟 Laffitte' color={Color.gray} />
+            <Tag label='Laffitte' emoji='🍟' color={Color.gray} />
           </div>
           <div>
             <Tag label='Pink Tag' color={Color.pink} />
@@ -70,7 +70,7 @@ export default function Page() {
             <Tag label='Yellow Tag' color={Color.yellow} size={Size.m} />
           </div>
           <div>
-            <Tag label='⚜️ Saint-Ho' color={Color.gray} size={Size.m} />
+            <Tag label='Saint-Ho' emoji='⚜️' color={Color.gray} size={Size.m} />
           </div>
           <div>
             <Tag label='Pink Tag' color={Color.pink} size={Size.m} />
@@ -106,7 +106,7 @@ export default function Page() {
             <Tag label='Yellow Tag' color={Color.yellow} size={Size.l} />
           </div>
           <div>
-            <Tag label='⛲️ Trévise' color={Color.gray} size={Size.l} />
+            <Tag label='Trévise' emoji='⛲' color={Color.gray} size={Size.l} />
           </div>
           <div>
             <Tag label='Pink Tag' color={Color.pink} size={Size.l} />
