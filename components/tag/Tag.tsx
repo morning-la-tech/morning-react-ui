@@ -6,6 +6,7 @@ type TagProps = React.HTMLAttributes<HTMLSpanElement> & {
   label?: string;
   color?: Color;
   size?: Size;
+  emoji?: string | null;
 };
 
 const Tag = ({
@@ -13,6 +14,7 @@ const Tag = ({
   label,
   color = Color.gray,
   size = Size.s,
+  emoji,
   ...props
 }: TagProps) => {
   return (
@@ -20,7 +22,7 @@ const Tag = ({
       className={`${styles.tag} ${styles[`tag-${color}`]} ${styles[`tag-${size}`]} ${className || ''}`}
       {...props}
     >
-      {label}
+      {emoji} {label}
     </span>
   );
 };
