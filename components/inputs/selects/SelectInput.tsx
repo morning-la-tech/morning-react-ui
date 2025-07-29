@@ -32,6 +32,7 @@ const SelectInput = ({
   emptyStateText = 'Aucun résultat dans la liste',
   required,
   setSelectError,
+  centerPlaceholder = false,
 }: SelectInputProps) => {
   const isMobile = useIsMobile();
   const finalSize = size ?? (isMobile ? Size.l : Size.m);
@@ -80,6 +81,7 @@ const SelectInput = ({
         isError={isError}
         errorText={errorText}
         required={required}
+        centerPlaceholder={centerPlaceholder}
       />
       {isDropdownDisplayed && (
         <div

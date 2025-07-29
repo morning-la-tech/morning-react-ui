@@ -51,6 +51,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputHtmlProps>(
       errorText,
       required,
       legend,
+      centerPlaceholder = false,
       ...props
     },
     ref,
@@ -161,7 +162,9 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputHtmlProps>(
             type='number'
             inputMode={inputMode}
             step={allowFloat ? 'any' : step}
-            className={classNames(styles.input, `font-size-${finalSize}`)}
+            className={classNames(styles.input, `font-size-${finalSize}`, {
+              [styles.centerPlaceholder]: centerPlaceholder,
+            })}
             ref={inputRef}
             value={value ?? ''}
             disabled={disabled}

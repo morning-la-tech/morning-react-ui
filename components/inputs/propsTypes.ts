@@ -12,6 +12,7 @@ export type BasicInputProps = {
 export type InputProps = BasicInputProps & {
   isError?: boolean;
   placeholder?: string;
+  centerPlaceholder?: boolean;
 };
 
 export type SelectsProps = InputProps & {

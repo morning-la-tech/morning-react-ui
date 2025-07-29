@@ -58,6 +58,7 @@ const DateInput = forwardRef<HTMLInputElement, DateInputHtmlProps>(
       setDateError,
       errorText,
       required,
+      centerPlaceholder = false,
       ...props
     },
     ref,
@@ -330,7 +331,9 @@ const DateInput = forwardRef<HTMLInputElement, DateInputHtmlProps>(
           onClick={handleWrapperClick}
         >
           <input
-            className={classNames(styles.input, `font-size-${finalSize}`)}
+            className={classNames(styles.input, `font-size-${finalSize}`, {
+              [styles.centerPlaceholder]: centerPlaceholder,
+            })}
             ref={inputRef}
             placeholder={placeholder}
             disabled={disabled}

@@ -41,6 +41,7 @@ const MultiSelect = ({
   errorText,
   required,
   setMultiSelectError,
+  centerPlaceholder = false,
 }: MultiSelectProps) => {
   const isMobile = useIsMobile();
   const finalSize = size ?? (isMobile ? Size.l : Size.m);
@@ -109,6 +110,7 @@ const MultiSelect = ({
         disabled={disabled}
         errorText={errorText}
         required={required}
+        centerPlaceholder={centerPlaceholder}
       />
       {isDropdownDisplayed && (
         <div

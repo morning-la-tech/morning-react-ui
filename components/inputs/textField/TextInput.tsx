@@ -65,6 +65,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputHtmlProps>(
       className,
       errorText,
       legend,
+      centerPlaceholder = false,
       ...props
     },
     ref,
@@ -173,6 +174,9 @@ const TextInput = forwardRef<HTMLInputElement, TextInputHtmlProps>(
               `font-size-${finalSize}`,
               `height-${finalSize}`,
               className,
+              {
+                [styles.centerPlaceholder]: centerPlaceholder,
+              },
             )}
             ref={inputRef}
             value={value}
