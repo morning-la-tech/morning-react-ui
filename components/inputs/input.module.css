@@ -17,6 +17,10 @@
     display: flex;
 }
 
+.centerPlaceholder::placeholder {
+    text-align: center;
+}
+
 .wrapper:focus-within {
     outline: none;
     border: 1px solid var(--sapphire);

@@ -47,9 +47,9 @@ export default function Page() {
   }) => {
     return (
       <>
-        <TextInput {...props} size={Size.xs} />
+        <TextInput {...props} size={Size.xs} centerPlaceholder />
         <TextInput {...props} size={Size.s} />
-        <TextInput {...props} size={Size.m} />
+        <TextInput {...props} size={Size.m} centerPlaceholder />
         <TextInput {...props} size={Size.l} />
         <TextInput {...props} size={Size.xl} />
       </>

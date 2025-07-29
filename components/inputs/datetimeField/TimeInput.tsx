@@ -60,6 +60,7 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputHtmlProps>(
       onChange,
       errorText,
       required,
+      centerPlaceholder = false,
       ...props
     },
     ref,
@@ -253,7 +254,9 @@ const TimeInput = forwardRef<HTMLInputElement, TimeInputHtmlProps>(
           onClick={handleWrapperClick}
         >
           <input
-            className={classNames(styles.input, `font-size-${finalSize}`)}
+            className={classNames(styles.input, `font-size-${finalSize}`, {
+              [styles.centerPlaceholder]: centerPlaceholder,
+            })}
             ref={inputRef}
             placeholder={placeholder}
             disabled={disabled}
