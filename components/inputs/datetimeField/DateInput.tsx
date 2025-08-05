@@ -7,6 +7,7 @@ import {
   useRef,
   useState,
 } from 'react';
+import Image from 'next/image';
 import classNames from 'classnames';
 import { setMilliseconds, setSeconds } from 'date-fns';
 import { format } from 'date-fns/format';
@@ -18,7 +19,7 @@ import {
   roundUpYear,
   stringToDate,
 } from 'morning-react-ui/utils/datetimeUtils';
-import { Size, sizeToHeight } from 'morning-react-ui/utils/Enum';
+import { Size, sizeToHeight, sizeToNumber } from 'morning-react-ui/utils/Enum';
 import { DateError } from 'morning-react-ui/utils/error';
 import { newCharInString } from 'morning-react-ui/utils/stringUtils';
 import styles from '../input.module.css';
@@ -32,6 +33,8 @@ type DateInputProps = {
   max?: Date | null;
   setDateError?: (error: DateError) => void;
   onChange: (time: OptionalDate) => void;
+  imageSrc?: string;
+  imageAlt?: string;
 } & BasicInputProps &
   InputProps;
 
@@ -59,6 +62,8 @@ const DateInput = forwardRef<HTMLInputElement, DateInputHtmlProps>(
       errorText,
       required,
       centerPlaceholder = false,
+      imageSrc,
+      imageAlt,
       ...props
     },
     ref,
@@ -330,6 +335,14 @@ const DateInput = forwardRef<HTMLInputElement, DateInputHtmlProps>(
           style={inputStyle}
           onClick={handleWrapperClick}
         >
+          {imageSrc && (
+            <Image
+              src={imageSrc}
+              alt={imageAlt || 'input icon'}
+              width={sizeToNumber(finalSize)}
+              height={sizeToNumber(finalSize)}
+            />
+          )}
           <input
             className={classNames(styles.input, `font-size-${finalSize}`, {
               [styles.centerPlaceholder]: centerPlaceholder,
