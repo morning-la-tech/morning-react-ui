@@ -30,13 +30,13 @@
 
 .label {
     display: flex;
-    gap: 2px;
     color: var(--graphite);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
     align-items: center;
+    gap: 6px;
 }
 
 .error {
