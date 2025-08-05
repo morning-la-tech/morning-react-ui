@@ -1,3 +1,13 @@
-.image {
+.wrapper {
+    position: relative;
     border-radius: 50%;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.image {
+    object-fit: cover;
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
 }

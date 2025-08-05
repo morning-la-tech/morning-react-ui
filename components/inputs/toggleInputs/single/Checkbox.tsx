@@ -69,7 +69,7 @@ const Checkbox = forwardRef<HTMLDivElement, CheckboxProps & CheckboxHTMLProps>(
             width: `${sizeToNumber(finalSize)}px`,
             height: `${sizeToNumber(finalSize)}px`,
           }}
-        ></span>
+        />
         <label
           className={classNames(styles.label, {
             [styles.error]: isError,

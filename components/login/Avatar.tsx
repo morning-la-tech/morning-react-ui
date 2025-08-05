@@ -8,13 +8,21 @@ type AvatarProps = {
 
 const Avatar = ({ imageUrl, size = 40 }: AvatarProps) => {
   return (
-    <Image
-      src={imageUrl}
-      alt='Avatar'
-      className={styles.image}
-      width={size}
-      height={size}
-    />
+    <div
+      style={{
+        width: size,
+        height: size,
+      }}
+      className={styles.wrapper}
+    >
+      <Image
+        src={imageUrl}
+        alt='Avatar'
+        className={styles.image}
+        fill
+        sizes={`${size}px`}
+      />
+    </div>
   );
 };
 
