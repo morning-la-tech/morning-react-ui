@@ -102,7 +102,6 @@ const MultiCheckbox = ({
             isError={isError}
             onMouseMove={() => setHoveredIndex?.(0)}
             ref={checkboxRefs?.[0] ?? null}
-            onMouseLeave={() => setHoveredIndex?.(null)}
             className='font-weight-medium'
           />
         )}
@@ -137,7 +136,6 @@ const MultiCheckbox = ({
               disabled={disabled}
               isError={isError}
               onMouseMove={() => setHoveredIndex?.(adjustedIndex)}
-              onMouseLeave={() => setHoveredIndex?.(null)}
               ref={checkboxRefs?.[adjustedIndex] ?? null}
               imgSrc={opt.imgSrc}
             />
