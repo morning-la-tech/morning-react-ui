@@ -10,11 +10,12 @@ import {
   useImperativeHandle,
   useRef,
 } from 'react';
+import Image from 'next/image';
 import classNames from 'classnames';
 import useIsMobile from 'morning-react-ui/components/hooks/useIsMobile';
 import ParentInput from 'morning-react-ui/components/inputs/ParentInput';
 import { InputProps } from 'morning-react-ui/components/inputs/propsTypes';
-import { Size, sizeToHeight } from 'morning-react-ui/utils/Enum';
+import { Size, sizeToHeight, sizeToNumber } from 'morning-react-ui/utils/Enum';
 import { InputError } from 'morning-react-ui/utils/error';
 import styles from '../input.module.css';
 import useInput from './useInput';
@@ -23,6 +24,8 @@ type NumberInputProps = InputProps & {
   value?: number | null;
   onChange: Dispatch<number | null>;
   setNumberError?: (error: InputError) => void;
+  imageSrc?: string;
+  imageAlt?: string;
   allowFloat?: boolean;
   allowNegative?: boolean;
   step?: number;
@@ -44,6 +47,8 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputHtmlProps>(
       setNumberError,
       isError,
       disabled,
+      imageSrc,
+      imageAlt,
       placeholder,
       allowFloat = false,
       allowNegative = true,
@@ -158,6 +163,14 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputHtmlProps>(
           style={inputStyle}
           onClick={handleWrapperClick}
         >
+          {imageSrc && (
+            <Image
+              src={imageSrc}
+              alt={imageAlt || 'input icon'}
+              width={sizeToNumber(finalSize)}
+              height={sizeToNumber(finalSize)}
+            />
+          )}
           <input
             type='number'
             inputMode={inputMode}

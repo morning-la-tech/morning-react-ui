@@ -26,7 +26,6 @@ type TextInputProps = InputProps & {
   onCursorPositionChange?: (position: number | null) => void;
   setCursorPosition?: (input: HTMLInputElement) => void;
   setTextError?: (error: InputError) => void;
-  required?: boolean;
   imageSrc?: string;
   imageAlt?: string;
   showClearButton?: boolean;
