@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import MultiCheckbox from 'morning-react-ui/components/inputs/toggleInputs/MultiCheckbox';
 import Checkbox from 'morning-react-ui/components/inputs/toggleInputs/single/Checkbox';
+import Toggle from 'morning-react-ui/components/inputs/toggleInputs/single/Toggle';
 import Column from 'morning-react-ui/components/layout/Column';
 import Columns from 'morning-react-ui/components/layout/Columns';
 import Container from 'morning-react-ui/components/layout/Container';
@@ -26,6 +27,11 @@ const CheckboxGroup = () => {
 
   const handleOptionsChange = (optionsModified: string[]) => {
     setSelectedValueCheckbox(optionsModified);
+  };
+
+  const [valueToggle, setValueToggle] = useState<boolean>(false);
+  const handleToggleChange = (value: boolean) => {
+    setValueToggle(value);
   };
 
   const renderCheckbox = (props: {
@@ -66,6 +72,25 @@ const CheckboxGroup = () => {
         <MultiCheckbox {...props} label='MultiCheckbox m' size={Size.m} />
         <MultiCheckbox {...props} label='MultiCheckbox l' size={Size.l} />
         <MultiCheckbox {...props} label='MultiCheckbox xl' size={Size.xl} />
+      </>
+    );
+  };
+
+  const renderToggle = (props: {
+    label: string;
+    size?: Size;
+    value: boolean;
+    onChange: (value: boolean) => void;
+    isError?: boolean;
+    disabled?: boolean;
+  }) => {
+    return (
+      <>
+        <Toggle {...props} label='Toggle xs' size={Size.xs} />
+        <Toggle {...props} label='Toggle s' size={Size.s} />
+        <Toggle {...props} label='Toggle m' size={Size.m} />
+        <Toggle {...props} label='Toggle l' size={Size.l} />
+        <Toggle {...props} label='Toggle xl' size={Size.xl} />
       </>
     );
   };
@@ -166,6 +191,25 @@ const CheckboxGroup = () => {
                 options: options,
                 selectedIds: selectedValueCheckbox,
                 onChange: handleOptionsChange,
+                disabled: true,
+              })}
+            </Column>
+            <Column>
+              {renderToggle({
+                label: 'Label',
+                value: valueToggle,
+                onChange: handleToggleChange,
+              })}
+              {renderToggle({
+                label: 'Label',
+                value: valueToggle,
+                onChange: handleToggleChange,
+                isError: true,
+              })}
+              {renderToggle({
+                label: 'Label',
+                value: valueToggle,
+                onChange: handleToggleChange,
                 disabled: true,
               })}
             </Column>
