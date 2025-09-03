@@ -15,6 +15,8 @@ type CheckboxProps = {
   value: TriState;
   isError?: boolean;
   style?: CSSProperties;
+  wrapperClassName?: string;
+  wrapperStyle?: CSSProperties;
 };
 
 type CheckboxHTMLProps = Omit<HTMLProps<HTMLDivElement>, keyof CheckboxProps>;
@@ -30,8 +32,12 @@ const Checkbox = forwardRef<HTMLDivElement, CheckboxProps & CheckboxHTMLProps>(
       disabled = false,
       isError = false,
       className,
+      wrapperClassName,
+      wrapperStyle,
       ...restProps
     } = props;
+
+    const { style: inlineStyle, ...divProps } = restProps;
 
     const isMobile = useIsMobile();
     const finalSize = size ?? (isMobile ? Size.l : Size.m);
@@ -55,9 +61,11 @@ const Checkbox = forwardRef<HTMLDivElement, CheckboxProps & CheckboxHTMLProps>(
           styles.wrapper,
           `font-size-${finalSize}`,
           className,
+          wrapperClassName,
         )}
         ref={ref}
-        {...restProps}
+        {...divProps}
+        style={{ ...(inlineStyle as CSSProperties), ...(wrapperStyle || {}) }}
       >
         <span
           className={classNames(checkboxClass, {
@@ -70,7 +78,7 @@ const Checkbox = forwardRef<HTMLDivElement, CheckboxProps & CheckboxHTMLProps>(
             height: `${sizeToNumber(finalSize)}px`,
           }}
         />
-        <label
+        <span
           className={classNames(styles.label, {
             [styles.error]: isError,
             ['disabled']: disabled,
@@ -84,7 +92,7 @@ const Checkbox = forwardRef<HTMLDivElement, CheckboxProps & CheckboxHTMLProps>(
             </div>
           )}
           {label}
-        </label>
+        </span>
       </div>
     );
   },

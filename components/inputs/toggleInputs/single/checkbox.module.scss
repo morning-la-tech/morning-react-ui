@@ -3,7 +3,6 @@
     align-items: center;
     user-select: none;
     gap: 4px;
-    padding: 6px 0;
 }
 
 .checkbox {
@@ -30,7 +29,6 @@
 
 .label {
     display: flex;
-    color: var(--graphite);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
