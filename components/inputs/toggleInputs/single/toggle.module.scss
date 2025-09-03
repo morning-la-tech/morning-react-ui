@@ -2,8 +2,7 @@
     display: flex;
     align-items: center;
     user-select: none;
-    gap: 8px;
-    padding: 6px 0;
+    gap: 4px;
 }
 
 .toggle {
@@ -31,7 +30,7 @@
 
 .label {
     display: flex;
-    color: var(--graphite);
+    color: var(--black);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
