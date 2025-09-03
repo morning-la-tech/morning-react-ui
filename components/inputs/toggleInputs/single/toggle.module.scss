@@ -1,0 +1,49 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    user-select: none;
+    gap: 8px;
+    padding: 6px 0;
+}
+
+.toggle {
+    display: inline-block;
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    flex-shrink: 0;
+    transition: background-color 0.25s ease;
+
+    &.active {
+        mask-image: url('#{$cdn-url}icons/toggle-on.svg');
+        background-color: var(--sapphire);
+    }
+
+    &.inactive {
+        mask-image: url('#{$cdn-url}icons/toggle-off.svg');
+        background-color: var(--stone);
+    }
+}
+
+.toggle.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.label {
+    display: flex;
+    color: var(--graphite);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    align-items: center;
+    
+    &.error {
+        color: var(--brick);
+    }
+}
+
+.label.disabled {
+    color: var(--ash);
+    cursor: not-allowed;
+}
