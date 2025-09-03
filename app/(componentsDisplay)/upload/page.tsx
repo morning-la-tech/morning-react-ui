@@ -13,10 +13,10 @@ import styles from './upload.module.css';
 const UploadPage = () => {
   const [firstFile, setFirstFile] = useState<string | undefined>(undefined);
   const [secondFile, setSecondFile] = useState<string>(
-    'morning-react-ui-data/images/login_background.jpeg',
+    'uploads/4076dcd2-34b5-499d-89a4-226b41c6c049.jpg',
   );
   const [thirdFile, setThirdFile] = useState<string | undefined>(undefined);
-
+  const [svgFile, setSvgFile] = useState<string | undefined>(undefined);
   return (
     <>
       <Navigation>
@@ -25,6 +25,22 @@ const UploadPage = () => {
       <Container>
         <h2 className={'font-size-l'}>Upload Files</h2>
         <Columns>
+          <Column>
+            <UploadFile
+              label={'SVG File example'}
+              sublabel={'Upload SVG file tips and more'}
+              buttonLabel={'Ajouter un fichier'}
+              destinationBucket={'react-ui-tests'}
+              destinationPath={'uploads/'}
+              onChange={setSvgFile}
+              className={styles.size}
+              fileUrl={
+                svgFile &&
+                `${process.env.NEXT_PUBLIC_MORNING_CDN_URL}resize/500/300/react-ui-tests/${svgFile}`
+              }
+              uploadType={UploadType.Profile}
+            ></UploadFile>
+          </Column>
           <Column>
             <UploadFile
               label={'Upload File'}
@@ -36,7 +52,7 @@ const UploadPage = () => {
               className={styles.size}
               fileUrl={
                 firstFile &&
-                `${process.env.NEXT_PUBLIC_MORNING_CDN_URL}500/300/${firstFile}`
+                `${process.env.NEXT_PUBLIC_MORNING_CDN_URL}resize/500/300/react-ui-tests/${firstFile}`
               }
               uploadType={UploadType.Profile}
             ></UploadFile>
@@ -48,7 +64,7 @@ const UploadPage = () => {
               destinationPath={'uploads'}
               fileUrl={
                 secondFile &&
-                `${process.env.NEXT_PUBLIC_MORNING_CDN_URL}resize/500/300/${secondFile}`
+                `${process.env.NEXT_PUBLIC_MORNING_CDN_URL}resize/500/300/react-ui-tests/${secondFile}`
               }
               onChange={setSecondFile}
               uploadType={UploadType.Profile}
@@ -69,7 +85,10 @@ const UploadPage = () => {
               destinationBucket={'react-ui-tests'}
               destinationPath={'uploads/'}
               onChange={setThirdFile}
-              fileUrl={thirdFile && `/resize/500/300/${thirdFile}`}
+              fileUrl={
+                thirdFile &&
+                `${process.env.NEXT_PUBLIC_MORNING_CDN_URL}resize/500/300/react-ui-tests/${thirdFile}`
+              }
               fileType={'image/*'}
               className={styles.surrounded}
               noBackground
@@ -86,7 +105,7 @@ const UploadPage = () => {
               onChange={setFirstFile}
               fileUrl={
                 firstFile &&
-                `${process.env.NEXT_PUBLIC_MORNING_CDN_URL}resize/500/300/${firstFile}`
+                `${process.env.NEXT_PUBLIC_MORNING_CDN_URL}resize/500/300/react-ui-tests/${firstFile}`
               }
               className={styles.size}
             ></UploadFile>
@@ -99,7 +118,7 @@ const UploadPage = () => {
               onChange={setFirstFile}
               fileUrl={
                 firstFile &&
-                `${process.env.NEXT_PUBLIC_MORNING_CDN_URL}resize/500/300/${firstFile}`
+                `${process.env.NEXT_PUBLIC_MORNING_CDN_URL}resize/500/300/react-ui-tests/${firstFile}`
               }
               maxFileSize={20}
               maxSizeErrorMessage={'On pensait que 20Mo était large.'}
@@ -114,7 +133,7 @@ const UploadPage = () => {
               onChange={setFirstFile}
               fileUrl={
                 firstFile &&
-                `${process.env.NEXT_PUBLIC_MORNING_CDN_URL}resize/500/300/${firstFile}`
+                `${process.env.NEXT_PUBLIC_MORNING_CDN_URL}resize/500/300/react-ui-tests/${firstFile}`
               }
               maxFileSize={1}
               maxSizeErrorMessage={
@@ -131,7 +150,7 @@ const UploadPage = () => {
             <dd>
               {firstFile}
               <Image
-                src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}resize/800/400/${firstFile}`}
+                src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}resize/800/400/react-ui-tests/${firstFile}`}
                 alt={'premier fichier'}
                 width={500}
                 height={400}
