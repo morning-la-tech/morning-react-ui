@@ -24,4 +24,6 @@ export { default as MultiCheckbox } from 'morning-react-ui/components/inputs/tog
 
 export { default as MultiRadio } from 'morning-react-ui/components/inputs/toggleInputs/MultiRadio';
 
+export { default as Toggle } from 'morning-react-ui/components/inputs/toggleInputs/single/Toggle';
+
 export * from 'morning-react-ui/components/Context/index';
