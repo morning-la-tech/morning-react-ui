@@ -19,6 +19,7 @@ type Props = {
   isLoading?: boolean;
   skeletonRows?: number;
   onRowClick?: (row: TableRowData | null) => void;
+  emptyMessage?: string;
 };
 
 const SimpleTable = ({
@@ -28,6 +29,7 @@ const SimpleTable = ({
   isLoading = false,
   skeletonRows = 5,
   onRowClick,
+  emptyMessage,
 }: Props) => {
   const [sortKey, setSortKey] = useState<string | null>(null);
   const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.Asc);
@@ -77,31 +79,44 @@ const SimpleTable = ({
         </tr>
       </thead>
       <tbody>
-        {rows.map((row, i) => (
-          <tr
-            key={row ? `row-${i}` : `skeleton-${i}`}
-            className={classNames(styles.tr, {
-              [styles.clickable]: !!onRowClick,
-            })}
-            onClick={() => onRowClick?.(row)}
-          >
+        {rows.length > 0 ? (
+          rows.map((row, i) => (
+            <tr
+              key={row ? `row-${i}` : `skeleton-${i}`}
+              className={classNames(styles.tr, {
+                [styles.clickable]: !!onRowClick,
+              })}
+              onClick={() => onRowClick?.(row)}
+            >
+              <td />
+              {columns.map(({ key }) =>
+                row === null ? (
+                  <SkeletonCell
+                    key={key}
+                    className={styles.td}
+                    shimmerClassName={styles.skeletonSize}
+                  />
+                ) : (
+                  <td key={key} className={styles.td}>
+                    {row[key]}
+                  </td>
+                ),
+              )}
+              <td />
+            </tr>
+          ))
+        ) : (
+          <tr>
             <td />
-            {columns.map(({ key }) =>
-              row === null ? (
-                <SkeletonCell
-                  key={key}
-                  className={styles.td}
-                  shimmerClassName={styles.skeletonSize}
-                />
-              ) : (
-                <td key={key} className={styles.td}>
-                  {row[key]}
-                </td>
-              ),
-            )}
+            <td
+              className={classNames(styles.td, styles.emptyMessage)}
+              colSpan={columns.length + 2}
+            >
+              {emptyMessage || 'No data'}
+            </td>
             <td />
           </tr>
-        ))}
+        )}
       </tbody>
     </table>
   );

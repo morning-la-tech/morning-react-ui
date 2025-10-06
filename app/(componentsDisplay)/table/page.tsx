@@ -281,6 +281,15 @@ export default function Page() {
           isLoading={isLoading}
           skeletonRows={5}
         />
+        <SimpleTable
+          data={[]}
+          columns={simpleInvoiceColumns}
+          onSortChange={(field, order) => {
+            console.log(`Sort by ${field} (${order})`);
+          }}
+          isLoading={isLoading}
+          skeletonRows={5}
+        />
       </div>
     </>
   );
