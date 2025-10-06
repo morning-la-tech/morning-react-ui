@@ -49,3 +49,8 @@
 .clickable {
     cursor: pointer;
 }
+
+.emptyMessage {
+    font-style: italic;
+    color: var(--iron);
+}
