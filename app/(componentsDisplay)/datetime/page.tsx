@@ -4,6 +4,7 @@ import { format } from 'date-fns';
 import { addWeeks } from 'date-fns/addWeeks';
 import DateInput from 'morning-react-ui/components/inputs/datetimeField/DateInput';
 import TimeInput from 'morning-react-ui/components/inputs/datetimeField/TimeInput';
+import TimeStringInput from 'morning-react-ui/components/inputs/datetimeField/TimeStringInput';
 import Column from 'morning-react-ui/components/layout/Column';
 import Columns from 'morning-react-ui/components/layout/Columns';
 import Container from 'morning-react-ui/components/layout/Container';
@@ -14,6 +15,7 @@ import { Size } from 'morning-react-ui/utils/Enum';
 export default function Page() {
   const [timeValue, setTimeValue] = useState<OptionalDate>(null);
   const [dateValue, setDateValue] = useState<OptionalDate>(null);
+  const [timeStringValue, setTimeStringValue] = useState<string | null>(null);
 
   const handleTimeChange = (newTimeValue: OptionalDate) => {
     setTimeValue(newTimeValue);
@@ -21,6 +23,10 @@ export default function Page() {
 
   const handleDateChange = (newDateValue: OptionalDate) => {
     setDateValue(newDateValue);
+  };
+
+  const handleTimeStringChange = (newTimeStringValue: string | null) => {
+    setTimeStringValue(newTimeStringValue);
   };
 
   const renderTimeInputs = (props: {
@@ -68,6 +74,29 @@ export default function Page() {
     );
   };
 
+  const renderTimeStringInputs = (props: {
+    label?: string;
+    sublabel?: string;
+    bold?: boolean;
+    size?: Size;
+    value?: string | null;
+    disabled?: boolean;
+    isError?: boolean;
+    min?: string | null;
+    max?: string | null;
+    onChange: (event: string | null) => void;
+    placeholder?: string;
+  }) => {
+    return (
+      <>
+        <TimeStringInput {...props} size={Size.xs} />
+        <TimeStringInput {...props} size={Size.s} />
+        <TimeStringInput {...props} size={Size.m} />
+        <TimeStringInput {...props} size={Size.l} />
+      </>
+    );
+  };
+
   return (
     <>
       <Navigation>
@@ -75,7 +104,8 @@ export default function Page() {
       </Navigation>
       <div style={{ display: 'flex', flexDirection: 'row' }}>
         <Container>
-          Selected time {timeValue && timeValue.toTimeString()}
+          <div>Selected time: {timeValue && timeValue.toTimeString()}</div>
+          <div>Selected time string: {timeStringValue ?? 'null'}</div>
           <Columns>
             <Column>
               <h1>DateInput</h1>
@@ -120,7 +150,7 @@ export default function Page() {
               })}
             </Column>
             <Column>
-              <h1>TimeInput</h1>
+              <h1>TimeInput (Date)</h1>
               {renderTimeInputs({
                 label: 'Normal',
                 value: timeValue,
@@ -157,6 +187,46 @@ export default function Page() {
                 max: new Date(0, 0, 0, 22, 0),
                 value: timeValue,
                 onChange: handleTimeChange,
+              })}
+            </Column>
+            <Column>
+              <h1>TimeStringInput (String)</h1>
+              {renderTimeStringInputs({
+                label: 'Normal',
+                value: timeStringValue,
+                onChange: handleTimeStringChange,
+                placeholder: 'HH:mm',
+              })}
+              {renderTimeStringInputs({
+                label: 'Error',
+                isError: true,
+                value: timeStringValue,
+                onChange: handleTimeStringChange,
+              })}
+              {renderTimeStringInputs({
+                label: 'Disabled',
+                disabled: true,
+                value: timeStringValue,
+                onChange: handleTimeStringChange,
+              })}
+              {renderTimeStringInputs({
+                label: '> 08:00',
+                min: '08:00',
+                value: timeStringValue,
+                onChange: handleTimeStringChange,
+              })}
+              {renderTimeStringInputs({
+                label: '< 22:00',
+                max: '22:00',
+                value: timeStringValue,
+                onChange: handleTimeStringChange,
+              })}
+              {renderTimeStringInputs({
+                label: '08:00 < x < 22:00',
+                min: '08:00',
+                max: '22:00',
+                value: timeStringValue,
+                onChange: handleTimeStringChange,
               })}
             </Column>
           </Columns>

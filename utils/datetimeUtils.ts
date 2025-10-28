@@ -179,3 +179,47 @@ export const isTimeWithinEdges = (
   }
   return null;
 };
+
+/**
+ * Compare two time strings in format HH:mm
+ * Returns -1 if time1 < time2, 0 if equal, 1 if time1 > time2
+ */
+export const compareTimeStrings = (time1: string, time2: string): number => {
+  if (time1 === time2) return 0;
+  return time1 < time2 ? -1 : 1;
+};
+
+/**
+ * Given 3 time strings
+ * Will check if first time is between the two others
+ * Version for string-based time comparison (no Date conversion)
+ */
+export const isTimeStringWithinEdges = (
+  time: string,
+  minEdge?: string,
+  maxEdge?: string,
+): TimeError | null => {
+  if (!isStringValidAsTime(time)) {
+    return TimeError.formatTime;
+  }
+
+  let isRefAfterMin = true;
+  let isRefBeforeMax = true;
+
+  if (minEdge && isStringValidAsTime(minEdge)) {
+    isRefAfterMin = compareTimeStrings(time, minEdge) >= 0;
+  }
+
+  if (maxEdge && isStringValidAsTime(maxEdge)) {
+    isRefBeforeMax = compareTimeStrings(time, maxEdge) <= 0;
+  }
+
+  if (minEdge && maxEdge && (!isRefBeforeMax || !isRefAfterMin)) {
+    return TimeError.timeWithinEdges;
+  } else if (!isRefBeforeMax) {
+    return TimeError.timeAfterMax;
+  } else if (!isRefAfterMin) {
+    return TimeError.timeBeforeMin;
+  }
+  return null;
+};
