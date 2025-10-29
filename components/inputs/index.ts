@@ -8,6 +8,8 @@ export { default as NumberInput } from 'morning-react-ui/components/inputs/textF
 
 export { default as TimeInput } from 'morning-react-ui/components/inputs/datetimeField/TimeInput';
 
+export { default as TimeStringInput } from 'morning-react-ui/components/inputs/datetimeField/TimeStringInput';
+
 export { default as DateInput } from 'morning-react-ui/components/inputs/datetimeField/DateInput';
 
 export { default as RichText } from 'morning-react-ui/components/inputs/richText/RichText';
