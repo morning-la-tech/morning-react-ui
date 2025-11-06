@@ -54,3 +54,7 @@
     font-style: italic;
     color: var(--iron);
 }
+
+.emptyRowTr {
+    border-bottom: 1px solid var(--ash);
+}

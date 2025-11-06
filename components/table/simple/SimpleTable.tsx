@@ -106,7 +106,7 @@ const SimpleTable = ({
             </tr>
           ))
         ) : (
-          <tr>
+          <tr className={styles.emptyRowTr}>
             <td />
             <td
               className={classNames(styles.td, styles.emptyMessage)}
