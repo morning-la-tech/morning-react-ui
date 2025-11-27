@@ -60,6 +60,14 @@ type UseMultiSelectProps = {
    * Function to externally set the validation error state.
    */
   setMultiSelectError?: (error: InputError) => void;
+
+  /**
+   * Function to sort the options.
+   */
+  sortOptionsFn?: (
+    options: SelectOption[],
+    selectedIds: string[],
+  ) => SelectOption[];
 };
 
 /**
@@ -91,6 +99,7 @@ const useMultiSelect = ({
   rowToDisplay,
   required,
   setMultiSelectError,
+  sortOptionsFn,
 }: UseMultiSelectProps) => {
   // Reference to the main wrapper, for detecting outside clicks.
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -160,7 +169,11 @@ const useMultiSelect = ({
 
   useEffect(() => {
     if (isDropdownDisplayed && setOptions) {
-      setOptions(sortOptionsWithSelectedFirst(options, selectedIds));
+      if (sortOptionsFn) {
+        setOptions(sortOptionsFn(options, selectedIds));
+      } else {
+        setOptions(sortOptionsWithSelectedFirst(options, selectedIds));
+      }
     }
   }, [isDropdownDisplayed]);
 
