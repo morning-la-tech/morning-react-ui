@@ -103,6 +103,25 @@ export default function Page() {
         <h1 className={'font-size-xl'}> Date & Time Inputs</h1>
       </Navigation>
       <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <div
+          style={{
+            width: '200px',
+            height: '200px',
+            border: '1px solid black',
+            overflow: 'scroll',
+          }}
+        >
+          <div style={{ width: '1000px', height: '1000px' }}>
+            <DateInput
+              label={'startDate'}
+              placeholder={'startDatePlaceholder'}
+              onChange={(value) => {
+                console.log(value);
+              }}
+            />
+          </div>
+        </div>
+
         <Container>
           <div>Selected time: {timeValue && timeValue.toTimeString()}</div>
           <div>Selected time string: {timeStringValue ?? 'null'}</div>

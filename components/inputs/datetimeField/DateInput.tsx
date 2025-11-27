@@ -359,15 +359,13 @@ const DateInput = forwardRef<HTMLInputElement, DateInputHtmlProps>(
             {...props}
           />
         </div>
-        <div>
-          <CalendarComponent
-            inputValue={inputValue}
-            parentRef={inputRef}
-            display={selected}
-            setDisplay={setSelected}
-            onSelect={onChange}
-          />
-        </div>
+        <CalendarComponent
+          inputValue={inputValue}
+          parentRef={inputRef}
+          display={selected}
+          setDisplay={setSelected}
+          onSelect={onChange}
+        />
       </ParentInput>
     );
   },
