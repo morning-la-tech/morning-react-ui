@@ -61,6 +61,7 @@ const MultiRadio = ({
     >
       <div
         className={classNames(styles.wrapper, {
+          [styles.wrapperRadioInline]: inline,
           [styles.inline]: inline,
           [styles.column]: !inline,
         })}
