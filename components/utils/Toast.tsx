@@ -9,6 +9,7 @@ type ToastProps = {
   delay?: number;
   closable?: boolean;
   onClose: () => void;
+  maxWidth?: string;
 };
 
 /**
@@ -28,6 +29,7 @@ const Toast = ({
   delay = 3000,
   closable = false,
   onClose,
+  maxWidth = 'initial',
 }: ToastProps) => {
   const toastId = useId();
 
@@ -53,7 +55,7 @@ const Toast = ({
       className={`${styles.toastContainer} ${styles[type]} ${closable || delay === 0 ? styles.toastClosable : styles.toastDelay}`}
       id={toastId}
     >
-      <span className={styles.toastMessage}>
+      <span className={styles.toastMessage} style={{ maxWidth }}>
         <Image
           src={defaultIconUrl}
           alt={type}

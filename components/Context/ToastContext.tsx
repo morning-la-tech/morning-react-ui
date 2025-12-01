@@ -20,6 +20,7 @@ export type ToastMessage = {
   onClose: () => void;
   delay?: number;
   closable?: boolean;
+  maxWidth?: string;
 };
 
 type ToastContextProps = {
@@ -28,6 +29,7 @@ type ToastContextProps = {
     message: string,
     delay?: number,
     closable?: boolean,
+    maxWidth?: string,
   ) => void;
 };
 
@@ -46,6 +48,7 @@ export const ToastProvider: React.FC<{ children?: React.ReactNode }> = ({
       message: string,
       delay: number = 3000,
       closable: boolean = false,
+      maxWidth: string = 'initial',
     ) => {
       const id =
         Date.now().toString() + Math.random().toString(36).substr(2, 9);
@@ -56,7 +59,7 @@ export const ToastProvider: React.FC<{ children?: React.ReactNode }> = ({
       };
       setToasts((currentToasts) => [
         ...currentToasts,
-        { id, type, message, onClose, delay, closable },
+        { id, type, message, onClose, delay, closable, maxWidth },
       ]);
     },
     [],
@@ -78,6 +81,7 @@ export const ToastProvider: React.FC<{ children?: React.ReactNode }> = ({
             delay={toast.delay}
             closable={toast.closable}
             onClose={toast.onClose}
+            maxWidth={toast.maxWidth}
           />
         ))}
       </div>
