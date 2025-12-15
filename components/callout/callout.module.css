@@ -6,102 +6,51 @@
 }
 
 .callout-red {
-    background-color: #ffcdd2;
-    color: #d32f2f;
+    background-color: var(--petal);
+    color: var(--garnet);
 }
 
 .callout-blue {
-    background-color: #ebf7ff;
-    color: var(--sapphire);
-}
-
-.callout-green {
-    background-color: #ebfff1;
-    color: #119c2b;
-}
-
-.callout-orange {
-    background-color: #faeada;
-    color: #ae4220;
-}
-
-.callout-gray {
-    background-color: var(--cloud);
-    color: var(--iron);
-}
-
-.callout-pink {
-    background-color: #fbe8f5;
-    color: #d32f87;
+    background-color: var(--sky);
+    color: var(--navy);
 }
 
 .callout-yellow {
-    background-color: #fffcc2;
-    color: #d29404;
-}
-
-.callout-teal {
-    background-color: #e4fcfc;
-    color: #0d9676;
-}
-
-.callout-purple {
-    background-color: #fcf0ff;
-    color: #a23fee;
+    background-color: var(--vanilla);
+    color: var(--bronze);
 }
 
 .callout-s {
-    padding: 6px 10px;
+    padding: 12px 8px;
     font-size: 12px;
     line-height: 16px;
+    gap: 4px;
 }
 
 .callout-m {
-    padding: 8px 12px;
+    padding: 14px 10px;
     font-size: 14px;
     line-height: 20px;
+    gap: 6px;
 }
 
 .callout-l {
-    padding: 10px 14px;
+    padding: 16px 12px;
     font-size: 16px;
     line-height: 24px;
+    gap: 8px;
 }
 
 .mask-red {
-    background-color: #d32f2f;
+    background-color: var(--garnet);
 }
 
 .mask-blue {
-    background-color: var(--sapphire);
-}
-
-.mask-green {
-    background-color: #119c2b;
-}
-
-.mask-orange {
-    background-color: #ae4220;
-}
-
-.mask-gray {
-    background-color: var(--iron);
-}
-
-.mask-pink {
-    background-color: #d32f87;
+    background-color: var(--navy);
 }
 
 .mask-yellow {
-    background-color: #d29404;
-}
-
-.mask-teal {
-    background-color: #0d9676;
-}
-
-.mask-purple {
-    background-color: #a23fee;
+    background-color: var(--bronze);
 }
 
 .icon {
@@ -113,7 +62,6 @@
 .iconContainer {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     flex: none;
-    margin-right: 10px;
 }

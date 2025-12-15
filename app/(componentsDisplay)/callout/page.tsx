@@ -42,67 +42,7 @@ export default function Page() {
             <Callout
               icon={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/bulb.svg`}
               size={Size.s}
-              color={Color.green}
-            >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-              commodo odio tellus.
-            </Callout>
-          </div>
-          <div>
-            <Callout
-              icon={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/bulb.svg`}
-              size={Size.s}
               color={Color.yellow}
-            >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-              commodo odio tellus.
-            </Callout>
-          </div>
-          <div>
-            <Callout
-              icon={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/bulb.svg`}
-              size={Size.s}
-              color={Color.gray}
-            >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-              commodo odio tellus.
-            </Callout>
-          </div>
-          <div>
-            <Callout
-              icon={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/bulb.svg`}
-              size={Size.s}
-              color={Color.pink}
-            >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-              commodo odio tellus.
-            </Callout>
-          </div>
-          <div>
-            <Callout
-              icon={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/bulb.svg`}
-              size={Size.s}
-              color={Color.orange}
-            >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-              commodo odio tellus.
-            </Callout>
-          </div>
-          <div>
-            <Callout
-              icon={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/bulb.svg`}
-              size={Size.s}
-              color={Color.purple}
-            >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-              commodo odio tellus.
-            </Callout>
-          </div>
-          <div>
-            <Callout
-              icon={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/bulb.svg`}
-              size={Size.s}
-              color={Color.teal}
             >
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
               commodo odio tellus.
@@ -140,67 +80,7 @@ export default function Page() {
           <div>
             <Callout
               icon={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/bulb.svg`}
-              color={Color.green}
-              size={Size.m}
-            >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-              commodo odio tellus.
-            </Callout>
-          </div>
-          <div>
-            <Callout
-              icon={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/bulb.svg`}
               color={Color.yellow}
-              size={Size.m}
-            >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-              commodo odio tellus.
-            </Callout>
-          </div>
-          <div>
-            <Callout
-              icon={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/bulb.svg`}
-              color={Color.gray}
-              size={Size.m}
-            >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-              commodo odio tellus.
-            </Callout>
-          </div>
-          <div>
-            <Callout
-              icon={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/bulb.svg`}
-              color={Color.pink}
-              size={Size.m}
-            >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-              commodo odio tellus.
-            </Callout>
-          </div>
-          <div>
-            <Callout
-              icon={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/bulb.svg`}
-              color={Color.orange}
-              size={Size.m}
-            >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-              commodo odio tellus.
-            </Callout>
-          </div>
-          <div>
-            <Callout
-              icon={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/bulb.svg`}
-              color={Color.purple}
-              size={Size.m}
-            >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-              commodo odio tellus.
-            </Callout>
-          </div>
-          <div>
-            <Callout
-              icon={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/bulb.svg`}
-              color={Color.teal}
               size={Size.m}
             >
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
@@ -239,67 +119,7 @@ export default function Page() {
           <div>
             <Callout
               icon={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/bulb.svg`}
-              color={Color.green}
-              size={Size.l}
-            >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-              commodo odio tellus.
-            </Callout>
-          </div>
-          <div>
-            <Callout
-              icon={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/bulb.svg`}
               color={Color.yellow}
-              size={Size.l}
-            >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-              commodo odio tellus.
-            </Callout>
-          </div>
-          <div>
-            <Callout
-              icon={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/bulb.svg`}
-              color={Color.gray}
-              size={Size.l}
-            >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-              commodo odio tellus.
-            </Callout>
-          </div>
-          <div>
-            <Callout
-              icon={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/bulb.svg`}
-              color={Color.pink}
-              size={Size.l}
-            >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-              commodo odio tellus.
-            </Callout>
-          </div>
-          <div>
-            <Callout
-              icon={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/bulb.svg`}
-              color={Color.orange}
-              size={Size.l}
-            >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-              commodo odio tellus.
-            </Callout>
-          </div>
-          <div>
-            <Callout
-              icon={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/bulb.svg`}
-              color={Color.purple}
-              size={Size.l}
-            >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-              commodo odio tellus.
-            </Callout>
-          </div>
-          <div>
-            <Callout
-              icon={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}icons/bulb.svg`}
-              color={Color.teal}
               size={Size.l}
             >
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
