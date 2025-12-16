@@ -1,9 +1,4 @@
-import {
-  Color,
-  Size,
-  sizeToHeight,
-  sizeToNumber,
-} from 'morning-react-ui/utils/Enum';
+import { Color, Size, sizeToNumber } from 'morning-react-ui/utils/Enum';
 import styles from './callout.module.css';
 
 type CalloutProps = React.HTMLAttributes<HTMLSpanElement> & {
@@ -33,8 +28,8 @@ const Callout = ({
             className={`${styles.icon} ${styles[`mask-${color}`]}`}
             style={{
               maskImage: `url(${icon})`,
-              width: sizeToNumber(size) / 1.5,
-              height: sizeToHeight(size) / 1.5,
+              width: sizeToNumber(size),
+              height: sizeToNumber(size),
             }}
           />
         </div>
