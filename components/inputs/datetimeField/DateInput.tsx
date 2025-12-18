@@ -36,6 +36,9 @@ type DateInputProps = {
   onChange: (time: OptionalDate) => void;
   imageSrc?: string;
   imageAlt?: string;
+  /**
+   * If true, the calendar will be displayed as a floating component
+   */
   floatingCalendar?: boolean;
 } & BasicInputProps &
   InputProps;
