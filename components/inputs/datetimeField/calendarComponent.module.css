@@ -17,6 +17,11 @@
     user-select: none;
 }
 
+.calendarContainer.portal {
+    z-index: 9999;
+    margin-top: 0;
+}
+
 .calendarContainer.hidden {
     display: none;
 }

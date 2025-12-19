@@ -229,6 +229,23 @@ export default function Page() {
                 onChange: handleTimeStringChange,
               })}
             </Column>
+            <Column>
+              <h1>Floating Calendar</h1>
+              <div
+                style={{
+                  width: '200px',
+                  height: '200px',
+                  border: '1px solid black',
+                  overflow: 'scroll',
+                }}
+              >
+                <DateInput
+                  label={'Floating Calendar'}
+                  onChange={handleDateChange}
+                  isFloating={true}
+                />
+              </div>
+            </Column>
           </Columns>
         </Container>
       </div>

@@ -26,6 +26,7 @@ import styles from '../input.module.css';
 import { BasicInputProps, InputProps } from '../propsTypes';
 import useInput from '../textField/useInput';
 import CalendarComponent from './CalendarComponent';
+import FloatingCalendarComponent from './FloatingCalendarComponent';
 
 type DateInputProps = {
   value?: Date | null;
@@ -35,6 +36,10 @@ type DateInputProps = {
   onChange: (time: OptionalDate) => void;
   imageSrc?: string;
   imageAlt?: string;
+  /**
+   * If true, the calendar will be displayed as a floating component
+   */
+  isFloating?: boolean;
 } & BasicInputProps &
   InputProps;
 
@@ -64,6 +69,7 @@ const DateInput = forwardRef<HTMLInputElement, DateInputHtmlProps>(
       centerPlaceholder = false,
       imageSrc,
       imageAlt,
+      isFloating = false,
       ...props
     },
     ref,
@@ -359,15 +365,25 @@ const DateInput = forwardRef<HTMLInputElement, DateInputHtmlProps>(
             {...props}
           />
         </div>
-        <div>
-          <CalendarComponent
+        {isFloating ? (
+          <FloatingCalendarComponent
             inputValue={inputValue}
             parentRef={inputRef}
             display={selected}
             setDisplay={setSelected}
             onSelect={onChange}
           />
-        </div>
+        ) : (
+          <div>
+            <CalendarComponent
+              inputValue={inputValue}
+              parentRef={inputRef}
+              display={selected}
+              setDisplay={setSelected}
+              onSelect={onChange}
+            />
+          </div>
+        )}
       </ParentInput>
     );
   },
