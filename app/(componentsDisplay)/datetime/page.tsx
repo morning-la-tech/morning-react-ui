@@ -240,9 +240,9 @@ export default function Page() {
                 }}
               >
                 <DateInput
-                  label={'floatingCalendar'}
+                  label={'Floating Calendar'}
                   onChange={handleDateChange}
-                  floatingCalendar={true}
+                  isFloating={true}
                 />
               </div>
             </Column>

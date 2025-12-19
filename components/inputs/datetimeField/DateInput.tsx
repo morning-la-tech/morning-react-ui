@@ -39,7 +39,7 @@ type DateInputProps = {
   /**
    * If true, the calendar will be displayed as a floating component
    */
-  floatingCalendar?: boolean;
+  isFloating?: boolean;
 } & BasicInputProps &
   InputProps;
 
@@ -69,7 +69,7 @@ const DateInput = forwardRef<HTMLInputElement, DateInputHtmlProps>(
       centerPlaceholder = false,
       imageSrc,
       imageAlt,
-      floatingCalendar = false,
+      isFloating = false,
       ...props
     },
     ref,
@@ -365,7 +365,7 @@ const DateInput = forwardRef<HTMLInputElement, DateInputHtmlProps>(
             {...props}
           />
         </div>
-        {floatingCalendar ? (
+        {isFloating ? (
           <FloatingCalendarComponent
             inputValue={inputValue}
             parentRef={inputRef}
