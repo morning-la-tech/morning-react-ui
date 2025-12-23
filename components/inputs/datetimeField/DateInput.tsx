@@ -10,7 +10,7 @@ import {
 import Image from 'next/image';
 import classNames from 'classnames';
 import { setMilliseconds, setSeconds } from 'date-fns';
-import { format } from 'date-fns/format';
+import { format, formatDate } from 'date-fns/format';
 import useIsMobile from 'morning-react-ui/components/hooks/useIsMobile';
 import ParentInput from 'morning-react-ui/components/inputs/ParentInput';
 import { OptionalDate } from 'morning-react-ui/types';
@@ -372,6 +372,8 @@ const DateInput = forwardRef<HTMLInputElement, DateInputHtmlProps>(
             display={selected}
             setDisplay={setSelected}
             onSelect={onChange}
+            from={min ? formatDate(min, 'dd/MM/yyyy') : undefined}
+            to={max ? formatDate(max, 'dd/MM/yyyy') : undefined}
           />
         ) : (
           <div>
