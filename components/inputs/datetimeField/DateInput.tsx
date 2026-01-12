@@ -254,7 +254,6 @@ const DateInput = forwardRef<HTMLInputElement, DateInputHtmlProps>(
           onChange(sanitizedDate);
         }
       }
-      validation();
     };
 
     useEffect(() => {
