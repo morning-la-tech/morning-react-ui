@@ -14,7 +14,7 @@ aliases: # declare some aliases for further use
         gcloud auth configure-docker europe-docker.pkg.dev
         gcloud --quiet config set project bap-link
         gcloud --quiet config set compute/zone europe-west1-b
-        gcloud container clusters get-credentials test --zone europe-west1-b --project bap-link
+        gcloud container clusters get-credentials ${GKE_CLUSTER_NAME} --zone europe-west1-b --project bap-link
 
 orbs:
   slack: circleci/slack@4.1
@@ -98,6 +98,8 @@ workflows:
 
       # Build and push when a tag for test or demo environment is pushed
       - build_push:
+          context:
+            - gcp-credentials
           filters:
             branches:
               ignore: /.*/
@@ -108,6 +110,8 @@ workflows:
 
       # Deploy for env test and demo
       - deploy:
+          context:
+            - gcp-credentials
           filters:
             branches:
               ignore: /.*/
