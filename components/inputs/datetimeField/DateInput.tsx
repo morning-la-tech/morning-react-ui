@@ -382,6 +382,8 @@ const DateInput = forwardRef<HTMLInputElement, DateInputHtmlProps>(
               display={selected}
               setDisplay={setSelected}
               onSelect={onChange}
+              from={min ? formatDate(min, 'dd/MM/yyyy') : undefined}
+              to={max ? formatDate(max, 'dd/MM/yyyy') : undefined}
             />
           </div>
         )}
