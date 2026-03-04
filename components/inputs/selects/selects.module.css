@@ -87,3 +87,8 @@
     padding-top: 9px;
     padding-bottom: 9px;
 }
+
+.avatar {
+    align-items: center;
+    margin-right: 6px;
+}
