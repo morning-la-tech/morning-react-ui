@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import useIsMobile from 'morning-react-ui/components/hooks/useIsMobile';
 import { SelectsProps } from 'morning-react-ui/components/inputs/propsTypes';
 import TextInput from 'morning-react-ui/components/inputs/textField/TextInput';
+import Avatar from 'morning-react-ui/components/login/Avatar';
 import { SelectOption } from 'morning-react-ui/types';
 import { Size, sizeToNumber } from 'morning-react-ui/utils/Enum';
 import { InputError } from 'morning-react-ui/utils/error';
@@ -118,6 +119,15 @@ const SelectInput = ({
               <span
                 className={classNames(`height-${finalSize}`, styles.option)}
               >
+                {option.imgSrc && (
+                  <div className={styles.avatar}>
+                    <Avatar
+                      imageUrl={option.imgSrc}
+                      size={sizeToNumber(Size.m)}
+                    />
+                  </div>
+                )}
+
                 {option.label}
               </span>
               {selectedOption?.id === option.id && (

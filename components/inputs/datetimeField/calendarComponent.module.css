@@ -1,7 +1,7 @@
 .calendarContainer {
     display: flex;
     flex-direction: column;
-    z-index: 2;
+    z-index: 10;
     position: absolute;
     top: 100%;
     left: 0;
