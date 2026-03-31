@@ -15,13 +15,15 @@
 .th {
     padding: 8px 6px 7px;
     font-weight: 400;
-    cursor: pointer;
 }
 
 .thContent {
     display: flex;
     align-items: center;
     gap: 4px;
+}
+
+.sortable {
     cursor: pointer;
 }
 
