@@ -8,6 +8,7 @@ import styles from './table.module.css';
 export type TableColumn = {
   key: string;
   header: string;
+  sortable?: boolean;
 };
 
 export type TableRowData = Record<string, string | ReactNode>;
@@ -34,6 +35,13 @@ const SimpleTable = ({
   const [sortKey, setSortKey] = useState<string | null>(null);
   const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.Asc);
 
+  const isColumnSortable = (column: TableColumn): boolean => {
+    if (column.sortable !== undefined) {
+      return column.sortable;
+    }
+    return !!onSortChange;
+  };
+
   const handleSort = (key: string) => {
     if (sortKey === key) {
       const newOrder =
@@ -56,25 +64,44 @@ const SimpleTable = ({
       <thead className={styles.thead}>
         <tr>
           <th className={styles.th} style={{ width: '16px' }} />
-          {columns.map(({ key, header }) => (
-            <th className={styles.th} key={key}>
-              <div className={styles.thContent} onClick={() => handleSort(key)}>
-                {header}
-                <RotatingButton
-                  collapsed={sortOrder === SortOrder.Asc}
-                  rotationDeg={-180}
-                  src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}/icons/pilote-chevron-down.svg`}
-                  alt={`Sort by ${header}`}
-                  style={{
-                    opacity: sortKey === key ? 1 : 0,
-                    transition:
-                      sortKey === key ? 'opacity 400ms ease-in-out' : 'none',
-                  }}
-                  imageStyle={sortKey !== key ? { transition: 'none' } : {}}
-                />
-              </div>
-            </th>
-          ))}
+          {columns.map((column) => {
+            const sortable = isColumnSortable(column);
+            return (
+              <th
+                className={classNames(styles.th, {
+                  [styles.sortable]: sortable,
+                })}
+                key={column.key}
+              >
+                <div
+                  className={classNames(styles.thContent, {
+                    [styles.sortable]: sortable,
+                  })}
+                  onClick={sortable ? () => handleSort(column.key) : undefined}
+                >
+                  {column.header}
+                  {sortable && (
+                    <RotatingButton
+                      collapsed={sortOrder === SortOrder.Asc}
+                      rotationDeg={-180}
+                      src={`${process.env.NEXT_PUBLIC_MORNING_CDN_URL}/icons/pilote-chevron-down.svg`}
+                      alt={`Sort by ${column.header}`}
+                      style={{
+                        opacity: sortKey === column.key ? 1 : 0,
+                        transition:
+                          sortKey === column.key
+                            ? 'opacity 400ms ease-in-out'
+                            : 'none',
+                      }}
+                      imageStyle={
+                        sortKey !== column.key ? { transition: 'none' } : {}
+                      }
+                    />
+                  )}
+                </div>
+              </th>
+            );
+          })}
           <th className={styles.th} style={{ width: '16px' }} />
         </tr>
       </thead>
