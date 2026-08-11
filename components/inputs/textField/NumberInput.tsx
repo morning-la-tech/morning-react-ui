@@ -140,6 +140,22 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputHtmlProps>(
       return () => input.removeEventListener('invalid', handleInvalid);
     }, [setNumberError]);
 
+    // Stops the wheel from changing the value while focused, without blurring.
+    // Native non-passive listener: React's onWheel is passive.
+    useEffect(() => {
+      const input = inputRef.current;
+      if (!input) return;
+
+      const handleWheel = (event: WheelEvent) => {
+        if (document.activeElement === input) {
+          event.preventDefault();
+        }
+      };
+
+      input.addEventListener('wheel', handleWheel, { passive: false });
+      return () => input.removeEventListener('wheel', handleWheel);
+    }, []);
+
     return (
       <ParentInput
         label={label}
